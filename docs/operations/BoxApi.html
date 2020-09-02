@@ -1,0 +1,287 @@
+<div class="main-content">
+  <h2><a name=""></a></h2>
+  <p>This is the  API</p>
+
+  <h2><a name="addBox"></a>addBox</h2>
+  <hr>
+  <p></p>
+  
+  <h3 class="section">URL</h3>
+  <code>https://virtserver.swaggerhub.com/bilgrami/helpaidafrica/1.0.0/box</code>
+  <h3 class="section">HTTP Method</h3>
+  <code>POST</code>
+  <h3 class="section">Response Type</h3>
+  <div class="model" data-model=""><a href=""></a></div>
+  <h3 class="section">Parameters</h3>
+  <ul>
+	  <li class="parameter">
+      
+      
+      
+      
+      <span class="param-in">Body: </span>
+      <span class="param-name">body</span>
+      <span class="param-type">Box(Box)</span>
+      
+      <p class="param-description">Box object that needs to be added to the shipment</p>
+	  </li>
+  </ul>
+  <h2><a name="deleteBox"></a>deleteBox</h2>
+  <hr>
+  <p></p>
+  
+  <h3 class="section">URL</h3>
+  <code>https://virtserver.swaggerhub.com/bilgrami/helpaidafrica/1.0.0/box/{boxId}</code>
+  <h3 class="section">HTTP Method</h3>
+  <code>DELETE</code>
+  <h3 class="section">Response Type</h3>
+  <div class="model" data-model=""><a href=""></a></div>
+  <h3 class="section">Parameters</h3>
+  <ul>
+	  <li class="parameter">
+      
+      
+      <span class="param-in">Path: </span>
+      
+      
+      <span class="param-name">boxId</span>
+      <span class="param-type">Long</span>
+      
+      <p class="param-description">Box id to delete</p>
+	  </li>
+	  <li class="parameter">
+      
+      
+      
+      <span class="param-in">Header: </span>
+      
+      <span class="param-name">api_key</span>
+      <span class="param-type">String</span>
+      
+      <p class="param-description"></p>
+	  </li>
+  </ul>
+  <h2><a name="findBoxesByStatus"></a>findBoxesByStatus</h2>
+  <hr>
+  <p></p>
+  <p>Multiple status values can be provided with comma separated strings</p>
+  <h3 class="section">URL</h3>
+  <code>https://virtserver.swaggerhub.com/bilgrami/helpaidafrica/1.0.0/box/findByStatus</code>
+  <h3 class="section">HTTP Method</h3>
+  <code>GET</code>
+  <h3 class="section">Response Type</h3>
+  <div class="model" data-model="Box"><a href="">List</a></div>
+  <h3 class="section">Parameters</h3>
+  <ul>
+	  <li class="parameter">
+      
+      <span class="param-in">Query: </span>
+      
+      
+      
+      <span class="param-name">status</span>
+      <span class="param-type">BoxStatus</span>
+      
+      <p class="param-description">Status values that need to be considered for filter</p>
+	  </li>
+  </ul>
+  <h2><a name="findBoxesByTags"></a>findBoxesByTags</h2>
+  <hr>
+  <p></p>
+  <p>Muliple tags can be provided with comma separated strings. Use\\ \\ tag1, tag2, tag3 for testing.</p>
+  <h3 class="section">URL</h3>
+  <code>https://virtserver.swaggerhub.com/bilgrami/helpaidafrica/1.0.0/box/findByTags</code>
+  <h3 class="section">HTTP Method</h3>
+  <code>GET</code>
+  <h3 class="section">Response Type</h3>
+  <div class="model" data-model="Box"><a href="">List</a></div>
+  <h3 class="section">Parameters</h3>
+  <ul>
+	  <li class="parameter">
+      
+      <span class="param-in">Query: </span>
+      
+      
+      
+      <span class="param-name">tags</span>
+      <span class="param-type">List(String)</span>
+      
+      <p class="param-description">Tags to filter by</p>
+	  </li>
+  </ul>
+  <h2><a name="getBoxById"></a>getBoxById</h2>
+  <hr>
+  <p></p>
+  <p>Returns a single box</p>
+  <h3 class="section">URL</h3>
+  <code>https://virtserver.swaggerhub.com/bilgrami/helpaidafrica/1.0.0/box/{boxId}</code>
+  <h3 class="section">HTTP Method</h3>
+  <code>GET</code>
+  <h3 class="section">Response Type</h3>
+  <div class="model" data-model="Box"><a href="">Box</a></div>
+  <h3 class="section">Parameters</h3>
+  <ul>
+	  <li class="parameter">
+      
+      
+      <span class="param-in">Path: </span>
+      
+      
+      <span class="param-name">boxId</span>
+      <span class="param-type">String</span>
+      
+      <p class="param-description">ID of box to return</p>
+	  </li>
+  </ul>
+  <h2><a name="getInventoryByBoxStatus"></a>getInventoryByBoxStatus</h2>
+  <hr>
+  <p></p>
+  <p>Returns a map of box status codes to quantities</p>
+  <h3 class="section">URL</h3>
+  <code>https://virtserver.swaggerhub.com/bilgrami/helpaidafrica/1.0.0/box/inventory</code>
+  <h3 class="section">HTTP Method</h3>
+  <code>GET</code>
+  <h3 class="section">Response Type</h3>
+  <div class="model" data-model="integer"><a href="">Map</a></div>
+  <h3 class="section">Parameters</h3>
+  <ul>
+  </ul>
+  <h2><a name="updateBox"></a>updateBox</h2>
+  <hr>
+  <p></p>
+  
+  <h3 class="section">URL</h3>
+  <code>https://virtserver.swaggerhub.com/bilgrami/helpaidafrica/1.0.0/box</code>
+  <h3 class="section">HTTP Method</h3>
+  <code>PUT</code>
+  <h3 class="section">Response Type</h3>
+  <div class="model" data-model=""><a href=""></a></div>
+  <h3 class="section">Parameters</h3>
+  <ul>
+	  <li class="parameter">
+      
+      
+      
+      
+      <span class="param-in">Body: </span>
+      <span class="param-name">body</span>
+      <span class="param-type">Box(Box)</span>
+      
+      <p class="param-description">Box object that needs to be added to the shipment</p>
+	  </li>
+  </ul>
+  <h2><a name="updateBoxWithForm"></a>updateBoxWithForm</h2>
+  <hr>
+  <p></p>
+  
+  <h3 class="section">URL</h3>
+  <code>https://virtserver.swaggerhub.com/bilgrami/helpaidafrica/1.0.0/box/{boxId}</code>
+  <h3 class="section">HTTP Method</h3>
+  <code>POST</code>
+  <h3 class="section">Response Type</h3>
+  <div class="model" data-model=""><a href=""></a></div>
+  <h3 class="section">Parameters</h3>
+  <ul>
+	  <li class="parameter">
+      
+      
+      <span class="param-in">Path: </span>
+      
+      
+      <span class="param-name">boxId</span>
+      <span class="param-type">String</span>
+      
+      <p class="param-description">ID of box that needs to be updated</p>
+	  </li>
+	  <li class="parameter">
+      <span class="param-in">Form: </span>
+      
+      
+      
+      
+      <span class="param-name">status</span>
+      <span class="param-type">String</span>
+      
+      <p class="param-description"></p>
+	  </li>
+	  <li class="parameter">
+      <span class="param-in">Form: </span>
+      
+      
+      
+      
+      <span class="param-name">notes</span>
+      <span class="param-type">String</span>
+      
+      <p class="param-description"></p>
+	  </li>
+	  <li class="parameter">
+      <span class="param-in">Form: </span>
+      
+      
+      
+      
+      <span class="param-name">userId</span>
+      <span class="param-type">String</span>
+      
+      <p class="param-description"></p>
+	  </li>
+	  <li class="parameter">
+      <span class="param-in">Form: </span>
+      
+      
+      
+      
+      <span class="param-name">location</span>
+      <span class="param-type">String</span>
+      
+      <p class="param-description"></p>
+	  </li>
+	  <li class="parameter">
+      <span class="param-in">Form: </span>
+      
+      
+      
+      
+      <span class="param-name">tags</span>
+      <span class="param-type">List(String)</span>
+      
+      <p class="param-description"></p>
+	  </li>
+  </ul>
+  <h2><a name="uploadFile"></a>uploadFile</h2>
+  <hr>
+  <p></p>
+  
+  <h3 class="section">URL</h3>
+  <code>https://virtserver.swaggerhub.com/bilgrami/helpaidafrica/1.0.0/box/{boxId}/uploadImage</code>
+  <h3 class="section">HTTP Method</h3>
+  <code>POST</code>
+  <h3 class="section">Response Type</h3>
+  <div class="model" data-model="ApiResponse"><a href="">ApiResponse</a></div>
+  <h3 class="section">Parameters</h3>
+  <ul>
+	  <li class="parameter">
+      
+      
+      <span class="param-in">Path: </span>
+      
+      
+      <span class="param-name">boxId</span>
+      <span class="param-type">Long</span>
+      
+      <p class="param-description">ID of box to update</p>
+	  </li>
+	  <li class="parameter">
+      
+      
+      
+      
+      <span class="param-in">Body: </span>
+      <span class="param-name">body</span>
+      <span class="param-type">Object(Object)</span>
+      
+      <p class="param-description"></p>
+	  </li>
+  </ul>
+</div>
