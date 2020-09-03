@@ -22,17 +22,17 @@ tags:
   description: Everything about our boxes
   externalDocs:
     description: Find out more
-    url: http://helpaidafrica.org/info/box
+    url: https://api.helpaidafrica.org/info/box
 - name: shipment
   description: Our shipments
   externalDocs:
     description: about shipment
-    url: http://helpaidafrica.org/info/shipment
+    url: https://api.helpaidafrica.org/info/shipment
 - name: org
   description: Orgs we are helping
   externalDocs:
     description: Find out more about orgs
-    url: http://helpaidafrica.org/info/org
+    url: https://api.helpaidafrica.org/info/org
 - name: user
   description: Operations about user
 paths:
