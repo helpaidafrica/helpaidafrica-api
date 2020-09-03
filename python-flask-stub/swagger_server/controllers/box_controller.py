@@ -48,7 +48,7 @@ def find_boxes_by_status(status):  # noqa: E501
     :rtype: List[Box]
     """
     if connexion.request.is_json:
-        status = .from_dict(connexion.request.get_json())  # noqa: E501
+        status = Box.from_dict(connexion.request.get_json())  # noqa: E501
     return 'do some magic!'
 
 
