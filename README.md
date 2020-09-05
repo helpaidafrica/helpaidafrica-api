@@ -1,7 +1,9 @@
 # Welcome to HelpAidAfrica Box Api
 
 ## About our API
-Our API conforms to OpenAPI spec v3 and is publicly available here 
+Use our API to track donation boxes using a simple QR Code or unique box number. Our public API conforms to industry-wide OpenAPI version 3.
+
+
 [HelpAidAfrica Box API Spec](https://app.swaggerhub.com/apis/bilgrami/helpaidafrica/1.0.0)
 
 [YAML file location](https://github.com/helpaidafrica/helpaidafrica-api/blob/master/swagger.yaml)
@@ -10,7 +12,7 @@ Our API conforms to OpenAPI spec v3 and is publicly available here
 https://app.swaggerhub.com/apis-docs/bilgrami/helpaidafrica/1.0.0)
 
 ## Server Stubs
-Our Server stubs can be auto-generated in any of the following languages
+Our Server stubs can be auto-generated in any of the following languages.
 
 Ada, C# (ASP.NET Core, NancyFx), C++ (Pistache, Restbed, Qt5 QHTTPEngine), Erlang, F# (Giraffe), Go (net/http, Gin), Haskell (Servant), Java (MSF4J, Spring, Undertow, JAX-RS: CDI, CXF, Inflector, Jersey, RestEasy, Play Framework, PKMST, Vert.x), Kotlin (Spring Boot, Ktor, Vertx), PHP (Laravel, Lumen, Slim, Silex, Symfony, Zend Expressive), Python (Flask), NodeJS, Ruby (Sinatra, Rails5), Rust (rust-server), Scala (Akka, Finch, Lagom, Play, Scalatra)
 
