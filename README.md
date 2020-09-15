@@ -58,7 +58,7 @@ query GetActiveBoxes {
         {
           "id": "Box-003",
           "isActive": true,
-          "contents": "Donation Package with Clothes",
+          "contents": "Donation Package with Girls Clothes",
           "orgID": "Help Aid Africa",
           "shipmentID": "2020-08-A",
           "title": "Box-003"
@@ -66,7 +66,7 @@ query GetActiveBoxes {
         {
           "id": "Box-004",
           "isActive": true,
-          "contents": "Donation Package with Clothes",
+          "contents": "Donation Package with Shoes",
           "orgID": "Help Aid Africa",
           "shipmentID": "2020-08-B",
           "title": "Box-004"
@@ -74,7 +74,7 @@ query GetActiveBoxes {
         {
           "id": "Box-001",
           "isActive": true,
-          "contents": "Donation Package with Clothes",
+          "contents": "Donation Package with Men's Clothes",
           "orgID": "Help Aid Africa",
           "shipmentID": "2020-08-A",
           "title": "Box-001"
@@ -82,7 +82,7 @@ query GetActiveBoxes {
         {
           "id": "Box-002",
           "isActive": true,
-          "contents": "Donation Package with Clothes",
+          "contents": "Donation Package with Women's Clothes",
           "orgID": "Help Aid Africa",
           "shipmentID": "2020-08-A",
           "title": "Box-002"
@@ -90,7 +90,7 @@ query GetActiveBoxes {
         {
           "id": "Box-005",
           "isActive": true,
-          "contents": "Donation Package with Clothes",
+          "contents": "Donation Package with Bedding and Household items",
           "orgID": "Help Aid Africa",
           "shipmentID": "2020-08-B",
           "title": "Box-005"
