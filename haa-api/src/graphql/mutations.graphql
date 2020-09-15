@@ -1,4 +1,52 @@
 # this is an auto generated file. This will be overwritten
+mutation CreateApihealthCheckInfo(
+  $input: CreateApihealthCheckInfoInput!
+  $condition: ModelApihealthCheckInfoConditionInput
+) {
+  createApihealthCheckInfo(input: $input, condition: $condition) {
+    id
+    status
+    isActive
+    proceed
+    message
+    lastUpdated
+    createdAt
+    updatedAt
+    owner
+  }
+}
+mutation UpdateApihealthCheckInfo(
+  $input: UpdateApihealthCheckInfoInput!
+  $condition: ModelApihealthCheckInfoConditionInput
+) {
+  updateApihealthCheckInfo(input: $input, condition: $condition) {
+    id
+    status
+    isActive
+    proceed
+    message
+    lastUpdated
+    createdAt
+    updatedAt
+    owner
+  }
+}
+mutation DeleteApihealthCheckInfo(
+  $input: DeleteApihealthCheckInfoInput!
+  $condition: ModelApihealthCheckInfoConditionInput
+) {
+  deleteApihealthCheckInfo(input: $input, condition: $condition) {
+    id
+    status
+    isActive
+    proceed
+    message
+    lastUpdated
+    createdAt
+    updatedAt
+    owner
+  }
+}
 mutation CreateAddress(
   $input: CreateAddressInput!
   $condition: ModelAddressConditionInput
@@ -11,6 +59,8 @@ mutation CreateAddress(
     city
     state
     province
+    zipCode
+    postalCode
     country
     createdAt
     updatedAt
@@ -29,6 +79,8 @@ mutation UpdateAddress(
     city
     state
     province
+    zipCode
+    postalCode
     country
     createdAt
     updatedAt
@@ -47,6 +99,8 @@ mutation DeleteAddress(
     city
     state
     province
+    zipCode
+    postalCode
     country
     createdAt
     updatedAt
@@ -60,7 +114,6 @@ mutation CreatePhone(
   createPhone(input: $input, condition: $condition) {
     id
     phone
-    isPrimary
     isActive
     type
     createdAt
@@ -75,7 +128,6 @@ mutation UpdatePhone(
   updatePhone(input: $input, condition: $condition) {
     id
     phone
-    isPrimary
     isActive
     type
     createdAt
@@ -90,7 +142,6 @@ mutation DeletePhone(
   deletePhone(input: $input, condition: $condition) {
     id
     phone
-    isPrimary
     isActive
     type
     createdAt
@@ -106,6 +157,7 @@ mutation CreateOrg(
     id
     name
     description
+    addressID
     address {
       id
       label
@@ -114,6 +166,8 @@ mutation CreateOrg(
       city
       state
       province
+      zipCode
+      postalCode
       country
       createdAt
       updatedAt
@@ -123,7 +177,6 @@ mutation CreateOrg(
     primaryPhone {
       id
       phone
-      isPrimary
       isActive
       type
       createdAt
@@ -133,7 +186,6 @@ mutation CreateOrg(
     otherPhones {
       id
       phone
-      isPrimary
       isActive
       type
       createdAt
@@ -183,6 +235,7 @@ mutation UpdateOrg(
     id
     name
     description
+    addressID
     address {
       id
       label
@@ -191,6 +244,8 @@ mutation UpdateOrg(
       city
       state
       province
+      zipCode
+      postalCode
       country
       createdAt
       updatedAt
@@ -200,7 +255,6 @@ mutation UpdateOrg(
     primaryPhone {
       id
       phone
-      isPrimary
       isActive
       type
       createdAt
@@ -210,7 +264,6 @@ mutation UpdateOrg(
     otherPhones {
       id
       phone
-      isPrimary
       isActive
       type
       createdAt
@@ -260,6 +313,7 @@ mutation DeleteOrg(
     id
     name
     description
+    addressID
     address {
       id
       label
@@ -268,6 +322,8 @@ mutation DeleteOrg(
       city
       state
       province
+      zipCode
+      postalCode
       country
       createdAt
       updatedAt
@@ -277,7 +333,6 @@ mutation DeleteOrg(
     primaryPhone {
       id
       phone
-      isPrimary
       isActive
       type
       createdAt
@@ -287,7 +342,6 @@ mutation DeleteOrg(
     otherPhones {
       id
       phone
-      isPrimary
       isActive
       type
       createdAt
@@ -336,6 +390,10 @@ mutation CreateLocationInfo(
   createLocationInfo(input: $input, condition: $condition) {
     id
     locationLabel
+    latitude
+    longitude
+    isActive
+    addressID
     address {
       id
       label
@@ -344,24 +402,22 @@ mutation CreateLocationInfo(
       city
       state
       province
+      zipCode
+      postalCode
       country
       createdAt
       updatedAt
       owner
     }
-    phone {
+    phones {
       id
       phone
-      isPrimary
       isActive
       type
       createdAt
       updatedAt
       owner
     }
-    latitude
-    longitude
-    isActive
     plusCode
     website
     notes
@@ -379,6 +435,10 @@ mutation UpdateLocationInfo(
   updateLocationInfo(input: $input, condition: $condition) {
     id
     locationLabel
+    latitude
+    longitude
+    isActive
+    addressID
     address {
       id
       label
@@ -387,24 +447,22 @@ mutation UpdateLocationInfo(
       city
       state
       province
+      zipCode
+      postalCode
       country
       createdAt
       updatedAt
       owner
     }
-    phone {
+    phones {
       id
       phone
-      isPrimary
       isActive
       type
       createdAt
       updatedAt
       owner
     }
-    latitude
-    longitude
-    isActive
     plusCode
     website
     notes
@@ -422,6 +480,10 @@ mutation DeleteLocationInfo(
   deleteLocationInfo(input: $input, condition: $condition) {
     id
     locationLabel
+    latitude
+    longitude
+    isActive
+    addressID
     address {
       id
       label
@@ -430,24 +492,22 @@ mutation DeleteLocationInfo(
       city
       state
       province
+      zipCode
+      postalCode
       country
       createdAt
       updatedAt
       owner
     }
-    phone {
+    phones {
       id
       phone
-      isPrimary
       isActive
       type
       createdAt
       updatedAt
       owner
     }
-    latitude
-    longitude
-    isActive
     plusCode
     website
     notes
@@ -469,9 +529,14 @@ mutation CreateShipment(
     isActive
     startDate
     deliveryDate
+    startLocationID
     startLocation {
       id
       locationLabel
+      latitude
+      longitude
+      isActive
+      addressID
       address {
         id
         label
@@ -480,24 +545,22 @@ mutation CreateShipment(
         city
         state
         province
+        zipCode
+        postalCode
         country
         createdAt
         updatedAt
         owner
       }
-      phone {
+      phones {
         id
         phone
-        isPrimary
         isActive
         type
         createdAt
         updatedAt
         owner
       }
-      latitude
-      longitude
-      isActive
       plusCode
       website
       notes
@@ -507,9 +570,14 @@ mutation CreateShipment(
       updatedAt
       owner
     }
+    destinationLocationID
     destinationLocation {
       id
       locationLabel
+      latitude
+      longitude
+      isActive
+      addressID
       address {
         id
         label
@@ -518,24 +586,22 @@ mutation CreateShipment(
         city
         state
         province
+        zipCode
+        postalCode
         country
         createdAt
         updatedAt
         owner
       }
-      phone {
+      phones {
         id
         phone
-        isPrimary
         isActive
         type
         createdAt
         updatedAt
         owner
       }
-      latitude
-      longitude
-      isActive
       plusCode
       website
       notes
@@ -598,9 +664,14 @@ mutation UpdateShipment(
     isActive
     startDate
     deliveryDate
+    startLocationID
     startLocation {
       id
       locationLabel
+      latitude
+      longitude
+      isActive
+      addressID
       address {
         id
         label
@@ -609,24 +680,22 @@ mutation UpdateShipment(
         city
         state
         province
+        zipCode
+        postalCode
         country
         createdAt
         updatedAt
         owner
       }
-      phone {
+      phones {
         id
         phone
-        isPrimary
         isActive
         type
         createdAt
         updatedAt
         owner
       }
-      latitude
-      longitude
-      isActive
       plusCode
       website
       notes
@@ -636,9 +705,14 @@ mutation UpdateShipment(
       updatedAt
       owner
     }
+    destinationLocationID
     destinationLocation {
       id
       locationLabel
+      latitude
+      longitude
+      isActive
+      addressID
       address {
         id
         label
@@ -647,24 +721,22 @@ mutation UpdateShipment(
         city
         state
         province
+        zipCode
+        postalCode
         country
         createdAt
         updatedAt
         owner
       }
-      phone {
+      phones {
         id
         phone
-        isPrimary
         isActive
         type
         createdAt
         updatedAt
         owner
       }
-      latitude
-      longitude
-      isActive
       plusCode
       website
       notes
@@ -727,9 +799,14 @@ mutation DeleteShipment(
     isActive
     startDate
     deliveryDate
+    startLocationID
     startLocation {
       id
       locationLabel
+      latitude
+      longitude
+      isActive
+      addressID
       address {
         id
         label
@@ -738,24 +815,22 @@ mutation DeleteShipment(
         city
         state
         province
+        zipCode
+        postalCode
         country
         createdAt
         updatedAt
         owner
       }
-      phone {
+      phones {
         id
         phone
-        isPrimary
         isActive
         type
         createdAt
         updatedAt
         owner
       }
-      latitude
-      longitude
-      isActive
       plusCode
       website
       notes
@@ -765,9 +840,14 @@ mutation DeleteShipment(
       updatedAt
       owner
     }
+    destinationLocationID
     destinationLocation {
       id
       locationLabel
+      latitude
+      longitude
+      isActive
+      addressID
       address {
         id
         label
@@ -776,24 +856,22 @@ mutation DeleteShipment(
         city
         state
         province
+        zipCode
+        postalCode
         country
         createdAt
         updatedAt
         owner
       }
-      phone {
+      phones {
         id
         phone
-        isPrimary
         isActive
         type
         createdAt
         updatedAt
         owner
       }
-      latitude
-      longitude
-      isActive
       plusCode
       website
       notes
@@ -859,6 +937,7 @@ mutation CreateBox(
       id
       name
       description
+      addressID
       address {
         id
         label
@@ -867,6 +946,8 @@ mutation CreateBox(
         city
         state
         province
+        zipCode
+        postalCode
         country
         createdAt
         updatedAt
@@ -876,7 +957,6 @@ mutation CreateBox(
       primaryPhone {
         id
         phone
-        isPrimary
         isActive
         type
         createdAt
@@ -886,7 +966,6 @@ mutation CreateBox(
       otherPhones {
         id
         phone
-        isPrimary
         isActive
         type
         createdAt
@@ -912,12 +991,14 @@ mutation CreateBox(
       isActive
       startDate
       deliveryDate
+      startLocationID
       startLocation {
         id
         locationLabel
         latitude
         longitude
         isActive
+        addressID
         plusCode
         website
         notes
@@ -927,12 +1008,14 @@ mutation CreateBox(
         updatedAt
         owner
       }
+      destinationLocationID
       destinationLocation {
         id
         locationLabel
         latitude
         longitude
         isActive
+        addressID
         plusCode
         website
         notes
@@ -976,7 +1059,6 @@ mutation CreateBox(
       items {
         id
         boxID
-        locationLabel
         locationInfoID
         notes
         isFinal
@@ -1008,6 +1090,7 @@ mutation UpdateBox(
       id
       name
       description
+      addressID
       address {
         id
         label
@@ -1016,6 +1099,8 @@ mutation UpdateBox(
         city
         state
         province
+        zipCode
+        postalCode
         country
         createdAt
         updatedAt
@@ -1025,7 +1110,6 @@ mutation UpdateBox(
       primaryPhone {
         id
         phone
-        isPrimary
         isActive
         type
         createdAt
@@ -1035,7 +1119,6 @@ mutation UpdateBox(
       otherPhones {
         id
         phone
-        isPrimary
         isActive
         type
         createdAt
@@ -1061,12 +1144,14 @@ mutation UpdateBox(
       isActive
       startDate
       deliveryDate
+      startLocationID
       startLocation {
         id
         locationLabel
         latitude
         longitude
         isActive
+        addressID
         plusCode
         website
         notes
@@ -1076,12 +1161,14 @@ mutation UpdateBox(
         updatedAt
         owner
       }
+      destinationLocationID
       destinationLocation {
         id
         locationLabel
         latitude
         longitude
         isActive
+        addressID
         plusCode
         website
         notes
@@ -1125,7 +1212,6 @@ mutation UpdateBox(
       items {
         id
         boxID
-        locationLabel
         locationInfoID
         notes
         isFinal
@@ -1157,6 +1243,7 @@ mutation DeleteBox(
       id
       name
       description
+      addressID
       address {
         id
         label
@@ -1165,6 +1252,8 @@ mutation DeleteBox(
         city
         state
         province
+        zipCode
+        postalCode
         country
         createdAt
         updatedAt
@@ -1174,7 +1263,6 @@ mutation DeleteBox(
       primaryPhone {
         id
         phone
-        isPrimary
         isActive
         type
         createdAt
@@ -1184,7 +1272,6 @@ mutation DeleteBox(
       otherPhones {
         id
         phone
-        isPrimary
         isActive
         type
         createdAt
@@ -1210,12 +1297,14 @@ mutation DeleteBox(
       isActive
       startDate
       deliveryDate
+      startLocationID
       startLocation {
         id
         locationLabel
         latitude
         longitude
         isActive
+        addressID
         plusCode
         website
         notes
@@ -1225,12 +1314,14 @@ mutation DeleteBox(
         updatedAt
         owner
       }
+      destinationLocationID
       destinationLocation {
         id
         locationLabel
         latitude
         longitude
         isActive
+        addressID
         plusCode
         website
         notes
@@ -1274,7 +1365,6 @@ mutation DeleteBox(
       items {
         id
         boxID
-        locationLabel
         locationInfoID
         notes
         isFinal
@@ -1292,11 +1382,11 @@ mutation DeleteBox(
     owner
   }
 }
-mutation CreateLocation(
-  $input: CreateLocationInput!
-  $condition: ModelLocationConditionInput
+mutation CreateBoxLocation(
+  $input: CreateBoxLocationInput!
+  $condition: ModelBoxLocationConditionInput
 ) {
-  createLocation(input: $input, condition: $condition) {
+  createBoxLocation(input: $input, condition: $condition) {
     id
     boxID
     box {
@@ -1309,6 +1399,7 @@ mutation CreateLocation(
         id
         name
         description
+        addressID
         email
         tags
         photosUrls
@@ -1326,6 +1417,8 @@ mutation CreateLocation(
         isActive
         startDate
         deliveryDate
+        startLocationID
+        destinationLocationID
         shipmentNotes
         deliveryNotes
         trackingId
@@ -1360,11 +1453,14 @@ mutation CreateLocation(
       updatedAt
       owner
     }
-    locationLabel
     locationInfoID
     locationInfo {
       id
       locationLabel
+      latitude
+      longitude
+      isActive
+      addressID
       address {
         id
         label
@@ -1373,24 +1469,22 @@ mutation CreateLocation(
         city
         state
         province
+        zipCode
+        postalCode
         country
         createdAt
         updatedAt
         owner
       }
-      phone {
+      phones {
         id
         phone
-        isPrimary
         isActive
         type
         createdAt
         updatedAt
         owner
       }
-      latitude
-      longitude
-      isActive
       plusCode
       website
       notes
@@ -1410,11 +1504,11 @@ mutation CreateLocation(
     owner
   }
 }
-mutation UpdateLocation(
-  $input: UpdateLocationInput!
-  $condition: ModelLocationConditionInput
+mutation UpdateBoxLocation(
+  $input: UpdateBoxLocationInput!
+  $condition: ModelBoxLocationConditionInput
 ) {
-  updateLocation(input: $input, condition: $condition) {
+  updateBoxLocation(input: $input, condition: $condition) {
     id
     boxID
     box {
@@ -1427,6 +1521,7 @@ mutation UpdateLocation(
         id
         name
         description
+        addressID
         email
         tags
         photosUrls
@@ -1444,6 +1539,8 @@ mutation UpdateLocation(
         isActive
         startDate
         deliveryDate
+        startLocationID
+        destinationLocationID
         shipmentNotes
         deliveryNotes
         trackingId
@@ -1478,11 +1575,14 @@ mutation UpdateLocation(
       updatedAt
       owner
     }
-    locationLabel
     locationInfoID
     locationInfo {
       id
       locationLabel
+      latitude
+      longitude
+      isActive
+      addressID
       address {
         id
         label
@@ -1491,24 +1591,22 @@ mutation UpdateLocation(
         city
         state
         province
+        zipCode
+        postalCode
         country
         createdAt
         updatedAt
         owner
       }
-      phone {
+      phones {
         id
         phone
-        isPrimary
         isActive
         type
         createdAt
         updatedAt
         owner
       }
-      latitude
-      longitude
-      isActive
       plusCode
       website
       notes
@@ -1528,11 +1626,11 @@ mutation UpdateLocation(
     owner
   }
 }
-mutation DeleteLocation(
-  $input: DeleteLocationInput!
-  $condition: ModelLocationConditionInput
+mutation DeleteBoxLocation(
+  $input: DeleteBoxLocationInput!
+  $condition: ModelBoxLocationConditionInput
 ) {
-  deleteLocation(input: $input, condition: $condition) {
+  deleteBoxLocation(input: $input, condition: $condition) {
     id
     boxID
     box {
@@ -1545,6 +1643,7 @@ mutation DeleteLocation(
         id
         name
         description
+        addressID
         email
         tags
         photosUrls
@@ -1562,6 +1661,8 @@ mutation DeleteLocation(
         isActive
         startDate
         deliveryDate
+        startLocationID
+        destinationLocationID
         shipmentNotes
         deliveryNotes
         trackingId
@@ -1596,11 +1697,14 @@ mutation DeleteLocation(
       updatedAt
       owner
     }
-    locationLabel
     locationInfoID
     locationInfo {
       id
       locationLabel
+      latitude
+      longitude
+      isActive
+      addressID
       address {
         id
         label
@@ -1609,24 +1713,22 @@ mutation DeleteLocation(
         city
         state
         province
+        zipCode
+        postalCode
         country
         createdAt
         updatedAt
         owner
       }
-      phone {
+      phones {
         id
         phone
-        isPrimary
         isActive
         type
         createdAt
         updatedAt
         owner
       }
-      latitude
-      longitude
-      isActive
       plusCode
       website
       notes

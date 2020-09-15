@@ -40,7 +40,7 @@
     }
   },
   "api": {
-    "haaApi": {
+    "haaapi": {
       "service": "AppSync",
       "providerPlugin": "awscloudformation",
       "output": {
@@ -56,7 +56,7 @@
               "authenticationType": "API_KEY",
               "apiKeyConfig": {
                 "apiKeyExpirationDays": 365,
-                "description": "public"
+                "description": "public api key"
               }
             }
           ]

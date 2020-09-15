@@ -1,8 +1,8 @@
 projects:
-  haaApi:
+  haaapi:
     schemaPath: src/graphql/schema.json
     includes:
-      - 'y'
+      - src/graphql/**/*.graphql
     excludes:
       - ./amplify/**
     extensions:

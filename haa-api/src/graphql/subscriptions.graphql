@@ -1,4 +1,43 @@
 # this is an auto generated file. This will be overwritten
+subscription OnCreateApihealthCheckInfo($owner: String!) {
+  onCreateApihealthCheckInfo(owner: $owner) {
+    id
+    status
+    isActive
+    proceed
+    message
+    lastUpdated
+    createdAt
+    updatedAt
+    owner
+  }
+}
+subscription OnUpdateApihealthCheckInfo($owner: String!) {
+  onUpdateApihealthCheckInfo(owner: $owner) {
+    id
+    status
+    isActive
+    proceed
+    message
+    lastUpdated
+    createdAt
+    updatedAt
+    owner
+  }
+}
+subscription OnDeleteApihealthCheckInfo($owner: String!) {
+  onDeleteApihealthCheckInfo(owner: $owner) {
+    id
+    status
+    isActive
+    proceed
+    message
+    lastUpdated
+    createdAt
+    updatedAt
+    owner
+  }
+}
 subscription OnCreateAddress($owner: String!) {
   onCreateAddress(owner: $owner) {
     id
@@ -8,6 +47,8 @@ subscription OnCreateAddress($owner: String!) {
     city
     state
     province
+    zipCode
+    postalCode
     country
     createdAt
     updatedAt
@@ -23,6 +64,8 @@ subscription OnUpdateAddress($owner: String!) {
     city
     state
     province
+    zipCode
+    postalCode
     country
     createdAt
     updatedAt
@@ -38,6 +81,8 @@ subscription OnDeleteAddress($owner: String!) {
     city
     state
     province
+    zipCode
+    postalCode
     country
     createdAt
     updatedAt
@@ -48,7 +93,6 @@ subscription OnCreatePhone($owner: String!) {
   onCreatePhone(owner: $owner) {
     id
     phone
-    isPrimary
     isActive
     type
     createdAt
@@ -60,7 +104,6 @@ subscription OnUpdatePhone($owner: String!) {
   onUpdatePhone(owner: $owner) {
     id
     phone
-    isPrimary
     isActive
     type
     createdAt
@@ -72,7 +115,6 @@ subscription OnDeletePhone($owner: String!) {
   onDeletePhone(owner: $owner) {
     id
     phone
-    isPrimary
     isActive
     type
     createdAt
@@ -85,6 +127,7 @@ subscription OnCreateOrg($owner: String!) {
     id
     name
     description
+    addressID
     address {
       id
       label
@@ -93,6 +136,8 @@ subscription OnCreateOrg($owner: String!) {
       city
       state
       province
+      zipCode
+      postalCode
       country
       createdAt
       updatedAt
@@ -102,7 +147,6 @@ subscription OnCreateOrg($owner: String!) {
     primaryPhone {
       id
       phone
-      isPrimary
       isActive
       type
       createdAt
@@ -112,7 +156,6 @@ subscription OnCreateOrg($owner: String!) {
     otherPhones {
       id
       phone
-      isPrimary
       isActive
       type
       createdAt
@@ -159,6 +202,7 @@ subscription OnUpdateOrg($owner: String!) {
     id
     name
     description
+    addressID
     address {
       id
       label
@@ -167,6 +211,8 @@ subscription OnUpdateOrg($owner: String!) {
       city
       state
       province
+      zipCode
+      postalCode
       country
       createdAt
       updatedAt
@@ -176,7 +222,6 @@ subscription OnUpdateOrg($owner: String!) {
     primaryPhone {
       id
       phone
-      isPrimary
       isActive
       type
       createdAt
@@ -186,7 +231,6 @@ subscription OnUpdateOrg($owner: String!) {
     otherPhones {
       id
       phone
-      isPrimary
       isActive
       type
       createdAt
@@ -233,6 +277,7 @@ subscription OnDeleteOrg($owner: String!) {
     id
     name
     description
+    addressID
     address {
       id
       label
@@ -241,6 +286,8 @@ subscription OnDeleteOrg($owner: String!) {
       city
       state
       province
+      zipCode
+      postalCode
       country
       createdAt
       updatedAt
@@ -250,7 +297,6 @@ subscription OnDeleteOrg($owner: String!) {
     primaryPhone {
       id
       phone
-      isPrimary
       isActive
       type
       createdAt
@@ -260,7 +306,6 @@ subscription OnDeleteOrg($owner: String!) {
     otherPhones {
       id
       phone
-      isPrimary
       isActive
       type
       createdAt
@@ -306,6 +351,10 @@ subscription OnCreateLocationInfo($owner: String!) {
   onCreateLocationInfo(owner: $owner) {
     id
     locationLabel
+    latitude
+    longitude
+    isActive
+    addressID
     address {
       id
       label
@@ -314,24 +363,22 @@ subscription OnCreateLocationInfo($owner: String!) {
       city
       state
       province
+      zipCode
+      postalCode
       country
       createdAt
       updatedAt
       owner
     }
-    phone {
+    phones {
       id
       phone
-      isPrimary
       isActive
       type
       createdAt
       updatedAt
       owner
     }
-    latitude
-    longitude
-    isActive
     plusCode
     website
     notes
@@ -346,6 +393,10 @@ subscription OnUpdateLocationInfo($owner: String!) {
   onUpdateLocationInfo(owner: $owner) {
     id
     locationLabel
+    latitude
+    longitude
+    isActive
+    addressID
     address {
       id
       label
@@ -354,24 +405,22 @@ subscription OnUpdateLocationInfo($owner: String!) {
       city
       state
       province
+      zipCode
+      postalCode
       country
       createdAt
       updatedAt
       owner
     }
-    phone {
+    phones {
       id
       phone
-      isPrimary
       isActive
       type
       createdAt
       updatedAt
       owner
     }
-    latitude
-    longitude
-    isActive
     plusCode
     website
     notes
@@ -386,6 +435,10 @@ subscription OnDeleteLocationInfo($owner: String!) {
   onDeleteLocationInfo(owner: $owner) {
     id
     locationLabel
+    latitude
+    longitude
+    isActive
+    addressID
     address {
       id
       label
@@ -394,24 +447,22 @@ subscription OnDeleteLocationInfo($owner: String!) {
       city
       state
       province
+      zipCode
+      postalCode
       country
       createdAt
       updatedAt
       owner
     }
-    phone {
+    phones {
       id
       phone
-      isPrimary
       isActive
       type
       createdAt
       updatedAt
       owner
     }
-    latitude
-    longitude
-    isActive
     plusCode
     website
     notes
@@ -430,9 +481,14 @@ subscription OnCreateShipment($owner: String!) {
     isActive
     startDate
     deliveryDate
+    startLocationID
     startLocation {
       id
       locationLabel
+      latitude
+      longitude
+      isActive
+      addressID
       address {
         id
         label
@@ -441,24 +497,22 @@ subscription OnCreateShipment($owner: String!) {
         city
         state
         province
+        zipCode
+        postalCode
         country
         createdAt
         updatedAt
         owner
       }
-      phone {
+      phones {
         id
         phone
-        isPrimary
         isActive
         type
         createdAt
         updatedAt
         owner
       }
-      latitude
-      longitude
-      isActive
       plusCode
       website
       notes
@@ -468,9 +522,14 @@ subscription OnCreateShipment($owner: String!) {
       updatedAt
       owner
     }
+    destinationLocationID
     destinationLocation {
       id
       locationLabel
+      latitude
+      longitude
+      isActive
+      addressID
       address {
         id
         label
@@ -479,24 +538,22 @@ subscription OnCreateShipment($owner: String!) {
         city
         state
         province
+        zipCode
+        postalCode
         country
         createdAt
         updatedAt
         owner
       }
-      phone {
+      phones {
         id
         phone
-        isPrimary
         isActive
         type
         createdAt
         updatedAt
         owner
       }
-      latitude
-      longitude
-      isActive
       plusCode
       website
       notes
@@ -556,9 +613,14 @@ subscription OnUpdateShipment($owner: String!) {
     isActive
     startDate
     deliveryDate
+    startLocationID
     startLocation {
       id
       locationLabel
+      latitude
+      longitude
+      isActive
+      addressID
       address {
         id
         label
@@ -567,24 +629,22 @@ subscription OnUpdateShipment($owner: String!) {
         city
         state
         province
+        zipCode
+        postalCode
         country
         createdAt
         updatedAt
         owner
       }
-      phone {
+      phones {
         id
         phone
-        isPrimary
         isActive
         type
         createdAt
         updatedAt
         owner
       }
-      latitude
-      longitude
-      isActive
       plusCode
       website
       notes
@@ -594,9 +654,14 @@ subscription OnUpdateShipment($owner: String!) {
       updatedAt
       owner
     }
+    destinationLocationID
     destinationLocation {
       id
       locationLabel
+      latitude
+      longitude
+      isActive
+      addressID
       address {
         id
         label
@@ -605,24 +670,22 @@ subscription OnUpdateShipment($owner: String!) {
         city
         state
         province
+        zipCode
+        postalCode
         country
         createdAt
         updatedAt
         owner
       }
-      phone {
+      phones {
         id
         phone
-        isPrimary
         isActive
         type
         createdAt
         updatedAt
         owner
       }
-      latitude
-      longitude
-      isActive
       plusCode
       website
       notes
@@ -682,9 +745,14 @@ subscription OnDeleteShipment($owner: String!) {
     isActive
     startDate
     deliveryDate
+    startLocationID
     startLocation {
       id
       locationLabel
+      latitude
+      longitude
+      isActive
+      addressID
       address {
         id
         label
@@ -693,24 +761,22 @@ subscription OnDeleteShipment($owner: String!) {
         city
         state
         province
+        zipCode
+        postalCode
         country
         createdAt
         updatedAt
         owner
       }
-      phone {
+      phones {
         id
         phone
-        isPrimary
         isActive
         type
         createdAt
         updatedAt
         owner
       }
-      latitude
-      longitude
-      isActive
       plusCode
       website
       notes
@@ -720,9 +786,14 @@ subscription OnDeleteShipment($owner: String!) {
       updatedAt
       owner
     }
+    destinationLocationID
     destinationLocation {
       id
       locationLabel
+      latitude
+      longitude
+      isActive
+      addressID
       address {
         id
         label
@@ -731,24 +802,22 @@ subscription OnDeleteShipment($owner: String!) {
         city
         state
         province
+        zipCode
+        postalCode
         country
         createdAt
         updatedAt
         owner
       }
-      phone {
+      phones {
         id
         phone
-        isPrimary
         isActive
         type
         createdAt
         updatedAt
         owner
       }
-      latitude
-      longitude
-      isActive
       plusCode
       website
       notes
@@ -811,6 +880,7 @@ subscription OnCreateBox($owner: String!) {
       id
       name
       description
+      addressID
       address {
         id
         label
@@ -819,6 +889,8 @@ subscription OnCreateBox($owner: String!) {
         city
         state
         province
+        zipCode
+        postalCode
         country
         createdAt
         updatedAt
@@ -828,7 +900,6 @@ subscription OnCreateBox($owner: String!) {
       primaryPhone {
         id
         phone
-        isPrimary
         isActive
         type
         createdAt
@@ -838,7 +909,6 @@ subscription OnCreateBox($owner: String!) {
       otherPhones {
         id
         phone
-        isPrimary
         isActive
         type
         createdAt
@@ -864,12 +934,14 @@ subscription OnCreateBox($owner: String!) {
       isActive
       startDate
       deliveryDate
+      startLocationID
       startLocation {
         id
         locationLabel
         latitude
         longitude
         isActive
+        addressID
         plusCode
         website
         notes
@@ -879,12 +951,14 @@ subscription OnCreateBox($owner: String!) {
         updatedAt
         owner
       }
+      destinationLocationID
       destinationLocation {
         id
         locationLabel
         latitude
         longitude
         isActive
+        addressID
         plusCode
         website
         notes
@@ -928,7 +1002,6 @@ subscription OnCreateBox($owner: String!) {
       items {
         id
         boxID
-        locationLabel
         locationInfoID
         notes
         isFinal
@@ -957,6 +1030,7 @@ subscription OnUpdateBox($owner: String!) {
       id
       name
       description
+      addressID
       address {
         id
         label
@@ -965,6 +1039,8 @@ subscription OnUpdateBox($owner: String!) {
         city
         state
         province
+        zipCode
+        postalCode
         country
         createdAt
         updatedAt
@@ -974,7 +1050,6 @@ subscription OnUpdateBox($owner: String!) {
       primaryPhone {
         id
         phone
-        isPrimary
         isActive
         type
         createdAt
@@ -984,7 +1059,6 @@ subscription OnUpdateBox($owner: String!) {
       otherPhones {
         id
         phone
-        isPrimary
         isActive
         type
         createdAt
@@ -1010,12 +1084,14 @@ subscription OnUpdateBox($owner: String!) {
       isActive
       startDate
       deliveryDate
+      startLocationID
       startLocation {
         id
         locationLabel
         latitude
         longitude
         isActive
+        addressID
         plusCode
         website
         notes
@@ -1025,12 +1101,14 @@ subscription OnUpdateBox($owner: String!) {
         updatedAt
         owner
       }
+      destinationLocationID
       destinationLocation {
         id
         locationLabel
         latitude
         longitude
         isActive
+        addressID
         plusCode
         website
         notes
@@ -1074,7 +1152,6 @@ subscription OnUpdateBox($owner: String!) {
       items {
         id
         boxID
-        locationLabel
         locationInfoID
         notes
         isFinal
@@ -1103,6 +1180,7 @@ subscription OnDeleteBox($owner: String!) {
       id
       name
       description
+      addressID
       address {
         id
         label
@@ -1111,6 +1189,8 @@ subscription OnDeleteBox($owner: String!) {
         city
         state
         province
+        zipCode
+        postalCode
         country
         createdAt
         updatedAt
@@ -1120,7 +1200,6 @@ subscription OnDeleteBox($owner: String!) {
       primaryPhone {
         id
         phone
-        isPrimary
         isActive
         type
         createdAt
@@ -1130,7 +1209,6 @@ subscription OnDeleteBox($owner: String!) {
       otherPhones {
         id
         phone
-        isPrimary
         isActive
         type
         createdAt
@@ -1156,12 +1234,14 @@ subscription OnDeleteBox($owner: String!) {
       isActive
       startDate
       deliveryDate
+      startLocationID
       startLocation {
         id
         locationLabel
         latitude
         longitude
         isActive
+        addressID
         plusCode
         website
         notes
@@ -1171,12 +1251,14 @@ subscription OnDeleteBox($owner: String!) {
         updatedAt
         owner
       }
+      destinationLocationID
       destinationLocation {
         id
         locationLabel
         latitude
         longitude
         isActive
+        addressID
         plusCode
         website
         notes
@@ -1220,7 +1302,6 @@ subscription OnDeleteBox($owner: String!) {
       items {
         id
         boxID
-        locationLabel
         locationInfoID
         notes
         isFinal
@@ -1238,8 +1319,8 @@ subscription OnDeleteBox($owner: String!) {
     owner
   }
 }
-subscription OnCreateLocation($owner: String!) {
-  onCreateLocation(owner: $owner) {
+subscription OnCreateBoxLocation($owner: String!) {
+  onCreateBoxLocation(owner: $owner) {
     id
     boxID
     box {
@@ -1252,6 +1333,7 @@ subscription OnCreateLocation($owner: String!) {
         id
         name
         description
+        addressID
         email
         tags
         photosUrls
@@ -1269,6 +1351,8 @@ subscription OnCreateLocation($owner: String!) {
         isActive
         startDate
         deliveryDate
+        startLocationID
+        destinationLocationID
         shipmentNotes
         deliveryNotes
         trackingId
@@ -1303,11 +1387,14 @@ subscription OnCreateLocation($owner: String!) {
       updatedAt
       owner
     }
-    locationLabel
     locationInfoID
     locationInfo {
       id
       locationLabel
+      latitude
+      longitude
+      isActive
+      addressID
       address {
         id
         label
@@ -1316,24 +1403,22 @@ subscription OnCreateLocation($owner: String!) {
         city
         state
         province
+        zipCode
+        postalCode
         country
         createdAt
         updatedAt
         owner
       }
-      phone {
+      phones {
         id
         phone
-        isPrimary
         isActive
         type
         createdAt
         updatedAt
         owner
       }
-      latitude
-      longitude
-      isActive
       plusCode
       website
       notes
@@ -1353,8 +1438,8 @@ subscription OnCreateLocation($owner: String!) {
     owner
   }
 }
-subscription OnUpdateLocation($owner: String!) {
-  onUpdateLocation(owner: $owner) {
+subscription OnUpdateBoxLocation($owner: String!) {
+  onUpdateBoxLocation(owner: $owner) {
     id
     boxID
     box {
@@ -1367,6 +1452,7 @@ subscription OnUpdateLocation($owner: String!) {
         id
         name
         description
+        addressID
         email
         tags
         photosUrls
@@ -1384,6 +1470,8 @@ subscription OnUpdateLocation($owner: String!) {
         isActive
         startDate
         deliveryDate
+        startLocationID
+        destinationLocationID
         shipmentNotes
         deliveryNotes
         trackingId
@@ -1418,11 +1506,14 @@ subscription OnUpdateLocation($owner: String!) {
       updatedAt
       owner
     }
-    locationLabel
     locationInfoID
     locationInfo {
       id
       locationLabel
+      latitude
+      longitude
+      isActive
+      addressID
       address {
         id
         label
@@ -1431,24 +1522,22 @@ subscription OnUpdateLocation($owner: String!) {
         city
         state
         province
+        zipCode
+        postalCode
         country
         createdAt
         updatedAt
         owner
       }
-      phone {
+      phones {
         id
         phone
-        isPrimary
         isActive
         type
         createdAt
         updatedAt
         owner
       }
-      latitude
-      longitude
-      isActive
       plusCode
       website
       notes
@@ -1468,8 +1557,8 @@ subscription OnUpdateLocation($owner: String!) {
     owner
   }
 }
-subscription OnDeleteLocation($owner: String!) {
-  onDeleteLocation(owner: $owner) {
+subscription OnDeleteBoxLocation($owner: String!) {
+  onDeleteBoxLocation(owner: $owner) {
     id
     boxID
     box {
@@ -1482,6 +1571,7 @@ subscription OnDeleteLocation($owner: String!) {
         id
         name
         description
+        addressID
         email
         tags
         photosUrls
@@ -1499,6 +1589,8 @@ subscription OnDeleteLocation($owner: String!) {
         isActive
         startDate
         deliveryDate
+        startLocationID
+        destinationLocationID
         shipmentNotes
         deliveryNotes
         trackingId
@@ -1533,11 +1625,14 @@ subscription OnDeleteLocation($owner: String!) {
       updatedAt
       owner
     }
-    locationLabel
     locationInfoID
     locationInfo {
       id
       locationLabel
+      latitude
+      longitude
+      isActive
+      addressID
       address {
         id
         label
@@ -1546,24 +1641,22 @@ subscription OnDeleteLocation($owner: String!) {
         city
         state
         province
+        zipCode
+        postalCode
         country
         createdAt
         updatedAt
         owner
       }
-      phone {
+      phones {
         id
         phone
-        isPrimary
         isActive
         type
         createdAt
         updatedAt
         owner
       }
-      latitude
-      longitude
-      isActive
       plusCode
       website
       notes

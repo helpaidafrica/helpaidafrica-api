@@ -3,15 +3,6 @@ enum ApiHealthStatus {
   DOWN
 }
 
-type ApihealthCheckInfo {
-  id: ID!
-  status: ApiHealthStatus!
-  isActive: Boolean!
-  proceed: Boolean!
-  message: String
-  lastUpdated: AWSDateTime
-}
-
 enum PhoneType {
   WORK
   CELL
@@ -48,13 +39,13 @@ enum BoxStatus {
   ERROR
 }
 
-type Address
+type ApihealthCheckInfo
 @model
 @auth(
   rules: [
     # Defaults to use the "owner" field.
     { allow: owner }
-    # Admins can access any operation.
+    # Admins can access any operation, but allow any authenticated user to read the objects
     {
       allow: groups
       groups: ["haaApiAdmins", "haaApiDataAdmins"]
@@ -63,13 +54,37 @@ type Address
   ]
 ) {
   id: ID!
-  label: String
+  status: ApiHealthStatus!
+  isActive: Boolean!
+  proceed: Boolean!
+  message: String
+  lastUpdated: AWSDateTime
+}
+
+type Address
+@model
+@auth(
+  rules: [
+    # Defaults to use the "owner" field.
+    { allow: owner }
+    # Admins can access any operation, but allow any authenticated user to read the objects
+    {
+      allow: groups
+      groups: ["haaApiAdmins", "haaApiDataAdmins"]
+      operations: [create, delete, update]
+    }
+  ]
+) {
+  id: ID!
+  label: String!
   addressLine1: String!
-  addressLine2: String!
-  city: String
+  addressLine2: String
+  city: String!
   state: String
   province: String
-  country: String
+  zipCode: String
+  postalCode: String
+  country: String!
 }
 
 type Phone
@@ -78,7 +93,7 @@ type Phone
   rules: [
     # Defaults to use the "owner" field.
     { allow: owner }
-    # Admins can access any operation.
+    # Admins can access any operation, but allow any authenticated user to read the objects
     {
       allow: groups
       groups: ["haaApiAdmins", "haaApiDataAdmins"]
@@ -88,7 +103,6 @@ type Phone
 ) {
   id: ID!
   phone: AWSPhone
-  isPrimary: Boolean
   isActive: Boolean
   type: PhoneType
 }
@@ -99,7 +113,7 @@ type Org
   rules: [
     # Defaults to use the "owner" field.
     { allow: owner }
-    # Admins can access any operation.
+    # Admins can access any operation, but allow any authenticated user to read the objects
     {
       allow: groups
       groups: ["haaApiAdmins", "haaApiDataAdmins"]
@@ -110,7 +124,8 @@ type Org
   id: ID!
   name: String!
   description: String
-  address: Address
+  addressID: ID!
+  address: Address @connection(fields: ["addressID"])
   email: AWSEmail
   primaryPhone: Phone
   otherPhones: [Phone!]
@@ -137,11 +152,14 @@ type LocationInfo
 ) {
   id: ID!
   locationLabel: String!
-  address: Address
-  phone: [Phone]
   latitude: String!
   longitude: String!
   isActive: Boolean!
+
+  addressID: ID!
+  address: Address @connection(fields: ["addressID"])
+
+  phones: [Phone]
   plusCode: String
   website: [AWSURL!]
   notes: String
@@ -169,8 +187,11 @@ type Shipment
   isActive: Boolean!
   startDate: AWSDateTime
   deliveryDate: AWSDateTime
-  startLocation: LocationInfo
+  startLocationID: ID!
+  startLocation: LocationInfo @connection(fields: ["startLocationID"])
+  destinationLocationID: ID!
   destinationLocation: LocationInfo
+  @connection(fields: ["destinationLocationID"])
   shipmentNotes: String
   deliveryNotes: String
   trackingId: String
@@ -225,10 +246,11 @@ type Box
   internalNotes: String
   notes: String
   notesHistory: [String!]
-  locations: [Location] @connection(keyName: "locationForBox", fields: ["id"])
+  locations: [BoxLocation]
+  @connection(keyName: "locationForBox", fields: ["id"])
 }
 
-type Location
+type BoxLocation
 @model
 @key(name: "locationForBox", fields: ["boxID", "locationInfoID"])
 @auth(
@@ -245,13 +267,13 @@ type Location
 ) {
   id: ID!
   boxID: ID!
-  box: Box @connection(fields: ["boxID"])
-  locationLabel: String!
+  box: Box! @connection(fields: ["boxID"])
+
   locationInfoID: ID!
-  locationInfo: LocationInfo!
+  locationInfo: LocationInfo! @connection(fields: ["locationInfoID"])
   notes: String
-  isFinal: Boolean
-  tags: [String]
-  photosUrls: [AWSURL]
+  isFinal: Boolean!
+  tags: [String!]
+  photosUrls: [AWSURL!]
   isActive: Boolean!
 }
