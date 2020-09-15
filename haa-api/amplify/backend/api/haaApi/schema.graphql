@@ -1,0 +1,75 @@
+type Org 
+@model 
+@auth(rules: [
+    # Defaults to use the "owner" field.
+    { allow: owner },
+
+    # Admins can access any operation.
+	  { allow: groups, groups: ["haaApiAdmins","haaApiDataAdmins"], operations: [create, delete, update] }
+  ])
+{
+  id: ID!
+  name: String!
+  isActive: Boolean!
+  boxes: [Box] @connection(keyName: "byOrg", fields: ["id"])
+}
+
+type Shipment 
+@model 
+@auth(rules: [
+    # Defaults to use the "owner" field.
+    { allow: owner },
+
+    # Admins can access any operation.
+	  { allow: groups, groups: ["haaApiAdmins","haaApiDataAdmins"], operations: [create, delete, update] }
+  ])
+{
+  id: ID!
+  name: String!
+  isActive: Boolean!
+  boxes: [Box] @connection(keyName: "byShipment", fields: ["id"])
+}
+
+type Box 
+@model 
+@key(name: "byOrg", fields: ["orgID"]) 
+@key(name: "byShipment", fields: ["shipmentID"])
+@auth(rules: [
+    # Defaults to use the "owner" field.
+    { allow: owner },
+
+    # Admins can access any operation, but allow any authenticated user to read the objects
+	  { allow: groups, groups: ["haaApiAdmins","haaApiDataAdmins"], operations: [create, delete, update] }
+  ])
+{
+  id: ID!
+  title: String!
+  contents: String!
+  size: String!
+  orgID: ID!
+  org: Org @connection(fields: ["orgID"])
+  shipmentID: ID!
+  shipment: Shipment @connection(fields: ["shipmentID"])
+  isActive: Boolean!
+  locations: [Location] @connection(keyName: "locationsbyBox", fields: ["id"])
+}
+
+type Location 
+@model 
+@key(name: "locationsbyBox", fields: ["boxID", "locationLabel"]) 
+@auth(rules: [
+    # Defaults to use the "owner" field.
+    { allow: owner },
+
+    # Admins can access any operation, but allow any authenticated user to read the objects
+	  { allow: groups, groups: ["haaApiAdmins","haaApiDataAdmins"], operations: [create, delete, update] }
+  ])
+{
+  id: ID!
+  boxID: ID!
+  box: Box @connection(fields: ["boxID"])
+  locationLabel: String!
+  latitude: String!
+  longitude: String!
+  isActive: Boolean!
+}

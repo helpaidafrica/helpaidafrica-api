@@ -1,0 +1,11 @@
+{
+    "AppSyncApiName": "haaApi",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "DynamoDBEnableServerSideEncryption": false,
+    "AuthCognitoUserPoolId": {
+        "Fn::GetAtt": [
+            "authhaaapi0a8b57ab",
+            "Outputs.UserPoolId"
+        ]
+    }
+}

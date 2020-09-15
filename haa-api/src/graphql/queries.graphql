@@ -1,0 +1,249 @@
+# this is an auto generated file. This will be overwritten
+query GetOrg($id: ID!) {
+  getOrg(id: $id) {
+    id
+    name
+    isActive
+    boxes {
+      items {
+        id
+        title
+        contents
+        size
+        orgID
+        shipmentID
+        isActive
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+    owner
+  }
+}
+query ListOrgs($filter: ModelOrgFilterInput, $limit: Int, $nextToken: String) {
+  listOrgs(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      name
+      isActive
+      boxes {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    nextToken
+  }
+}
+query GetShipment($id: ID!) {
+  getShipment(id: $id) {
+    id
+    name
+    isActive
+    boxes {
+      items {
+        id
+        title
+        contents
+        size
+        orgID
+        shipmentID
+        isActive
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+    owner
+  }
+}
+query ListShipments(
+  $filter: ModelShipmentFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listShipments(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      name
+      isActive
+      boxes {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    nextToken
+  }
+}
+query GetBox($id: ID!) {
+  getBox(id: $id) {
+    id
+    title
+    contents
+    size
+    orgID
+    org {
+      id
+      name
+      isActive
+      boxes {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    shipmentID
+    shipment {
+      id
+      name
+      isActive
+      boxes {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    isActive
+    locations {
+      items {
+        id
+        boxID
+        locationLabel
+        latitude
+        longitude
+        isActive
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+    owner
+  }
+}
+query ListBoxs($filter: ModelBoxFilterInput, $limit: Int, $nextToken: String) {
+  listBoxs(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      title
+      contents
+      size
+      orgID
+      org {
+        id
+        name
+        isActive
+        createdAt
+        updatedAt
+        owner
+      }
+      shipmentID
+      shipment {
+        id
+        name
+        isActive
+        createdAt
+        updatedAt
+        owner
+      }
+      isActive
+      locations {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    nextToken
+  }
+}
+query GetLocation($id: ID!) {
+  getLocation(id: $id) {
+    id
+    boxID
+    box {
+      id
+      title
+      contents
+      size
+      orgID
+      org {
+        id
+        name
+        isActive
+        createdAt
+        updatedAt
+        owner
+      }
+      shipmentID
+      shipment {
+        id
+        name
+        isActive
+        createdAt
+        updatedAt
+        owner
+      }
+      isActive
+      locations {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    locationLabel
+    latitude
+    longitude
+    isActive
+    createdAt
+    updatedAt
+    owner
+  }
+}
+query ListLocations(
+  $filter: ModelLocationFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listLocations(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      boxID
+      box {
+        id
+        title
+        contents
+        size
+        orgID
+        shipmentID
+        isActive
+        createdAt
+        updatedAt
+        owner
+      }
+      locationLabel
+      latitude
+      longitude
+      isActive
+      createdAt
+      updatedAt
+      owner
+    }
+    nextToken
+  }
+}

@@ -1,0 +1,469 @@
+# this is an auto generated file. This will be overwritten
+mutation CreateOrg(
+  $input: CreateOrgInput!
+  $condition: ModelOrgConditionInput
+) {
+  createOrg(input: $input, condition: $condition) {
+    id
+    name
+    isActive
+    boxes {
+      items {
+        id
+        title
+        contents
+        size
+        orgID
+        shipmentID
+        isActive
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+    owner
+  }
+}
+mutation UpdateOrg(
+  $input: UpdateOrgInput!
+  $condition: ModelOrgConditionInput
+) {
+  updateOrg(input: $input, condition: $condition) {
+    id
+    name
+    isActive
+    boxes {
+      items {
+        id
+        title
+        contents
+        size
+        orgID
+        shipmentID
+        isActive
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+    owner
+  }
+}
+mutation DeleteOrg(
+  $input: DeleteOrgInput!
+  $condition: ModelOrgConditionInput
+) {
+  deleteOrg(input: $input, condition: $condition) {
+    id
+    name
+    isActive
+    boxes {
+      items {
+        id
+        title
+        contents
+        size
+        orgID
+        shipmentID
+        isActive
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+    owner
+  }
+}
+mutation CreateShipment(
+  $input: CreateShipmentInput!
+  $condition: ModelShipmentConditionInput
+) {
+  createShipment(input: $input, condition: $condition) {
+    id
+    name
+    isActive
+    boxes {
+      items {
+        id
+        title
+        contents
+        size
+        orgID
+        shipmentID
+        isActive
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+    owner
+  }
+}
+mutation UpdateShipment(
+  $input: UpdateShipmentInput!
+  $condition: ModelShipmentConditionInput
+) {
+  updateShipment(input: $input, condition: $condition) {
+    id
+    name
+    isActive
+    boxes {
+      items {
+        id
+        title
+        contents
+        size
+        orgID
+        shipmentID
+        isActive
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+    owner
+  }
+}
+mutation DeleteShipment(
+  $input: DeleteShipmentInput!
+  $condition: ModelShipmentConditionInput
+) {
+  deleteShipment(input: $input, condition: $condition) {
+    id
+    name
+    isActive
+    boxes {
+      items {
+        id
+        title
+        contents
+        size
+        orgID
+        shipmentID
+        isActive
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+    owner
+  }
+}
+mutation CreateBox(
+  $input: CreateBoxInput!
+  $condition: ModelBoxConditionInput
+) {
+  createBox(input: $input, condition: $condition) {
+    id
+    title
+    contents
+    size
+    orgID
+    org {
+      id
+      name
+      isActive
+      boxes {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    shipmentID
+    shipment {
+      id
+      name
+      isActive
+      boxes {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    isActive
+    locations {
+      items {
+        id
+        boxID
+        locationLabel
+        latitude
+        longitude
+        isActive
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+    owner
+  }
+}
+mutation UpdateBox(
+  $input: UpdateBoxInput!
+  $condition: ModelBoxConditionInput
+) {
+  updateBox(input: $input, condition: $condition) {
+    id
+    title
+    contents
+    size
+    orgID
+    org {
+      id
+      name
+      isActive
+      boxes {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    shipmentID
+    shipment {
+      id
+      name
+      isActive
+      boxes {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    isActive
+    locations {
+      items {
+        id
+        boxID
+        locationLabel
+        latitude
+        longitude
+        isActive
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+    owner
+  }
+}
+mutation DeleteBox(
+  $input: DeleteBoxInput!
+  $condition: ModelBoxConditionInput
+) {
+  deleteBox(input: $input, condition: $condition) {
+    id
+    title
+    contents
+    size
+    orgID
+    org {
+      id
+      name
+      isActive
+      boxes {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    shipmentID
+    shipment {
+      id
+      name
+      isActive
+      boxes {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    isActive
+    locations {
+      items {
+        id
+        boxID
+        locationLabel
+        latitude
+        longitude
+        isActive
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+    owner
+  }
+}
+mutation CreateLocation(
+  $input: CreateLocationInput!
+  $condition: ModelLocationConditionInput
+) {
+  createLocation(input: $input, condition: $condition) {
+    id
+    boxID
+    box {
+      id
+      title
+      contents
+      size
+      orgID
+      org {
+        id
+        name
+        isActive
+        createdAt
+        updatedAt
+        owner
+      }
+      shipmentID
+      shipment {
+        id
+        name
+        isActive
+        createdAt
+        updatedAt
+        owner
+      }
+      isActive
+      locations {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    locationLabel
+    latitude
+    longitude
+    isActive
+    createdAt
+    updatedAt
+    owner
+  }
+}
+mutation UpdateLocation(
+  $input: UpdateLocationInput!
+  $condition: ModelLocationConditionInput
+) {
+  updateLocation(input: $input, condition: $condition) {
+    id
+    boxID
+    box {
+      id
+      title
+      contents
+      size
+      orgID
+      org {
+        id
+        name
+        isActive
+        createdAt
+        updatedAt
+        owner
+      }
+      shipmentID
+      shipment {
+        id
+        name
+        isActive
+        createdAt
+        updatedAt
+        owner
+      }
+      isActive
+      locations {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    locationLabel
+    latitude
+    longitude
+    isActive
+    createdAt
+    updatedAt
+    owner
+  }
+}
+mutation DeleteLocation(
+  $input: DeleteLocationInput!
+  $condition: ModelLocationConditionInput
+) {
+  deleteLocation(input: $input, condition: $condition) {
+    id
+    boxID
+    box {
+      id
+      title
+      contents
+      size
+      orgID
+      org {
+        id
+        name
+        isActive
+        createdAt
+        updatedAt
+        owner
+      }
+      shipmentID
+      shipment {
+        id
+        name
+        isActive
+        createdAt
+        updatedAt
+        owner
+      }
+      isActive
+      locations {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    locationLabel
+    latitude
+    longitude
+    isActive
+    createdAt
+    updatedAt
+    owner
+  }
+}

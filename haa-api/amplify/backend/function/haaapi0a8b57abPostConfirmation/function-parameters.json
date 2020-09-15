@@ -1,0 +1,16 @@
+{
+  "trigger": true,
+  "modules": [
+    "add-to-group"
+  ],
+  "parentResource": "haaapi0a8b57ab",
+  "functionName": "haaapi0a8b57abPostConfirmation",
+  "resourceName": "haaapi0a8b57abPostConfirmation",
+  "parentStack": "auth",
+  "triggerEnvs": [],
+  "triggerDir": "/home/bilgrami/.nvm/versions/node/v14.8.0/lib/node_modules/@aws-amplify/cli/node_modules/amplify-category-auth/provider-utils/awscloudformation/triggers/PostConfirmation",
+  "triggerTemplate": "PostConfirmation.json.ejs",
+  "roleName": "haaapi0a8b57abPostConfirmation",
+  "skipEdit": true,
+  "GROUP": "haaApiUsers"
+}

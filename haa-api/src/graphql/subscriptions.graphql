@@ -1,0 +1,433 @@
+# this is an auto generated file. This will be overwritten
+subscription OnCreateOrg($owner: String!) {
+  onCreateOrg(owner: $owner) {
+    id
+    name
+    isActive
+    boxes {
+      items {
+        id
+        title
+        contents
+        size
+        orgID
+        shipmentID
+        isActive
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+    owner
+  }
+}
+subscription OnUpdateOrg($owner: String!) {
+  onUpdateOrg(owner: $owner) {
+    id
+    name
+    isActive
+    boxes {
+      items {
+        id
+        title
+        contents
+        size
+        orgID
+        shipmentID
+        isActive
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+    owner
+  }
+}
+subscription OnDeleteOrg($owner: String!) {
+  onDeleteOrg(owner: $owner) {
+    id
+    name
+    isActive
+    boxes {
+      items {
+        id
+        title
+        contents
+        size
+        orgID
+        shipmentID
+        isActive
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+    owner
+  }
+}
+subscription OnCreateShipment($owner: String!) {
+  onCreateShipment(owner: $owner) {
+    id
+    name
+    isActive
+    boxes {
+      items {
+        id
+        title
+        contents
+        size
+        orgID
+        shipmentID
+        isActive
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+    owner
+  }
+}
+subscription OnUpdateShipment($owner: String!) {
+  onUpdateShipment(owner: $owner) {
+    id
+    name
+    isActive
+    boxes {
+      items {
+        id
+        title
+        contents
+        size
+        orgID
+        shipmentID
+        isActive
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+    owner
+  }
+}
+subscription OnDeleteShipment($owner: String!) {
+  onDeleteShipment(owner: $owner) {
+    id
+    name
+    isActive
+    boxes {
+      items {
+        id
+        title
+        contents
+        size
+        orgID
+        shipmentID
+        isActive
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+    owner
+  }
+}
+subscription OnCreateBox($owner: String!) {
+  onCreateBox(owner: $owner) {
+    id
+    title
+    contents
+    size
+    orgID
+    org {
+      id
+      name
+      isActive
+      boxes {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    shipmentID
+    shipment {
+      id
+      name
+      isActive
+      boxes {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    isActive
+    locations {
+      items {
+        id
+        boxID
+        locationLabel
+        latitude
+        longitude
+        isActive
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+    owner
+  }
+}
+subscription OnUpdateBox($owner: String!) {
+  onUpdateBox(owner: $owner) {
+    id
+    title
+    contents
+    size
+    orgID
+    org {
+      id
+      name
+      isActive
+      boxes {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    shipmentID
+    shipment {
+      id
+      name
+      isActive
+      boxes {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    isActive
+    locations {
+      items {
+        id
+        boxID
+        locationLabel
+        latitude
+        longitude
+        isActive
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+    owner
+  }
+}
+subscription OnDeleteBox($owner: String!) {
+  onDeleteBox(owner: $owner) {
+    id
+    title
+    contents
+    size
+    orgID
+    org {
+      id
+      name
+      isActive
+      boxes {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    shipmentID
+    shipment {
+      id
+      name
+      isActive
+      boxes {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    isActive
+    locations {
+      items {
+        id
+        boxID
+        locationLabel
+        latitude
+        longitude
+        isActive
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+    owner
+  }
+}
+subscription OnCreateLocation($owner: String!) {
+  onCreateLocation(owner: $owner) {
+    id
+    boxID
+    box {
+      id
+      title
+      contents
+      size
+      orgID
+      org {
+        id
+        name
+        isActive
+        createdAt
+        updatedAt
+        owner
+      }
+      shipmentID
+      shipment {
+        id
+        name
+        isActive
+        createdAt
+        updatedAt
+        owner
+      }
+      isActive
+      locations {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    locationLabel
+    latitude
+    longitude
+    isActive
+    createdAt
+    updatedAt
+    owner
+  }
+}
+subscription OnUpdateLocation($owner: String!) {
+  onUpdateLocation(owner: $owner) {
+    id
+    boxID
+    box {
+      id
+      title
+      contents
+      size
+      orgID
+      org {
+        id
+        name
+        isActive
+        createdAt
+        updatedAt
+        owner
+      }
+      shipmentID
+      shipment {
+        id
+        name
+        isActive
+        createdAt
+        updatedAt
+        owner
+      }
+      isActive
+      locations {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    locationLabel
+    latitude
+    longitude
+    isActive
+    createdAt
+    updatedAt
+    owner
+  }
+}
+subscription OnDeleteLocation($owner: String!) {
+  onDeleteLocation(owner: $owner) {
+    id
+    boxID
+    box {
+      id
+      title
+      contents
+      size
+      orgID
+      org {
+        id
+        name
+        isActive
+        createdAt
+        updatedAt
+        owner
+      }
+      shipmentID
+      shipment {
+        id
+        name
+        isActive
+        createdAt
+        updatedAt
+        owner
+      }
+      isActive
+      locations {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    locationLabel
+    latitude
+    longitude
+    isActive
+    createdAt
+    updatedAt
+    owner
+  }
+}

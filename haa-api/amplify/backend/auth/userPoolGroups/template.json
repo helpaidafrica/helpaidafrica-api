@@ -1,0 +1,81 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Parameters": {
+        "authhaaapi0a8b57abUserPoolId": {
+            "Type": "String",
+            "Default": "authhaaapi0a8b57abUserPoolId"
+        },
+        
+        "authhaaapi0a8b57abAppClientID": {
+            "Type": "String",
+            "Default": "authhaaapi0a8b57abAppClientID"
+        },
+        "authhaaapi0a8b57abAppClientIDWeb": {
+            "Type": "String",
+            "Default": "authhaaapi0a8b57abAppClientIDWeb"
+        },
+        "AuthRoleArn": {
+            "Type": "String"
+        },
+        "UnauthRoleArn": {
+            "Type": "String"
+        },
+        "env": {
+            "Type": "String"
+        }
+    },
+    "Conditions": {
+        "ShouldNotCreateEnvResources": {
+            "Fn::Equals": [
+                {
+                    "Ref": "env"
+                },
+                "NONE"
+            ]
+        }
+    },
+    "Resources": {
+    
+        "haaApiAdminsGroup": {
+          "Type" : "AWS::Cognito::UserPoolGroup",
+          "Properties" : {
+              "GroupName" : "haaApiAdmins",
+              "Precedence" : 1,
+              
+              "UserPoolId" : {
+                "Ref": "authhaaapi0a8b57abUserPoolId"
+              } 
+            }
+        },
+        
+    
+        "haaApiDataAdminsGroup": {
+          "Type" : "AWS::Cognito::UserPoolGroup",
+          "Properties" : {
+              "GroupName" : "haaApiDataAdmins",
+              "Precedence" : 2,
+              
+              "UserPoolId" : {
+                "Ref": "authhaaapi0a8b57abUserPoolId"
+              } 
+            }
+        },
+        
+    
+        "haaApiUsersGroup": {
+          "Type" : "AWS::Cognito::UserPoolGroup",
+          "Properties" : {
+              "GroupName" : "haaApiUsers",
+              "Precedence" : 3,
+              
+              "UserPoolId" : {
+                "Ref": "authhaaapi0a8b57abUserPoolId"
+              } 
+            }
+        },
+        
+    
+    
+    },
+    
+}
