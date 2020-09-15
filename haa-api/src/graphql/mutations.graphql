@@ -5,7 +5,9 @@ mutation CreateAddress(
 ) {
   createAddress(input: $input, condition: $condition) {
     id
-    address
+    label
+    addressLine1
+    addressLine2
     city
     state
     province
@@ -21,7 +23,9 @@ mutation UpdateAddress(
 ) {
   updateAddress(input: $input, condition: $condition) {
     id
-    address
+    label
+    addressLine1
+    addressLine2
     city
     state
     province
@@ -37,7 +41,9 @@ mutation DeleteAddress(
 ) {
   deleteAddress(input: $input, condition: $condition) {
     id
-    address
+    label
+    addressLine1
+    addressLine2
     city
     state
     province
@@ -102,7 +108,9 @@ mutation CreateOrg(
     description
     address {
       id
-      address
+      label
+      addressLine1
+      addressLine2
       city
       state
       province
@@ -177,7 +185,9 @@ mutation UpdateOrg(
     description
     address {
       id
-      address
+      label
+      addressLine1
+      addressLine2
       city
       state
       province
@@ -252,7 +262,9 @@ mutation DeleteOrg(
     description
     address {
       id
-      address
+      label
+      addressLine1
+      addressLine2
       city
       state
       province
@@ -324,11 +336,37 @@ mutation CreateLocationInfo(
   createLocationInfo(input: $input, condition: $condition) {
     id
     locationLabel
+    address {
+      id
+      label
+      addressLine1
+      addressLine2
+      city
+      state
+      province
+      country
+      createdAt
+      updatedAt
+      owner
+    }
+    phone {
+      id
+      phone
+      isPrimary
+      isActive
+      type
+      createdAt
+      updatedAt
+      owner
+    }
     latitude
     longitude
     isActive
+    plusCode
+    website
     notes
     notesHistory
+    tags
     createdAt
     updatedAt
     owner
@@ -341,11 +379,37 @@ mutation UpdateLocationInfo(
   updateLocationInfo(input: $input, condition: $condition) {
     id
     locationLabel
+    address {
+      id
+      label
+      addressLine1
+      addressLine2
+      city
+      state
+      province
+      country
+      createdAt
+      updatedAt
+      owner
+    }
+    phone {
+      id
+      phone
+      isPrimary
+      isActive
+      type
+      createdAt
+      updatedAt
+      owner
+    }
     latitude
     longitude
     isActive
+    plusCode
+    website
     notes
     notesHistory
+    tags
     createdAt
     updatedAt
     owner
@@ -358,11 +422,37 @@ mutation DeleteLocationInfo(
   deleteLocationInfo(input: $input, condition: $condition) {
     id
     locationLabel
+    address {
+      id
+      label
+      addressLine1
+      addressLine2
+      city
+      state
+      province
+      country
+      createdAt
+      updatedAt
+      owner
+    }
+    phone {
+      id
+      phone
+      isPrimary
+      isActive
+      type
+      createdAt
+      updatedAt
+      owner
+    }
     latitude
     longitude
     isActive
+    plusCode
+    website
     notes
     notesHistory
+    tags
     createdAt
     updatedAt
     owner
@@ -382,11 +472,37 @@ mutation CreateShipment(
     startLocation {
       id
       locationLabel
+      address {
+        id
+        label
+        addressLine1
+        addressLine2
+        city
+        state
+        province
+        country
+        createdAt
+        updatedAt
+        owner
+      }
+      phone {
+        id
+        phone
+        isPrimary
+        isActive
+        type
+        createdAt
+        updatedAt
+        owner
+      }
       latitude
       longitude
       isActive
+      plusCode
+      website
       notes
       notesHistory
+      tags
       createdAt
       updatedAt
       owner
@@ -394,11 +510,37 @@ mutation CreateShipment(
     destinationLocation {
       id
       locationLabel
+      address {
+        id
+        label
+        addressLine1
+        addressLine2
+        city
+        state
+        province
+        country
+        createdAt
+        updatedAt
+        owner
+      }
+      phone {
+        id
+        phone
+        isPrimary
+        isActive
+        type
+        createdAt
+        updatedAt
+        owner
+      }
       latitude
       longitude
       isActive
+      plusCode
+      website
       notes
       notesHistory
+      tags
       createdAt
       updatedAt
       owner
@@ -459,11 +601,37 @@ mutation UpdateShipment(
     startLocation {
       id
       locationLabel
+      address {
+        id
+        label
+        addressLine1
+        addressLine2
+        city
+        state
+        province
+        country
+        createdAt
+        updatedAt
+        owner
+      }
+      phone {
+        id
+        phone
+        isPrimary
+        isActive
+        type
+        createdAt
+        updatedAt
+        owner
+      }
       latitude
       longitude
       isActive
+      plusCode
+      website
       notes
       notesHistory
+      tags
       createdAt
       updatedAt
       owner
@@ -471,11 +639,37 @@ mutation UpdateShipment(
     destinationLocation {
       id
       locationLabel
+      address {
+        id
+        label
+        addressLine1
+        addressLine2
+        city
+        state
+        province
+        country
+        createdAt
+        updatedAt
+        owner
+      }
+      phone {
+        id
+        phone
+        isPrimary
+        isActive
+        type
+        createdAt
+        updatedAt
+        owner
+      }
       latitude
       longitude
       isActive
+      plusCode
+      website
       notes
       notesHistory
+      tags
       createdAt
       updatedAt
       owner
@@ -536,11 +730,37 @@ mutation DeleteShipment(
     startLocation {
       id
       locationLabel
+      address {
+        id
+        label
+        addressLine1
+        addressLine2
+        city
+        state
+        province
+        country
+        createdAt
+        updatedAt
+        owner
+      }
+      phone {
+        id
+        phone
+        isPrimary
+        isActive
+        type
+        createdAt
+        updatedAt
+        owner
+      }
       latitude
       longitude
       isActive
+      plusCode
+      website
       notes
       notesHistory
+      tags
       createdAt
       updatedAt
       owner
@@ -548,11 +768,37 @@ mutation DeleteShipment(
     destinationLocation {
       id
       locationLabel
+      address {
+        id
+        label
+        addressLine1
+        addressLine2
+        city
+        state
+        province
+        country
+        createdAt
+        updatedAt
+        owner
+      }
+      phone {
+        id
+        phone
+        isPrimary
+        isActive
+        type
+        createdAt
+        updatedAt
+        owner
+      }
       latitude
       longitude
       isActive
+      plusCode
+      website
       notes
       notesHistory
+      tags
       createdAt
       updatedAt
       owner
@@ -615,7 +861,9 @@ mutation CreateBox(
       description
       address {
         id
-        address
+        label
+        addressLine1
+        addressLine2
         city
         state
         province
@@ -670,8 +918,11 @@ mutation CreateBox(
         latitude
         longitude
         isActive
+        plusCode
+        website
         notes
         notesHistory
+        tags
         createdAt
         updatedAt
         owner
@@ -682,8 +933,11 @@ mutation CreateBox(
         latitude
         longitude
         isActive
+        plusCode
+        website
         notes
         notesHistory
+        tags
         createdAt
         updatedAt
         owner
@@ -756,7 +1010,9 @@ mutation UpdateBox(
       description
       address {
         id
-        address
+        label
+        addressLine1
+        addressLine2
         city
         state
         province
@@ -811,8 +1067,11 @@ mutation UpdateBox(
         latitude
         longitude
         isActive
+        plusCode
+        website
         notes
         notesHistory
+        tags
         createdAt
         updatedAt
         owner
@@ -823,8 +1082,11 @@ mutation UpdateBox(
         latitude
         longitude
         isActive
+        plusCode
+        website
         notes
         notesHistory
+        tags
         createdAt
         updatedAt
         owner
@@ -897,7 +1159,9 @@ mutation DeleteBox(
       description
       address {
         id
-        address
+        label
+        addressLine1
+        addressLine2
         city
         state
         province
@@ -952,8 +1216,11 @@ mutation DeleteBox(
         latitude
         longitude
         isActive
+        plusCode
+        website
         notes
         notesHistory
+        tags
         createdAt
         updatedAt
         owner
@@ -964,8 +1231,11 @@ mutation DeleteBox(
         latitude
         longitude
         isActive
+        plusCode
+        website
         notes
         notesHistory
+        tags
         createdAt
         updatedAt
         owner
@@ -1095,11 +1365,37 @@ mutation CreateLocation(
     locationInfo {
       id
       locationLabel
+      address {
+        id
+        label
+        addressLine1
+        addressLine2
+        city
+        state
+        province
+        country
+        createdAt
+        updatedAt
+        owner
+      }
+      phone {
+        id
+        phone
+        isPrimary
+        isActive
+        type
+        createdAt
+        updatedAt
+        owner
+      }
       latitude
       longitude
       isActive
+      plusCode
+      website
       notes
       notesHistory
+      tags
       createdAt
       updatedAt
       owner
@@ -1187,11 +1483,37 @@ mutation UpdateLocation(
     locationInfo {
       id
       locationLabel
+      address {
+        id
+        label
+        addressLine1
+        addressLine2
+        city
+        state
+        province
+        country
+        createdAt
+        updatedAt
+        owner
+      }
+      phone {
+        id
+        phone
+        isPrimary
+        isActive
+        type
+        createdAt
+        updatedAt
+        owner
+      }
       latitude
       longitude
       isActive
+      plusCode
+      website
       notes
       notesHistory
+      tags
       createdAt
       updatedAt
       owner
@@ -1279,11 +1601,37 @@ mutation DeleteLocation(
     locationInfo {
       id
       locationLabel
+      address {
+        id
+        label
+        addressLine1
+        addressLine2
+        city
+        state
+        province
+        country
+        createdAt
+        updatedAt
+        owner
+      }
+      phone {
+        id
+        phone
+        isPrimary
+        isActive
+        type
+        createdAt
+        updatedAt
+        owner
+      }
       latitude
       longitude
       isActive
+      plusCode
+      website
       notes
       notesHistory
+      tags
       createdAt
       updatedAt
       owner

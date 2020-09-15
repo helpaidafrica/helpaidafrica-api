@@ -2,7 +2,9 @@
 query GetAddress($id: ID!) {
   getAddress(id: $id) {
     id
-    address
+    label
+    addressLine1
+    addressLine2
     city
     state
     province
@@ -20,7 +22,9 @@ query ListAddresss(
   listAddresss(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
-      address
+      label
+      addressLine1
+      addressLine2
       city
       state
       province
@@ -70,7 +74,9 @@ query GetOrg($id: ID!) {
     description
     address {
       id
-      address
+      label
+      addressLine1
+      addressLine2
       city
       state
       province
@@ -143,7 +149,9 @@ query ListOrgs($filter: ModelOrgFilterInput, $limit: Int, $nextToken: String) {
       description
       address {
         id
-        address
+        label
+        addressLine1
+        addressLine2
         city
         state
         province
@@ -191,11 +199,37 @@ query GetLocationInfo($id: ID!) {
   getLocationInfo(id: $id) {
     id
     locationLabel
+    address {
+      id
+      label
+      addressLine1
+      addressLine2
+      city
+      state
+      province
+      country
+      createdAt
+      updatedAt
+      owner
+    }
+    phone {
+      id
+      phone
+      isPrimary
+      isActive
+      type
+      createdAt
+      updatedAt
+      owner
+    }
     latitude
     longitude
     isActive
+    plusCode
+    website
     notes
     notesHistory
+    tags
     createdAt
     updatedAt
     owner
@@ -210,11 +244,37 @@ query ListLocationInfos(
     items {
       id
       locationLabel
+      address {
+        id
+        label
+        addressLine1
+        addressLine2
+        city
+        state
+        province
+        country
+        createdAt
+        updatedAt
+        owner
+      }
+      phone {
+        id
+        phone
+        isPrimary
+        isActive
+        type
+        createdAt
+        updatedAt
+        owner
+      }
       latitude
       longitude
       isActive
+      plusCode
+      website
       notes
       notesHistory
+      tags
       createdAt
       updatedAt
       owner
@@ -233,11 +293,37 @@ query GetShipment($id: ID!) {
     startLocation {
       id
       locationLabel
+      address {
+        id
+        label
+        addressLine1
+        addressLine2
+        city
+        state
+        province
+        country
+        createdAt
+        updatedAt
+        owner
+      }
+      phone {
+        id
+        phone
+        isPrimary
+        isActive
+        type
+        createdAt
+        updatedAt
+        owner
+      }
       latitude
       longitude
       isActive
+      plusCode
+      website
       notes
       notesHistory
+      tags
       createdAt
       updatedAt
       owner
@@ -245,11 +331,37 @@ query GetShipment($id: ID!) {
     destinationLocation {
       id
       locationLabel
+      address {
+        id
+        label
+        addressLine1
+        addressLine2
+        city
+        state
+        province
+        country
+        createdAt
+        updatedAt
+        owner
+      }
+      phone {
+        id
+        phone
+        isPrimary
+        isActive
+        type
+        createdAt
+        updatedAt
+        owner
+      }
       latitude
       longitude
       isActive
+      plusCode
+      website
       notes
       notesHistory
+      tags
       createdAt
       updatedAt
       owner
@@ -315,8 +427,11 @@ query ListShipments(
         latitude
         longitude
         isActive
+        plusCode
+        website
         notes
         notesHistory
+        tags
         createdAt
         updatedAt
         owner
@@ -327,8 +442,11 @@ query ListShipments(
         latitude
         longitude
         isActive
+        plusCode
+        website
         notes
         notesHistory
+        tags
         createdAt
         updatedAt
         owner
@@ -367,7 +485,9 @@ query GetBox($id: ID!) {
       description
       address {
         id
-        address
+        label
+        addressLine1
+        addressLine2
         city
         state
         province
@@ -422,8 +542,11 @@ query GetBox($id: ID!) {
         latitude
         longitude
         isActive
+        plusCode
+        website
         notes
         notesHistory
+        tags
         createdAt
         updatedAt
         owner
@@ -434,8 +557,11 @@ query GetBox($id: ID!) {
         latitude
         longitude
         isActive
+        plusCode
+        website
         notes
         notesHistory
+        tags
         createdAt
         updatedAt
         owner
@@ -628,11 +754,37 @@ query GetLocation($id: ID!) {
     locationInfo {
       id
       locationLabel
+      address {
+        id
+        label
+        addressLine1
+        addressLine2
+        city
+        state
+        province
+        country
+        createdAt
+        updatedAt
+        owner
+      }
+      phone {
+        id
+        phone
+        isPrimary
+        isActive
+        type
+        createdAt
+        updatedAt
+        owner
+      }
       latitude
       longitude
       isActive
+      plusCode
+      website
       notes
       notesHistory
+      tags
       createdAt
       updatedAt
       owner
@@ -687,8 +839,11 @@ query ListLocations(
         latitude
         longitude
         isActive
+        plusCode
+        website
         notes
         notesHistory
+        tags
         createdAt
         updatedAt
         owner

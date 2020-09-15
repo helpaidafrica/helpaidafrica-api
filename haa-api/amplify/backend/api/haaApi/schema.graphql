@@ -63,7 +63,9 @@ type Address
   ]
 ) {
   id: ID!
-  address: String!
+  label: String
+  addressLine1: String!
+  addressLine2: String!
   city: String
   state: String
   province: String
@@ -135,11 +137,16 @@ type LocationInfo
 ) {
   id: ID!
   locationLabel: String!
+  address: Address
+  phone: [Phone]
   latitude: String!
   longitude: String!
   isActive: Boolean!
+  plusCode: String
+  website: [AWSURL!]
   notes: String
   notesHistory: [String!]
+  tags: [String!]
 }
 
 type Shipment
