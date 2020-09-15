@@ -1,15 +1,15 @@
 enum ApiHealthStatus {
-	UP
-	DOWN
+  UP
+  DOWN
 }
 
 type ApihealthCheckInfo {
-	id: ID!
-	status: ApiHealthStatus!
-	isActive: Boolean!
-	proceed: Boolean!
-	message: String
-	lastUpdated: AWSDateTime
+  id: ID!
+  status: ApiHealthStatus!
+  isActive: Boolean!
+  proceed: Boolean!
+  message: String
+  lastUpdated: AWSDateTime
 }
 
 enum PhoneType {
