@@ -961,71 +961,34 @@ export type CreateShipmentMutation = {
   photosUrls: Array<string> | null;
   notes: string | null;
   notesHistory: Array<string> | null;
-  boxes: Array<{
-    __typename: "Box";
-    id: string;
-    title: string;
-    contents: string;
-    size: string;
-    orgID: string;
-    org: {
-      __typename: "Org";
+  boxes: {
+    __typename: "ModelBoxConnection";
+    items: Array<{
+      __typename: "Box";
       id: string;
-      name: string;
-      description: string | null;
-      email: string | null;
+      title: string;
+      contents: string;
+      size: string;
+      orgID: string;
+      shipmentID: string;
+      isActive: boolean;
+      barCode: string | null;
+      qrCode: string | null;
+      barCodePhoto: string | null;
+      qrCodePhoto: string | null;
       tags: Array<string> | null;
       photosUrls: Array<string> | null;
-      notes: string | null;
-      isActive: boolean;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null;
-    shipmentID: string;
-    shipment: {
-      __typename: "Shipment";
-      id: string;
-      name: string;
-      description: string | null;
-      isActive: boolean;
-      startDate: string | null;
-      deliveryDate: string | null;
-      shipmentNotes: string | null;
-      deliveryNotes: string | null;
-      trackingId: string | null;
-      weight: string | null;
-      shipmentReceiver: string | null;
-      status: ShippingStatus | null;
-      statusHistory: Array<string> | null;
-      tags: Array<string> | null;
-      photosUrls: Array<string> | null;
+      status: BoxStatus;
+      statusHistory: Array<BoxStatus> | null;
+      internalNotes: string | null;
       notes: string | null;
       notesHistory: Array<string> | null;
       createdAt: string;
       updatedAt: string;
       owner: string | null;
-    } | null;
-    isActive: boolean;
-    barCode: string | null;
-    qrCode: string | null;
-    barCodePhoto: string | null;
-    qrCodePhoto: string | null;
-    tags: Array<string> | null;
-    photosUrls: Array<string> | null;
-    status: BoxStatus;
-    statusHistory: Array<BoxStatus> | null;
-    internalNotes: string | null;
-    notes: string | null;
-    notesHistory: Array<string> | null;
-    locations: {
-      __typename: "ModelLocationConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
-  } | null> | null;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
   createdAt: string;
   updatedAt: string;
   owner: string | null;
@@ -1076,71 +1039,34 @@ export type UpdateShipmentMutation = {
   photosUrls: Array<string> | null;
   notes: string | null;
   notesHistory: Array<string> | null;
-  boxes: Array<{
-    __typename: "Box";
-    id: string;
-    title: string;
-    contents: string;
-    size: string;
-    orgID: string;
-    org: {
-      __typename: "Org";
+  boxes: {
+    __typename: "ModelBoxConnection";
+    items: Array<{
+      __typename: "Box";
       id: string;
-      name: string;
-      description: string | null;
-      email: string | null;
+      title: string;
+      contents: string;
+      size: string;
+      orgID: string;
+      shipmentID: string;
+      isActive: boolean;
+      barCode: string | null;
+      qrCode: string | null;
+      barCodePhoto: string | null;
+      qrCodePhoto: string | null;
       tags: Array<string> | null;
       photosUrls: Array<string> | null;
-      notes: string | null;
-      isActive: boolean;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null;
-    shipmentID: string;
-    shipment: {
-      __typename: "Shipment";
-      id: string;
-      name: string;
-      description: string | null;
-      isActive: boolean;
-      startDate: string | null;
-      deliveryDate: string | null;
-      shipmentNotes: string | null;
-      deliveryNotes: string | null;
-      trackingId: string | null;
-      weight: string | null;
-      shipmentReceiver: string | null;
-      status: ShippingStatus | null;
-      statusHistory: Array<string> | null;
-      tags: Array<string> | null;
-      photosUrls: Array<string> | null;
+      status: BoxStatus;
+      statusHistory: Array<BoxStatus> | null;
+      internalNotes: string | null;
       notes: string | null;
       notesHistory: Array<string> | null;
       createdAt: string;
       updatedAt: string;
       owner: string | null;
-    } | null;
-    isActive: boolean;
-    barCode: string | null;
-    qrCode: string | null;
-    barCodePhoto: string | null;
-    qrCodePhoto: string | null;
-    tags: Array<string> | null;
-    photosUrls: Array<string> | null;
-    status: BoxStatus;
-    statusHistory: Array<BoxStatus> | null;
-    internalNotes: string | null;
-    notes: string | null;
-    notesHistory: Array<string> | null;
-    locations: {
-      __typename: "ModelLocationConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
-  } | null> | null;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
   createdAt: string;
   updatedAt: string;
   owner: string | null;
@@ -1191,71 +1117,34 @@ export type DeleteShipmentMutation = {
   photosUrls: Array<string> | null;
   notes: string | null;
   notesHistory: Array<string> | null;
-  boxes: Array<{
-    __typename: "Box";
-    id: string;
-    title: string;
-    contents: string;
-    size: string;
-    orgID: string;
-    org: {
-      __typename: "Org";
+  boxes: {
+    __typename: "ModelBoxConnection";
+    items: Array<{
+      __typename: "Box";
       id: string;
-      name: string;
-      description: string | null;
-      email: string | null;
+      title: string;
+      contents: string;
+      size: string;
+      orgID: string;
+      shipmentID: string;
+      isActive: boolean;
+      barCode: string | null;
+      qrCode: string | null;
+      barCodePhoto: string | null;
+      qrCodePhoto: string | null;
       tags: Array<string> | null;
       photosUrls: Array<string> | null;
-      notes: string | null;
-      isActive: boolean;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null;
-    shipmentID: string;
-    shipment: {
-      __typename: "Shipment";
-      id: string;
-      name: string;
-      description: string | null;
-      isActive: boolean;
-      startDate: string | null;
-      deliveryDate: string | null;
-      shipmentNotes: string | null;
-      deliveryNotes: string | null;
-      trackingId: string | null;
-      weight: string | null;
-      shipmentReceiver: string | null;
-      status: ShippingStatus | null;
-      statusHistory: Array<string> | null;
-      tags: Array<string> | null;
-      photosUrls: Array<string> | null;
+      status: BoxStatus;
+      statusHistory: Array<BoxStatus> | null;
+      internalNotes: string | null;
       notes: string | null;
       notesHistory: Array<string> | null;
       createdAt: string;
       updatedAt: string;
       owner: string | null;
-    } | null;
-    isActive: boolean;
-    barCode: string | null;
-    qrCode: string | null;
-    barCodePhoto: string | null;
-    qrCodePhoto: string | null;
-    tags: Array<string> | null;
-    photosUrls: Array<string> | null;
-    status: BoxStatus;
-    statusHistory: Array<BoxStatus> | null;
-    internalNotes: string | null;
-    notes: string | null;
-    notesHistory: Array<string> | null;
-    locations: {
-      __typename: "ModelLocationConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
-  } | null> | null;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
   createdAt: string;
   updatedAt: string;
   owner: string | null;
@@ -1366,30 +1255,10 @@ export type CreateBoxMutation = {
     photosUrls: Array<string> | null;
     notes: string | null;
     notesHistory: Array<string> | null;
-    boxes: Array<{
-      __typename: "Box";
-      id: string;
-      title: string;
-      contents: string;
-      size: string;
-      orgID: string;
-      shipmentID: string;
-      isActive: boolean;
-      barCode: string | null;
-      qrCode: string | null;
-      barCodePhoto: string | null;
-      qrCodePhoto: string | null;
-      tags: Array<string> | null;
-      photosUrls: Array<string> | null;
-      status: BoxStatus;
-      statusHistory: Array<BoxStatus> | null;
-      internalNotes: string | null;
-      notes: string | null;
-      notesHistory: Array<string> | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null> | null;
+    boxes: {
+      __typename: "ModelBoxConnection";
+      nextToken: string | null;
+    } | null;
     createdAt: string;
     updatedAt: string;
     owner: string | null;
@@ -1535,30 +1404,10 @@ export type UpdateBoxMutation = {
     photosUrls: Array<string> | null;
     notes: string | null;
     notesHistory: Array<string> | null;
-    boxes: Array<{
-      __typename: "Box";
-      id: string;
-      title: string;
-      contents: string;
-      size: string;
-      orgID: string;
-      shipmentID: string;
-      isActive: boolean;
-      barCode: string | null;
-      qrCode: string | null;
-      barCodePhoto: string | null;
-      qrCodePhoto: string | null;
-      tags: Array<string> | null;
-      photosUrls: Array<string> | null;
-      status: BoxStatus;
-      statusHistory: Array<BoxStatus> | null;
-      internalNotes: string | null;
-      notes: string | null;
-      notesHistory: Array<string> | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null> | null;
+    boxes: {
+      __typename: "ModelBoxConnection";
+      nextToken: string | null;
+    } | null;
     createdAt: string;
     updatedAt: string;
     owner: string | null;
@@ -1704,30 +1553,10 @@ export type DeleteBoxMutation = {
     photosUrls: Array<string> | null;
     notes: string | null;
     notesHistory: Array<string> | null;
-    boxes: Array<{
-      __typename: "Box";
-      id: string;
-      title: string;
-      contents: string;
-      size: string;
-      orgID: string;
-      shipmentID: string;
-      isActive: boolean;
-      barCode: string | null;
-      qrCode: string | null;
-      barCodePhoto: string | null;
-      qrCodePhoto: string | null;
-      tags: Array<string> | null;
-      photosUrls: Array<string> | null;
-      status: BoxStatus;
-      statusHistory: Array<BoxStatus> | null;
-      internalNotes: string | null;
-      notes: string | null;
-      notesHistory: Array<string> | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null> | null;
+    boxes: {
+      __typename: "ModelBoxConnection";
+      nextToken: string | null;
+    } | null;
     createdAt: string;
     updatedAt: string;
     owner: string | null;
@@ -2319,71 +2148,34 @@ export type GetShipmentQuery = {
   photosUrls: Array<string> | null;
   notes: string | null;
   notesHistory: Array<string> | null;
-  boxes: Array<{
-    __typename: "Box";
-    id: string;
-    title: string;
-    contents: string;
-    size: string;
-    orgID: string;
-    org: {
-      __typename: "Org";
+  boxes: {
+    __typename: "ModelBoxConnection";
+    items: Array<{
+      __typename: "Box";
       id: string;
-      name: string;
-      description: string | null;
-      email: string | null;
+      title: string;
+      contents: string;
+      size: string;
+      orgID: string;
+      shipmentID: string;
+      isActive: boolean;
+      barCode: string | null;
+      qrCode: string | null;
+      barCodePhoto: string | null;
+      qrCodePhoto: string | null;
       tags: Array<string> | null;
       photosUrls: Array<string> | null;
-      notes: string | null;
-      isActive: boolean;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null;
-    shipmentID: string;
-    shipment: {
-      __typename: "Shipment";
-      id: string;
-      name: string;
-      description: string | null;
-      isActive: boolean;
-      startDate: string | null;
-      deliveryDate: string | null;
-      shipmentNotes: string | null;
-      deliveryNotes: string | null;
-      trackingId: string | null;
-      weight: string | null;
-      shipmentReceiver: string | null;
-      status: ShippingStatus | null;
-      statusHistory: Array<string> | null;
-      tags: Array<string> | null;
-      photosUrls: Array<string> | null;
+      status: BoxStatus;
+      statusHistory: Array<BoxStatus> | null;
+      internalNotes: string | null;
       notes: string | null;
       notesHistory: Array<string> | null;
       createdAt: string;
       updatedAt: string;
       owner: string | null;
-    } | null;
-    isActive: boolean;
-    barCode: string | null;
-    qrCode: string | null;
-    barCodePhoto: string | null;
-    qrCodePhoto: string | null;
-    tags: Array<string> | null;
-    photosUrls: Array<string> | null;
-    status: BoxStatus;
-    statusHistory: Array<BoxStatus> | null;
-    internalNotes: string | null;
-    notes: string | null;
-    notesHistory: Array<string> | null;
-    locations: {
-      __typename: "ModelLocationConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
-  } | null> | null;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
   createdAt: string;
   updatedAt: string;
   owner: string | null;
@@ -2436,30 +2228,10 @@ export type ListShipmentsQuery = {
     photosUrls: Array<string> | null;
     notes: string | null;
     notesHistory: Array<string> | null;
-    boxes: Array<{
-      __typename: "Box";
-      id: string;
-      title: string;
-      contents: string;
-      size: string;
-      orgID: string;
-      shipmentID: string;
-      isActive: boolean;
-      barCode: string | null;
-      qrCode: string | null;
-      barCodePhoto: string | null;
-      qrCodePhoto: string | null;
-      tags: Array<string> | null;
-      photosUrls: Array<string> | null;
-      status: BoxStatus;
-      statusHistory: Array<BoxStatus> | null;
-      internalNotes: string | null;
-      notes: string | null;
-      notesHistory: Array<string> | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null> | null;
+    boxes: {
+      __typename: "ModelBoxConnection";
+      nextToken: string | null;
+    } | null;
     createdAt: string;
     updatedAt: string;
     owner: string | null;
@@ -2572,30 +2344,10 @@ export type GetBoxQuery = {
     photosUrls: Array<string> | null;
     notes: string | null;
     notesHistory: Array<string> | null;
-    boxes: Array<{
-      __typename: "Box";
-      id: string;
-      title: string;
-      contents: string;
-      size: string;
-      orgID: string;
-      shipmentID: string;
-      isActive: boolean;
-      barCode: string | null;
-      qrCode: string | null;
-      barCodePhoto: string | null;
-      qrCodePhoto: string | null;
-      tags: Array<string> | null;
-      photosUrls: Array<string> | null;
-      status: BoxStatus;
-      statusHistory: Array<BoxStatus> | null;
-      internalNotes: string | null;
-      notes: string | null;
-      notesHistory: Array<string> | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null> | null;
+    boxes: {
+      __typename: "ModelBoxConnection";
+      nextToken: string | null;
+    } | null;
     createdAt: string;
     updatedAt: string;
     owner: string | null;
@@ -3320,71 +3072,34 @@ export type OnCreateShipmentSubscription = {
   photosUrls: Array<string> | null;
   notes: string | null;
   notesHistory: Array<string> | null;
-  boxes: Array<{
-    __typename: "Box";
-    id: string;
-    title: string;
-    contents: string;
-    size: string;
-    orgID: string;
-    org: {
-      __typename: "Org";
+  boxes: {
+    __typename: "ModelBoxConnection";
+    items: Array<{
+      __typename: "Box";
       id: string;
-      name: string;
-      description: string | null;
-      email: string | null;
+      title: string;
+      contents: string;
+      size: string;
+      orgID: string;
+      shipmentID: string;
+      isActive: boolean;
+      barCode: string | null;
+      qrCode: string | null;
+      barCodePhoto: string | null;
+      qrCodePhoto: string | null;
       tags: Array<string> | null;
       photosUrls: Array<string> | null;
-      notes: string | null;
-      isActive: boolean;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null;
-    shipmentID: string;
-    shipment: {
-      __typename: "Shipment";
-      id: string;
-      name: string;
-      description: string | null;
-      isActive: boolean;
-      startDate: string | null;
-      deliveryDate: string | null;
-      shipmentNotes: string | null;
-      deliveryNotes: string | null;
-      trackingId: string | null;
-      weight: string | null;
-      shipmentReceiver: string | null;
-      status: ShippingStatus | null;
-      statusHistory: Array<string> | null;
-      tags: Array<string> | null;
-      photosUrls: Array<string> | null;
+      status: BoxStatus;
+      statusHistory: Array<BoxStatus> | null;
+      internalNotes: string | null;
       notes: string | null;
       notesHistory: Array<string> | null;
       createdAt: string;
       updatedAt: string;
       owner: string | null;
-    } | null;
-    isActive: boolean;
-    barCode: string | null;
-    qrCode: string | null;
-    barCodePhoto: string | null;
-    qrCodePhoto: string | null;
-    tags: Array<string> | null;
-    photosUrls: Array<string> | null;
-    status: BoxStatus;
-    statusHistory: Array<BoxStatus> | null;
-    internalNotes: string | null;
-    notes: string | null;
-    notesHistory: Array<string> | null;
-    locations: {
-      __typename: "ModelLocationConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
-  } | null> | null;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
   createdAt: string;
   updatedAt: string;
   owner: string | null;
@@ -3435,71 +3150,34 @@ export type OnUpdateShipmentSubscription = {
   photosUrls: Array<string> | null;
   notes: string | null;
   notesHistory: Array<string> | null;
-  boxes: Array<{
-    __typename: "Box";
-    id: string;
-    title: string;
-    contents: string;
-    size: string;
-    orgID: string;
-    org: {
-      __typename: "Org";
+  boxes: {
+    __typename: "ModelBoxConnection";
+    items: Array<{
+      __typename: "Box";
       id: string;
-      name: string;
-      description: string | null;
-      email: string | null;
+      title: string;
+      contents: string;
+      size: string;
+      orgID: string;
+      shipmentID: string;
+      isActive: boolean;
+      barCode: string | null;
+      qrCode: string | null;
+      barCodePhoto: string | null;
+      qrCodePhoto: string | null;
       tags: Array<string> | null;
       photosUrls: Array<string> | null;
-      notes: string | null;
-      isActive: boolean;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null;
-    shipmentID: string;
-    shipment: {
-      __typename: "Shipment";
-      id: string;
-      name: string;
-      description: string | null;
-      isActive: boolean;
-      startDate: string | null;
-      deliveryDate: string | null;
-      shipmentNotes: string | null;
-      deliveryNotes: string | null;
-      trackingId: string | null;
-      weight: string | null;
-      shipmentReceiver: string | null;
-      status: ShippingStatus | null;
-      statusHistory: Array<string> | null;
-      tags: Array<string> | null;
-      photosUrls: Array<string> | null;
+      status: BoxStatus;
+      statusHistory: Array<BoxStatus> | null;
+      internalNotes: string | null;
       notes: string | null;
       notesHistory: Array<string> | null;
       createdAt: string;
       updatedAt: string;
       owner: string | null;
-    } | null;
-    isActive: boolean;
-    barCode: string | null;
-    qrCode: string | null;
-    barCodePhoto: string | null;
-    qrCodePhoto: string | null;
-    tags: Array<string> | null;
-    photosUrls: Array<string> | null;
-    status: BoxStatus;
-    statusHistory: Array<BoxStatus> | null;
-    internalNotes: string | null;
-    notes: string | null;
-    notesHistory: Array<string> | null;
-    locations: {
-      __typename: "ModelLocationConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
-  } | null> | null;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
   createdAt: string;
   updatedAt: string;
   owner: string | null;
@@ -3550,71 +3228,34 @@ export type OnDeleteShipmentSubscription = {
   photosUrls: Array<string> | null;
   notes: string | null;
   notesHistory: Array<string> | null;
-  boxes: Array<{
-    __typename: "Box";
-    id: string;
-    title: string;
-    contents: string;
-    size: string;
-    orgID: string;
-    org: {
-      __typename: "Org";
+  boxes: {
+    __typename: "ModelBoxConnection";
+    items: Array<{
+      __typename: "Box";
       id: string;
-      name: string;
-      description: string | null;
-      email: string | null;
+      title: string;
+      contents: string;
+      size: string;
+      orgID: string;
+      shipmentID: string;
+      isActive: boolean;
+      barCode: string | null;
+      qrCode: string | null;
+      barCodePhoto: string | null;
+      qrCodePhoto: string | null;
       tags: Array<string> | null;
       photosUrls: Array<string> | null;
-      notes: string | null;
-      isActive: boolean;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null;
-    shipmentID: string;
-    shipment: {
-      __typename: "Shipment";
-      id: string;
-      name: string;
-      description: string | null;
-      isActive: boolean;
-      startDate: string | null;
-      deliveryDate: string | null;
-      shipmentNotes: string | null;
-      deliveryNotes: string | null;
-      trackingId: string | null;
-      weight: string | null;
-      shipmentReceiver: string | null;
-      status: ShippingStatus | null;
-      statusHistory: Array<string> | null;
-      tags: Array<string> | null;
-      photosUrls: Array<string> | null;
+      status: BoxStatus;
+      statusHistory: Array<BoxStatus> | null;
+      internalNotes: string | null;
       notes: string | null;
       notesHistory: Array<string> | null;
       createdAt: string;
       updatedAt: string;
       owner: string | null;
-    } | null;
-    isActive: boolean;
-    barCode: string | null;
-    qrCode: string | null;
-    barCodePhoto: string | null;
-    qrCodePhoto: string | null;
-    tags: Array<string> | null;
-    photosUrls: Array<string> | null;
-    status: BoxStatus;
-    statusHistory: Array<BoxStatus> | null;
-    internalNotes: string | null;
-    notes: string | null;
-    notesHistory: Array<string> | null;
-    locations: {
-      __typename: "ModelLocationConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
-  } | null> | null;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
   createdAt: string;
   updatedAt: string;
   owner: string | null;
@@ -3725,30 +3366,10 @@ export type OnCreateBoxSubscription = {
     photosUrls: Array<string> | null;
     notes: string | null;
     notesHistory: Array<string> | null;
-    boxes: Array<{
-      __typename: "Box";
-      id: string;
-      title: string;
-      contents: string;
-      size: string;
-      orgID: string;
-      shipmentID: string;
-      isActive: boolean;
-      barCode: string | null;
-      qrCode: string | null;
-      barCodePhoto: string | null;
-      qrCodePhoto: string | null;
-      tags: Array<string> | null;
-      photosUrls: Array<string> | null;
-      status: BoxStatus;
-      statusHistory: Array<BoxStatus> | null;
-      internalNotes: string | null;
-      notes: string | null;
-      notesHistory: Array<string> | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null> | null;
+    boxes: {
+      __typename: "ModelBoxConnection";
+      nextToken: string | null;
+    } | null;
     createdAt: string;
     updatedAt: string;
     owner: string | null;
@@ -3894,30 +3515,10 @@ export type OnUpdateBoxSubscription = {
     photosUrls: Array<string> | null;
     notes: string | null;
     notesHistory: Array<string> | null;
-    boxes: Array<{
-      __typename: "Box";
-      id: string;
-      title: string;
-      contents: string;
-      size: string;
-      orgID: string;
-      shipmentID: string;
-      isActive: boolean;
-      barCode: string | null;
-      qrCode: string | null;
-      barCodePhoto: string | null;
-      qrCodePhoto: string | null;
-      tags: Array<string> | null;
-      photosUrls: Array<string> | null;
-      status: BoxStatus;
-      statusHistory: Array<BoxStatus> | null;
-      internalNotes: string | null;
-      notes: string | null;
-      notesHistory: Array<string> | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null> | null;
+    boxes: {
+      __typename: "ModelBoxConnection";
+      nextToken: string | null;
+    } | null;
     createdAt: string;
     updatedAt: string;
     owner: string | null;
@@ -4063,30 +3664,10 @@ export type OnDeleteBoxSubscription = {
     photosUrls: Array<string> | null;
     notes: string | null;
     notesHistory: Array<string> | null;
-    boxes: Array<{
-      __typename: "Box";
-      id: string;
-      title: string;
-      contents: string;
-      size: string;
-      orgID: string;
-      shipmentID: string;
-      isActive: boolean;
-      barCode: string | null;
-      qrCode: string | null;
-      barCodePhoto: string | null;
-      qrCodePhoto: string | null;
-      tags: Array<string> | null;
-      photosUrls: Array<string> | null;
-      status: BoxStatus;
-      statusHistory: Array<BoxStatus> | null;
-      internalNotes: string | null;
-      notes: string | null;
-      notesHistory: Array<string> | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null> | null;
+    boxes: {
+      __typename: "ModelBoxConnection";
+      nextToken: string | null;
+    } | null;
     createdAt: string;
     updatedAt: string;
     owner: string | null;
@@ -5005,68 +4586,31 @@ export class APIService {
           notesHistory
           boxes {
             __typename
-            id
-            title
-            contents
-            size
-            orgID
-            org {
+            items {
               __typename
               id
-              name
-              description
-              email
+              title
+              contents
+              size
+              orgID
+              shipmentID
+              isActive
+              barCode
+              qrCode
+              barCodePhoto
+              qrCodePhoto
               tags
               photosUrls
-              notes
-              isActive
-              createdAt
-              updatedAt
-              owner
-            }
-            shipmentID
-            shipment {
-              __typename
-              id
-              name
-              description
-              isActive
-              startDate
-              deliveryDate
-              shipmentNotes
-              deliveryNotes
-              trackingId
-              weight
-              shipmentReceiver
               status
               statusHistory
-              tags
-              photosUrls
+              internalNotes
               notes
               notesHistory
               createdAt
               updatedAt
               owner
             }
-            isActive
-            barCode
-            qrCode
-            barCodePhoto
-            qrCodePhoto
-            tags
-            photosUrls
-            status
-            statusHistory
-            internalNotes
-            notes
-            notesHistory
-            locations {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-            owner
+            nextToken
           }
           createdAt
           updatedAt
@@ -5136,68 +4680,31 @@ export class APIService {
           notesHistory
           boxes {
             __typename
-            id
-            title
-            contents
-            size
-            orgID
-            org {
+            items {
               __typename
               id
-              name
-              description
-              email
+              title
+              contents
+              size
+              orgID
+              shipmentID
+              isActive
+              barCode
+              qrCode
+              barCodePhoto
+              qrCodePhoto
               tags
               photosUrls
-              notes
-              isActive
-              createdAt
-              updatedAt
-              owner
-            }
-            shipmentID
-            shipment {
-              __typename
-              id
-              name
-              description
-              isActive
-              startDate
-              deliveryDate
-              shipmentNotes
-              deliveryNotes
-              trackingId
-              weight
-              shipmentReceiver
               status
               statusHistory
-              tags
-              photosUrls
+              internalNotes
               notes
               notesHistory
               createdAt
               updatedAt
               owner
             }
-            isActive
-            barCode
-            qrCode
-            barCodePhoto
-            qrCodePhoto
-            tags
-            photosUrls
-            status
-            statusHistory
-            internalNotes
-            notes
-            notesHistory
-            locations {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-            owner
+            nextToken
           }
           createdAt
           updatedAt
@@ -5267,68 +4774,31 @@ export class APIService {
           notesHistory
           boxes {
             __typename
-            id
-            title
-            contents
-            size
-            orgID
-            org {
+            items {
               __typename
               id
-              name
-              description
-              email
+              title
+              contents
+              size
+              orgID
+              shipmentID
+              isActive
+              barCode
+              qrCode
+              barCodePhoto
+              qrCodePhoto
               tags
               photosUrls
-              notes
-              isActive
-              createdAt
-              updatedAt
-              owner
-            }
-            shipmentID
-            shipment {
-              __typename
-              id
-              name
-              description
-              isActive
-              startDate
-              deliveryDate
-              shipmentNotes
-              deliveryNotes
-              trackingId
-              weight
-              shipmentReceiver
               status
               statusHistory
-              tags
-              photosUrls
+              internalNotes
               notes
               notesHistory
               createdAt
               updatedAt
               owner
             }
-            isActive
-            barCode
-            qrCode
-            barCodePhoto
-            qrCodePhoto
-            tags
-            photosUrls
-            status
-            statusHistory
-            internalNotes
-            notes
-            notesHistory
-            locations {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-            owner
+            nextToken
           }
           createdAt
           updatedAt
@@ -5458,27 +4928,7 @@ export class APIService {
             notesHistory
             boxes {
               __typename
-              id
-              title
-              contents
-              size
-              orgID
-              shipmentID
-              isActive
-              barCode
-              qrCode
-              barCodePhoto
-              qrCodePhoto
-              tags
-              photosUrls
-              status
-              statusHistory
-              internalNotes
-              notes
-              notesHistory
-              createdAt
-              updatedAt
-              owner
+              nextToken
             }
             createdAt
             updatedAt
@@ -5643,27 +5093,7 @@ export class APIService {
             notesHistory
             boxes {
               __typename
-              id
-              title
-              contents
-              size
-              orgID
-              shipmentID
-              isActive
-              barCode
-              qrCode
-              barCodePhoto
-              qrCodePhoto
-              tags
-              photosUrls
-              status
-              statusHistory
-              internalNotes
-              notes
-              notesHistory
-              createdAt
-              updatedAt
-              owner
+              nextToken
             }
             createdAt
             updatedAt
@@ -5828,27 +5258,7 @@ export class APIService {
             notesHistory
             boxes {
               __typename
-              id
-              title
-              contents
-              size
-              orgID
-              shipmentID
-              isActive
-              barCode
-              qrCode
-              barCodePhoto
-              qrCodePhoto
-              tags
-              photosUrls
-              status
-              statusHistory
-              internalNotes
-              notes
-              notesHistory
-              createdAt
-              updatedAt
-              owner
+              nextToken
             }
             createdAt
             updatedAt
@@ -6628,68 +6038,31 @@ export class APIService {
           notesHistory
           boxes {
             __typename
-            id
-            title
-            contents
-            size
-            orgID
-            org {
+            items {
               __typename
               id
-              name
-              description
-              email
+              title
+              contents
+              size
+              orgID
+              shipmentID
+              isActive
+              barCode
+              qrCode
+              barCodePhoto
+              qrCodePhoto
               tags
               photosUrls
-              notes
-              isActive
-              createdAt
-              updatedAt
-              owner
-            }
-            shipmentID
-            shipment {
-              __typename
-              id
-              name
-              description
-              isActive
-              startDate
-              deliveryDate
-              shipmentNotes
-              deliveryNotes
-              trackingId
-              weight
-              shipmentReceiver
               status
               statusHistory
-              tags
-              photosUrls
+              internalNotes
               notes
               notesHistory
               createdAt
               updatedAt
               owner
             }
-            isActive
-            barCode
-            qrCode
-            barCodePhoto
-            qrCodePhoto
-            tags
-            photosUrls
-            status
-            statusHistory
-            internalNotes
-            notes
-            notesHistory
-            locations {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-            owner
+            nextToken
           }
           createdAt
           updatedAt
@@ -6759,27 +6132,7 @@ export class APIService {
             notesHistory
             boxes {
               __typename
-              id
-              title
-              contents
-              size
-              orgID
-              shipmentID
-              isActive
-              barCode
-              qrCode
-              barCodePhoto
-              qrCodePhoto
-              tags
-              photosUrls
-              status
-              statusHistory
-              internalNotes
-              notes
-              notesHistory
-              createdAt
-              updatedAt
-              owner
+              nextToken
             }
             createdAt
             updatedAt
@@ -6912,27 +6265,7 @@ export class APIService {
             notesHistory
             boxes {
               __typename
-              id
-              title
-              contents
-              size
-              orgID
-              shipmentID
-              isActive
-              barCode
-              qrCode
-              barCodePhoto
-              qrCodePhoto
-              tags
-              photosUrls
-              status
-              statusHistory
-              internalNotes
-              notes
-              notesHistory
-              createdAt
-              updatedAt
-              owner
+              nextToken
             }
             createdAt
             updatedAt
@@ -7842,68 +7175,31 @@ export class APIService {
           notesHistory
           boxes {
             __typename
-            id
-            title
-            contents
-            size
-            orgID
-            org {
+            items {
               __typename
               id
-              name
-              description
-              email
+              title
+              contents
+              size
+              orgID
+              shipmentID
+              isActive
+              barCode
+              qrCode
+              barCodePhoto
+              qrCodePhoto
               tags
               photosUrls
-              notes
-              isActive
-              createdAt
-              updatedAt
-              owner
-            }
-            shipmentID
-            shipment {
-              __typename
-              id
-              name
-              description
-              isActive
-              startDate
-              deliveryDate
-              shipmentNotes
-              deliveryNotes
-              trackingId
-              weight
-              shipmentReceiver
               status
               statusHistory
-              tags
-              photosUrls
+              internalNotes
               notes
               notesHistory
               createdAt
               updatedAt
               owner
             }
-            isActive
-            barCode
-            qrCode
-            barCodePhoto
-            qrCodePhoto
-            tags
-            photosUrls
-            status
-            statusHistory
-            internalNotes
-            notes
-            notesHistory
-            locations {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-            owner
+            nextToken
           }
           createdAt
           updatedAt
@@ -7965,68 +7261,31 @@ export class APIService {
           notesHistory
           boxes {
             __typename
-            id
-            title
-            contents
-            size
-            orgID
-            org {
+            items {
               __typename
               id
-              name
-              description
-              email
+              title
+              contents
+              size
+              orgID
+              shipmentID
+              isActive
+              barCode
+              qrCode
+              barCodePhoto
+              qrCodePhoto
               tags
               photosUrls
-              notes
-              isActive
-              createdAt
-              updatedAt
-              owner
-            }
-            shipmentID
-            shipment {
-              __typename
-              id
-              name
-              description
-              isActive
-              startDate
-              deliveryDate
-              shipmentNotes
-              deliveryNotes
-              trackingId
-              weight
-              shipmentReceiver
               status
               statusHistory
-              tags
-              photosUrls
+              internalNotes
               notes
               notesHistory
               createdAt
               updatedAt
               owner
             }
-            isActive
-            barCode
-            qrCode
-            barCodePhoto
-            qrCodePhoto
-            tags
-            photosUrls
-            status
-            statusHistory
-            internalNotes
-            notes
-            notesHistory
-            locations {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-            owner
+            nextToken
           }
           createdAt
           updatedAt
@@ -8088,68 +7347,31 @@ export class APIService {
           notesHistory
           boxes {
             __typename
-            id
-            title
-            contents
-            size
-            orgID
-            org {
+            items {
               __typename
               id
-              name
-              description
-              email
+              title
+              contents
+              size
+              orgID
+              shipmentID
+              isActive
+              barCode
+              qrCode
+              barCodePhoto
+              qrCodePhoto
               tags
               photosUrls
-              notes
-              isActive
-              createdAt
-              updatedAt
-              owner
-            }
-            shipmentID
-            shipment {
-              __typename
-              id
-              name
-              description
-              isActive
-              startDate
-              deliveryDate
-              shipmentNotes
-              deliveryNotes
-              trackingId
-              weight
-              shipmentReceiver
               status
               statusHistory
-              tags
-              photosUrls
+              internalNotes
               notes
               notesHistory
               createdAt
               updatedAt
               owner
             }
-            isActive
-            barCode
-            qrCode
-            barCodePhoto
-            qrCodePhoto
-            tags
-            photosUrls
-            status
-            statusHistory
-            internalNotes
-            notes
-            notesHistory
-            locations {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-            owner
+            nextToken
           }
           createdAt
           updatedAt
@@ -8269,27 +7491,7 @@ export class APIService {
             notesHistory
             boxes {
               __typename
-              id
-              title
-              contents
-              size
-              orgID
-              shipmentID
-              isActive
-              barCode
-              qrCode
-              barCodePhoto
-              qrCodePhoto
-              tags
-              photosUrls
-              status
-              statusHistory
-              internalNotes
-              notes
-              notesHistory
-              createdAt
-              updatedAt
-              owner
+              nextToken
             }
             createdAt
             updatedAt
@@ -8444,27 +7646,7 @@ export class APIService {
             notesHistory
             boxes {
               __typename
-              id
-              title
-              contents
-              size
-              orgID
-              shipmentID
-              isActive
-              barCode
-              qrCode
-              barCodePhoto
-              qrCodePhoto
-              tags
-              photosUrls
-              status
-              statusHistory
-              internalNotes
-              notes
-              notesHistory
-              createdAt
-              updatedAt
-              owner
+              nextToken
             }
             createdAt
             updatedAt
@@ -8619,27 +7801,7 @@ export class APIService {
             notesHistory
             boxes {
               __typename
-              id
-              title
-              contents
-              size
-              orgID
-              shipmentID
-              isActive
-              barCode
-              qrCode
-              barCodePhoto
-              qrCodePhoto
-              tags
-              photosUrls
-              status
-              statusHistory
-              internalNotes
-              notes
-              notesHistory
-              createdAt
-              updatedAt
-              owner
+              nextToken
             }
             createdAt
             updatedAt

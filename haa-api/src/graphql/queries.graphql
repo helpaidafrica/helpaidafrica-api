@@ -266,65 +266,30 @@ query GetShipment($id: ID!) {
     notes
     notesHistory
     boxes {
-      id
-      title
-      contents
-      size
-      orgID
-      org {
+      items {
         id
-        name
-        description
-        email
+        title
+        contents
+        size
+        orgID
+        shipmentID
+        isActive
+        barCode
+        qrCode
+        barCodePhoto
+        qrCodePhoto
         tags
         photosUrls
-        notes
-        isActive
-        createdAt
-        updatedAt
-        owner
-      }
-      shipmentID
-      shipment {
-        id
-        name
-        description
-        isActive
-        startDate
-        deliveryDate
-        shipmentNotes
-        deliveryNotes
-        trackingId
-        weight
-        shipmentReceiver
         status
         statusHistory
-        tags
-        photosUrls
+        internalNotes
         notes
         notesHistory
         createdAt
         updatedAt
         owner
       }
-      isActive
-      barCode
-      qrCode
-      barCodePhoto
-      qrCodePhoto
-      tags
-      photosUrls
-      status
-      statusHistory
-      internalNotes
-      notes
-      notesHistory
-      locations {
-        nextToken
-      }
-      createdAt
-      updatedAt
-      owner
+      nextToken
     }
     createdAt
     updatedAt
@@ -380,27 +345,7 @@ query ListShipments(
       notes
       notesHistory
       boxes {
-        id
-        title
-        contents
-        size
-        orgID
-        shipmentID
-        isActive
-        barCode
-        qrCode
-        barCodePhoto
-        qrCodePhoto
-        tags
-        photosUrls
-        status
-        statusHistory
-        internalNotes
-        notes
-        notesHistory
-        createdAt
-        updatedAt
-        owner
+        nextToken
       }
       createdAt
       updatedAt
@@ -507,27 +452,7 @@ query GetBox($id: ID!) {
       notes
       notesHistory
       boxes {
-        id
-        title
-        contents
-        size
-        orgID
-        shipmentID
-        isActive
-        barCode
-        qrCode
-        barCodePhoto
-        qrCodePhoto
-        tags
-        photosUrls
-        status
-        statusHistory
-        internalNotes
-        notes
-        notesHistory
-        createdAt
-        updatedAt
-        owner
+        nextToken
       }
       createdAt
       updatedAt
