@@ -1,3 +1,17 @@
+enum ApiHealthStatus {
+	UP
+	DOWN
+}
+
+type ApihealthCheckInfo {
+	id: ID!
+	status: ApiHealthStatus!
+	isActive: Boolean!
+	proceed: Boolean!
+	message: String
+	lastUpdated: AWSDateTime
+}
+
 enum PhoneType {
   WORK
   CELL
@@ -167,7 +181,6 @@ type Shipment
 type Box
 @model
 @key(name: "byOrg", fields: ["orgID"])
-@key(name: "byShipment", fields: ["shipmentID"])
 @key(
   name: "byBoxShipment"
   fields: ["shipmentID", "id"]
@@ -210,7 +223,6 @@ type Box
 
 type Location
 @model
-@key(name: "locationsbyBox", fields: ["boxID", "locationLabel"])
 @key(name: "locationForBox", fields: ["boxID", "locationInfoID"])
 @auth(
   rules: [
