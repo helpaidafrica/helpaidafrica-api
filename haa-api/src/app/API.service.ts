@@ -1018,21 +1018,10 @@ export type CreateShipmentMutation = {
     internalNotes: string | null;
     notes: string | null;
     notesHistory: Array<string> | null;
-    locations: Array<{
-      __typename: "Location";
-      id: string;
-      boxID: string;
-      locationLabel: string;
-      locationInfoID: string;
-      notes: string | null;
-      isFinal: boolean | null;
-      tags: Array<string | null> | null;
-      photosUrls: Array<string | null> | null;
-      isActive: boolean;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null> | null;
+    locations: {
+      __typename: "ModelLocationConnection";
+      nextToken: string | null;
+    } | null;
     createdAt: string;
     updatedAt: string;
     owner: string | null;
@@ -1144,21 +1133,10 @@ export type UpdateShipmentMutation = {
     internalNotes: string | null;
     notes: string | null;
     notesHistory: Array<string> | null;
-    locations: Array<{
-      __typename: "Location";
-      id: string;
-      boxID: string;
-      locationLabel: string;
-      locationInfoID: string;
-      notes: string | null;
-      isFinal: boolean | null;
-      tags: Array<string | null> | null;
-      photosUrls: Array<string | null> | null;
-      isActive: boolean;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null> | null;
+    locations: {
+      __typename: "ModelLocationConnection";
+      nextToken: string | null;
+    } | null;
     createdAt: string;
     updatedAt: string;
     owner: string | null;
@@ -1270,21 +1248,10 @@ export type DeleteShipmentMutation = {
     internalNotes: string | null;
     notes: string | null;
     notesHistory: Array<string> | null;
-    locations: Array<{
-      __typename: "Location";
-      id: string;
-      boxID: string;
-      locationLabel: string;
-      locationInfoID: string;
-      notes: string | null;
-      isFinal: boolean | null;
-      tags: Array<string | null> | null;
-      photosUrls: Array<string | null> | null;
-      isActive: boolean;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null> | null;
+    locations: {
+      __typename: "ModelLocationConnection";
+      nextToken: string | null;
+    } | null;
     createdAt: string;
     updatedAt: string;
     owner: string | null;
@@ -1439,58 +1406,25 @@ export type CreateBoxMutation = {
   internalNotes: string | null;
   notes: string | null;
   notesHistory: Array<string> | null;
-  locations: Array<{
-    __typename: "Location";
-    id: string;
-    boxID: string;
-    box: {
-      __typename: "Box";
+  locations: {
+    __typename: "ModelLocationConnection";
+    items: Array<{
+      __typename: "Location";
       id: string;
-      title: string;
-      contents: string;
-      size: string;
-      orgID: string;
-      shipmentID: string;
-      isActive: boolean;
-      barCode: string | null;
-      qrCode: string | null;
-      barCodePhoto: string | null;
-      qrCodePhoto: string | null;
-      tags: Array<string> | null;
-      photosUrls: Array<string> | null;
-      status: BoxStatus;
-      statusHistory: Array<BoxStatus> | null;
-      internalNotes: string | null;
-      notes: string | null;
-      notesHistory: Array<string> | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null;
-    locationLabel: string;
-    locationInfoID: string;
-    locationInfo: {
-      __typename: "LocationInfo";
-      id: string;
+      boxID: string;
       locationLabel: string;
-      latitude: string;
-      longitude: string;
-      isActive: boolean;
+      locationInfoID: string;
       notes: string | null;
-      notesHistory: Array<string> | null;
+      isFinal: boolean | null;
+      tags: Array<string | null> | null;
+      photosUrls: Array<string | null> | null;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
       owner: string | null;
-    };
-    notes: string | null;
-    isFinal: boolean | null;
-    tags: Array<string | null> | null;
-    photosUrls: Array<string | null> | null;
-    isActive: boolean;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
-  } | null> | null;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
   createdAt: string;
   updatedAt: string;
   owner: string | null;
@@ -1641,58 +1575,25 @@ export type UpdateBoxMutation = {
   internalNotes: string | null;
   notes: string | null;
   notesHistory: Array<string> | null;
-  locations: Array<{
-    __typename: "Location";
-    id: string;
-    boxID: string;
-    box: {
-      __typename: "Box";
+  locations: {
+    __typename: "ModelLocationConnection";
+    items: Array<{
+      __typename: "Location";
       id: string;
-      title: string;
-      contents: string;
-      size: string;
-      orgID: string;
-      shipmentID: string;
-      isActive: boolean;
-      barCode: string | null;
-      qrCode: string | null;
-      barCodePhoto: string | null;
-      qrCodePhoto: string | null;
-      tags: Array<string> | null;
-      photosUrls: Array<string> | null;
-      status: BoxStatus;
-      statusHistory: Array<BoxStatus> | null;
-      internalNotes: string | null;
-      notes: string | null;
-      notesHistory: Array<string> | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null;
-    locationLabel: string;
-    locationInfoID: string;
-    locationInfo: {
-      __typename: "LocationInfo";
-      id: string;
+      boxID: string;
       locationLabel: string;
-      latitude: string;
-      longitude: string;
-      isActive: boolean;
+      locationInfoID: string;
       notes: string | null;
-      notesHistory: Array<string> | null;
+      isFinal: boolean | null;
+      tags: Array<string | null> | null;
+      photosUrls: Array<string | null> | null;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
       owner: string | null;
-    };
-    notes: string | null;
-    isFinal: boolean | null;
-    tags: Array<string | null> | null;
-    photosUrls: Array<string | null> | null;
-    isActive: boolean;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
-  } | null> | null;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
   createdAt: string;
   updatedAt: string;
   owner: string | null;
@@ -1843,58 +1744,25 @@ export type DeleteBoxMutation = {
   internalNotes: string | null;
   notes: string | null;
   notesHistory: Array<string> | null;
-  locations: Array<{
-    __typename: "Location";
-    id: string;
-    boxID: string;
-    box: {
-      __typename: "Box";
+  locations: {
+    __typename: "ModelLocationConnection";
+    items: Array<{
+      __typename: "Location";
       id: string;
-      title: string;
-      contents: string;
-      size: string;
-      orgID: string;
-      shipmentID: string;
-      isActive: boolean;
-      barCode: string | null;
-      qrCode: string | null;
-      barCodePhoto: string | null;
-      qrCodePhoto: string | null;
-      tags: Array<string> | null;
-      photosUrls: Array<string> | null;
-      status: BoxStatus;
-      statusHistory: Array<BoxStatus> | null;
-      internalNotes: string | null;
-      notes: string | null;
-      notesHistory: Array<string> | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null;
-    locationLabel: string;
-    locationInfoID: string;
-    locationInfo: {
-      __typename: "LocationInfo";
-      id: string;
+      boxID: string;
       locationLabel: string;
-      latitude: string;
-      longitude: string;
-      isActive: boolean;
+      locationInfoID: string;
       notes: string | null;
-      notesHistory: Array<string> | null;
+      isFinal: boolean | null;
+      tags: Array<string | null> | null;
+      photosUrls: Array<string | null> | null;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
       owner: string | null;
-    };
-    notes: string | null;
-    isFinal: boolean | null;
-    tags: Array<string | null> | null;
-    photosUrls: Array<string | null> | null;
-    isActive: boolean;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
-  } | null> | null;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
   createdAt: string;
   updatedAt: string;
   owner: string | null;
@@ -1961,21 +1829,10 @@ export type CreateLocationMutation = {
     internalNotes: string | null;
     notes: string | null;
     notesHistory: Array<string> | null;
-    locations: Array<{
-      __typename: "Location";
-      id: string;
-      boxID: string;
-      locationLabel: string;
-      locationInfoID: string;
-      notes: string | null;
-      isFinal: boolean | null;
-      tags: Array<string | null> | null;
-      photosUrls: Array<string | null> | null;
-      isActive: boolean;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null> | null;
+    locations: {
+      __typename: "ModelLocationConnection";
+      nextToken: string | null;
+    } | null;
     createdAt: string;
     updatedAt: string;
     owner: string | null;
@@ -2066,21 +1923,10 @@ export type UpdateLocationMutation = {
     internalNotes: string | null;
     notes: string | null;
     notesHistory: Array<string> | null;
-    locations: Array<{
-      __typename: "Location";
-      id: string;
-      boxID: string;
-      locationLabel: string;
-      locationInfoID: string;
-      notes: string | null;
-      isFinal: boolean | null;
-      tags: Array<string | null> | null;
-      photosUrls: Array<string | null> | null;
-      isActive: boolean;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null> | null;
+    locations: {
+      __typename: "ModelLocationConnection";
+      nextToken: string | null;
+    } | null;
     createdAt: string;
     updatedAt: string;
     owner: string | null;
@@ -2171,21 +2017,10 @@ export type DeleteLocationMutation = {
     internalNotes: string | null;
     notes: string | null;
     notesHistory: Array<string> | null;
-    locations: Array<{
-      __typename: "Location";
-      id: string;
-      boxID: string;
-      locationLabel: string;
-      locationInfoID: string;
-      notes: string | null;
-      isFinal: boolean | null;
-      tags: Array<string | null> | null;
-      photosUrls: Array<string | null> | null;
-      isActive: boolean;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null> | null;
+    locations: {
+      __typename: "ModelLocationConnection";
+      nextToken: string | null;
+    } | null;
     createdAt: string;
     updatedAt: string;
     owner: string | null;
@@ -2541,21 +2376,10 @@ export type GetShipmentQuery = {
     internalNotes: string | null;
     notes: string | null;
     notesHistory: Array<string> | null;
-    locations: Array<{
-      __typename: "Location";
-      id: string;
-      boxID: string;
-      locationLabel: string;
-      locationInfoID: string;
-      notes: string | null;
-      isFinal: boolean | null;
-      tags: Array<string | null> | null;
-      photosUrls: Array<string | null> | null;
-      isActive: boolean;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null> | null;
+    locations: {
+      __typename: "ModelLocationConnection";
+      nextToken: string | null;
+    } | null;
     createdAt: string;
     updatedAt: string;
     owner: string | null;
@@ -2788,58 +2612,25 @@ export type GetBoxQuery = {
   internalNotes: string | null;
   notes: string | null;
   notesHistory: Array<string> | null;
-  locations: Array<{
-    __typename: "Location";
-    id: string;
-    boxID: string;
-    box: {
-      __typename: "Box";
+  locations: {
+    __typename: "ModelLocationConnection";
+    items: Array<{
+      __typename: "Location";
       id: string;
-      title: string;
-      contents: string;
-      size: string;
-      orgID: string;
-      shipmentID: string;
-      isActive: boolean;
-      barCode: string | null;
-      qrCode: string | null;
-      barCodePhoto: string | null;
-      qrCodePhoto: string | null;
-      tags: Array<string> | null;
-      photosUrls: Array<string> | null;
-      status: BoxStatus;
-      statusHistory: Array<BoxStatus> | null;
-      internalNotes: string | null;
-      notes: string | null;
-      notesHistory: Array<string> | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null;
-    locationLabel: string;
-    locationInfoID: string;
-    locationInfo: {
-      __typename: "LocationInfo";
-      id: string;
+      boxID: string;
       locationLabel: string;
-      latitude: string;
-      longitude: string;
-      isActive: boolean;
+      locationInfoID: string;
       notes: string | null;
-      notesHistory: Array<string> | null;
+      isFinal: boolean | null;
+      tags: Array<string | null> | null;
+      photosUrls: Array<string | null> | null;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
       owner: string | null;
-    };
-    notes: string | null;
-    isFinal: boolean | null;
-    tags: Array<string | null> | null;
-    photosUrls: Array<string | null> | null;
-    isActive: boolean;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
-  } | null> | null;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
   createdAt: string;
   updatedAt: string;
   owner: string | null;
@@ -2904,21 +2695,10 @@ export type ListBoxsQuery = {
     internalNotes: string | null;
     notes: string | null;
     notesHistory: Array<string> | null;
-    locations: Array<{
-      __typename: "Location";
-      id: string;
-      boxID: string;
-      locationLabel: string;
-      locationInfoID: string;
-      notes: string | null;
-      isFinal: boolean | null;
-      tags: Array<string | null> | null;
-      photosUrls: Array<string | null> | null;
-      isActive: boolean;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null> | null;
+    locations: {
+      __typename: "ModelLocationConnection";
+      nextToken: string | null;
+    } | null;
     createdAt: string;
     updatedAt: string;
     owner: string | null;
@@ -2987,21 +2767,10 @@ export type GetLocationQuery = {
     internalNotes: string | null;
     notes: string | null;
     notesHistory: Array<string> | null;
-    locations: Array<{
-      __typename: "Location";
-      id: string;
-      boxID: string;
-      locationLabel: string;
-      locationInfoID: string;
-      notes: string | null;
-      isFinal: boolean | null;
-      tags: Array<string | null> | null;
-      photosUrls: Array<string | null> | null;
-      isActive: boolean;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null> | null;
+    locations: {
+      __typename: "ModelLocationConnection";
+      nextToken: string | null;
+    } | null;
     createdAt: string;
     updatedAt: string;
     owner: string | null;
@@ -3147,21 +2916,10 @@ export type ShipmentsByBoxIdQuery = {
     internalNotes: string | null;
     notes: string | null;
     notesHistory: Array<string> | null;
-    locations: Array<{
-      __typename: "Location";
-      id: string;
-      boxID: string;
-      locationLabel: string;
-      locationInfoID: string;
-      notes: string | null;
-      isFinal: boolean | null;
-      tags: Array<string | null> | null;
-      photosUrls: Array<string | null> | null;
-      isActive: boolean;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null> | null;
+    locations: {
+      __typename: "ModelLocationConnection";
+      nextToken: string | null;
+    } | null;
     createdAt: string;
     updatedAt: string;
     owner: string | null;
@@ -3619,21 +3377,10 @@ export type OnCreateShipmentSubscription = {
     internalNotes: string | null;
     notes: string | null;
     notesHistory: Array<string> | null;
-    locations: Array<{
-      __typename: "Location";
-      id: string;
-      boxID: string;
-      locationLabel: string;
-      locationInfoID: string;
-      notes: string | null;
-      isFinal: boolean | null;
-      tags: Array<string | null> | null;
-      photosUrls: Array<string | null> | null;
-      isActive: boolean;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null> | null;
+    locations: {
+      __typename: "ModelLocationConnection";
+      nextToken: string | null;
+    } | null;
     createdAt: string;
     updatedAt: string;
     owner: string | null;
@@ -3745,21 +3492,10 @@ export type OnUpdateShipmentSubscription = {
     internalNotes: string | null;
     notes: string | null;
     notesHistory: Array<string> | null;
-    locations: Array<{
-      __typename: "Location";
-      id: string;
-      boxID: string;
-      locationLabel: string;
-      locationInfoID: string;
-      notes: string | null;
-      isFinal: boolean | null;
-      tags: Array<string | null> | null;
-      photosUrls: Array<string | null> | null;
-      isActive: boolean;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null> | null;
+    locations: {
+      __typename: "ModelLocationConnection";
+      nextToken: string | null;
+    } | null;
     createdAt: string;
     updatedAt: string;
     owner: string | null;
@@ -3871,21 +3607,10 @@ export type OnDeleteShipmentSubscription = {
     internalNotes: string | null;
     notes: string | null;
     notesHistory: Array<string> | null;
-    locations: Array<{
-      __typename: "Location";
-      id: string;
-      boxID: string;
-      locationLabel: string;
-      locationInfoID: string;
-      notes: string | null;
-      isFinal: boolean | null;
-      tags: Array<string | null> | null;
-      photosUrls: Array<string | null> | null;
-      isActive: boolean;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null> | null;
+    locations: {
+      __typename: "ModelLocationConnection";
+      nextToken: string | null;
+    } | null;
     createdAt: string;
     updatedAt: string;
     owner: string | null;
@@ -4040,58 +3765,25 @@ export type OnCreateBoxSubscription = {
   internalNotes: string | null;
   notes: string | null;
   notesHistory: Array<string> | null;
-  locations: Array<{
-    __typename: "Location";
-    id: string;
-    boxID: string;
-    box: {
-      __typename: "Box";
+  locations: {
+    __typename: "ModelLocationConnection";
+    items: Array<{
+      __typename: "Location";
       id: string;
-      title: string;
-      contents: string;
-      size: string;
-      orgID: string;
-      shipmentID: string;
-      isActive: boolean;
-      barCode: string | null;
-      qrCode: string | null;
-      barCodePhoto: string | null;
-      qrCodePhoto: string | null;
-      tags: Array<string> | null;
-      photosUrls: Array<string> | null;
-      status: BoxStatus;
-      statusHistory: Array<BoxStatus> | null;
-      internalNotes: string | null;
-      notes: string | null;
-      notesHistory: Array<string> | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null;
-    locationLabel: string;
-    locationInfoID: string;
-    locationInfo: {
-      __typename: "LocationInfo";
-      id: string;
+      boxID: string;
       locationLabel: string;
-      latitude: string;
-      longitude: string;
-      isActive: boolean;
+      locationInfoID: string;
       notes: string | null;
-      notesHistory: Array<string> | null;
+      isFinal: boolean | null;
+      tags: Array<string | null> | null;
+      photosUrls: Array<string | null> | null;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
       owner: string | null;
-    };
-    notes: string | null;
-    isFinal: boolean | null;
-    tags: Array<string | null> | null;
-    photosUrls: Array<string | null> | null;
-    isActive: boolean;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
-  } | null> | null;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
   createdAt: string;
   updatedAt: string;
   owner: string | null;
@@ -4242,58 +3934,25 @@ export type OnUpdateBoxSubscription = {
   internalNotes: string | null;
   notes: string | null;
   notesHistory: Array<string> | null;
-  locations: Array<{
-    __typename: "Location";
-    id: string;
-    boxID: string;
-    box: {
-      __typename: "Box";
+  locations: {
+    __typename: "ModelLocationConnection";
+    items: Array<{
+      __typename: "Location";
       id: string;
-      title: string;
-      contents: string;
-      size: string;
-      orgID: string;
-      shipmentID: string;
-      isActive: boolean;
-      barCode: string | null;
-      qrCode: string | null;
-      barCodePhoto: string | null;
-      qrCodePhoto: string | null;
-      tags: Array<string> | null;
-      photosUrls: Array<string> | null;
-      status: BoxStatus;
-      statusHistory: Array<BoxStatus> | null;
-      internalNotes: string | null;
-      notes: string | null;
-      notesHistory: Array<string> | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null;
-    locationLabel: string;
-    locationInfoID: string;
-    locationInfo: {
-      __typename: "LocationInfo";
-      id: string;
+      boxID: string;
       locationLabel: string;
-      latitude: string;
-      longitude: string;
-      isActive: boolean;
+      locationInfoID: string;
       notes: string | null;
-      notesHistory: Array<string> | null;
+      isFinal: boolean | null;
+      tags: Array<string | null> | null;
+      photosUrls: Array<string | null> | null;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
       owner: string | null;
-    };
-    notes: string | null;
-    isFinal: boolean | null;
-    tags: Array<string | null> | null;
-    photosUrls: Array<string | null> | null;
-    isActive: boolean;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
-  } | null> | null;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
   createdAt: string;
   updatedAt: string;
   owner: string | null;
@@ -4444,58 +4103,25 @@ export type OnDeleteBoxSubscription = {
   internalNotes: string | null;
   notes: string | null;
   notesHistory: Array<string> | null;
-  locations: Array<{
-    __typename: "Location";
-    id: string;
-    boxID: string;
-    box: {
-      __typename: "Box";
+  locations: {
+    __typename: "ModelLocationConnection";
+    items: Array<{
+      __typename: "Location";
       id: string;
-      title: string;
-      contents: string;
-      size: string;
-      orgID: string;
-      shipmentID: string;
-      isActive: boolean;
-      barCode: string | null;
-      qrCode: string | null;
-      barCodePhoto: string | null;
-      qrCodePhoto: string | null;
-      tags: Array<string> | null;
-      photosUrls: Array<string> | null;
-      status: BoxStatus;
-      statusHistory: Array<BoxStatus> | null;
-      internalNotes: string | null;
-      notes: string | null;
-      notesHistory: Array<string> | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null;
-    locationLabel: string;
-    locationInfoID: string;
-    locationInfo: {
-      __typename: "LocationInfo";
-      id: string;
+      boxID: string;
       locationLabel: string;
-      latitude: string;
-      longitude: string;
-      isActive: boolean;
+      locationInfoID: string;
       notes: string | null;
-      notesHistory: Array<string> | null;
+      isFinal: boolean | null;
+      tags: Array<string | null> | null;
+      photosUrls: Array<string | null> | null;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
       owner: string | null;
-    };
-    notes: string | null;
-    isFinal: boolean | null;
-    tags: Array<string | null> | null;
-    photosUrls: Array<string | null> | null;
-    isActive: boolean;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
-  } | null> | null;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
   createdAt: string;
   updatedAt: string;
   owner: string | null;
@@ -4562,21 +4188,10 @@ export type OnCreateLocationSubscription = {
     internalNotes: string | null;
     notes: string | null;
     notesHistory: Array<string> | null;
-    locations: Array<{
-      __typename: "Location";
-      id: string;
-      boxID: string;
-      locationLabel: string;
-      locationInfoID: string;
-      notes: string | null;
-      isFinal: boolean | null;
-      tags: Array<string | null> | null;
-      photosUrls: Array<string | null> | null;
-      isActive: boolean;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null> | null;
+    locations: {
+      __typename: "ModelLocationConnection";
+      nextToken: string | null;
+    } | null;
     createdAt: string;
     updatedAt: string;
     owner: string | null;
@@ -4667,21 +4282,10 @@ export type OnUpdateLocationSubscription = {
     internalNotes: string | null;
     notes: string | null;
     notesHistory: Array<string> | null;
-    locations: Array<{
-      __typename: "Location";
-      id: string;
-      boxID: string;
-      locationLabel: string;
-      locationInfoID: string;
-      notes: string | null;
-      isFinal: boolean | null;
-      tags: Array<string | null> | null;
-      photosUrls: Array<string | null> | null;
-      isActive: boolean;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null> | null;
+    locations: {
+      __typename: "ModelLocationConnection";
+      nextToken: string | null;
+    } | null;
     createdAt: string;
     updatedAt: string;
     owner: string | null;
@@ -4772,21 +4376,10 @@ export type OnDeleteLocationSubscription = {
     internalNotes: string | null;
     notes: string | null;
     notesHistory: Array<string> | null;
-    locations: Array<{
-      __typename: "Location";
-      id: string;
-      boxID: string;
-      locationLabel: string;
-      locationInfoID: string;
-      notes: string | null;
-      isFinal: boolean | null;
-      tags: Array<string | null> | null;
-      photosUrls: Array<string | null> | null;
-      isActive: boolean;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null> | null;
+    locations: {
+      __typename: "ModelLocationConnection";
+      nextToken: string | null;
+    } | null;
     createdAt: string;
     updatedAt: string;
     owner: string | null;
@@ -5469,18 +5062,7 @@ export class APIService {
             notesHistory
             locations {
               __typename
-              id
-              boxID
-              locationLabel
-              locationInfoID
-              notes
-              isFinal
-              tags
-              photosUrls
-              isActive
-              createdAt
-              updatedAt
-              owner
+              nextToken
             }
             createdAt
             updatedAt
@@ -5611,18 +5193,7 @@ export class APIService {
             notesHistory
             locations {
               __typename
-              id
-              boxID
-              locationLabel
-              locationInfoID
-              notes
-              isFinal
-              tags
-              photosUrls
-              isActive
-              createdAt
-              updatedAt
-              owner
+              nextToken
             }
             createdAt
             updatedAt
@@ -5753,18 +5324,7 @@ export class APIService {
             notesHistory
             locations {
               __typename
-              id
-              boxID
-              locationLabel
-              locationInfoID
-              notes
-              isFinal
-              tags
-              photosUrls
-              isActive
-              createdAt
-              updatedAt
-              owner
+              nextToken
             }
             createdAt
             updatedAt
@@ -5938,55 +5498,22 @@ export class APIService {
           notesHistory
           locations {
             __typename
-            id
-            boxID
-            box {
+            items {
               __typename
               id
-              title
-              contents
-              size
-              orgID
-              shipmentID
-              isActive
-              barCode
-              qrCode
-              barCodePhoto
-              qrCodePhoto
+              boxID
+              locationLabel
+              locationInfoID
+              notes
+              isFinal
               tags
               photosUrls
-              status
-              statusHistory
-              internalNotes
-              notes
-              notesHistory
-              createdAt
-              updatedAt
-              owner
-            }
-            locationLabel
-            locationInfoID
-            locationInfo {
-              __typename
-              id
-              locationLabel
-              latitude
-              longitude
               isActive
-              notes
-              notesHistory
               createdAt
               updatedAt
               owner
             }
-            notes
-            isFinal
-            tags
-            photosUrls
-            isActive
-            createdAt
-            updatedAt
-            owner
+            nextToken
           }
           createdAt
           updatedAt
@@ -6156,55 +5683,22 @@ export class APIService {
           notesHistory
           locations {
             __typename
-            id
-            boxID
-            box {
+            items {
               __typename
               id
-              title
-              contents
-              size
-              orgID
-              shipmentID
-              isActive
-              barCode
-              qrCode
-              barCodePhoto
-              qrCodePhoto
+              boxID
+              locationLabel
+              locationInfoID
+              notes
+              isFinal
               tags
               photosUrls
-              status
-              statusHistory
-              internalNotes
-              notes
-              notesHistory
-              createdAt
-              updatedAt
-              owner
-            }
-            locationLabel
-            locationInfoID
-            locationInfo {
-              __typename
-              id
-              locationLabel
-              latitude
-              longitude
               isActive
-              notes
-              notesHistory
               createdAt
               updatedAt
               owner
             }
-            notes
-            isFinal
-            tags
-            photosUrls
-            isActive
-            createdAt
-            updatedAt
-            owner
+            nextToken
           }
           createdAt
           updatedAt
@@ -6374,55 +5868,22 @@ export class APIService {
           notesHistory
           locations {
             __typename
-            id
-            boxID
-            box {
+            items {
               __typename
               id
-              title
-              contents
-              size
-              orgID
-              shipmentID
-              isActive
-              barCode
-              qrCode
-              barCodePhoto
-              qrCodePhoto
+              boxID
+              locationLabel
+              locationInfoID
+              notes
+              isFinal
               tags
               photosUrls
-              status
-              statusHistory
-              internalNotes
-              notes
-              notesHistory
-              createdAt
-              updatedAt
-              owner
-            }
-            locationLabel
-            locationInfoID
-            locationInfo {
-              __typename
-              id
-              locationLabel
-              latitude
-              longitude
               isActive
-              notes
-              notesHistory
               createdAt
               updatedAt
               owner
             }
-            notes
-            isFinal
-            tags
-            photosUrls
-            isActive
-            createdAt
-            updatedAt
-            owner
+            nextToken
           }
           createdAt
           updatedAt
@@ -6508,18 +5969,7 @@ export class APIService {
             notesHistory
             locations {
               __typename
-              id
-              boxID
-              locationLabel
-              locationInfoID
-              notes
-              isFinal
-              tags
-              photosUrls
-              isActive
-              createdAt
-              updatedAt
-              owner
+              nextToken
             }
             createdAt
             updatedAt
@@ -6629,18 +6079,7 @@ export class APIService {
             notesHistory
             locations {
               __typename
-              id
-              boxID
-              locationLabel
-              locationInfoID
-              notes
-              isFinal
-              tags
-              photosUrls
-              isActive
-              createdAt
-              updatedAt
-              owner
+              nextToken
             }
             createdAt
             updatedAt
@@ -6750,18 +6189,7 @@ export class APIService {
             notesHistory
             locations {
               __typename
-              id
-              boxID
-              locationLabel
-              locationInfoID
-              notes
-              isFinal
-              tags
-              photosUrls
-              isActive
-              createdAt
-              updatedAt
-              owner
+              nextToken
             }
             createdAt
             updatedAt
@@ -7257,18 +6685,7 @@ export class APIService {
             notesHistory
             locations {
               __typename
-              id
-              boxID
-              locationLabel
-              locationInfoID
-              notes
-              isFinal
-              tags
-              photosUrls
-              isActive
-              createdAt
-              updatedAt
-              owner
+              nextToken
             }
             createdAt
             updatedAt
@@ -7535,55 +6952,22 @@ export class APIService {
           notesHistory
           locations {
             __typename
-            id
-            boxID
-            box {
+            items {
               __typename
               id
-              title
-              contents
-              size
-              orgID
-              shipmentID
-              isActive
-              barCode
-              qrCode
-              barCodePhoto
-              qrCodePhoto
+              boxID
+              locationLabel
+              locationInfoID
+              notes
+              isFinal
               tags
               photosUrls
-              status
-              statusHistory
-              internalNotes
-              notes
-              notesHistory
-              createdAt
-              updatedAt
-              owner
-            }
-            locationLabel
-            locationInfoID
-            locationInfo {
-              __typename
-              id
-              locationLabel
-              latitude
-              longitude
               isActive
-              notes
-              notesHistory
               createdAt
               updatedAt
               owner
             }
-            notes
-            isFinal
-            tags
-            photosUrls
-            isActive
-            createdAt
-            updatedAt
-            owner
+            nextToken
           }
           createdAt
           updatedAt
@@ -7665,18 +7049,7 @@ export class APIService {
             notesHistory
             locations {
               __typename
-              id
-              boxID
-              locationLabel
-              locationInfoID
-              notes
-              isFinal
-              tags
-              photosUrls
-              isActive
-              createdAt
-              updatedAt
-              owner
+              nextToken
             }
             createdAt
             updatedAt
@@ -7765,18 +7138,7 @@ export class APIService {
             notesHistory
             locations {
               __typename
-              id
-              boxID
-              locationLabel
-              locationInfoID
-              notes
-              isFinal
-              tags
-              photosUrls
-              isActive
-              createdAt
-              updatedAt
-              owner
+              nextToken
             }
             createdAt
             updatedAt
@@ -7963,18 +7325,7 @@ export class APIService {
             notesHistory
             locations {
               __typename
-              id
-              boxID
-              locationLabel
-              locationInfoID
-              notes
-              isFinal
-              tags
-              photosUrls
-              isActive
-              createdAt
-              updatedAt
-              owner
+              nextToken
             }
             createdAt
             updatedAt
@@ -8548,18 +7899,7 @@ export class APIService {
             notesHistory
             locations {
               __typename
-              id
-              boxID
-              locationLabel
-              locationInfoID
-              notes
-              isFinal
-              tags
-              photosUrls
-              isActive
-              createdAt
-              updatedAt
-              owner
+              nextToken
             }
             createdAt
             updatedAt
@@ -8682,18 +8022,7 @@ export class APIService {
             notesHistory
             locations {
               __typename
-              id
-              boxID
-              locationLabel
-              locationInfoID
-              notes
-              isFinal
-              tags
-              photosUrls
-              isActive
-              createdAt
-              updatedAt
-              owner
+              nextToken
             }
             createdAt
             updatedAt
@@ -8816,18 +8145,7 @@ export class APIService {
             notesHistory
             locations {
               __typename
-              id
-              boxID
-              locationLabel
-              locationInfoID
-              notes
-              isFinal
-              tags
-              photosUrls
-              isActive
-              createdAt
-              updatedAt
-              owner
+              nextToken
             }
             createdAt
             updatedAt
@@ -8991,55 +8309,22 @@ export class APIService {
           notesHistory
           locations {
             __typename
-            id
-            boxID
-            box {
+            items {
               __typename
               id
-              title
-              contents
-              size
-              orgID
-              shipmentID
-              isActive
-              barCode
-              qrCode
-              barCodePhoto
-              qrCodePhoto
+              boxID
+              locationLabel
+              locationInfoID
+              notes
+              isFinal
               tags
               photosUrls
-              status
-              statusHistory
-              internalNotes
-              notes
-              notesHistory
-              createdAt
-              updatedAt
-              owner
-            }
-            locationLabel
-            locationInfoID
-            locationInfo {
-              __typename
-              id
-              locationLabel
-              latitude
-              longitude
               isActive
-              notes
-              notesHistory
               createdAt
               updatedAt
               owner
             }
-            notes
-            isFinal
-            tags
-            photosUrls
-            isActive
-            createdAt
-            updatedAt
-            owner
+            nextToken
           }
           createdAt
           updatedAt
@@ -9199,55 +8484,22 @@ export class APIService {
           notesHistory
           locations {
             __typename
-            id
-            boxID
-            box {
+            items {
               __typename
               id
-              title
-              contents
-              size
-              orgID
-              shipmentID
-              isActive
-              barCode
-              qrCode
-              barCodePhoto
-              qrCodePhoto
+              boxID
+              locationLabel
+              locationInfoID
+              notes
+              isFinal
               tags
               photosUrls
-              status
-              statusHistory
-              internalNotes
-              notes
-              notesHistory
-              createdAt
-              updatedAt
-              owner
-            }
-            locationLabel
-            locationInfoID
-            locationInfo {
-              __typename
-              id
-              locationLabel
-              latitude
-              longitude
               isActive
-              notes
-              notesHistory
               createdAt
               updatedAt
               owner
             }
-            notes
-            isFinal
-            tags
-            photosUrls
-            isActive
-            createdAt
-            updatedAt
-            owner
+            nextToken
           }
           createdAt
           updatedAt
@@ -9407,55 +8659,22 @@ export class APIService {
           notesHistory
           locations {
             __typename
-            id
-            boxID
-            box {
+            items {
               __typename
               id
-              title
-              contents
-              size
-              orgID
-              shipmentID
-              isActive
-              barCode
-              qrCode
-              barCodePhoto
-              qrCodePhoto
+              boxID
+              locationLabel
+              locationInfoID
+              notes
+              isFinal
               tags
               photosUrls
-              status
-              statusHistory
-              internalNotes
-              notes
-              notesHistory
-              createdAt
-              updatedAt
-              owner
-            }
-            locationLabel
-            locationInfoID
-            locationInfo {
-              __typename
-              id
-              locationLabel
-              latitude
-              longitude
               isActive
-              notes
-              notesHistory
               createdAt
               updatedAt
               owner
             }
-            notes
-            isFinal
-            tags
-            photosUrls
-            isActive
-            createdAt
-            updatedAt
-            owner
+            nextToken
           }
           createdAt
           updatedAt
@@ -9533,18 +8752,7 @@ export class APIService {
             notesHistory
             locations {
               __typename
-              id
-              boxID
-              locationLabel
-              locationInfoID
-              notes
-              isFinal
-              tags
-              photosUrls
-              isActive
-              createdAt
-              updatedAt
-              owner
+              nextToken
             }
             createdAt
             updatedAt
@@ -9646,18 +8854,7 @@ export class APIService {
             notesHistory
             locations {
               __typename
-              id
-              boxID
-              locationLabel
-              locationInfoID
-              notes
-              isFinal
-              tags
-              photosUrls
-              isActive
-              createdAt
-              updatedAt
-              owner
+              nextToken
             }
             createdAt
             updatedAt
@@ -9759,18 +8956,7 @@ export class APIService {
             notesHistory
             locations {
               __typename
-              id
-              boxID
-              locationLabel
-              locationInfoID
-              notes
-              isFinal
-              tags
-              photosUrls
-              isActive
-              createdAt
-              updatedAt
-              owner
+              nextToken
             }
             createdAt
             updatedAt

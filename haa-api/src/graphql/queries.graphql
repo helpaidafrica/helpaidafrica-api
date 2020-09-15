@@ -320,18 +320,7 @@ query GetShipment($id: ID!) {
       notes
       notesHistory
       locations {
-        id
-        boxID
-        locationLabel
-        locationInfoID
-        notes
-        isFinal
-        tags
-        photosUrls
-        isActive
-        createdAt
-        updatedAt
-        owner
+        nextToken
       }
       createdAt
       updatedAt
@@ -557,53 +546,21 @@ query GetBox($id: ID!) {
     notes
     notesHistory
     locations {
-      id
-      boxID
-      box {
+      items {
         id
-        title
-        contents
-        size
-        orgID
-        shipmentID
-        isActive
-        barCode
-        qrCode
-        barCodePhoto
-        qrCodePhoto
+        boxID
+        locationLabel
+        locationInfoID
+        notes
+        isFinal
         tags
         photosUrls
-        status
-        statusHistory
-        internalNotes
-        notes
-        notesHistory
-        createdAt
-        updatedAt
-        owner
-      }
-      locationLabel
-      locationInfoID
-      locationInfo {
-        id
-        locationLabel
-        latitude
-        longitude
         isActive
-        notes
-        notesHistory
         createdAt
         updatedAt
         owner
       }
-      notes
-      isFinal
-      tags
-      photosUrls
-      isActive
-      createdAt
-      updatedAt
-      owner
+      nextToken
     }
     createdAt
     updatedAt
@@ -667,18 +624,7 @@ query ListBoxs($filter: ModelBoxFilterInput, $limit: Int, $nextToken: String) {
       notes
       notesHistory
       locations {
-        id
-        boxID
-        locationLabel
-        locationInfoID
-        notes
-        isFinal
-        tags
-        photosUrls
-        isActive
-        createdAt
-        updatedAt
-        owner
+        nextToken
       }
       createdAt
       updatedAt
@@ -746,18 +692,7 @@ query GetLocation($id: ID!) {
       notes
       notesHistory
       locations {
-        id
-        boxID
-        locationLabel
-        locationInfoID
-        notes
-        isFinal
-        tags
-        photosUrls
-        isActive
-        createdAt
-        updatedAt
-        owner
+        nextToken
       }
       createdAt
       updatedAt
@@ -916,18 +851,7 @@ query ShipmentsByBoxId(
       notes
       notesHistory
       locations {
-        id
-        boxID
-        locationLabel
-        locationInfoID
-        notes
-        isFinal
-        tags
-        photosUrls
-        isActive
-        createdAt
-        updatedAt
-        owner
+        nextToken
       }
       createdAt
       updatedAt

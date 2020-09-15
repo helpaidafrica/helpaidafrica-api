@@ -469,18 +469,7 @@ mutation CreateShipment(
       notes
       notesHistory
       locations {
-        id
-        boxID
-        locationLabel
-        locationInfoID
-        notes
-        isFinal
-        tags
-        photosUrls
-        isActive
-        createdAt
-        updatedAt
-        owner
+        nextToken
       }
       createdAt
       updatedAt
@@ -592,18 +581,7 @@ mutation UpdateShipment(
       notes
       notesHistory
       locations {
-        id
-        boxID
-        locationLabel
-        locationInfoID
-        notes
-        isFinal
-        tags
-        photosUrls
-        isActive
-        createdAt
-        updatedAt
-        owner
+        nextToken
       }
       createdAt
       updatedAt
@@ -715,18 +693,7 @@ mutation DeleteShipment(
       notes
       notesHistory
       locations {
-        id
-        boxID
-        locationLabel
-        locationInfoID
-        notes
-        isFinal
-        tags
-        photosUrls
-        isActive
-        createdAt
-        updatedAt
-        owner
+        nextToken
       }
       createdAt
       updatedAt
@@ -877,53 +844,21 @@ mutation CreateBox(
     notes
     notesHistory
     locations {
-      id
-      boxID
-      box {
+      items {
         id
-        title
-        contents
-        size
-        orgID
-        shipmentID
-        isActive
-        barCode
-        qrCode
-        barCodePhoto
-        qrCodePhoto
+        boxID
+        locationLabel
+        locationInfoID
+        notes
+        isFinal
         tags
         photosUrls
-        status
-        statusHistory
-        internalNotes
-        notes
-        notesHistory
-        createdAt
-        updatedAt
-        owner
-      }
-      locationLabel
-      locationInfoID
-      locationInfo {
-        id
-        locationLabel
-        latitude
-        longitude
         isActive
-        notes
-        notesHistory
         createdAt
         updatedAt
         owner
       }
-      notes
-      isFinal
-      tags
-      photosUrls
-      isActive
-      createdAt
-      updatedAt
-      owner
+      nextToken
     }
     createdAt
     updatedAt
@@ -1070,53 +1005,21 @@ mutation UpdateBox(
     notes
     notesHistory
     locations {
-      id
-      boxID
-      box {
+      items {
         id
-        title
-        contents
-        size
-        orgID
-        shipmentID
-        isActive
-        barCode
-        qrCode
-        barCodePhoto
-        qrCodePhoto
+        boxID
+        locationLabel
+        locationInfoID
+        notes
+        isFinal
         tags
         photosUrls
-        status
-        statusHistory
-        internalNotes
-        notes
-        notesHistory
-        createdAt
-        updatedAt
-        owner
-      }
-      locationLabel
-      locationInfoID
-      locationInfo {
-        id
-        locationLabel
-        latitude
-        longitude
         isActive
-        notes
-        notesHistory
         createdAt
         updatedAt
         owner
       }
-      notes
-      isFinal
-      tags
-      photosUrls
-      isActive
-      createdAt
-      updatedAt
-      owner
+      nextToken
     }
     createdAt
     updatedAt
@@ -1263,53 +1166,21 @@ mutation DeleteBox(
     notes
     notesHistory
     locations {
-      id
-      boxID
-      box {
+      items {
         id
-        title
-        contents
-        size
-        orgID
-        shipmentID
-        isActive
-        barCode
-        qrCode
-        barCodePhoto
-        qrCodePhoto
+        boxID
+        locationLabel
+        locationInfoID
+        notes
+        isFinal
         tags
         photosUrls
-        status
-        statusHistory
-        internalNotes
-        notes
-        notesHistory
-        createdAt
-        updatedAt
-        owner
-      }
-      locationLabel
-      locationInfoID
-      locationInfo {
-        id
-        locationLabel
-        latitude
-        longitude
         isActive
-        notes
-        notesHistory
         createdAt
         updatedAt
         owner
       }
-      notes
-      isFinal
-      tags
-      photosUrls
-      isActive
-      createdAt
-      updatedAt
-      owner
+      nextToken
     }
     createdAt
     updatedAt
@@ -1378,18 +1249,7 @@ mutation CreateLocation(
       notes
       notesHistory
       locations {
-        id
-        boxID
-        locationLabel
-        locationInfoID
-        notes
-        isFinal
-        tags
-        photosUrls
-        isActive
-        createdAt
-        updatedAt
-        owner
+        nextToken
       }
       createdAt
       updatedAt
@@ -1481,18 +1341,7 @@ mutation UpdateLocation(
       notes
       notesHistory
       locations {
-        id
-        boxID
-        locationLabel
-        locationInfoID
-        notes
-        isFinal
-        tags
-        photosUrls
-        isActive
-        createdAt
-        updatedAt
-        owner
+        nextToken
       }
       createdAt
       updatedAt
@@ -1584,18 +1433,7 @@ mutation DeleteLocation(
       notes
       notesHistory
       locations {
-        id
-        boxID
-        locationLabel
-        locationInfoID
-        notes
-        isFinal
-        tags
-        photosUrls
-        isActive
-        createdAt
-        updatedAt
-        owner
+        nextToken
       }
       createdAt
       updatedAt

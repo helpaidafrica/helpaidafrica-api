@@ -430,18 +430,7 @@ subscription OnCreateShipment($owner: String!) {
       notes
       notesHistory
       locations {
-        id
-        boxID
-        locationLabel
-        locationInfoID
-        notes
-        isFinal
-        tags
-        photosUrls
-        isActive
-        createdAt
-        updatedAt
-        owner
+        nextToken
       }
       createdAt
       updatedAt
@@ -550,18 +539,7 @@ subscription OnUpdateShipment($owner: String!) {
       notes
       notesHistory
       locations {
-        id
-        boxID
-        locationLabel
-        locationInfoID
-        notes
-        isFinal
-        tags
-        photosUrls
-        isActive
-        createdAt
-        updatedAt
-        owner
+        nextToken
       }
       createdAt
       updatedAt
@@ -670,18 +648,7 @@ subscription OnDeleteShipment($owner: String!) {
       notes
       notesHistory
       locations {
-        id
-        boxID
-        locationLabel
-        locationInfoID
-        notes
-        isFinal
-        tags
-        photosUrls
-        isActive
-        createdAt
-        updatedAt
-        owner
+        nextToken
       }
       createdAt
       updatedAt
@@ -829,53 +796,21 @@ subscription OnCreateBox($owner: String!) {
     notes
     notesHistory
     locations {
-      id
-      boxID
-      box {
+      items {
         id
-        title
-        contents
-        size
-        orgID
-        shipmentID
-        isActive
-        barCode
-        qrCode
-        barCodePhoto
-        qrCodePhoto
+        boxID
+        locationLabel
+        locationInfoID
+        notes
+        isFinal
         tags
         photosUrls
-        status
-        statusHistory
-        internalNotes
-        notes
-        notesHistory
-        createdAt
-        updatedAt
-        owner
-      }
-      locationLabel
-      locationInfoID
-      locationInfo {
-        id
-        locationLabel
-        latitude
-        longitude
         isActive
-        notes
-        notesHistory
         createdAt
         updatedAt
         owner
       }
-      notes
-      isFinal
-      tags
-      photosUrls
-      isActive
-      createdAt
-      updatedAt
-      owner
+      nextToken
     }
     createdAt
     updatedAt
@@ -1019,53 +954,21 @@ subscription OnUpdateBox($owner: String!) {
     notes
     notesHistory
     locations {
-      id
-      boxID
-      box {
+      items {
         id
-        title
-        contents
-        size
-        orgID
-        shipmentID
-        isActive
-        barCode
-        qrCode
-        barCodePhoto
-        qrCodePhoto
+        boxID
+        locationLabel
+        locationInfoID
+        notes
+        isFinal
         tags
         photosUrls
-        status
-        statusHistory
-        internalNotes
-        notes
-        notesHistory
-        createdAt
-        updatedAt
-        owner
-      }
-      locationLabel
-      locationInfoID
-      locationInfo {
-        id
-        locationLabel
-        latitude
-        longitude
         isActive
-        notes
-        notesHistory
         createdAt
         updatedAt
         owner
       }
-      notes
-      isFinal
-      tags
-      photosUrls
-      isActive
-      createdAt
-      updatedAt
-      owner
+      nextToken
     }
     createdAt
     updatedAt
@@ -1209,53 +1112,21 @@ subscription OnDeleteBox($owner: String!) {
     notes
     notesHistory
     locations {
-      id
-      boxID
-      box {
+      items {
         id
-        title
-        contents
-        size
-        orgID
-        shipmentID
-        isActive
-        barCode
-        qrCode
-        barCodePhoto
-        qrCodePhoto
+        boxID
+        locationLabel
+        locationInfoID
+        notes
+        isFinal
         tags
         photosUrls
-        status
-        statusHistory
-        internalNotes
-        notes
-        notesHistory
-        createdAt
-        updatedAt
-        owner
-      }
-      locationLabel
-      locationInfoID
-      locationInfo {
-        id
-        locationLabel
-        latitude
-        longitude
         isActive
-        notes
-        notesHistory
         createdAt
         updatedAt
         owner
       }
-      notes
-      isFinal
-      tags
-      photosUrls
-      isActive
-      createdAt
-      updatedAt
-      owner
+      nextToken
     }
     createdAt
     updatedAt
@@ -1321,18 +1192,7 @@ subscription OnCreateLocation($owner: String!) {
       notes
       notesHistory
       locations {
-        id
-        boxID
-        locationLabel
-        locationInfoID
-        notes
-        isFinal
-        tags
-        photosUrls
-        isActive
-        createdAt
-        updatedAt
-        owner
+        nextToken
       }
       createdAt
       updatedAt
@@ -1421,18 +1281,7 @@ subscription OnUpdateLocation($owner: String!) {
       notes
       notesHistory
       locations {
-        id
-        boxID
-        locationLabel
-        locationInfoID
-        notes
-        isFinal
-        tags
-        photosUrls
-        isActive
-        createdAt
-        updatedAt
-        owner
+        nextToken
       }
       createdAt
       updatedAt
@@ -1521,18 +1370,7 @@ subscription OnDeleteLocation($owner: String!) {
       notes
       notesHistory
       locations {
-        id
-        boxID
-        locationLabel
-        locationInfoID
-        notes
-        isFinal
-        tags
-        photosUrls
-        isActive
-        createdAt
-        updatedAt
-        owner
+        nextToken
       }
       createdAt
       updatedAt

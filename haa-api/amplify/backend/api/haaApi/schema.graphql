@@ -161,7 +161,7 @@ type Shipment
   photosUrls: [AWSURL!]
   notes: String
   notesHistory: [String!]
-  boxes: [Box] # @connection(keyName: "byBoxShipment", fields: ["id"])
+  boxes: [Box] @connection(keyName: "byBoxShipment", fields: ["id"])
 }
 
 type Box
@@ -205,7 +205,7 @@ type Box
   internalNotes: String
   notes: String
   notesHistory: [String!]
-  locations: [Location] # @connection(keyName: "locationsbyBox", fields: ["id"])
+  locations: [Location] @connection(keyName: "locationForBox", fields: ["id"])
 }
 
 type Location
