@@ -1,8 +1,108 @@
 # this is an auto generated file. This will be overwritten
+query GetAddress($id: ID!) {
+  getAddress(id: $id) {
+    id
+    address
+    city
+    state
+    province
+    country
+    createdAt
+    updatedAt
+    owner
+  }
+}
+query ListAddresss(
+  $filter: ModelAddressFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listAddresss(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      address
+      city
+      state
+      province
+      country
+      createdAt
+      updatedAt
+      owner
+    }
+    nextToken
+  }
+}
+query GetPhone($id: ID!) {
+  getPhone(id: $id) {
+    id
+    phone
+    isPrimary
+    isActive
+    type
+    createdAt
+    updatedAt
+    owner
+  }
+}
+query ListPhones(
+  $filter: ModelPhoneFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listPhones(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      phone
+      isPrimary
+      isActive
+      type
+      createdAt
+      updatedAt
+      owner
+    }
+    nextToken
+  }
+}
 query GetOrg($id: ID!) {
   getOrg(id: $id) {
     id
     name
+    description
+    address {
+      id
+      address
+      city
+      state
+      province
+      country
+      createdAt
+      updatedAt
+      owner
+    }
+    email
+    primaryPhone {
+      id
+      phone
+      isPrimary
+      isActive
+      type
+      createdAt
+      updatedAt
+      owner
+    }
+    otherPhones {
+      id
+      phone
+      isPrimary
+      isActive
+      type
+      createdAt
+      updatedAt
+      owner
+    }
+    tags
+    photosUrls
+    notes
     isActive
     boxes {
       items {
@@ -13,6 +113,17 @@ query GetOrg($id: ID!) {
         orgID
         shipmentID
         isActive
+        barCode
+        qrCode
+        barCodePhoto
+        qrCodePhoto
+        tags
+        photosUrls
+        status
+        statusHistory
+        internalNotes
+        notes
+        notesHistory
         createdAt
         updatedAt
         owner
@@ -29,6 +140,42 @@ query ListOrgs($filter: ModelOrgFilterInput, $limit: Int, $nextToken: String) {
     items {
       id
       name
+      description
+      address {
+        id
+        address
+        city
+        state
+        province
+        country
+        createdAt
+        updatedAt
+        owner
+      }
+      email
+      primaryPhone {
+        id
+        phone
+        isPrimary
+        isActive
+        type
+        createdAt
+        updatedAt
+        owner
+      }
+      otherPhones {
+        id
+        phone
+        isPrimary
+        isActive
+        type
+        createdAt
+        updatedAt
+        owner
+      }
+      tags
+      photosUrls
+      notes
       isActive
       boxes {
         nextToken
@@ -40,25 +187,155 @@ query ListOrgs($filter: ModelOrgFilterInput, $limit: Int, $nextToken: String) {
     nextToken
   }
 }
+query GetLocationInfo($id: ID!) {
+  getLocationInfo(id: $id) {
+    id
+    locationLabel
+    latitude
+    longitude
+    isActive
+    notes
+    notesHistory
+    createdAt
+    updatedAt
+    owner
+  }
+}
+query ListLocationInfos(
+  $filter: ModelLocationInfoFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listLocationInfos(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      locationLabel
+      latitude
+      longitude
+      isActive
+      notes
+      notesHistory
+      createdAt
+      updatedAt
+      owner
+    }
+    nextToken
+  }
+}
 query GetShipment($id: ID!) {
   getShipment(id: $id) {
     id
     name
+    description
     isActive
+    startDate
+    deliveryDate
+    startLocation {
+      id
+      locationLabel
+      latitude
+      longitude
+      isActive
+      notes
+      notesHistory
+      createdAt
+      updatedAt
+      owner
+    }
+    destinationLocation {
+      id
+      locationLabel
+      latitude
+      longitude
+      isActive
+      notes
+      notesHistory
+      createdAt
+      updatedAt
+      owner
+    }
+    shipmentNotes
+    deliveryNotes
+    trackingId
+    weight
+    shipmentReceiver
+    status
+    statusHistory
+    tags
+    photosUrls
+    notes
+    notesHistory
     boxes {
-      items {
+      id
+      title
+      contents
+      size
+      orgID
+      org {
         id
-        title
-        contents
-        size
-        orgID
-        shipmentID
+        name
+        description
+        email
+        tags
+        photosUrls
+        notes
         isActive
         createdAt
         updatedAt
         owner
       }
-      nextToken
+      shipmentID
+      shipment {
+        id
+        name
+        description
+        isActive
+        startDate
+        deliveryDate
+        shipmentNotes
+        deliveryNotes
+        trackingId
+        weight
+        shipmentReceiver
+        status
+        statusHistory
+        tags
+        photosUrls
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+        owner
+      }
+      isActive
+      barCode
+      qrCode
+      barCodePhoto
+      qrCodePhoto
+      tags
+      photosUrls
+      status
+      statusHistory
+      internalNotes
+      notes
+      notesHistory
+      locations {
+        id
+        boxID
+        locationLabel
+        locationInfoID
+        notes
+        isFinal
+        tags
+        photosUrls
+        isActive
+        createdAt
+        updatedAt
+        owner
+      }
+      createdAt
+      updatedAt
+      owner
     }
     createdAt
     updatedAt
@@ -74,9 +351,67 @@ query ListShipments(
     items {
       id
       name
+      description
       isActive
+      startDate
+      deliveryDate
+      startLocation {
+        id
+        locationLabel
+        latitude
+        longitude
+        isActive
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+        owner
+      }
+      destinationLocation {
+        id
+        locationLabel
+        latitude
+        longitude
+        isActive
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+        owner
+      }
+      shipmentNotes
+      deliveryNotes
+      trackingId
+      weight
+      shipmentReceiver
+      status
+      statusHistory
+      tags
+      photosUrls
+      notes
+      notesHistory
       boxes {
-        nextToken
+        id
+        title
+        contents
+        size
+        orgID
+        shipmentID
+        isActive
+        barCode
+        qrCode
+        barCodePhoto
+        qrCodePhoto
+        tags
+        photosUrls
+        status
+        statusHistory
+        internalNotes
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+        owner
       }
       createdAt
       updatedAt
@@ -95,6 +430,42 @@ query GetBox($id: ID!) {
     org {
       id
       name
+      description
+      address {
+        id
+        address
+        city
+        state
+        province
+        country
+        createdAt
+        updatedAt
+        owner
+      }
+      email
+      primaryPhone {
+        id
+        phone
+        isPrimary
+        isActive
+        type
+        createdAt
+        updatedAt
+        owner
+      }
+      otherPhones {
+        id
+        phone
+        isPrimary
+        isActive
+        type
+        createdAt
+        updatedAt
+        owner
+      }
+      tags
+      photosUrls
+      notes
       isActive
       boxes {
         nextToken
@@ -107,28 +478,132 @@ query GetBox($id: ID!) {
     shipment {
       id
       name
+      description
       isActive
+      startDate
+      deliveryDate
+      startLocation {
+        id
+        locationLabel
+        latitude
+        longitude
+        isActive
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+        owner
+      }
+      destinationLocation {
+        id
+        locationLabel
+        latitude
+        longitude
+        isActive
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+        owner
+      }
+      shipmentNotes
+      deliveryNotes
+      trackingId
+      weight
+      shipmentReceiver
+      status
+      statusHistory
+      tags
+      photosUrls
+      notes
+      notesHistory
       boxes {
-        nextToken
+        id
+        title
+        contents
+        size
+        orgID
+        shipmentID
+        isActive
+        barCode
+        qrCode
+        barCodePhoto
+        qrCodePhoto
+        tags
+        photosUrls
+        status
+        statusHistory
+        internalNotes
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+        owner
       }
       createdAt
       updatedAt
       owner
     }
     isActive
+    barCode
+    qrCode
+    barCodePhoto
+    qrCodePhoto
+    tags
+    photosUrls
+    status
+    statusHistory
+    internalNotes
+    notes
+    notesHistory
     locations {
-      items {
+      id
+      boxID
+      box {
         id
-        boxID
-        locationLabel
-        latitude
-        longitude
+        title
+        contents
+        size
+        orgID
+        shipmentID
         isActive
+        barCode
+        qrCode
+        barCodePhoto
+        qrCodePhoto
+        tags
+        photosUrls
+        status
+        statusHistory
+        internalNotes
+        notes
+        notesHistory
         createdAt
         updatedAt
         owner
       }
-      nextToken
+      locationLabel
+      locationInfoID
+      locationInfo {
+        id
+        locationLabel
+        latitude
+        longitude
+        isActive
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+        owner
+      }
+      notes
+      isFinal
+      tags
+      photosUrls
+      isActive
+      createdAt
+      updatedAt
+      owner
     }
     createdAt
     updatedAt
@@ -146,6 +621,11 @@ query ListBoxs($filter: ModelBoxFilterInput, $limit: Int, $nextToken: String) {
       org {
         id
         name
+        description
+        email
+        tags
+        photosUrls
+        notes
         isActive
         createdAt
         updatedAt
@@ -155,14 +635,50 @@ query ListBoxs($filter: ModelBoxFilterInput, $limit: Int, $nextToken: String) {
       shipment {
         id
         name
+        description
         isActive
+        startDate
+        deliveryDate
+        shipmentNotes
+        deliveryNotes
+        trackingId
+        weight
+        shipmentReceiver
+        status
+        statusHistory
+        tags
+        photosUrls
+        notes
+        notesHistory
         createdAt
         updatedAt
         owner
       }
       isActive
+      barCode
+      qrCode
+      barCodePhoto
+      qrCodePhoto
+      tags
+      photosUrls
+      status
+      statusHistory
+      internalNotes
+      notes
+      notesHistory
       locations {
-        nextToken
+        id
+        boxID
+        locationLabel
+        locationInfoID
+        notes
+        isFinal
+        tags
+        photosUrls
+        isActive
+        createdAt
+        updatedAt
+        owner
       }
       createdAt
       updatedAt
@@ -184,6 +700,11 @@ query GetLocation($id: ID!) {
       org {
         id
         name
+        description
+        email
+        tags
+        photosUrls
+        notes
         isActive
         createdAt
         updatedAt
@@ -193,22 +714,73 @@ query GetLocation($id: ID!) {
       shipment {
         id
         name
+        description
         isActive
+        startDate
+        deliveryDate
+        shipmentNotes
+        deliveryNotes
+        trackingId
+        weight
+        shipmentReceiver
+        status
+        statusHistory
+        tags
+        photosUrls
+        notes
+        notesHistory
         createdAt
         updatedAt
         owner
       }
       isActive
+      barCode
+      qrCode
+      barCodePhoto
+      qrCodePhoto
+      tags
+      photosUrls
+      status
+      statusHistory
+      internalNotes
+      notes
+      notesHistory
       locations {
-        nextToken
+        id
+        boxID
+        locationLabel
+        locationInfoID
+        notes
+        isFinal
+        tags
+        photosUrls
+        isActive
+        createdAt
+        updatedAt
+        owner
       }
       createdAt
       updatedAt
       owner
     }
     locationLabel
-    latitude
-    longitude
+    locationInfoID
+    locationInfo {
+      id
+      locationLabel
+      latitude
+      longitude
+      isActive
+      notes
+      notesHistory
+      createdAt
+      updatedAt
+      owner
+    }
+    notes
+    isFinal
+    tags
+    photosUrls
     isActive
     createdAt
     updatedAt
@@ -232,14 +804,131 @@ query ListLocations(
         orgID
         shipmentID
         isActive
+        barCode
+        qrCode
+        barCodePhoto
+        qrCodePhoto
+        tags
+        photosUrls
+        status
+        statusHistory
+        internalNotes
+        notes
+        notesHistory
         createdAt
         updatedAt
         owner
       }
       locationLabel
-      latitude
-      longitude
+      locationInfoID
+      locationInfo {
+        id
+        locationLabel
+        latitude
+        longitude
+        isActive
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+        owner
+      }
+      notes
+      isFinal
+      tags
+      photosUrls
       isActive
+      createdAt
+      updatedAt
+      owner
+    }
+    nextToken
+  }
+}
+query ShipmentsByBoxId(
+  $shipmentID: ID
+  $id: ModelIDKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelBoxFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  shipmentsByBoxId(
+    shipmentID: $shipmentID
+    id: $id
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      title
+      contents
+      size
+      orgID
+      org {
+        id
+        name
+        description
+        email
+        tags
+        photosUrls
+        notes
+        isActive
+        createdAt
+        updatedAt
+        owner
+      }
+      shipmentID
+      shipment {
+        id
+        name
+        description
+        isActive
+        startDate
+        deliveryDate
+        shipmentNotes
+        deliveryNotes
+        trackingId
+        weight
+        shipmentReceiver
+        status
+        statusHistory
+        tags
+        photosUrls
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+        owner
+      }
+      isActive
+      barCode
+      qrCode
+      barCodePhoto
+      qrCodePhoto
+      tags
+      photosUrls
+      status
+      statusHistory
+      internalNotes
+      notes
+      notesHistory
+      locations {
+        id
+        boxID
+        locationLabel
+        locationInfoID
+        notes
+        isFinal
+        tags
+        photosUrls
+        isActive
+        createdAt
+        updatedAt
+        owner
+      }
       createdAt
       updatedAt
       owner

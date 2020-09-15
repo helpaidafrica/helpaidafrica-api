@@ -1,8 +1,119 @@
 # this is an auto generated file. This will be overwritten
+subscription OnCreateAddress($owner: String!) {
+  onCreateAddress(owner: $owner) {
+    id
+    address
+    city
+    state
+    province
+    country
+    createdAt
+    updatedAt
+    owner
+  }
+}
+subscription OnUpdateAddress($owner: String!) {
+  onUpdateAddress(owner: $owner) {
+    id
+    address
+    city
+    state
+    province
+    country
+    createdAt
+    updatedAt
+    owner
+  }
+}
+subscription OnDeleteAddress($owner: String!) {
+  onDeleteAddress(owner: $owner) {
+    id
+    address
+    city
+    state
+    province
+    country
+    createdAt
+    updatedAt
+    owner
+  }
+}
+subscription OnCreatePhone($owner: String!) {
+  onCreatePhone(owner: $owner) {
+    id
+    phone
+    isPrimary
+    isActive
+    type
+    createdAt
+    updatedAt
+    owner
+  }
+}
+subscription OnUpdatePhone($owner: String!) {
+  onUpdatePhone(owner: $owner) {
+    id
+    phone
+    isPrimary
+    isActive
+    type
+    createdAt
+    updatedAt
+    owner
+  }
+}
+subscription OnDeletePhone($owner: String!) {
+  onDeletePhone(owner: $owner) {
+    id
+    phone
+    isPrimary
+    isActive
+    type
+    createdAt
+    updatedAt
+    owner
+  }
+}
 subscription OnCreateOrg($owner: String!) {
   onCreateOrg(owner: $owner) {
     id
     name
+    description
+    address {
+      id
+      address
+      city
+      state
+      province
+      country
+      createdAt
+      updatedAt
+      owner
+    }
+    email
+    primaryPhone {
+      id
+      phone
+      isPrimary
+      isActive
+      type
+      createdAt
+      updatedAt
+      owner
+    }
+    otherPhones {
+      id
+      phone
+      isPrimary
+      isActive
+      type
+      createdAt
+      updatedAt
+      owner
+    }
+    tags
+    photosUrls
+    notes
     isActive
     boxes {
       items {
@@ -13,6 +124,17 @@ subscription OnCreateOrg($owner: String!) {
         orgID
         shipmentID
         isActive
+        barCode
+        qrCode
+        barCodePhoto
+        qrCodePhoto
+        tags
+        photosUrls
+        status
+        statusHistory
+        internalNotes
+        notes
+        notesHistory
         createdAt
         updatedAt
         owner
@@ -28,6 +150,42 @@ subscription OnUpdateOrg($owner: String!) {
   onUpdateOrg(owner: $owner) {
     id
     name
+    description
+    address {
+      id
+      address
+      city
+      state
+      province
+      country
+      createdAt
+      updatedAt
+      owner
+    }
+    email
+    primaryPhone {
+      id
+      phone
+      isPrimary
+      isActive
+      type
+      createdAt
+      updatedAt
+      owner
+    }
+    otherPhones {
+      id
+      phone
+      isPrimary
+      isActive
+      type
+      createdAt
+      updatedAt
+      owner
+    }
+    tags
+    photosUrls
+    notes
     isActive
     boxes {
       items {
@@ -38,6 +196,17 @@ subscription OnUpdateOrg($owner: String!) {
         orgID
         shipmentID
         isActive
+        barCode
+        qrCode
+        barCodePhoto
+        qrCodePhoto
+        tags
+        photosUrls
+        status
+        statusHistory
+        internalNotes
+        notes
+        notesHistory
         createdAt
         updatedAt
         owner
@@ -53,6 +222,42 @@ subscription OnDeleteOrg($owner: String!) {
   onDeleteOrg(owner: $owner) {
     id
     name
+    description
+    address {
+      id
+      address
+      city
+      state
+      province
+      country
+      createdAt
+      updatedAt
+      owner
+    }
+    email
+    primaryPhone {
+      id
+      phone
+      isPrimary
+      isActive
+      type
+      createdAt
+      updatedAt
+      owner
+    }
+    otherPhones {
+      id
+      phone
+      isPrimary
+      isActive
+      type
+      createdAt
+      updatedAt
+      owner
+    }
+    tags
+    photosUrls
+    notes
     isActive
     boxes {
       items {
@@ -63,6 +268,17 @@ subscription OnDeleteOrg($owner: String!) {
         orgID
         shipmentID
         isActive
+        barCode
+        qrCode
+        barCodePhoto
+        qrCodePhoto
+        tags
+        photosUrls
+        status
+        statusHistory
+        internalNotes
+        notes
+        notesHistory
         createdAt
         updatedAt
         owner
@@ -74,25 +290,162 @@ subscription OnDeleteOrg($owner: String!) {
     owner
   }
 }
+subscription OnCreateLocationInfo($owner: String!) {
+  onCreateLocationInfo(owner: $owner) {
+    id
+    locationLabel
+    latitude
+    longitude
+    isActive
+    notes
+    notesHistory
+    createdAt
+    updatedAt
+    owner
+  }
+}
+subscription OnUpdateLocationInfo($owner: String!) {
+  onUpdateLocationInfo(owner: $owner) {
+    id
+    locationLabel
+    latitude
+    longitude
+    isActive
+    notes
+    notesHistory
+    createdAt
+    updatedAt
+    owner
+  }
+}
+subscription OnDeleteLocationInfo($owner: String!) {
+  onDeleteLocationInfo(owner: $owner) {
+    id
+    locationLabel
+    latitude
+    longitude
+    isActive
+    notes
+    notesHistory
+    createdAt
+    updatedAt
+    owner
+  }
+}
 subscription OnCreateShipment($owner: String!) {
   onCreateShipment(owner: $owner) {
     id
     name
+    description
     isActive
+    startDate
+    deliveryDate
+    startLocation {
+      id
+      locationLabel
+      latitude
+      longitude
+      isActive
+      notes
+      notesHistory
+      createdAt
+      updatedAt
+      owner
+    }
+    destinationLocation {
+      id
+      locationLabel
+      latitude
+      longitude
+      isActive
+      notes
+      notesHistory
+      createdAt
+      updatedAt
+      owner
+    }
+    shipmentNotes
+    deliveryNotes
+    trackingId
+    weight
+    shipmentReceiver
+    status
+    statusHistory
+    tags
+    photosUrls
+    notes
+    notesHistory
     boxes {
-      items {
+      id
+      title
+      contents
+      size
+      orgID
+      org {
         id
-        title
-        contents
-        size
-        orgID
-        shipmentID
+        name
+        description
+        email
+        tags
+        photosUrls
+        notes
         isActive
         createdAt
         updatedAt
         owner
       }
-      nextToken
+      shipmentID
+      shipment {
+        id
+        name
+        description
+        isActive
+        startDate
+        deliveryDate
+        shipmentNotes
+        deliveryNotes
+        trackingId
+        weight
+        shipmentReceiver
+        status
+        statusHistory
+        tags
+        photosUrls
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+        owner
+      }
+      isActive
+      barCode
+      qrCode
+      barCodePhoto
+      qrCodePhoto
+      tags
+      photosUrls
+      status
+      statusHistory
+      internalNotes
+      notes
+      notesHistory
+      locations {
+        id
+        boxID
+        locationLabel
+        locationInfoID
+        notes
+        isFinal
+        tags
+        photosUrls
+        isActive
+        createdAt
+        updatedAt
+        owner
+      }
+      createdAt
+      updatedAt
+      owner
     }
     createdAt
     updatedAt
@@ -103,21 +456,116 @@ subscription OnUpdateShipment($owner: String!) {
   onUpdateShipment(owner: $owner) {
     id
     name
+    description
     isActive
+    startDate
+    deliveryDate
+    startLocation {
+      id
+      locationLabel
+      latitude
+      longitude
+      isActive
+      notes
+      notesHistory
+      createdAt
+      updatedAt
+      owner
+    }
+    destinationLocation {
+      id
+      locationLabel
+      latitude
+      longitude
+      isActive
+      notes
+      notesHistory
+      createdAt
+      updatedAt
+      owner
+    }
+    shipmentNotes
+    deliveryNotes
+    trackingId
+    weight
+    shipmentReceiver
+    status
+    statusHistory
+    tags
+    photosUrls
+    notes
+    notesHistory
     boxes {
-      items {
+      id
+      title
+      contents
+      size
+      orgID
+      org {
         id
-        title
-        contents
-        size
-        orgID
-        shipmentID
+        name
+        description
+        email
+        tags
+        photosUrls
+        notes
         isActive
         createdAt
         updatedAt
         owner
       }
-      nextToken
+      shipmentID
+      shipment {
+        id
+        name
+        description
+        isActive
+        startDate
+        deliveryDate
+        shipmentNotes
+        deliveryNotes
+        trackingId
+        weight
+        shipmentReceiver
+        status
+        statusHistory
+        tags
+        photosUrls
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+        owner
+      }
+      isActive
+      barCode
+      qrCode
+      barCodePhoto
+      qrCodePhoto
+      tags
+      photosUrls
+      status
+      statusHistory
+      internalNotes
+      notes
+      notesHistory
+      locations {
+        id
+        boxID
+        locationLabel
+        locationInfoID
+        notes
+        isFinal
+        tags
+        photosUrls
+        isActive
+        createdAt
+        updatedAt
+        owner
+      }
+      createdAt
+      updatedAt
+      owner
     }
     createdAt
     updatedAt
@@ -128,21 +576,116 @@ subscription OnDeleteShipment($owner: String!) {
   onDeleteShipment(owner: $owner) {
     id
     name
+    description
     isActive
+    startDate
+    deliveryDate
+    startLocation {
+      id
+      locationLabel
+      latitude
+      longitude
+      isActive
+      notes
+      notesHistory
+      createdAt
+      updatedAt
+      owner
+    }
+    destinationLocation {
+      id
+      locationLabel
+      latitude
+      longitude
+      isActive
+      notes
+      notesHistory
+      createdAt
+      updatedAt
+      owner
+    }
+    shipmentNotes
+    deliveryNotes
+    trackingId
+    weight
+    shipmentReceiver
+    status
+    statusHistory
+    tags
+    photosUrls
+    notes
+    notesHistory
     boxes {
-      items {
+      id
+      title
+      contents
+      size
+      orgID
+      org {
         id
-        title
-        contents
-        size
-        orgID
-        shipmentID
+        name
+        description
+        email
+        tags
+        photosUrls
+        notes
         isActive
         createdAt
         updatedAt
         owner
       }
-      nextToken
+      shipmentID
+      shipment {
+        id
+        name
+        description
+        isActive
+        startDate
+        deliveryDate
+        shipmentNotes
+        deliveryNotes
+        trackingId
+        weight
+        shipmentReceiver
+        status
+        statusHistory
+        tags
+        photosUrls
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+        owner
+      }
+      isActive
+      barCode
+      qrCode
+      barCodePhoto
+      qrCodePhoto
+      tags
+      photosUrls
+      status
+      statusHistory
+      internalNotes
+      notes
+      notesHistory
+      locations {
+        id
+        boxID
+        locationLabel
+        locationInfoID
+        notes
+        isFinal
+        tags
+        photosUrls
+        isActive
+        createdAt
+        updatedAt
+        owner
+      }
+      createdAt
+      updatedAt
+      owner
     }
     createdAt
     updatedAt
@@ -159,6 +702,42 @@ subscription OnCreateBox($owner: String!) {
     org {
       id
       name
+      description
+      address {
+        id
+        address
+        city
+        state
+        province
+        country
+        createdAt
+        updatedAt
+        owner
+      }
+      email
+      primaryPhone {
+        id
+        phone
+        isPrimary
+        isActive
+        type
+        createdAt
+        updatedAt
+        owner
+      }
+      otherPhones {
+        id
+        phone
+        isPrimary
+        isActive
+        type
+        createdAt
+        updatedAt
+        owner
+      }
+      tags
+      photosUrls
+      notes
       isActive
       boxes {
         nextToken
@@ -171,28 +750,132 @@ subscription OnCreateBox($owner: String!) {
     shipment {
       id
       name
+      description
       isActive
+      startDate
+      deliveryDate
+      startLocation {
+        id
+        locationLabel
+        latitude
+        longitude
+        isActive
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+        owner
+      }
+      destinationLocation {
+        id
+        locationLabel
+        latitude
+        longitude
+        isActive
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+        owner
+      }
+      shipmentNotes
+      deliveryNotes
+      trackingId
+      weight
+      shipmentReceiver
+      status
+      statusHistory
+      tags
+      photosUrls
+      notes
+      notesHistory
       boxes {
-        nextToken
+        id
+        title
+        contents
+        size
+        orgID
+        shipmentID
+        isActive
+        barCode
+        qrCode
+        barCodePhoto
+        qrCodePhoto
+        tags
+        photosUrls
+        status
+        statusHistory
+        internalNotes
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+        owner
       }
       createdAt
       updatedAt
       owner
     }
     isActive
+    barCode
+    qrCode
+    barCodePhoto
+    qrCodePhoto
+    tags
+    photosUrls
+    status
+    statusHistory
+    internalNotes
+    notes
+    notesHistory
     locations {
-      items {
+      id
+      boxID
+      box {
         id
-        boxID
-        locationLabel
-        latitude
-        longitude
+        title
+        contents
+        size
+        orgID
+        shipmentID
         isActive
+        barCode
+        qrCode
+        barCodePhoto
+        qrCodePhoto
+        tags
+        photosUrls
+        status
+        statusHistory
+        internalNotes
+        notes
+        notesHistory
         createdAt
         updatedAt
         owner
       }
-      nextToken
+      locationLabel
+      locationInfoID
+      locationInfo {
+        id
+        locationLabel
+        latitude
+        longitude
+        isActive
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+        owner
+      }
+      notes
+      isFinal
+      tags
+      photosUrls
+      isActive
+      createdAt
+      updatedAt
+      owner
     }
     createdAt
     updatedAt
@@ -209,6 +892,42 @@ subscription OnUpdateBox($owner: String!) {
     org {
       id
       name
+      description
+      address {
+        id
+        address
+        city
+        state
+        province
+        country
+        createdAt
+        updatedAt
+        owner
+      }
+      email
+      primaryPhone {
+        id
+        phone
+        isPrimary
+        isActive
+        type
+        createdAt
+        updatedAt
+        owner
+      }
+      otherPhones {
+        id
+        phone
+        isPrimary
+        isActive
+        type
+        createdAt
+        updatedAt
+        owner
+      }
+      tags
+      photosUrls
+      notes
       isActive
       boxes {
         nextToken
@@ -221,28 +940,132 @@ subscription OnUpdateBox($owner: String!) {
     shipment {
       id
       name
+      description
       isActive
+      startDate
+      deliveryDate
+      startLocation {
+        id
+        locationLabel
+        latitude
+        longitude
+        isActive
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+        owner
+      }
+      destinationLocation {
+        id
+        locationLabel
+        latitude
+        longitude
+        isActive
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+        owner
+      }
+      shipmentNotes
+      deliveryNotes
+      trackingId
+      weight
+      shipmentReceiver
+      status
+      statusHistory
+      tags
+      photosUrls
+      notes
+      notesHistory
       boxes {
-        nextToken
+        id
+        title
+        contents
+        size
+        orgID
+        shipmentID
+        isActive
+        barCode
+        qrCode
+        barCodePhoto
+        qrCodePhoto
+        tags
+        photosUrls
+        status
+        statusHistory
+        internalNotes
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+        owner
       }
       createdAt
       updatedAt
       owner
     }
     isActive
+    barCode
+    qrCode
+    barCodePhoto
+    qrCodePhoto
+    tags
+    photosUrls
+    status
+    statusHistory
+    internalNotes
+    notes
+    notesHistory
     locations {
-      items {
+      id
+      boxID
+      box {
         id
-        boxID
-        locationLabel
-        latitude
-        longitude
+        title
+        contents
+        size
+        orgID
+        shipmentID
         isActive
+        barCode
+        qrCode
+        barCodePhoto
+        qrCodePhoto
+        tags
+        photosUrls
+        status
+        statusHistory
+        internalNotes
+        notes
+        notesHistory
         createdAt
         updatedAt
         owner
       }
-      nextToken
+      locationLabel
+      locationInfoID
+      locationInfo {
+        id
+        locationLabel
+        latitude
+        longitude
+        isActive
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+        owner
+      }
+      notes
+      isFinal
+      tags
+      photosUrls
+      isActive
+      createdAt
+      updatedAt
+      owner
     }
     createdAt
     updatedAt
@@ -259,6 +1082,42 @@ subscription OnDeleteBox($owner: String!) {
     org {
       id
       name
+      description
+      address {
+        id
+        address
+        city
+        state
+        province
+        country
+        createdAt
+        updatedAt
+        owner
+      }
+      email
+      primaryPhone {
+        id
+        phone
+        isPrimary
+        isActive
+        type
+        createdAt
+        updatedAt
+        owner
+      }
+      otherPhones {
+        id
+        phone
+        isPrimary
+        isActive
+        type
+        createdAt
+        updatedAt
+        owner
+      }
+      tags
+      photosUrls
+      notes
       isActive
       boxes {
         nextToken
@@ -271,28 +1130,132 @@ subscription OnDeleteBox($owner: String!) {
     shipment {
       id
       name
+      description
       isActive
+      startDate
+      deliveryDate
+      startLocation {
+        id
+        locationLabel
+        latitude
+        longitude
+        isActive
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+        owner
+      }
+      destinationLocation {
+        id
+        locationLabel
+        latitude
+        longitude
+        isActive
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+        owner
+      }
+      shipmentNotes
+      deliveryNotes
+      trackingId
+      weight
+      shipmentReceiver
+      status
+      statusHistory
+      tags
+      photosUrls
+      notes
+      notesHistory
       boxes {
-        nextToken
+        id
+        title
+        contents
+        size
+        orgID
+        shipmentID
+        isActive
+        barCode
+        qrCode
+        barCodePhoto
+        qrCodePhoto
+        tags
+        photosUrls
+        status
+        statusHistory
+        internalNotes
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+        owner
       }
       createdAt
       updatedAt
       owner
     }
     isActive
+    barCode
+    qrCode
+    barCodePhoto
+    qrCodePhoto
+    tags
+    photosUrls
+    status
+    statusHistory
+    internalNotes
+    notes
+    notesHistory
     locations {
-      items {
+      id
+      boxID
+      box {
         id
-        boxID
-        locationLabel
-        latitude
-        longitude
+        title
+        contents
+        size
+        orgID
+        shipmentID
         isActive
+        barCode
+        qrCode
+        barCodePhoto
+        qrCodePhoto
+        tags
+        photosUrls
+        status
+        statusHistory
+        internalNotes
+        notes
+        notesHistory
         createdAt
         updatedAt
         owner
       }
-      nextToken
+      locationLabel
+      locationInfoID
+      locationInfo {
+        id
+        locationLabel
+        latitude
+        longitude
+        isActive
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+        owner
+      }
+      notes
+      isFinal
+      tags
+      photosUrls
+      isActive
+      createdAt
+      updatedAt
+      owner
     }
     createdAt
     updatedAt
@@ -312,6 +1275,11 @@ subscription OnCreateLocation($owner: String!) {
       org {
         id
         name
+        description
+        email
+        tags
+        photosUrls
+        notes
         isActive
         createdAt
         updatedAt
@@ -321,22 +1289,73 @@ subscription OnCreateLocation($owner: String!) {
       shipment {
         id
         name
+        description
         isActive
+        startDate
+        deliveryDate
+        shipmentNotes
+        deliveryNotes
+        trackingId
+        weight
+        shipmentReceiver
+        status
+        statusHistory
+        tags
+        photosUrls
+        notes
+        notesHistory
         createdAt
         updatedAt
         owner
       }
       isActive
+      barCode
+      qrCode
+      barCodePhoto
+      qrCodePhoto
+      tags
+      photosUrls
+      status
+      statusHistory
+      internalNotes
+      notes
+      notesHistory
       locations {
-        nextToken
+        id
+        boxID
+        locationLabel
+        locationInfoID
+        notes
+        isFinal
+        tags
+        photosUrls
+        isActive
+        createdAt
+        updatedAt
+        owner
       }
       createdAt
       updatedAt
       owner
     }
     locationLabel
-    latitude
-    longitude
+    locationInfoID
+    locationInfo {
+      id
+      locationLabel
+      latitude
+      longitude
+      isActive
+      notes
+      notesHistory
+      createdAt
+      updatedAt
+      owner
+    }
+    notes
+    isFinal
+    tags
+    photosUrls
     isActive
     createdAt
     updatedAt
@@ -356,6 +1375,11 @@ subscription OnUpdateLocation($owner: String!) {
       org {
         id
         name
+        description
+        email
+        tags
+        photosUrls
+        notes
         isActive
         createdAt
         updatedAt
@@ -365,22 +1389,73 @@ subscription OnUpdateLocation($owner: String!) {
       shipment {
         id
         name
+        description
         isActive
+        startDate
+        deliveryDate
+        shipmentNotes
+        deliveryNotes
+        trackingId
+        weight
+        shipmentReceiver
+        status
+        statusHistory
+        tags
+        photosUrls
+        notes
+        notesHistory
         createdAt
         updatedAt
         owner
       }
       isActive
+      barCode
+      qrCode
+      barCodePhoto
+      qrCodePhoto
+      tags
+      photosUrls
+      status
+      statusHistory
+      internalNotes
+      notes
+      notesHistory
       locations {
-        nextToken
+        id
+        boxID
+        locationLabel
+        locationInfoID
+        notes
+        isFinal
+        tags
+        photosUrls
+        isActive
+        createdAt
+        updatedAt
+        owner
       }
       createdAt
       updatedAt
       owner
     }
     locationLabel
-    latitude
-    longitude
+    locationInfoID
+    locationInfo {
+      id
+      locationLabel
+      latitude
+      longitude
+      isActive
+      notes
+      notesHistory
+      createdAt
+      updatedAt
+      owner
+    }
+    notes
+    isFinal
+    tags
+    photosUrls
     isActive
     createdAt
     updatedAt
@@ -400,6 +1475,11 @@ subscription OnDeleteLocation($owner: String!) {
       org {
         id
         name
+        description
+        email
+        tags
+        photosUrls
+        notes
         isActive
         createdAt
         updatedAt
@@ -409,22 +1489,73 @@ subscription OnDeleteLocation($owner: String!) {
       shipment {
         id
         name
+        description
         isActive
+        startDate
+        deliveryDate
+        shipmentNotes
+        deliveryNotes
+        trackingId
+        weight
+        shipmentReceiver
+        status
+        statusHistory
+        tags
+        photosUrls
+        notes
+        notesHistory
         createdAt
         updatedAt
         owner
       }
       isActive
+      barCode
+      qrCode
+      barCodePhoto
+      qrCodePhoto
+      tags
+      photosUrls
+      status
+      statusHistory
+      internalNotes
+      notes
+      notesHistory
       locations {
-        nextToken
+        id
+        boxID
+        locationLabel
+        locationInfoID
+        notes
+        isFinal
+        tags
+        photosUrls
+        isActive
+        createdAt
+        updatedAt
+        owner
       }
       createdAt
       updatedAt
       owner
     }
     locationLabel
-    latitude
-    longitude
+    locationInfoID
+    locationInfo {
+      id
+      locationLabel
+      latitude
+      longitude
+      isActive
+      notes
+      notesHistory
+      createdAt
+      updatedAt
+      owner
+    }
+    notes
+    isFinal
+    tags
+    photosUrls
     isActive
     createdAt
     updatedAt

@@ -1,47 +1,190 @@
-type Org 
-@model 
-@auth(rules: [
-    # Defaults to use the "owner" field.
-    { allow: owner },
+enum PhoneType {
+  WORK
+  CELL
+  HOME
+  OTHER
+}
 
+enum ShippingStatus {
+  NEW
+  DEPARTED_FROM_SHIPPING_HUB
+  IN_PROGRESS
+  ARRIVED_AT_SHIPPING_HUB
+  COMPLETED
+  CANCELLED
+  ERROR
+}
+
+enum BoxStatus {
+  NEW
+  PACKAGED
+  PICKUP_IN_TRANSIT
+  PICKUP_COMPLETED
+  READY_TO_SHIP
+  IN_TRANSIT
+  DELIVERED
+  FAILED_TO_DELIVER
+  CANCELLED
+  REJECTED
+  DAMAGED
+  PARTIALLY_DAMAGED
+  LOST
+  DUPLICATE
+  DIVERTED
+  ERROR
+}
+
+type Address
+@model
+@auth(
+  rules: [
+    # Defaults to use the "owner" field.
+    { allow: owner }
     # Admins can access any operation.
-	  { allow: groups, groups: ["haaApiAdmins","haaApiDataAdmins"], operations: [create, delete, update] }
-  ])
-{
+    {
+      allow: groups
+      groups: ["haaApiAdmins", "haaApiDataAdmins"]
+      operations: [create, delete, update]
+    }
+  ]
+) {
+  id: ID!
+  address: String!
+  city: String
+  state: String
+  province: String
+  country: String
+}
+
+type Phone
+@model
+@auth(
+  rules: [
+    # Defaults to use the "owner" field.
+    { allow: owner }
+    # Admins can access any operation.
+    {
+      allow: groups
+      groups: ["haaApiAdmins", "haaApiDataAdmins"]
+      operations: [create, delete, update]
+    }
+  ]
+) {
+  id: ID!
+  phone: AWSPhone
+  isPrimary: Boolean
+  isActive: Boolean
+  type: PhoneType
+}
+
+type Org
+@model
+@auth(
+  rules: [
+    # Defaults to use the "owner" field.
+    { allow: owner }
+    # Admins can access any operation.
+    {
+      allow: groups
+      groups: ["haaApiAdmins", "haaApiDataAdmins"]
+      operations: [create, delete, update]
+    }
+  ]
+) {
   id: ID!
   name: String!
+  description: String
+  address: Address
+  email: AWSEmail
+  primaryPhone: Phone
+  otherPhones: [Phone!]
+  tags: [String!]
+  photosUrls: [AWSURL!]
+  notes: String
   isActive: Boolean!
   boxes: [Box] @connection(keyName: "byOrg", fields: ["id"])
 }
 
-type Shipment 
-@model 
-@auth(rules: [
+type LocationInfo
+@model
+@auth(
+  rules: [
     # Defaults to use the "owner" field.
-    { allow: owner },
-
-    # Admins can access any operation.
-	  { allow: groups, groups: ["haaApiAdmins","haaApiDataAdmins"], operations: [create, delete, update] }
-  ])
-{
+    { allow: owner }
+    # Admins can access any operation, but allow any authenticated user to read the objects
+    {
+      allow: groups
+      groups: ["haaApiAdmins", "haaApiDataAdmins"]
+      operations: [create, delete, update]
+    }
+  ]
+) {
   id: ID!
-  name: String!
+  locationLabel: String!
+  latitude: String!
+  longitude: String!
   isActive: Boolean!
-  boxes: [Box] @connection(keyName: "byShipment", fields: ["id"])
+  notes: String
+  notesHistory: [String!]
 }
 
-type Box 
-@model 
-@key(name: "byOrg", fields: ["orgID"]) 
-@key(name: "byShipment", fields: ["shipmentID"])
-@auth(rules: [
+type Shipment
+@model
+@auth(
+  rules: [
     # Defaults to use the "owner" field.
-    { allow: owner },
+    { allow: owner }
+    # Admins can access any operation.
+    {
+      allow: groups
+      groups: ["haaApiAdmins", "haaApiDataAdmins"]
+      operations: [create, delete, update]
+    }
+  ]
+) {
+  id: ID!
+  name: String!
+  description: String
+  isActive: Boolean!
+  startDate: AWSDateTime
+  deliveryDate: AWSDateTime
+  startLocation: LocationInfo
+  destinationLocation: LocationInfo
+  shipmentNotes: String
+  deliveryNotes: String
+  trackingId: String
+  weight: String
+  shipmentReceiver: String
+  status: ShippingStatus
+  statusHistory: [String!]
+  tags: [String!]
+  photosUrls: [AWSURL!]
+  notes: String
+  notesHistory: [String!]
+  boxes: [Box] # @connection(keyName: "byBoxShipment", fields: ["id"])
+}
 
+type Box
+@model
+@key(name: "byOrg", fields: ["orgID"])
+@key(name: "byShipment", fields: ["shipmentID"])
+@key(
+  name: "byBoxShipment"
+  fields: ["shipmentID", "id"]
+  queryField: "shipmentsByBoxId"
+)
+@auth(
+  rules: [
+    # Defaults to use the "owner" field.
+    { allow: owner }
     # Admins can access any operation, but allow any authenticated user to read the objects
-	  { allow: groups, groups: ["haaApiAdmins","haaApiDataAdmins"], operations: [create, delete, update] }
-  ])
-{
+    {
+      allow: groups
+      groups: ["haaApiAdmins", "haaApiDataAdmins"]
+      operations: [create, delete, update]
+    }
+  ]
+) {
   id: ID!
   title: String!
   contents: String!
@@ -51,25 +194,45 @@ type Box
   shipmentID: ID!
   shipment: Shipment @connection(fields: ["shipmentID"])
   isActive: Boolean!
-  locations: [Location] @connection(keyName: "locationsbyBox", fields: ["id"])
+  barCode: String
+  qrCode: String
+  barCodePhoto: AWSURL
+  qrCodePhoto: AWSURL
+  tags: [String!]
+  photosUrls: [AWSURL!]
+  status: BoxStatus!
+  statusHistory: [BoxStatus!]
+  internalNotes: String
+  notes: String
+  notesHistory: [String!]
+  locations: [Location] # @connection(keyName: "locationsbyBox", fields: ["id"])
 }
 
-type Location 
-@model 
-@key(name: "locationsbyBox", fields: ["boxID", "locationLabel"]) 
-@auth(rules: [
+type Location
+@model
+@key(name: "locationsbyBox", fields: ["boxID", "locationLabel"])
+@key(name: "locationForBox", fields: ["boxID", "locationInfoID"])
+@auth(
+  rules: [
     # Defaults to use the "owner" field.
-    { allow: owner },
-
+    { allow: owner }
     # Admins can access any operation, but allow any authenticated user to read the objects
-	  { allow: groups, groups: ["haaApiAdmins","haaApiDataAdmins"], operations: [create, delete, update] }
-  ])
-{
+    {
+      allow: groups
+      groups: ["haaApiAdmins", "haaApiDataAdmins"]
+      operations: [create, delete, update]
+    }
+  ]
+) {
   id: ID!
   boxID: ID!
   box: Box @connection(fields: ["boxID"])
   locationLabel: String!
-  latitude: String!
-  longitude: String!
+  locationInfoID: ID!
+  locationInfo: LocationInfo!
+  notes: String
+  isFinal: Boolean
+  tags: [String]
+  photosUrls: [AWSURL]
   isActive: Boolean!
 }

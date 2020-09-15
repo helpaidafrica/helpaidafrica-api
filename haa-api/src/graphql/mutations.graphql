@@ -1,4 +1,97 @@
 # this is an auto generated file. This will be overwritten
+mutation CreateAddress(
+  $input: CreateAddressInput!
+  $condition: ModelAddressConditionInput
+) {
+  createAddress(input: $input, condition: $condition) {
+    id
+    address
+    city
+    state
+    province
+    country
+    createdAt
+    updatedAt
+    owner
+  }
+}
+mutation UpdateAddress(
+  $input: UpdateAddressInput!
+  $condition: ModelAddressConditionInput
+) {
+  updateAddress(input: $input, condition: $condition) {
+    id
+    address
+    city
+    state
+    province
+    country
+    createdAt
+    updatedAt
+    owner
+  }
+}
+mutation DeleteAddress(
+  $input: DeleteAddressInput!
+  $condition: ModelAddressConditionInput
+) {
+  deleteAddress(input: $input, condition: $condition) {
+    id
+    address
+    city
+    state
+    province
+    country
+    createdAt
+    updatedAt
+    owner
+  }
+}
+mutation CreatePhone(
+  $input: CreatePhoneInput!
+  $condition: ModelPhoneConditionInput
+) {
+  createPhone(input: $input, condition: $condition) {
+    id
+    phone
+    isPrimary
+    isActive
+    type
+    createdAt
+    updatedAt
+    owner
+  }
+}
+mutation UpdatePhone(
+  $input: UpdatePhoneInput!
+  $condition: ModelPhoneConditionInput
+) {
+  updatePhone(input: $input, condition: $condition) {
+    id
+    phone
+    isPrimary
+    isActive
+    type
+    createdAt
+    updatedAt
+    owner
+  }
+}
+mutation DeletePhone(
+  $input: DeletePhoneInput!
+  $condition: ModelPhoneConditionInput
+) {
+  deletePhone(input: $input, condition: $condition) {
+    id
+    phone
+    isPrimary
+    isActive
+    type
+    createdAt
+    updatedAt
+    owner
+  }
+}
 mutation CreateOrg(
   $input: CreateOrgInput!
   $condition: ModelOrgConditionInput
@@ -6,6 +99,42 @@ mutation CreateOrg(
   createOrg(input: $input, condition: $condition) {
     id
     name
+    description
+    address {
+      id
+      address
+      city
+      state
+      province
+      country
+      createdAt
+      updatedAt
+      owner
+    }
+    email
+    primaryPhone {
+      id
+      phone
+      isPrimary
+      isActive
+      type
+      createdAt
+      updatedAt
+      owner
+    }
+    otherPhones {
+      id
+      phone
+      isPrimary
+      isActive
+      type
+      createdAt
+      updatedAt
+      owner
+    }
+    tags
+    photosUrls
+    notes
     isActive
     boxes {
       items {
@@ -16,6 +145,17 @@ mutation CreateOrg(
         orgID
         shipmentID
         isActive
+        barCode
+        qrCode
+        barCodePhoto
+        qrCodePhoto
+        tags
+        photosUrls
+        status
+        statusHistory
+        internalNotes
+        notes
+        notesHistory
         createdAt
         updatedAt
         owner
@@ -34,6 +174,42 @@ mutation UpdateOrg(
   updateOrg(input: $input, condition: $condition) {
     id
     name
+    description
+    address {
+      id
+      address
+      city
+      state
+      province
+      country
+      createdAt
+      updatedAt
+      owner
+    }
+    email
+    primaryPhone {
+      id
+      phone
+      isPrimary
+      isActive
+      type
+      createdAt
+      updatedAt
+      owner
+    }
+    otherPhones {
+      id
+      phone
+      isPrimary
+      isActive
+      type
+      createdAt
+      updatedAt
+      owner
+    }
+    tags
+    photosUrls
+    notes
     isActive
     boxes {
       items {
@@ -44,6 +220,17 @@ mutation UpdateOrg(
         orgID
         shipmentID
         isActive
+        barCode
+        qrCode
+        barCodePhoto
+        qrCodePhoto
+        tags
+        photosUrls
+        status
+        statusHistory
+        internalNotes
+        notes
+        notesHistory
         createdAt
         updatedAt
         owner
@@ -62,6 +249,42 @@ mutation DeleteOrg(
   deleteOrg(input: $input, condition: $condition) {
     id
     name
+    description
+    address {
+      id
+      address
+      city
+      state
+      province
+      country
+      createdAt
+      updatedAt
+      owner
+    }
+    email
+    primaryPhone {
+      id
+      phone
+      isPrimary
+      isActive
+      type
+      createdAt
+      updatedAt
+      owner
+    }
+    otherPhones {
+      id
+      phone
+      isPrimary
+      isActive
+      type
+      createdAt
+      updatedAt
+      owner
+    }
+    tags
+    photosUrls
+    notes
     isActive
     boxes {
       items {
@@ -72,12 +295,74 @@ mutation DeleteOrg(
         orgID
         shipmentID
         isActive
+        barCode
+        qrCode
+        barCodePhoto
+        qrCodePhoto
+        tags
+        photosUrls
+        status
+        statusHistory
+        internalNotes
+        notes
+        notesHistory
         createdAt
         updatedAt
         owner
       }
       nextToken
     }
+    createdAt
+    updatedAt
+    owner
+  }
+}
+mutation CreateLocationInfo(
+  $input: CreateLocationInfoInput!
+  $condition: ModelLocationInfoConditionInput
+) {
+  createLocationInfo(input: $input, condition: $condition) {
+    id
+    locationLabel
+    latitude
+    longitude
+    isActive
+    notes
+    notesHistory
+    createdAt
+    updatedAt
+    owner
+  }
+}
+mutation UpdateLocationInfo(
+  $input: UpdateLocationInfoInput!
+  $condition: ModelLocationInfoConditionInput
+) {
+  updateLocationInfo(input: $input, condition: $condition) {
+    id
+    locationLabel
+    latitude
+    longitude
+    isActive
+    notes
+    notesHistory
+    createdAt
+    updatedAt
+    owner
+  }
+}
+mutation DeleteLocationInfo(
+  $input: DeleteLocationInfoInput!
+  $condition: ModelLocationInfoConditionInput
+) {
+  deleteLocationInfo(input: $input, condition: $condition) {
+    id
+    locationLabel
+    latitude
+    longitude
+    isActive
+    notes
+    notesHistory
     createdAt
     updatedAt
     owner
@@ -90,21 +375,116 @@ mutation CreateShipment(
   createShipment(input: $input, condition: $condition) {
     id
     name
+    description
     isActive
+    startDate
+    deliveryDate
+    startLocation {
+      id
+      locationLabel
+      latitude
+      longitude
+      isActive
+      notes
+      notesHistory
+      createdAt
+      updatedAt
+      owner
+    }
+    destinationLocation {
+      id
+      locationLabel
+      latitude
+      longitude
+      isActive
+      notes
+      notesHistory
+      createdAt
+      updatedAt
+      owner
+    }
+    shipmentNotes
+    deliveryNotes
+    trackingId
+    weight
+    shipmentReceiver
+    status
+    statusHistory
+    tags
+    photosUrls
+    notes
+    notesHistory
     boxes {
-      items {
+      id
+      title
+      contents
+      size
+      orgID
+      org {
         id
-        title
-        contents
-        size
-        orgID
-        shipmentID
+        name
+        description
+        email
+        tags
+        photosUrls
+        notes
         isActive
         createdAt
         updatedAt
         owner
       }
-      nextToken
+      shipmentID
+      shipment {
+        id
+        name
+        description
+        isActive
+        startDate
+        deliveryDate
+        shipmentNotes
+        deliveryNotes
+        trackingId
+        weight
+        shipmentReceiver
+        status
+        statusHistory
+        tags
+        photosUrls
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+        owner
+      }
+      isActive
+      barCode
+      qrCode
+      barCodePhoto
+      qrCodePhoto
+      tags
+      photosUrls
+      status
+      statusHistory
+      internalNotes
+      notes
+      notesHistory
+      locations {
+        id
+        boxID
+        locationLabel
+        locationInfoID
+        notes
+        isFinal
+        tags
+        photosUrls
+        isActive
+        createdAt
+        updatedAt
+        owner
+      }
+      createdAt
+      updatedAt
+      owner
     }
     createdAt
     updatedAt
@@ -118,21 +498,116 @@ mutation UpdateShipment(
   updateShipment(input: $input, condition: $condition) {
     id
     name
+    description
     isActive
+    startDate
+    deliveryDate
+    startLocation {
+      id
+      locationLabel
+      latitude
+      longitude
+      isActive
+      notes
+      notesHistory
+      createdAt
+      updatedAt
+      owner
+    }
+    destinationLocation {
+      id
+      locationLabel
+      latitude
+      longitude
+      isActive
+      notes
+      notesHistory
+      createdAt
+      updatedAt
+      owner
+    }
+    shipmentNotes
+    deliveryNotes
+    trackingId
+    weight
+    shipmentReceiver
+    status
+    statusHistory
+    tags
+    photosUrls
+    notes
+    notesHistory
     boxes {
-      items {
+      id
+      title
+      contents
+      size
+      orgID
+      org {
         id
-        title
-        contents
-        size
-        orgID
-        shipmentID
+        name
+        description
+        email
+        tags
+        photosUrls
+        notes
         isActive
         createdAt
         updatedAt
         owner
       }
-      nextToken
+      shipmentID
+      shipment {
+        id
+        name
+        description
+        isActive
+        startDate
+        deliveryDate
+        shipmentNotes
+        deliveryNotes
+        trackingId
+        weight
+        shipmentReceiver
+        status
+        statusHistory
+        tags
+        photosUrls
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+        owner
+      }
+      isActive
+      barCode
+      qrCode
+      barCodePhoto
+      qrCodePhoto
+      tags
+      photosUrls
+      status
+      statusHistory
+      internalNotes
+      notes
+      notesHistory
+      locations {
+        id
+        boxID
+        locationLabel
+        locationInfoID
+        notes
+        isFinal
+        tags
+        photosUrls
+        isActive
+        createdAt
+        updatedAt
+        owner
+      }
+      createdAt
+      updatedAt
+      owner
     }
     createdAt
     updatedAt
@@ -146,21 +621,116 @@ mutation DeleteShipment(
   deleteShipment(input: $input, condition: $condition) {
     id
     name
+    description
     isActive
+    startDate
+    deliveryDate
+    startLocation {
+      id
+      locationLabel
+      latitude
+      longitude
+      isActive
+      notes
+      notesHistory
+      createdAt
+      updatedAt
+      owner
+    }
+    destinationLocation {
+      id
+      locationLabel
+      latitude
+      longitude
+      isActive
+      notes
+      notesHistory
+      createdAt
+      updatedAt
+      owner
+    }
+    shipmentNotes
+    deliveryNotes
+    trackingId
+    weight
+    shipmentReceiver
+    status
+    statusHistory
+    tags
+    photosUrls
+    notes
+    notesHistory
     boxes {
-      items {
+      id
+      title
+      contents
+      size
+      orgID
+      org {
         id
-        title
-        contents
-        size
-        orgID
-        shipmentID
+        name
+        description
+        email
+        tags
+        photosUrls
+        notes
         isActive
         createdAt
         updatedAt
         owner
       }
-      nextToken
+      shipmentID
+      shipment {
+        id
+        name
+        description
+        isActive
+        startDate
+        deliveryDate
+        shipmentNotes
+        deliveryNotes
+        trackingId
+        weight
+        shipmentReceiver
+        status
+        statusHistory
+        tags
+        photosUrls
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+        owner
+      }
+      isActive
+      barCode
+      qrCode
+      barCodePhoto
+      qrCodePhoto
+      tags
+      photosUrls
+      status
+      statusHistory
+      internalNotes
+      notes
+      notesHistory
+      locations {
+        id
+        boxID
+        locationLabel
+        locationInfoID
+        notes
+        isFinal
+        tags
+        photosUrls
+        isActive
+        createdAt
+        updatedAt
+        owner
+      }
+      createdAt
+      updatedAt
+      owner
     }
     createdAt
     updatedAt
@@ -180,6 +750,42 @@ mutation CreateBox(
     org {
       id
       name
+      description
+      address {
+        id
+        address
+        city
+        state
+        province
+        country
+        createdAt
+        updatedAt
+        owner
+      }
+      email
+      primaryPhone {
+        id
+        phone
+        isPrimary
+        isActive
+        type
+        createdAt
+        updatedAt
+        owner
+      }
+      otherPhones {
+        id
+        phone
+        isPrimary
+        isActive
+        type
+        createdAt
+        updatedAt
+        owner
+      }
+      tags
+      photosUrls
+      notes
       isActive
       boxes {
         nextToken
@@ -192,28 +798,132 @@ mutation CreateBox(
     shipment {
       id
       name
+      description
       isActive
+      startDate
+      deliveryDate
+      startLocation {
+        id
+        locationLabel
+        latitude
+        longitude
+        isActive
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+        owner
+      }
+      destinationLocation {
+        id
+        locationLabel
+        latitude
+        longitude
+        isActive
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+        owner
+      }
+      shipmentNotes
+      deliveryNotes
+      trackingId
+      weight
+      shipmentReceiver
+      status
+      statusHistory
+      tags
+      photosUrls
+      notes
+      notesHistory
       boxes {
-        nextToken
+        id
+        title
+        contents
+        size
+        orgID
+        shipmentID
+        isActive
+        barCode
+        qrCode
+        barCodePhoto
+        qrCodePhoto
+        tags
+        photosUrls
+        status
+        statusHistory
+        internalNotes
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+        owner
       }
       createdAt
       updatedAt
       owner
     }
     isActive
+    barCode
+    qrCode
+    barCodePhoto
+    qrCodePhoto
+    tags
+    photosUrls
+    status
+    statusHistory
+    internalNotes
+    notes
+    notesHistory
     locations {
-      items {
+      id
+      boxID
+      box {
         id
-        boxID
-        locationLabel
-        latitude
-        longitude
+        title
+        contents
+        size
+        orgID
+        shipmentID
         isActive
+        barCode
+        qrCode
+        barCodePhoto
+        qrCodePhoto
+        tags
+        photosUrls
+        status
+        statusHistory
+        internalNotes
+        notes
+        notesHistory
         createdAt
         updatedAt
         owner
       }
-      nextToken
+      locationLabel
+      locationInfoID
+      locationInfo {
+        id
+        locationLabel
+        latitude
+        longitude
+        isActive
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+        owner
+      }
+      notes
+      isFinal
+      tags
+      photosUrls
+      isActive
+      createdAt
+      updatedAt
+      owner
     }
     createdAt
     updatedAt
@@ -233,6 +943,42 @@ mutation UpdateBox(
     org {
       id
       name
+      description
+      address {
+        id
+        address
+        city
+        state
+        province
+        country
+        createdAt
+        updatedAt
+        owner
+      }
+      email
+      primaryPhone {
+        id
+        phone
+        isPrimary
+        isActive
+        type
+        createdAt
+        updatedAt
+        owner
+      }
+      otherPhones {
+        id
+        phone
+        isPrimary
+        isActive
+        type
+        createdAt
+        updatedAt
+        owner
+      }
+      tags
+      photosUrls
+      notes
       isActive
       boxes {
         nextToken
@@ -245,28 +991,132 @@ mutation UpdateBox(
     shipment {
       id
       name
+      description
       isActive
+      startDate
+      deliveryDate
+      startLocation {
+        id
+        locationLabel
+        latitude
+        longitude
+        isActive
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+        owner
+      }
+      destinationLocation {
+        id
+        locationLabel
+        latitude
+        longitude
+        isActive
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+        owner
+      }
+      shipmentNotes
+      deliveryNotes
+      trackingId
+      weight
+      shipmentReceiver
+      status
+      statusHistory
+      tags
+      photosUrls
+      notes
+      notesHistory
       boxes {
-        nextToken
+        id
+        title
+        contents
+        size
+        orgID
+        shipmentID
+        isActive
+        barCode
+        qrCode
+        barCodePhoto
+        qrCodePhoto
+        tags
+        photosUrls
+        status
+        statusHistory
+        internalNotes
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+        owner
       }
       createdAt
       updatedAt
       owner
     }
     isActive
+    barCode
+    qrCode
+    barCodePhoto
+    qrCodePhoto
+    tags
+    photosUrls
+    status
+    statusHistory
+    internalNotes
+    notes
+    notesHistory
     locations {
-      items {
+      id
+      boxID
+      box {
         id
-        boxID
-        locationLabel
-        latitude
-        longitude
+        title
+        contents
+        size
+        orgID
+        shipmentID
         isActive
+        barCode
+        qrCode
+        barCodePhoto
+        qrCodePhoto
+        tags
+        photosUrls
+        status
+        statusHistory
+        internalNotes
+        notes
+        notesHistory
         createdAt
         updatedAt
         owner
       }
-      nextToken
+      locationLabel
+      locationInfoID
+      locationInfo {
+        id
+        locationLabel
+        latitude
+        longitude
+        isActive
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+        owner
+      }
+      notes
+      isFinal
+      tags
+      photosUrls
+      isActive
+      createdAt
+      updatedAt
+      owner
     }
     createdAt
     updatedAt
@@ -286,6 +1136,42 @@ mutation DeleteBox(
     org {
       id
       name
+      description
+      address {
+        id
+        address
+        city
+        state
+        province
+        country
+        createdAt
+        updatedAt
+        owner
+      }
+      email
+      primaryPhone {
+        id
+        phone
+        isPrimary
+        isActive
+        type
+        createdAt
+        updatedAt
+        owner
+      }
+      otherPhones {
+        id
+        phone
+        isPrimary
+        isActive
+        type
+        createdAt
+        updatedAt
+        owner
+      }
+      tags
+      photosUrls
+      notes
       isActive
       boxes {
         nextToken
@@ -298,28 +1184,132 @@ mutation DeleteBox(
     shipment {
       id
       name
+      description
       isActive
+      startDate
+      deliveryDate
+      startLocation {
+        id
+        locationLabel
+        latitude
+        longitude
+        isActive
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+        owner
+      }
+      destinationLocation {
+        id
+        locationLabel
+        latitude
+        longitude
+        isActive
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+        owner
+      }
+      shipmentNotes
+      deliveryNotes
+      trackingId
+      weight
+      shipmentReceiver
+      status
+      statusHistory
+      tags
+      photosUrls
+      notes
+      notesHistory
       boxes {
-        nextToken
+        id
+        title
+        contents
+        size
+        orgID
+        shipmentID
+        isActive
+        barCode
+        qrCode
+        barCodePhoto
+        qrCodePhoto
+        tags
+        photosUrls
+        status
+        statusHistory
+        internalNotes
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+        owner
       }
       createdAt
       updatedAt
       owner
     }
     isActive
+    barCode
+    qrCode
+    barCodePhoto
+    qrCodePhoto
+    tags
+    photosUrls
+    status
+    statusHistory
+    internalNotes
+    notes
+    notesHistory
     locations {
-      items {
+      id
+      boxID
+      box {
         id
-        boxID
-        locationLabel
-        latitude
-        longitude
+        title
+        contents
+        size
+        orgID
+        shipmentID
         isActive
+        barCode
+        qrCode
+        barCodePhoto
+        qrCodePhoto
+        tags
+        photosUrls
+        status
+        statusHistory
+        internalNotes
+        notes
+        notesHistory
         createdAt
         updatedAt
         owner
       }
-      nextToken
+      locationLabel
+      locationInfoID
+      locationInfo {
+        id
+        locationLabel
+        latitude
+        longitude
+        isActive
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+        owner
+      }
+      notes
+      isFinal
+      tags
+      photosUrls
+      isActive
+      createdAt
+      updatedAt
+      owner
     }
     createdAt
     updatedAt
@@ -342,6 +1332,11 @@ mutation CreateLocation(
       org {
         id
         name
+        description
+        email
+        tags
+        photosUrls
+        notes
         isActive
         createdAt
         updatedAt
@@ -351,22 +1346,73 @@ mutation CreateLocation(
       shipment {
         id
         name
+        description
         isActive
+        startDate
+        deliveryDate
+        shipmentNotes
+        deliveryNotes
+        trackingId
+        weight
+        shipmentReceiver
+        status
+        statusHistory
+        tags
+        photosUrls
+        notes
+        notesHistory
         createdAt
         updatedAt
         owner
       }
       isActive
+      barCode
+      qrCode
+      barCodePhoto
+      qrCodePhoto
+      tags
+      photosUrls
+      status
+      statusHistory
+      internalNotes
+      notes
+      notesHistory
       locations {
-        nextToken
+        id
+        boxID
+        locationLabel
+        locationInfoID
+        notes
+        isFinal
+        tags
+        photosUrls
+        isActive
+        createdAt
+        updatedAt
+        owner
       }
       createdAt
       updatedAt
       owner
     }
     locationLabel
-    latitude
-    longitude
+    locationInfoID
+    locationInfo {
+      id
+      locationLabel
+      latitude
+      longitude
+      isActive
+      notes
+      notesHistory
+      createdAt
+      updatedAt
+      owner
+    }
+    notes
+    isFinal
+    tags
+    photosUrls
     isActive
     createdAt
     updatedAt
@@ -389,6 +1435,11 @@ mutation UpdateLocation(
       org {
         id
         name
+        description
+        email
+        tags
+        photosUrls
+        notes
         isActive
         createdAt
         updatedAt
@@ -398,22 +1449,73 @@ mutation UpdateLocation(
       shipment {
         id
         name
+        description
         isActive
+        startDate
+        deliveryDate
+        shipmentNotes
+        deliveryNotes
+        trackingId
+        weight
+        shipmentReceiver
+        status
+        statusHistory
+        tags
+        photosUrls
+        notes
+        notesHistory
         createdAt
         updatedAt
         owner
       }
       isActive
+      barCode
+      qrCode
+      barCodePhoto
+      qrCodePhoto
+      tags
+      photosUrls
+      status
+      statusHistory
+      internalNotes
+      notes
+      notesHistory
       locations {
-        nextToken
+        id
+        boxID
+        locationLabel
+        locationInfoID
+        notes
+        isFinal
+        tags
+        photosUrls
+        isActive
+        createdAt
+        updatedAt
+        owner
       }
       createdAt
       updatedAt
       owner
     }
     locationLabel
-    latitude
-    longitude
+    locationInfoID
+    locationInfo {
+      id
+      locationLabel
+      latitude
+      longitude
+      isActive
+      notes
+      notesHistory
+      createdAt
+      updatedAt
+      owner
+    }
+    notes
+    isFinal
+    tags
+    photosUrls
     isActive
     createdAt
     updatedAt
@@ -436,6 +1538,11 @@ mutation DeleteLocation(
       org {
         id
         name
+        description
+        email
+        tags
+        photosUrls
+        notes
         isActive
         createdAt
         updatedAt
@@ -445,22 +1552,73 @@ mutation DeleteLocation(
       shipment {
         id
         name
+        description
         isActive
+        startDate
+        deliveryDate
+        shipmentNotes
+        deliveryNotes
+        trackingId
+        weight
+        shipmentReceiver
+        status
+        statusHistory
+        tags
+        photosUrls
+        notes
+        notesHistory
         createdAt
         updatedAt
         owner
       }
       isActive
+      barCode
+      qrCode
+      barCodePhoto
+      qrCodePhoto
+      tags
+      photosUrls
+      status
+      statusHistory
+      internalNotes
+      notes
+      notesHistory
       locations {
-        nextToken
+        id
+        boxID
+        locationLabel
+        locationInfoID
+        notes
+        isFinal
+        tags
+        photosUrls
+        isActive
+        createdAt
+        updatedAt
+        owner
       }
       createdAt
       updatedAt
       owner
     }
     locationLabel
-    latitude
-    longitude
+    locationInfoID
+    locationInfo {
+      id
+      locationLabel
+      latitude
+      longitude
+      isActive
+      notes
+      notesHistory
+      createdAt
+      updatedAt
+      owner
+    }
+    notes
+    isFinal
+    tags
+    photosUrls
     isActive
     createdAt
     updatedAt

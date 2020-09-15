@@ -1,0 +1,25 @@
+{
+    "dev": {
+      "awscloudformation": {
+        "AuthRoleName": "amplify-haaapi-dev-01542-authRole",
+        "UnauthRoleArn": "arn:aws:iam::580208182080:role/amplify-haaapi-dev-01542-unauthRole",
+        "AuthRoleArn": "arn:aws:iam::580208182080:role/amplify-haaapi-dev-01542-authRole",
+        "Region": "us-east-1",
+        "DeploymentBucketName": "amplify-haaapi-dev-01542-deployment",
+        "UnauthRoleName": "amplify-haaapi-dev-01542-unauthRole",
+        "StackName": "amplify-haaapi-dev-01542",
+        "StackId": "arn:aws:cloudformation:us-east-1:580208182080:stack/amplify-haaapi-dev-01542/45d71120-f723-11ea-b88a-1264a8f6165d",
+        "AmplifyAppId": "d3kxlxdr4p8i0z"
+      },
+      "categories": {
+        "auth": {
+          "haaapi0a8b57ab": {}
+        },
+        "function": {
+          "haaapi0a8b57abPostConfirmation": {
+            "GROUP": "haaApiUsers"
+          }
+        }
+      }
+    }
+  }
