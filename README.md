@@ -31,6 +31,78 @@ For more information, please write to info@helpaidafrica.org
 
 ---
 
+# Sample Graphql Query
+
+## Get Active Boxes
+```graphql
+query GetActiveBoxes {
+  listBoxs(filter: {isActive: {eq: true}}) {
+    items {
+      id
+      isActive
+      contents
+      orgID
+      shipmentID
+      title
+    }
+  }
+}
+```
+
+## Response
+```json
+{
+  "data": {
+    "listBoxs": {
+      "items": [
+        {
+          "id": "Box-003",
+          "isActive": true,
+          "contents": "Donation Package with Clothes",
+          "orgID": "Help Aid Africa",
+          "shipmentID": "2020-08-A",
+          "title": "Box-003"
+        },
+        {
+          "id": "Box-004",
+          "isActive": true,
+          "contents": "Donation Package with Clothes",
+          "orgID": "Help Aid Africa",
+          "shipmentID": "2020-08-B",
+          "title": "Box-004"
+        },
+        {
+          "id": "Box-001",
+          "isActive": true,
+          "contents": "Donation Package with Clothes",
+          "orgID": "Help Aid Africa",
+          "shipmentID": "2020-08-A",
+          "title": "Box-001"
+        },
+        {
+          "id": "Box-002",
+          "isActive": true,
+          "contents": "Donation Package with Clothes",
+          "orgID": "Help Aid Africa",
+          "shipmentID": "2020-08-A",
+          "title": "Box-002"
+        },
+        {
+          "id": "Box-005",
+          "isActive": true,
+          "contents": "Donation Package with Clothes",
+          "orgID": "Help Aid Africa",
+          "shipmentID": "2020-08-B",
+          "title": "Box-005"
+        }
+      ]
+    }
+  }
+}
+```
+
+---
+
 ![alt text](https://github.com/helpaidafrica/helpaidafrica-api/blob/master/public/assets/img/5%20Reasons%20for%20HAA%20box%20Api-small.png?raw=true "5 Reasons for help aid Africa Box API")
 
 ---
@@ -41,4 +113,6 @@ For more information, please write to info@helpaidafrica.org
 
 ---
 ![alt text](https://github.com/helpaidafrica/helpaidafrica-api/blob/master/public/assets/img/HAA-DataModel-3.png?raw=true "HAA-DataModel-4")
+
+---
 
