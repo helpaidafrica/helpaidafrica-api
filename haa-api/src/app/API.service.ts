@@ -6,6 +6,69 @@ import API, { graphqlOperation } from "@aws-amplify/api";
 import { GraphQLResult } from "@aws-amplify/api/lib/types";
 import { Observable } from "zen-observable-ts";
 
+export type CreateImageInput = {
+  id?: string | null;
+  altTex?: string | null;
+  src: string;
+};
+
+export type ModelImageConditionInput = {
+  altTex?: ModelStringInput | null;
+  src?: ModelStringInput | null;
+  and?: Array<ModelImageConditionInput | null> | null;
+  or?: Array<ModelImageConditionInput | null> | null;
+  not?: ModelImageConditionInput | null;
+};
+
+export type ModelStringInput = {
+  ne?: string | null;
+  eq?: string | null;
+  le?: string | null;
+  lt?: string | null;
+  ge?: string | null;
+  gt?: string | null;
+  contains?: string | null;
+  notContains?: string | null;
+  between?: Array<string | null> | null;
+  beginsWith?: string | null;
+  attributeExists?: boolean | null;
+  attributeType?: ModelAttributeTypes | null;
+  size?: ModelSizeInput | null;
+};
+
+export enum ModelAttributeTypes {
+  binary = "binary",
+  binarySet = "binarySet",
+  bool = "bool",
+  list = "list",
+  map = "map",
+  number = "number",
+  numberSet = "numberSet",
+  string = "string",
+  stringSet = "stringSet",
+  _null = "_null"
+}
+
+export type ModelSizeInput = {
+  ne?: number | null;
+  eq?: number | null;
+  le?: number | null;
+  lt?: number | null;
+  ge?: number | null;
+  gt?: number | null;
+  between?: Array<number | null> | null;
+};
+
+export type UpdateImageInput = {
+  id: string;
+  altTex?: string | null;
+  src?: string | null;
+};
+
+export type DeleteImageInput = {
+  id?: string | null;
+};
+
 export type CreateApihealthCheckInfoInput = {
   id?: string | null;
   status: ApiHealthStatus;
@@ -41,45 +104,6 @@ export type ModelBooleanInput = {
   eq?: boolean | null;
   attributeExists?: boolean | null;
   attributeType?: ModelAttributeTypes | null;
-};
-
-export enum ModelAttributeTypes {
-  binary = "binary",
-  binarySet = "binarySet",
-  bool = "bool",
-  list = "list",
-  map = "map",
-  number = "number",
-  numberSet = "numberSet",
-  string = "string",
-  stringSet = "stringSet",
-  _null = "_null"
-}
-
-export type ModelStringInput = {
-  ne?: string | null;
-  eq?: string | null;
-  le?: string | null;
-  lt?: string | null;
-  ge?: string | null;
-  gt?: string | null;
-  contains?: string | null;
-  notContains?: string | null;
-  between?: Array<string | null> | null;
-  beginsWith?: string | null;
-  attributeExists?: boolean | null;
-  attributeType?: ModelAttributeTypes | null;
-  size?: ModelSizeInput | null;
-};
-
-export type ModelSizeInput = {
-  ne?: number | null;
-  eq?: number | null;
-  le?: number | null;
-  lt?: number | null;
-  ge?: number | null;
-  gt?: number | null;
-  between?: Array<number | null> | null;
 };
 
 export type UpdateApihealthCheckInfoInput = {
@@ -185,8 +209,9 @@ export type CreateOrgInput = {
   description?: string | null;
   addressID: string;
   email?: string | null;
+  primaryDomain?: string | null;
+  privacyPolicy?: string | null;
   tags?: Array<string> | null;
-  photosUrls?: Array<string> | null;
   notes?: string | null;
   isActive: boolean;
 };
@@ -196,8 +221,9 @@ export type ModelOrgConditionInput = {
   description?: ModelStringInput | null;
   addressID?: ModelIDInput | null;
   email?: ModelStringInput | null;
+  primaryDomain?: ModelStringInput | null;
+  privacyPolicy?: ModelStringInput | null;
   tags?: ModelStringInput | null;
-  photosUrls?: ModelStringInput | null;
   notes?: ModelStringInput | null;
   isActive?: ModelBooleanInput | null;
   and?: Array<ModelOrgConditionInput | null> | null;
@@ -240,14 +266,22 @@ export enum BoxStatus {
   ERROR = "ERROR"
 }
 
+export enum UserStatus {
+  PENDING_VERIFICATION = "PENDING_VERIFICATION",
+  ACTIVE = "ACTIVE",
+  DISABLED = "DISABLED",
+  FLAGGED = "FLAGGED"
+}
+
 export type UpdateOrgInput = {
   id: string;
   name?: string | null;
   description?: string | null;
   addressID?: string | null;
   email?: string | null;
+  primaryDomain?: string | null;
+  privacyPolicy?: string | null;
   tags?: Array<string> | null;
-  photosUrls?: Array<string> | null;
   notes?: string | null;
   isActive?: boolean | null;
 };
@@ -321,7 +355,6 @@ export type CreateShipmentInput = {
   status?: ShippingStatus | null;
   statusHistory?: Array<string> | null;
   tags?: Array<string> | null;
-  photosUrls?: Array<string> | null;
   notes?: string | null;
   notesHistory?: Array<string> | null;
 };
@@ -352,7 +385,6 @@ export type ModelShipmentConditionInput = {
   status?: ModelShippingStatusInput | null;
   statusHistory?: ModelStringInput | null;
   tags?: ModelStringInput | null;
-  photosUrls?: ModelStringInput | null;
   notes?: ModelStringInput | null;
   notesHistory?: ModelStringInput | null;
   and?: Array<ModelShipmentConditionInput | null> | null;
@@ -382,7 +414,6 @@ export type UpdateShipmentInput = {
   status?: ShippingStatus | null;
   statusHistory?: Array<string> | null;
   tags?: Array<string> | null;
-  photosUrls?: Array<string> | null;
   notes?: string | null;
   notesHistory?: Array<string> | null;
 };
@@ -404,7 +435,6 @@ export type CreateBoxInput = {
   barCodePhoto?: string | null;
   qrCodePhoto?: string | null;
   tags?: Array<string> | null;
-  photosUrls?: Array<string> | null;
   status: BoxStatus;
   statusHistory?: Array<BoxStatus> | null;
   internalNotes?: string | null;
@@ -424,7 +454,6 @@ export type ModelBoxConditionInput = {
   barCodePhoto?: ModelStringInput | null;
   qrCodePhoto?: ModelStringInput | null;
   tags?: ModelStringInput | null;
-  photosUrls?: ModelStringInput | null;
   status?: ModelBoxStatusInput | null;
   statusHistory?: ModelBoxStatusListInput | null;
   internalNotes?: ModelStringInput | null;
@@ -460,7 +489,6 @@ export type UpdateBoxInput = {
   barCodePhoto?: string | null;
   qrCodePhoto?: string | null;
   tags?: Array<string> | null;
-  photosUrls?: Array<string> | null;
   status?: BoxStatus | null;
   statusHistory?: Array<BoxStatus> | null;
   internalNotes?: string | null;
@@ -476,20 +504,20 @@ export type CreateBoxLocationInput = {
   id?: string | null;
   boxID: string;
   locationInfoID: string;
+  userID: string;
   notes?: string | null;
   isFinal: boolean;
   tags?: Array<string> | null;
-  photosUrls?: Array<string> | null;
   isActive: boolean;
 };
 
 export type ModelBoxLocationConditionInput = {
   boxID?: ModelIDInput | null;
   locationInfoID?: ModelIDInput | null;
+  userID?: ModelIDInput | null;
   notes?: ModelStringInput | null;
   isFinal?: ModelBooleanInput | null;
   tags?: ModelStringInput | null;
-  photosUrls?: ModelStringInput | null;
   isActive?: ModelBooleanInput | null;
   and?: Array<ModelBoxLocationConditionInput | null> | null;
   or?: Array<ModelBoxLocationConditionInput | null> | null;
@@ -500,15 +528,96 @@ export type UpdateBoxLocationInput = {
   id: string;
   boxID?: string | null;
   locationInfoID?: string | null;
+  userID?: string | null;
   notes?: string | null;
   isFinal?: boolean | null;
   tags?: Array<string> | null;
-  photosUrls?: Array<string> | null;
   isActive?: boolean | null;
 };
 
 export type DeleteBoxLocationInput = {
   id?: string | null;
+};
+
+export type CreateUserInput = {
+  id?: string | null;
+  name: string;
+  orgID: string;
+  isActive: boolean;
+  tags?: Array<string> | null;
+  status: UserStatus;
+  statusHistory?: Array<UserStatus> | null;
+  internalNotes?: string | null;
+  notes?: string | null;
+  rank?: number | null;
+  notesHistory?: Array<string> | null;
+};
+
+export type ModelUserConditionInput = {
+  name?: ModelStringInput | null;
+  orgID?: ModelIDInput | null;
+  isActive?: ModelBooleanInput | null;
+  tags?: ModelStringInput | null;
+  status?: ModelUserStatusInput | null;
+  statusHistory?: ModelUserStatusListInput | null;
+  internalNotes?: ModelStringInput | null;
+  notes?: ModelStringInput | null;
+  rank?: ModelFloatInput | null;
+  notesHistory?: ModelStringInput | null;
+  and?: Array<ModelUserConditionInput | null> | null;
+  or?: Array<ModelUserConditionInput | null> | null;
+  not?: ModelUserConditionInput | null;
+};
+
+export type ModelUserStatusInput = {
+  eq?: UserStatus | null;
+  ne?: UserStatus | null;
+};
+
+export type ModelUserStatusListInput = {
+  eq?: Array<UserStatus | null> | null;
+  ne?: Array<UserStatus | null> | null;
+  contains?: UserStatus | null;
+  notContains?: UserStatus | null;
+};
+
+export type ModelFloatInput = {
+  ne?: number | null;
+  eq?: number | null;
+  le?: number | null;
+  lt?: number | null;
+  ge?: number | null;
+  gt?: number | null;
+  between?: Array<number | null> | null;
+  attributeExists?: boolean | null;
+  attributeType?: ModelAttributeTypes | null;
+};
+
+export type UpdateUserInput = {
+  id: string;
+  name?: string | null;
+  orgID?: string | null;
+  isActive?: boolean | null;
+  tags?: Array<string> | null;
+  status?: UserStatus | null;
+  statusHistory?: Array<UserStatus> | null;
+  internalNotes?: string | null;
+  notes?: string | null;
+  rank?: number | null;
+  notesHistory?: Array<string> | null;
+};
+
+export type DeleteUserInput = {
+  id?: string | null;
+};
+
+export type ModelImageFilterInput = {
+  id?: ModelIDInput | null;
+  altTex?: ModelStringInput | null;
+  src?: ModelStringInput | null;
+  and?: Array<ModelImageFilterInput | null> | null;
+  or?: Array<ModelImageFilterInput | null> | null;
+  not?: ModelImageFilterInput | null;
 };
 
 export type ModelApihealthCheckInfoFilterInput = {
@@ -555,8 +664,9 @@ export type ModelOrgFilterInput = {
   description?: ModelStringInput | null;
   addressID?: ModelIDInput | null;
   email?: ModelStringInput | null;
+  primaryDomain?: ModelStringInput | null;
+  privacyPolicy?: ModelStringInput | null;
   tags?: ModelStringInput | null;
-  photosUrls?: ModelStringInput | null;
   notes?: ModelStringInput | null;
   isActive?: ModelBooleanInput | null;
   and?: Array<ModelOrgFilterInput | null> | null;
@@ -598,7 +708,6 @@ export type ModelShipmentFilterInput = {
   status?: ModelShippingStatusInput | null;
   statusHistory?: ModelStringInput | null;
   tags?: ModelStringInput | null;
-  photosUrls?: ModelStringInput | null;
   notes?: ModelStringInput | null;
   notesHistory?: ModelStringInput | null;
   and?: Array<ModelShipmentFilterInput | null> | null;
@@ -619,7 +728,6 @@ export type ModelBoxFilterInput = {
   barCodePhoto?: ModelStringInput | null;
   qrCodePhoto?: ModelStringInput | null;
   tags?: ModelStringInput | null;
-  photosUrls?: ModelStringInput | null;
   status?: ModelBoxStatusInput | null;
   statusHistory?: ModelBoxStatusListInput | null;
   internalNotes?: ModelStringInput | null;
@@ -628,20 +736,6 @@ export type ModelBoxFilterInput = {
   and?: Array<ModelBoxFilterInput | null> | null;
   or?: Array<ModelBoxFilterInput | null> | null;
   not?: ModelBoxFilterInput | null;
-};
-
-export type ModelBoxLocationFilterInput = {
-  id?: ModelIDInput | null;
-  boxID?: ModelIDInput | null;
-  locationInfoID?: ModelIDInput | null;
-  notes?: ModelStringInput | null;
-  isFinal?: ModelBooleanInput | null;
-  tags?: ModelStringInput | null;
-  photosUrls?: ModelStringInput | null;
-  isActive?: ModelBooleanInput | null;
-  and?: Array<ModelBoxLocationFilterInput | null> | null;
-  or?: Array<ModelBoxLocationFilterInput | null> | null;
-  not?: ModelBoxLocationFilterInput | null;
 };
 
 export type ModelIDKeyConditionInput = {
@@ -659,6 +753,64 @@ export enum ModelSortDirection {
   DESC = "DESC"
 }
 
+export type ModelBoxLocationFilterInput = {
+  id?: ModelIDInput | null;
+  boxID?: ModelIDInput | null;
+  locationInfoID?: ModelIDInput | null;
+  userID?: ModelIDInput | null;
+  notes?: ModelStringInput | null;
+  isFinal?: ModelBooleanInput | null;
+  tags?: ModelStringInput | null;
+  isActive?: ModelBooleanInput | null;
+  and?: Array<ModelBoxLocationFilterInput | null> | null;
+  or?: Array<ModelBoxLocationFilterInput | null> | null;
+  not?: ModelBoxLocationFilterInput | null;
+};
+
+export type ModelUserFilterInput = {
+  id?: ModelIDInput | null;
+  name?: ModelStringInput | null;
+  orgID?: ModelIDInput | null;
+  isActive?: ModelBooleanInput | null;
+  tags?: ModelStringInput | null;
+  status?: ModelUserStatusInput | null;
+  statusHistory?: ModelUserStatusListInput | null;
+  internalNotes?: ModelStringInput | null;
+  notes?: ModelStringInput | null;
+  rank?: ModelFloatInput | null;
+  notesHistory?: ModelStringInput | null;
+  and?: Array<ModelUserFilterInput | null> | null;
+  or?: Array<ModelUserFilterInput | null> | null;
+  not?: ModelUserFilterInput | null;
+};
+
+export type CreateImageMutation = {
+  __typename: "Image";
+  id: string;
+  altTex: string | null;
+  src: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type UpdateImageMutation = {
+  __typename: "Image";
+  id: string;
+  altTex: string | null;
+  src: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type DeleteImageMutation = {
+  __typename: "Image";
+  id: string;
+  altTex: string | null;
+  src: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
 export type CreateApihealthCheckInfoMutation = {
   __typename: "ApihealthCheckInfo";
   id: string;
@@ -669,7 +821,6 @@ export type CreateApihealthCheckInfoMutation = {
   lastUpdated: string | null;
   createdAt: string;
   updatedAt: string;
-  owner: string | null;
 };
 
 export type UpdateApihealthCheckInfoMutation = {
@@ -682,7 +833,6 @@ export type UpdateApihealthCheckInfoMutation = {
   lastUpdated: string | null;
   createdAt: string;
   updatedAt: string;
-  owner: string | null;
 };
 
 export type DeleteApihealthCheckInfoMutation = {
@@ -695,7 +845,6 @@ export type DeleteApihealthCheckInfoMutation = {
   lastUpdated: string | null;
   createdAt: string;
   updatedAt: string;
-  owner: string | null;
 };
 
 export type CreateAddressMutation = {
@@ -712,7 +861,6 @@ export type CreateAddressMutation = {
   country: string;
   createdAt: string;
   updatedAt: string;
-  owner: string | null;
 };
 
 export type UpdateAddressMutation = {
@@ -729,7 +877,6 @@ export type UpdateAddressMutation = {
   country: string;
   createdAt: string;
   updatedAt: string;
-  owner: string | null;
 };
 
 export type DeleteAddressMutation = {
@@ -746,7 +893,6 @@ export type DeleteAddressMutation = {
   country: string;
   createdAt: string;
   updatedAt: string;
-  owner: string | null;
 };
 
 export type CreatePhoneMutation = {
@@ -757,7 +903,6 @@ export type CreatePhoneMutation = {
   type: PhoneType | null;
   createdAt: string;
   updatedAt: string;
-  owner: string | null;
 };
 
 export type UpdatePhoneMutation = {
@@ -768,7 +913,6 @@ export type UpdatePhoneMutation = {
   type: PhoneType | null;
   createdAt: string;
   updatedAt: string;
-  owner: string | null;
 };
 
 export type DeletePhoneMutation = {
@@ -779,7 +923,6 @@ export type DeletePhoneMutation = {
   type: PhoneType | null;
   createdAt: string;
   updatedAt: string;
-  owner: string | null;
 };
 
 export type CreateOrgMutation = {
@@ -788,6 +931,40 @@ export type CreateOrgMutation = {
   name: string;
   description: string | null;
   addressID: string;
+  email: string | null;
+  primaryPhone: {
+    __typename: "Phone";
+    id: string;
+    phone: string | null;
+    isActive: boolean | null;
+    type: PhoneType | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+  otherPhones: Array<{
+    __typename: "Phone";
+    id: string;
+    phone: string | null;
+    isActive: boolean | null;
+    type: PhoneType | null;
+    createdAt: string;
+    updatedAt: string;
+  }> | null;
+  primaryDomain: string | null;
+  privacyPolicy: string | null;
+  tags: Array<string> | null;
+  images: Array<{
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    createdAt: string;
+    updatedAt: string;
+  }> | null;
+  notes: string | null;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
   address: {
     __typename: "Address";
     id: string;
@@ -802,33 +979,7 @@ export type CreateOrgMutation = {
     country: string;
     createdAt: string;
     updatedAt: string;
-    owner: string | null;
   } | null;
-  email: string | null;
-  primaryPhone: {
-    __typename: "Phone";
-    id: string;
-    phone: string | null;
-    isActive: boolean | null;
-    type: PhoneType | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
-  } | null;
-  otherPhones: Array<{
-    __typename: "Phone";
-    id: string;
-    phone: string | null;
-    isActive: boolean | null;
-    type: PhoneType | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
-  }> | null;
-  tags: Array<string> | null;
-  photosUrls: Array<string> | null;
-  notes: string | null;
-  isActive: boolean;
   boxes: {
     __typename: "ModelBoxConnection";
     items: Array<{
@@ -845,7 +996,6 @@ export type CreateOrgMutation = {
       barCodePhoto: string | null;
       qrCodePhoto: string | null;
       tags: Array<string> | null;
-      photosUrls: Array<string> | null;
       status: BoxStatus;
       statusHistory: Array<BoxStatus> | null;
       internalNotes: string | null;
@@ -853,13 +1003,29 @@ export type CreateOrgMutation = {
       notesHistory: Array<string> | null;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null> | null;
     nextToken: string | null;
   } | null;
-  createdAt: string;
-  updatedAt: string;
-  owner: string | null;
+  users: {
+    __typename: "ModelUserConnection";
+    items: Array<{
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
 };
 
 export type UpdateOrgMutation = {
@@ -868,6 +1034,40 @@ export type UpdateOrgMutation = {
   name: string;
   description: string | null;
   addressID: string;
+  email: string | null;
+  primaryPhone: {
+    __typename: "Phone";
+    id: string;
+    phone: string | null;
+    isActive: boolean | null;
+    type: PhoneType | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+  otherPhones: Array<{
+    __typename: "Phone";
+    id: string;
+    phone: string | null;
+    isActive: boolean | null;
+    type: PhoneType | null;
+    createdAt: string;
+    updatedAt: string;
+  }> | null;
+  primaryDomain: string | null;
+  privacyPolicy: string | null;
+  tags: Array<string> | null;
+  images: Array<{
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    createdAt: string;
+    updatedAt: string;
+  }> | null;
+  notes: string | null;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
   address: {
     __typename: "Address";
     id: string;
@@ -882,33 +1082,7 @@ export type UpdateOrgMutation = {
     country: string;
     createdAt: string;
     updatedAt: string;
-    owner: string | null;
   } | null;
-  email: string | null;
-  primaryPhone: {
-    __typename: "Phone";
-    id: string;
-    phone: string | null;
-    isActive: boolean | null;
-    type: PhoneType | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
-  } | null;
-  otherPhones: Array<{
-    __typename: "Phone";
-    id: string;
-    phone: string | null;
-    isActive: boolean | null;
-    type: PhoneType | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
-  }> | null;
-  tags: Array<string> | null;
-  photosUrls: Array<string> | null;
-  notes: string | null;
-  isActive: boolean;
   boxes: {
     __typename: "ModelBoxConnection";
     items: Array<{
@@ -925,7 +1099,6 @@ export type UpdateOrgMutation = {
       barCodePhoto: string | null;
       qrCodePhoto: string | null;
       tags: Array<string> | null;
-      photosUrls: Array<string> | null;
       status: BoxStatus;
       statusHistory: Array<BoxStatus> | null;
       internalNotes: string | null;
@@ -933,13 +1106,29 @@ export type UpdateOrgMutation = {
       notesHistory: Array<string> | null;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null> | null;
     nextToken: string | null;
   } | null;
-  createdAt: string;
-  updatedAt: string;
-  owner: string | null;
+  users: {
+    __typename: "ModelUserConnection";
+    items: Array<{
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
 };
 
 export type DeleteOrgMutation = {
@@ -948,6 +1137,40 @@ export type DeleteOrgMutation = {
   name: string;
   description: string | null;
   addressID: string;
+  email: string | null;
+  primaryPhone: {
+    __typename: "Phone";
+    id: string;
+    phone: string | null;
+    isActive: boolean | null;
+    type: PhoneType | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+  otherPhones: Array<{
+    __typename: "Phone";
+    id: string;
+    phone: string | null;
+    isActive: boolean | null;
+    type: PhoneType | null;
+    createdAt: string;
+    updatedAt: string;
+  }> | null;
+  primaryDomain: string | null;
+  privacyPolicy: string | null;
+  tags: Array<string> | null;
+  images: Array<{
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    createdAt: string;
+    updatedAt: string;
+  }> | null;
+  notes: string | null;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
   address: {
     __typename: "Address";
     id: string;
@@ -962,33 +1185,7 @@ export type DeleteOrgMutation = {
     country: string;
     createdAt: string;
     updatedAt: string;
-    owner: string | null;
   } | null;
-  email: string | null;
-  primaryPhone: {
-    __typename: "Phone";
-    id: string;
-    phone: string | null;
-    isActive: boolean | null;
-    type: PhoneType | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
-  } | null;
-  otherPhones: Array<{
-    __typename: "Phone";
-    id: string;
-    phone: string | null;
-    isActive: boolean | null;
-    type: PhoneType | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
-  }> | null;
-  tags: Array<string> | null;
-  photosUrls: Array<string> | null;
-  notes: string | null;
-  isActive: boolean;
   boxes: {
     __typename: "ModelBoxConnection";
     items: Array<{
@@ -1005,7 +1202,6 @@ export type DeleteOrgMutation = {
       barCodePhoto: string | null;
       qrCodePhoto: string | null;
       tags: Array<string> | null;
-      photosUrls: Array<string> | null;
       status: BoxStatus;
       statusHistory: Array<BoxStatus> | null;
       internalNotes: string | null;
@@ -1013,13 +1209,29 @@ export type DeleteOrgMutation = {
       notesHistory: Array<string> | null;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null> | null;
     nextToken: string | null;
   } | null;
-  createdAt: string;
-  updatedAt: string;
-  owner: string | null;
+  users: {
+    __typename: "ModelUserConnection";
+    items: Array<{
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
 };
 
 export type CreateLocationInfoMutation = {
@@ -1030,6 +1242,22 @@ export type CreateLocationInfoMutation = {
   longitude: string;
   isActive: boolean;
   addressID: string;
+  phones: Array<{
+    __typename: "Phone";
+    id: string;
+    phone: string | null;
+    isActive: boolean | null;
+    type: PhoneType | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null> | null;
+  plusCode: string | null;
+  website: Array<string> | null;
+  notes: string | null;
+  notesHistory: Array<string> | null;
+  tags: Array<string> | null;
+  createdAt: string;
+  updatedAt: string;
   address: {
     __typename: "Address";
     id: string;
@@ -1044,26 +1272,7 @@ export type CreateLocationInfoMutation = {
     country: string;
     createdAt: string;
     updatedAt: string;
-    owner: string | null;
   } | null;
-  phones: Array<{
-    __typename: "Phone";
-    id: string;
-    phone: string | null;
-    isActive: boolean | null;
-    type: PhoneType | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
-  } | null> | null;
-  plusCode: string | null;
-  website: Array<string> | null;
-  notes: string | null;
-  notesHistory: Array<string> | null;
-  tags: Array<string> | null;
-  createdAt: string;
-  updatedAt: string;
-  owner: string | null;
 };
 
 export type UpdateLocationInfoMutation = {
@@ -1074,6 +1283,22 @@ export type UpdateLocationInfoMutation = {
   longitude: string;
   isActive: boolean;
   addressID: string;
+  phones: Array<{
+    __typename: "Phone";
+    id: string;
+    phone: string | null;
+    isActive: boolean | null;
+    type: PhoneType | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null> | null;
+  plusCode: string | null;
+  website: Array<string> | null;
+  notes: string | null;
+  notesHistory: Array<string> | null;
+  tags: Array<string> | null;
+  createdAt: string;
+  updatedAt: string;
   address: {
     __typename: "Address";
     id: string;
@@ -1088,26 +1313,7 @@ export type UpdateLocationInfoMutation = {
     country: string;
     createdAt: string;
     updatedAt: string;
-    owner: string | null;
   } | null;
-  phones: Array<{
-    __typename: "Phone";
-    id: string;
-    phone: string | null;
-    isActive: boolean | null;
-    type: PhoneType | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
-  } | null> | null;
-  plusCode: string | null;
-  website: Array<string> | null;
-  notes: string | null;
-  notesHistory: Array<string> | null;
-  tags: Array<string> | null;
-  createdAt: string;
-  updatedAt: string;
-  owner: string | null;
 };
 
 export type DeleteLocationInfoMutation = {
@@ -1118,6 +1324,22 @@ export type DeleteLocationInfoMutation = {
   longitude: string;
   isActive: boolean;
   addressID: string;
+  phones: Array<{
+    __typename: "Phone";
+    id: string;
+    phone: string | null;
+    isActive: boolean | null;
+    type: PhoneType | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null> | null;
+  plusCode: string | null;
+  website: Array<string> | null;
+  notes: string | null;
+  notesHistory: Array<string> | null;
+  tags: Array<string> | null;
+  createdAt: string;
+  updatedAt: string;
   address: {
     __typename: "Address";
     id: string;
@@ -1132,26 +1354,7 @@ export type DeleteLocationInfoMutation = {
     country: string;
     createdAt: string;
     updatedAt: string;
-    owner: string | null;
   } | null;
-  phones: Array<{
-    __typename: "Phone";
-    id: string;
-    phone: string | null;
-    isActive: boolean | null;
-    type: PhoneType | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
-  } | null> | null;
-  plusCode: string | null;
-  website: Array<string> | null;
-  notes: string | null;
-  notesHistory: Array<string> | null;
-  tags: Array<string> | null;
-  createdAt: string;
-  updatedAt: string;
-  owner: string | null;
 };
 
 export type CreateShipmentMutation = {
@@ -1163,93 +1366,7 @@ export type CreateShipmentMutation = {
   startDate: string | null;
   deliveryDate: string | null;
   startLocationID: string;
-  startLocation: {
-    __typename: "LocationInfo";
-    id: string;
-    locationLabel: string;
-    latitude: string;
-    longitude: string;
-    isActive: boolean;
-    addressID: string;
-    address: {
-      __typename: "Address";
-      id: string;
-      label: string;
-      addressLine1: string;
-      addressLine2: string | null;
-      city: string;
-      state: string | null;
-      province: string | null;
-      zipCode: string | null;
-      postalCode: string | null;
-      country: string;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null;
-    phones: Array<{
-      __typename: "Phone";
-      id: string;
-      phone: string | null;
-      isActive: boolean | null;
-      type: PhoneType | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null> | null;
-    plusCode: string | null;
-    website: Array<string> | null;
-    notes: string | null;
-    notesHistory: Array<string> | null;
-    tags: Array<string> | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
-  } | null;
   destinationLocationID: string;
-  destinationLocation: {
-    __typename: "LocationInfo";
-    id: string;
-    locationLabel: string;
-    latitude: string;
-    longitude: string;
-    isActive: boolean;
-    addressID: string;
-    address: {
-      __typename: "Address";
-      id: string;
-      label: string;
-      addressLine1: string;
-      addressLine2: string | null;
-      city: string;
-      state: string | null;
-      province: string | null;
-      zipCode: string | null;
-      postalCode: string | null;
-      country: string;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null;
-    phones: Array<{
-      __typename: "Phone";
-      id: string;
-      phone: string | null;
-      isActive: boolean | null;
-      type: PhoneType | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null> | null;
-    plusCode: string | null;
-    website: Array<string> | null;
-    notes: string | null;
-    notesHistory: Array<string> | null;
-    tags: Array<string> | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
-  } | null;
   shipmentNotes: string | null;
   deliveryNotes: string | null;
   trackingId: string | null;
@@ -1258,9 +1375,98 @@ export type CreateShipmentMutation = {
   status: ShippingStatus | null;
   statusHistory: Array<string> | null;
   tags: Array<string> | null;
-  photosUrls: Array<string> | null;
+  images: Array<{
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    createdAt: string;
+    updatedAt: string;
+  }> | null;
   notes: string | null;
   notesHistory: Array<string> | null;
+  createdAt: string;
+  updatedAt: string;
+  startLocation: {
+    __typename: "LocationInfo";
+    id: string;
+    locationLabel: string;
+    latitude: string;
+    longitude: string;
+    isActive: boolean;
+    addressID: string;
+    phones: Array<{
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    plusCode: string | null;
+    website: Array<string> | null;
+    notes: string | null;
+    notesHistory: Array<string> | null;
+    tags: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
+    address: {
+      __typename: "Address";
+      id: string;
+      label: string;
+      addressLine1: string;
+      addressLine2: string | null;
+      city: string;
+      state: string | null;
+      province: string | null;
+      zipCode: string | null;
+      postalCode: string | null;
+      country: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+  } | null;
+  destinationLocation: {
+    __typename: "LocationInfo";
+    id: string;
+    locationLabel: string;
+    latitude: string;
+    longitude: string;
+    isActive: boolean;
+    addressID: string;
+    phones: Array<{
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    plusCode: string | null;
+    website: Array<string> | null;
+    notes: string | null;
+    notesHistory: Array<string> | null;
+    tags: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
+    address: {
+      __typename: "Address";
+      id: string;
+      label: string;
+      addressLine1: string;
+      addressLine2: string | null;
+      city: string;
+      state: string | null;
+      province: string | null;
+      zipCode: string | null;
+      postalCode: string | null;
+      country: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+  } | null;
   boxes: {
     __typename: "ModelBoxConnection";
     items: Array<{
@@ -1277,7 +1483,6 @@ export type CreateShipmentMutation = {
       barCodePhoto: string | null;
       qrCodePhoto: string | null;
       tags: Array<string> | null;
-      photosUrls: Array<string> | null;
       status: BoxStatus;
       statusHistory: Array<BoxStatus> | null;
       internalNotes: string | null;
@@ -1285,13 +1490,9 @@ export type CreateShipmentMutation = {
       notesHistory: Array<string> | null;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null> | null;
     nextToken: string | null;
   } | null;
-  createdAt: string;
-  updatedAt: string;
-  owner: string | null;
 };
 
 export type UpdateShipmentMutation = {
@@ -1303,93 +1504,7 @@ export type UpdateShipmentMutation = {
   startDate: string | null;
   deliveryDate: string | null;
   startLocationID: string;
-  startLocation: {
-    __typename: "LocationInfo";
-    id: string;
-    locationLabel: string;
-    latitude: string;
-    longitude: string;
-    isActive: boolean;
-    addressID: string;
-    address: {
-      __typename: "Address";
-      id: string;
-      label: string;
-      addressLine1: string;
-      addressLine2: string | null;
-      city: string;
-      state: string | null;
-      province: string | null;
-      zipCode: string | null;
-      postalCode: string | null;
-      country: string;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null;
-    phones: Array<{
-      __typename: "Phone";
-      id: string;
-      phone: string | null;
-      isActive: boolean | null;
-      type: PhoneType | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null> | null;
-    plusCode: string | null;
-    website: Array<string> | null;
-    notes: string | null;
-    notesHistory: Array<string> | null;
-    tags: Array<string> | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
-  } | null;
   destinationLocationID: string;
-  destinationLocation: {
-    __typename: "LocationInfo";
-    id: string;
-    locationLabel: string;
-    latitude: string;
-    longitude: string;
-    isActive: boolean;
-    addressID: string;
-    address: {
-      __typename: "Address";
-      id: string;
-      label: string;
-      addressLine1: string;
-      addressLine2: string | null;
-      city: string;
-      state: string | null;
-      province: string | null;
-      zipCode: string | null;
-      postalCode: string | null;
-      country: string;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null;
-    phones: Array<{
-      __typename: "Phone";
-      id: string;
-      phone: string | null;
-      isActive: boolean | null;
-      type: PhoneType | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null> | null;
-    plusCode: string | null;
-    website: Array<string> | null;
-    notes: string | null;
-    notesHistory: Array<string> | null;
-    tags: Array<string> | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
-  } | null;
   shipmentNotes: string | null;
   deliveryNotes: string | null;
   trackingId: string | null;
@@ -1398,9 +1513,98 @@ export type UpdateShipmentMutation = {
   status: ShippingStatus | null;
   statusHistory: Array<string> | null;
   tags: Array<string> | null;
-  photosUrls: Array<string> | null;
+  images: Array<{
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    createdAt: string;
+    updatedAt: string;
+  }> | null;
   notes: string | null;
   notesHistory: Array<string> | null;
+  createdAt: string;
+  updatedAt: string;
+  startLocation: {
+    __typename: "LocationInfo";
+    id: string;
+    locationLabel: string;
+    latitude: string;
+    longitude: string;
+    isActive: boolean;
+    addressID: string;
+    phones: Array<{
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    plusCode: string | null;
+    website: Array<string> | null;
+    notes: string | null;
+    notesHistory: Array<string> | null;
+    tags: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
+    address: {
+      __typename: "Address";
+      id: string;
+      label: string;
+      addressLine1: string;
+      addressLine2: string | null;
+      city: string;
+      state: string | null;
+      province: string | null;
+      zipCode: string | null;
+      postalCode: string | null;
+      country: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+  } | null;
+  destinationLocation: {
+    __typename: "LocationInfo";
+    id: string;
+    locationLabel: string;
+    latitude: string;
+    longitude: string;
+    isActive: boolean;
+    addressID: string;
+    phones: Array<{
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    plusCode: string | null;
+    website: Array<string> | null;
+    notes: string | null;
+    notesHistory: Array<string> | null;
+    tags: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
+    address: {
+      __typename: "Address";
+      id: string;
+      label: string;
+      addressLine1: string;
+      addressLine2: string | null;
+      city: string;
+      state: string | null;
+      province: string | null;
+      zipCode: string | null;
+      postalCode: string | null;
+      country: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+  } | null;
   boxes: {
     __typename: "ModelBoxConnection";
     items: Array<{
@@ -1417,7 +1621,6 @@ export type UpdateShipmentMutation = {
       barCodePhoto: string | null;
       qrCodePhoto: string | null;
       tags: Array<string> | null;
-      photosUrls: Array<string> | null;
       status: BoxStatus;
       statusHistory: Array<BoxStatus> | null;
       internalNotes: string | null;
@@ -1425,13 +1628,9 @@ export type UpdateShipmentMutation = {
       notesHistory: Array<string> | null;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null> | null;
     nextToken: string | null;
   } | null;
-  createdAt: string;
-  updatedAt: string;
-  owner: string | null;
 };
 
 export type DeleteShipmentMutation = {
@@ -1443,93 +1642,7 @@ export type DeleteShipmentMutation = {
   startDate: string | null;
   deliveryDate: string | null;
   startLocationID: string;
-  startLocation: {
-    __typename: "LocationInfo";
-    id: string;
-    locationLabel: string;
-    latitude: string;
-    longitude: string;
-    isActive: boolean;
-    addressID: string;
-    address: {
-      __typename: "Address";
-      id: string;
-      label: string;
-      addressLine1: string;
-      addressLine2: string | null;
-      city: string;
-      state: string | null;
-      province: string | null;
-      zipCode: string | null;
-      postalCode: string | null;
-      country: string;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null;
-    phones: Array<{
-      __typename: "Phone";
-      id: string;
-      phone: string | null;
-      isActive: boolean | null;
-      type: PhoneType | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null> | null;
-    plusCode: string | null;
-    website: Array<string> | null;
-    notes: string | null;
-    notesHistory: Array<string> | null;
-    tags: Array<string> | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
-  } | null;
   destinationLocationID: string;
-  destinationLocation: {
-    __typename: "LocationInfo";
-    id: string;
-    locationLabel: string;
-    latitude: string;
-    longitude: string;
-    isActive: boolean;
-    addressID: string;
-    address: {
-      __typename: "Address";
-      id: string;
-      label: string;
-      addressLine1: string;
-      addressLine2: string | null;
-      city: string;
-      state: string | null;
-      province: string | null;
-      zipCode: string | null;
-      postalCode: string | null;
-      country: string;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null;
-    phones: Array<{
-      __typename: "Phone";
-      id: string;
-      phone: string | null;
-      isActive: boolean | null;
-      type: PhoneType | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null> | null;
-    plusCode: string | null;
-    website: Array<string> | null;
-    notes: string | null;
-    notesHistory: Array<string> | null;
-    tags: Array<string> | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
-  } | null;
   shipmentNotes: string | null;
   deliveryNotes: string | null;
   trackingId: string | null;
@@ -1538,9 +1651,98 @@ export type DeleteShipmentMutation = {
   status: ShippingStatus | null;
   statusHistory: Array<string> | null;
   tags: Array<string> | null;
-  photosUrls: Array<string> | null;
+  images: Array<{
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    createdAt: string;
+    updatedAt: string;
+  }> | null;
   notes: string | null;
   notesHistory: Array<string> | null;
+  createdAt: string;
+  updatedAt: string;
+  startLocation: {
+    __typename: "LocationInfo";
+    id: string;
+    locationLabel: string;
+    latitude: string;
+    longitude: string;
+    isActive: boolean;
+    addressID: string;
+    phones: Array<{
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    plusCode: string | null;
+    website: Array<string> | null;
+    notes: string | null;
+    notesHistory: Array<string> | null;
+    tags: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
+    address: {
+      __typename: "Address";
+      id: string;
+      label: string;
+      addressLine1: string;
+      addressLine2: string | null;
+      city: string;
+      state: string | null;
+      province: string | null;
+      zipCode: string | null;
+      postalCode: string | null;
+      country: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+  } | null;
+  destinationLocation: {
+    __typename: "LocationInfo";
+    id: string;
+    locationLabel: string;
+    latitude: string;
+    longitude: string;
+    isActive: boolean;
+    addressID: string;
+    phones: Array<{
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    plusCode: string | null;
+    website: Array<string> | null;
+    notes: string | null;
+    notesHistory: Array<string> | null;
+    tags: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
+    address: {
+      __typename: "Address";
+      id: string;
+      label: string;
+      addressLine1: string;
+      addressLine2: string | null;
+      city: string;
+      state: string | null;
+      province: string | null;
+      zipCode: string | null;
+      postalCode: string | null;
+      country: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+  } | null;
   boxes: {
     __typename: "ModelBoxConnection";
     items: Array<{
@@ -1557,7 +1759,6 @@ export type DeleteShipmentMutation = {
       barCodePhoto: string | null;
       qrCodePhoto: string | null;
       tags: Array<string> | null;
-      photosUrls: Array<string> | null;
       status: BoxStatus;
       statusHistory: Array<BoxStatus> | null;
       internalNotes: string | null;
@@ -1565,13 +1766,9 @@ export type DeleteShipmentMutation = {
       notesHistory: Array<string> | null;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null> | null;
     nextToken: string | null;
   } | null;
-  createdAt: string;
-  updatedAt: string;
-  owner: string | null;
 };
 
 export type CreateBoxMutation = {
@@ -1581,12 +1778,68 @@ export type CreateBoxMutation = {
   contents: string;
   size: string;
   orgID: string;
+  shipmentID: string;
+  isActive: boolean;
+  barCode: string | null;
+  qrCode: string | null;
+  barCodePhoto: string | null;
+  qrCodePhoto: string | null;
+  tags: Array<string> | null;
+  images: Array<{
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    createdAt: string;
+    updatedAt: string;
+  }> | null;
+  status: BoxStatus;
+  statusHistory: Array<BoxStatus> | null;
+  internalNotes: string | null;
+  notes: string | null;
+  notesHistory: Array<string> | null;
+  createdAt: string;
+  updatedAt: string;
   org: {
     __typename: "Org";
     id: string;
     name: string;
     description: string | null;
     addressID: string;
+    email: string | null;
+    primaryPhone: {
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    otherPhones: Array<{
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    primaryDomain: string | null;
+    privacyPolicy: string | null;
+    tags: Array<string> | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    notes: string | null;
+    isActive: boolean;
+    createdAt: string;
+    updatedAt: string;
     address: {
       __typename: "Address";
       id: string;
@@ -1601,42 +1854,16 @@ export type CreateBoxMutation = {
       country: string;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null;
-    email: string | null;
-    primaryPhone: {
-      __typename: "Phone";
-      id: string;
-      phone: string | null;
-      isActive: boolean | null;
-      type: PhoneType | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null;
-    otherPhones: Array<{
-      __typename: "Phone";
-      id: string;
-      phone: string | null;
-      isActive: boolean | null;
-      type: PhoneType | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    }> | null;
-    tags: Array<string> | null;
-    photosUrls: Array<string> | null;
-    notes: string | null;
-    isActive: boolean;
     boxes: {
       __typename: "ModelBoxConnection";
       nextToken: string | null;
     } | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
+    users: {
+      __typename: "ModelUserConnection";
+      nextToken: string | null;
+    } | null;
   } | null;
-  shipmentID: string;
   shipment: {
     __typename: "Shipment";
     id: string;
@@ -1646,6 +1873,27 @@ export type CreateBoxMutation = {
     startDate: string | null;
     deliveryDate: string | null;
     startLocationID: string;
+    destinationLocationID: string;
+    shipmentNotes: string | null;
+    deliveryNotes: string | null;
+    trackingId: string | null;
+    weight: string | null;
+    shipmentReceiver: string | null;
+    status: ShippingStatus | null;
+    statusHistory: Array<string> | null;
+    tags: Array<string> | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    notes: string | null;
+    notesHistory: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
     startLocation: {
       __typename: "LocationInfo";
       id: string;
@@ -1661,9 +1909,7 @@ export type CreateBoxMutation = {
       tags: Array<string> | null;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null;
-    destinationLocationID: string;
     destinationLocation: {
       __typename: "LocationInfo";
       id: string;
@@ -1679,39 +1925,12 @@ export type CreateBoxMutation = {
       tags: Array<string> | null;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null;
-    shipmentNotes: string | null;
-    deliveryNotes: string | null;
-    trackingId: string | null;
-    weight: string | null;
-    shipmentReceiver: string | null;
-    status: ShippingStatus | null;
-    statusHistory: Array<string> | null;
-    tags: Array<string> | null;
-    photosUrls: Array<string> | null;
-    notes: string | null;
-    notesHistory: Array<string> | null;
     boxes: {
       __typename: "ModelBoxConnection";
       nextToken: string | null;
     } | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
   } | null;
-  isActive: boolean;
-  barCode: string | null;
-  qrCode: string | null;
-  barCodePhoto: string | null;
-  qrCodePhoto: string | null;
-  tags: Array<string> | null;
-  photosUrls: Array<string> | null;
-  status: BoxStatus;
-  statusHistory: Array<BoxStatus> | null;
-  internalNotes: string | null;
-  notes: string | null;
-  notesHistory: Array<string> | null;
   locations: {
     __typename: "ModelBoxLocationConnection";
     items: Array<{
@@ -1719,20 +1938,16 @@ export type CreateBoxMutation = {
       id: string;
       boxID: string;
       locationInfoID: string;
+      userID: string;
       notes: string | null;
       isFinal: boolean;
       tags: Array<string> | null;
-      photosUrls: Array<string> | null;
       isActive: boolean;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null> | null;
     nextToken: string | null;
   } | null;
-  createdAt: string;
-  updatedAt: string;
-  owner: string | null;
 };
 
 export type UpdateBoxMutation = {
@@ -1742,12 +1957,68 @@ export type UpdateBoxMutation = {
   contents: string;
   size: string;
   orgID: string;
+  shipmentID: string;
+  isActive: boolean;
+  barCode: string | null;
+  qrCode: string | null;
+  barCodePhoto: string | null;
+  qrCodePhoto: string | null;
+  tags: Array<string> | null;
+  images: Array<{
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    createdAt: string;
+    updatedAt: string;
+  }> | null;
+  status: BoxStatus;
+  statusHistory: Array<BoxStatus> | null;
+  internalNotes: string | null;
+  notes: string | null;
+  notesHistory: Array<string> | null;
+  createdAt: string;
+  updatedAt: string;
   org: {
     __typename: "Org";
     id: string;
     name: string;
     description: string | null;
     addressID: string;
+    email: string | null;
+    primaryPhone: {
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    otherPhones: Array<{
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    primaryDomain: string | null;
+    privacyPolicy: string | null;
+    tags: Array<string> | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    notes: string | null;
+    isActive: boolean;
+    createdAt: string;
+    updatedAt: string;
     address: {
       __typename: "Address";
       id: string;
@@ -1762,42 +2033,16 @@ export type UpdateBoxMutation = {
       country: string;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null;
-    email: string | null;
-    primaryPhone: {
-      __typename: "Phone";
-      id: string;
-      phone: string | null;
-      isActive: boolean | null;
-      type: PhoneType | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null;
-    otherPhones: Array<{
-      __typename: "Phone";
-      id: string;
-      phone: string | null;
-      isActive: boolean | null;
-      type: PhoneType | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    }> | null;
-    tags: Array<string> | null;
-    photosUrls: Array<string> | null;
-    notes: string | null;
-    isActive: boolean;
     boxes: {
       __typename: "ModelBoxConnection";
       nextToken: string | null;
     } | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
+    users: {
+      __typename: "ModelUserConnection";
+      nextToken: string | null;
+    } | null;
   } | null;
-  shipmentID: string;
   shipment: {
     __typename: "Shipment";
     id: string;
@@ -1807,6 +2052,27 @@ export type UpdateBoxMutation = {
     startDate: string | null;
     deliveryDate: string | null;
     startLocationID: string;
+    destinationLocationID: string;
+    shipmentNotes: string | null;
+    deliveryNotes: string | null;
+    trackingId: string | null;
+    weight: string | null;
+    shipmentReceiver: string | null;
+    status: ShippingStatus | null;
+    statusHistory: Array<string> | null;
+    tags: Array<string> | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    notes: string | null;
+    notesHistory: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
     startLocation: {
       __typename: "LocationInfo";
       id: string;
@@ -1822,9 +2088,7 @@ export type UpdateBoxMutation = {
       tags: Array<string> | null;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null;
-    destinationLocationID: string;
     destinationLocation: {
       __typename: "LocationInfo";
       id: string;
@@ -1840,39 +2104,12 @@ export type UpdateBoxMutation = {
       tags: Array<string> | null;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null;
-    shipmentNotes: string | null;
-    deliveryNotes: string | null;
-    trackingId: string | null;
-    weight: string | null;
-    shipmentReceiver: string | null;
-    status: ShippingStatus | null;
-    statusHistory: Array<string> | null;
-    tags: Array<string> | null;
-    photosUrls: Array<string> | null;
-    notes: string | null;
-    notesHistory: Array<string> | null;
     boxes: {
       __typename: "ModelBoxConnection";
       nextToken: string | null;
     } | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
   } | null;
-  isActive: boolean;
-  barCode: string | null;
-  qrCode: string | null;
-  barCodePhoto: string | null;
-  qrCodePhoto: string | null;
-  tags: Array<string> | null;
-  photosUrls: Array<string> | null;
-  status: BoxStatus;
-  statusHistory: Array<BoxStatus> | null;
-  internalNotes: string | null;
-  notes: string | null;
-  notesHistory: Array<string> | null;
   locations: {
     __typename: "ModelBoxLocationConnection";
     items: Array<{
@@ -1880,20 +2117,16 @@ export type UpdateBoxMutation = {
       id: string;
       boxID: string;
       locationInfoID: string;
+      userID: string;
       notes: string | null;
       isFinal: boolean;
       tags: Array<string> | null;
-      photosUrls: Array<string> | null;
       isActive: boolean;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null> | null;
     nextToken: string | null;
   } | null;
-  createdAt: string;
-  updatedAt: string;
-  owner: string | null;
 };
 
 export type DeleteBoxMutation = {
@@ -1903,12 +2136,68 @@ export type DeleteBoxMutation = {
   contents: string;
   size: string;
   orgID: string;
+  shipmentID: string;
+  isActive: boolean;
+  barCode: string | null;
+  qrCode: string | null;
+  barCodePhoto: string | null;
+  qrCodePhoto: string | null;
+  tags: Array<string> | null;
+  images: Array<{
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    createdAt: string;
+    updatedAt: string;
+  }> | null;
+  status: BoxStatus;
+  statusHistory: Array<BoxStatus> | null;
+  internalNotes: string | null;
+  notes: string | null;
+  notesHistory: Array<string> | null;
+  createdAt: string;
+  updatedAt: string;
   org: {
     __typename: "Org";
     id: string;
     name: string;
     description: string | null;
     addressID: string;
+    email: string | null;
+    primaryPhone: {
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    otherPhones: Array<{
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    primaryDomain: string | null;
+    privacyPolicy: string | null;
+    tags: Array<string> | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    notes: string | null;
+    isActive: boolean;
+    createdAt: string;
+    updatedAt: string;
     address: {
       __typename: "Address";
       id: string;
@@ -1923,42 +2212,16 @@ export type DeleteBoxMutation = {
       country: string;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null;
-    email: string | null;
-    primaryPhone: {
-      __typename: "Phone";
-      id: string;
-      phone: string | null;
-      isActive: boolean | null;
-      type: PhoneType | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null;
-    otherPhones: Array<{
-      __typename: "Phone";
-      id: string;
-      phone: string | null;
-      isActive: boolean | null;
-      type: PhoneType | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    }> | null;
-    tags: Array<string> | null;
-    photosUrls: Array<string> | null;
-    notes: string | null;
-    isActive: boolean;
     boxes: {
       __typename: "ModelBoxConnection";
       nextToken: string | null;
     } | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
+    users: {
+      __typename: "ModelUserConnection";
+      nextToken: string | null;
+    } | null;
   } | null;
-  shipmentID: string;
   shipment: {
     __typename: "Shipment";
     id: string;
@@ -1968,6 +2231,27 @@ export type DeleteBoxMutation = {
     startDate: string | null;
     deliveryDate: string | null;
     startLocationID: string;
+    destinationLocationID: string;
+    shipmentNotes: string | null;
+    deliveryNotes: string | null;
+    trackingId: string | null;
+    weight: string | null;
+    shipmentReceiver: string | null;
+    status: ShippingStatus | null;
+    statusHistory: Array<string> | null;
+    tags: Array<string> | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    notes: string | null;
+    notesHistory: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
     startLocation: {
       __typename: "LocationInfo";
       id: string;
@@ -1983,9 +2267,7 @@ export type DeleteBoxMutation = {
       tags: Array<string> | null;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null;
-    destinationLocationID: string;
     destinationLocation: {
       __typename: "LocationInfo";
       id: string;
@@ -2001,39 +2283,12 @@ export type DeleteBoxMutation = {
       tags: Array<string> | null;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null;
-    shipmentNotes: string | null;
-    deliveryNotes: string | null;
-    trackingId: string | null;
-    weight: string | null;
-    shipmentReceiver: string | null;
-    status: ShippingStatus | null;
-    statusHistory: Array<string> | null;
-    tags: Array<string> | null;
-    photosUrls: Array<string> | null;
-    notes: string | null;
-    notesHistory: Array<string> | null;
     boxes: {
       __typename: "ModelBoxConnection";
       nextToken: string | null;
     } | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
   } | null;
-  isActive: boolean;
-  barCode: string | null;
-  qrCode: string | null;
-  barCodePhoto: string | null;
-  qrCodePhoto: string | null;
-  tags: Array<string> | null;
-  photosUrls: Array<string> | null;
-  status: BoxStatus;
-  statusHistory: Array<BoxStatus> | null;
-  internalNotes: string | null;
-  notes: string | null;
-  notesHistory: Array<string> | null;
   locations: {
     __typename: "ModelBoxLocationConnection";
     items: Array<{
@@ -2041,26 +2296,78 @@ export type DeleteBoxMutation = {
       id: string;
       boxID: string;
       locationInfoID: string;
+      userID: string;
       notes: string | null;
       isFinal: boolean;
       tags: Array<string> | null;
-      photosUrls: Array<string> | null;
       isActive: boolean;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null> | null;
     nextToken: string | null;
   } | null;
-  createdAt: string;
-  updatedAt: string;
-  owner: string | null;
 };
 
 export type CreateBoxLocationMutation = {
   __typename: "BoxLocation";
   id: string;
   boxID: string;
+  locationInfoID: string;
+  userID: string;
+  notes: string | null;
+  isFinal: boolean;
+  tags: Array<string> | null;
+  images: Array<{
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    createdAt: string;
+    updatedAt: string;
+  }> | null;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+  locationInfo: {
+    __typename: "LocationInfo";
+    id: string;
+    locationLabel: string;
+    latitude: string;
+    longitude: string;
+    isActive: boolean;
+    addressID: string;
+    phones: Array<{
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    plusCode: string | null;
+    website: Array<string> | null;
+    notes: string | null;
+    notesHistory: Array<string> | null;
+    tags: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
+    address: {
+      __typename: "Address";
+      id: string;
+      label: string;
+      addressLine1: string;
+      addressLine2: string | null;
+      city: string;
+      state: string | null;
+      province: string | null;
+      zipCode: string | null;
+      postalCode: string | null;
+      country: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+  };
   box: {
     __typename: "Box";
     id: string;
@@ -2068,6 +2375,28 @@ export type CreateBoxLocationMutation = {
     contents: string;
     size: string;
     orgID: string;
+    shipmentID: string;
+    isActive: boolean;
+    barCode: string | null;
+    qrCode: string | null;
+    barCodePhoto: string | null;
+    qrCodePhoto: string | null;
+    tags: Array<string> | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    status: BoxStatus;
+    statusHistory: Array<BoxStatus> | null;
+    internalNotes: string | null;
+    notes: string | null;
+    notesHistory: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
     org: {
       __typename: "Org";
       id: string;
@@ -2075,15 +2404,14 @@ export type CreateBoxLocationMutation = {
       description: string | null;
       addressID: string;
       email: string | null;
+      primaryDomain: string | null;
+      privacyPolicy: string | null;
       tags: Array<string> | null;
-      photosUrls: Array<string> | null;
       notes: string | null;
       isActive: boolean;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null;
-    shipmentID: string;
     shipment: {
       __typename: "Shipment";
       id: string;
@@ -2102,91 +2430,121 @@ export type CreateBoxLocationMutation = {
       status: ShippingStatus | null;
       statusHistory: Array<string> | null;
       tags: Array<string> | null;
-      photosUrls: Array<string> | null;
       notes: string | null;
       notesHistory: Array<string> | null;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null;
-    isActive: boolean;
-    barCode: string | null;
-    qrCode: string | null;
-    barCodePhoto: string | null;
-    qrCodePhoto: string | null;
-    tags: Array<string> | null;
-    photosUrls: Array<string> | null;
-    status: BoxStatus;
-    statusHistory: Array<BoxStatus> | null;
-    internalNotes: string | null;
-    notes: string | null;
-    notesHistory: Array<string> | null;
     locations: {
       __typename: "ModelBoxLocationConnection";
       nextToken: string | null;
     } | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
   };
-  locationInfoID: string;
-  locationInfo: {
-    __typename: "LocationInfo";
+  user: {
+    __typename: "User";
     id: string;
-    locationLabel: string;
-    latitude: string;
-    longitude: string;
+    name: string;
+    orgID: string;
     isActive: boolean;
-    addressID: string;
-    address: {
-      __typename: "Address";
-      id: string;
-      label: string;
-      addressLine1: string;
-      addressLine2: string | null;
-      city: string;
-      state: string | null;
-      province: string | null;
-      zipCode: string | null;
-      postalCode: string | null;
-      country: string;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null;
-    phones: Array<{
-      __typename: "Phone";
-      id: string;
-      phone: string | null;
-      isActive: boolean | null;
-      type: PhoneType | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null> | null;
-    plusCode: string | null;
-    website: Array<string> | null;
-    notes: string | null;
-    notesHistory: Array<string> | null;
     tags: Array<string> | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    status: UserStatus;
+    statusHistory: Array<UserStatus> | null;
+    internalNotes: string | null;
+    notes: string | null;
+    rank: number | null;
+    notesHistory: Array<string> | null;
     createdAt: string;
     updatedAt: string;
-    owner: string | null;
+    org: {
+      __typename: "Org";
+      id: string;
+      name: string;
+      description: string | null;
+      addressID: string;
+      email: string | null;
+      primaryDomain: string | null;
+      privacyPolicy: string | null;
+      tags: Array<string> | null;
+      notes: string | null;
+      isActive: boolean;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
   };
-  notes: string | null;
-  isFinal: boolean;
-  tags: Array<string> | null;
-  photosUrls: Array<string> | null;
-  isActive: boolean;
-  createdAt: string;
-  updatedAt: string;
-  owner: string | null;
 };
 
 export type UpdateBoxLocationMutation = {
   __typename: "BoxLocation";
   id: string;
   boxID: string;
+  locationInfoID: string;
+  userID: string;
+  notes: string | null;
+  isFinal: boolean;
+  tags: Array<string> | null;
+  images: Array<{
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    createdAt: string;
+    updatedAt: string;
+  }> | null;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+  locationInfo: {
+    __typename: "LocationInfo";
+    id: string;
+    locationLabel: string;
+    latitude: string;
+    longitude: string;
+    isActive: boolean;
+    addressID: string;
+    phones: Array<{
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    plusCode: string | null;
+    website: Array<string> | null;
+    notes: string | null;
+    notesHistory: Array<string> | null;
+    tags: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
+    address: {
+      __typename: "Address";
+      id: string;
+      label: string;
+      addressLine1: string;
+      addressLine2: string | null;
+      city: string;
+      state: string | null;
+      province: string | null;
+      zipCode: string | null;
+      postalCode: string | null;
+      country: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+  };
   box: {
     __typename: "Box";
     id: string;
@@ -2194,6 +2552,28 @@ export type UpdateBoxLocationMutation = {
     contents: string;
     size: string;
     orgID: string;
+    shipmentID: string;
+    isActive: boolean;
+    barCode: string | null;
+    qrCode: string | null;
+    barCodePhoto: string | null;
+    qrCodePhoto: string | null;
+    tags: Array<string> | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    status: BoxStatus;
+    statusHistory: Array<BoxStatus> | null;
+    internalNotes: string | null;
+    notes: string | null;
+    notesHistory: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
     org: {
       __typename: "Org";
       id: string;
@@ -2201,15 +2581,14 @@ export type UpdateBoxLocationMutation = {
       description: string | null;
       addressID: string;
       email: string | null;
+      primaryDomain: string | null;
+      privacyPolicy: string | null;
       tags: Array<string> | null;
-      photosUrls: Array<string> | null;
       notes: string | null;
       isActive: boolean;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null;
-    shipmentID: string;
     shipment: {
       __typename: "Shipment";
       id: string;
@@ -2228,91 +2607,121 @@ export type UpdateBoxLocationMutation = {
       status: ShippingStatus | null;
       statusHistory: Array<string> | null;
       tags: Array<string> | null;
-      photosUrls: Array<string> | null;
       notes: string | null;
       notesHistory: Array<string> | null;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null;
-    isActive: boolean;
-    barCode: string | null;
-    qrCode: string | null;
-    barCodePhoto: string | null;
-    qrCodePhoto: string | null;
-    tags: Array<string> | null;
-    photosUrls: Array<string> | null;
-    status: BoxStatus;
-    statusHistory: Array<BoxStatus> | null;
-    internalNotes: string | null;
-    notes: string | null;
-    notesHistory: Array<string> | null;
     locations: {
       __typename: "ModelBoxLocationConnection";
       nextToken: string | null;
     } | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
   };
-  locationInfoID: string;
-  locationInfo: {
-    __typename: "LocationInfo";
+  user: {
+    __typename: "User";
     id: string;
-    locationLabel: string;
-    latitude: string;
-    longitude: string;
+    name: string;
+    orgID: string;
     isActive: boolean;
-    addressID: string;
-    address: {
-      __typename: "Address";
-      id: string;
-      label: string;
-      addressLine1: string;
-      addressLine2: string | null;
-      city: string;
-      state: string | null;
-      province: string | null;
-      zipCode: string | null;
-      postalCode: string | null;
-      country: string;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null;
-    phones: Array<{
-      __typename: "Phone";
-      id: string;
-      phone: string | null;
-      isActive: boolean | null;
-      type: PhoneType | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null> | null;
-    plusCode: string | null;
-    website: Array<string> | null;
-    notes: string | null;
-    notesHistory: Array<string> | null;
     tags: Array<string> | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    status: UserStatus;
+    statusHistory: Array<UserStatus> | null;
+    internalNotes: string | null;
+    notes: string | null;
+    rank: number | null;
+    notesHistory: Array<string> | null;
     createdAt: string;
     updatedAt: string;
-    owner: string | null;
+    org: {
+      __typename: "Org";
+      id: string;
+      name: string;
+      description: string | null;
+      addressID: string;
+      email: string | null;
+      primaryDomain: string | null;
+      privacyPolicy: string | null;
+      tags: Array<string> | null;
+      notes: string | null;
+      isActive: boolean;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
   };
-  notes: string | null;
-  isFinal: boolean;
-  tags: Array<string> | null;
-  photosUrls: Array<string> | null;
-  isActive: boolean;
-  createdAt: string;
-  updatedAt: string;
-  owner: string | null;
 };
 
 export type DeleteBoxLocationMutation = {
   __typename: "BoxLocation";
   id: string;
   boxID: string;
+  locationInfoID: string;
+  userID: string;
+  notes: string | null;
+  isFinal: boolean;
+  tags: Array<string> | null;
+  images: Array<{
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    createdAt: string;
+    updatedAt: string;
+  }> | null;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+  locationInfo: {
+    __typename: "LocationInfo";
+    id: string;
+    locationLabel: string;
+    latitude: string;
+    longitude: string;
+    isActive: boolean;
+    addressID: string;
+    phones: Array<{
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    plusCode: string | null;
+    website: Array<string> | null;
+    notes: string | null;
+    notesHistory: Array<string> | null;
+    tags: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
+    address: {
+      __typename: "Address";
+      id: string;
+      label: string;
+      addressLine1: string;
+      addressLine2: string | null;
+      city: string;
+      state: string | null;
+      province: string | null;
+      zipCode: string | null;
+      postalCode: string | null;
+      country: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+  };
   box: {
     __typename: "Box";
     id: string;
@@ -2320,6 +2729,28 @@ export type DeleteBoxLocationMutation = {
     contents: string;
     size: string;
     orgID: string;
+    shipmentID: string;
+    isActive: boolean;
+    barCode: string | null;
+    qrCode: string | null;
+    barCodePhoto: string | null;
+    qrCodePhoto: string | null;
+    tags: Array<string> | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    status: BoxStatus;
+    statusHistory: Array<BoxStatus> | null;
+    internalNotes: string | null;
+    notes: string | null;
+    notesHistory: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
     org: {
       __typename: "Org";
       id: string;
@@ -2327,15 +2758,14 @@ export type DeleteBoxLocationMutation = {
       description: string | null;
       addressID: string;
       email: string | null;
+      primaryDomain: string | null;
+      privacyPolicy: string | null;
       tags: Array<string> | null;
-      photosUrls: Array<string> | null;
       notes: string | null;
       isActive: boolean;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null;
-    shipmentID: string;
     shipment: {
       __typename: "Shipment";
       id: string;
@@ -2354,42 +2784,124 @@ export type DeleteBoxLocationMutation = {
       status: ShippingStatus | null;
       statusHistory: Array<string> | null;
       tags: Array<string> | null;
-      photosUrls: Array<string> | null;
       notes: string | null;
       notesHistory: Array<string> | null;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null;
-    isActive: boolean;
-    barCode: string | null;
-    qrCode: string | null;
-    barCodePhoto: string | null;
-    qrCodePhoto: string | null;
-    tags: Array<string> | null;
-    photosUrls: Array<string> | null;
-    status: BoxStatus;
-    statusHistory: Array<BoxStatus> | null;
-    internalNotes: string | null;
-    notes: string | null;
-    notesHistory: Array<string> | null;
     locations: {
       __typename: "ModelBoxLocationConnection";
       nextToken: string | null;
     } | null;
+  };
+  user: {
+    __typename: "User";
+    id: string;
+    name: string;
+    orgID: string;
+    isActive: boolean;
+    tags: Array<string> | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    status: UserStatus;
+    statusHistory: Array<UserStatus> | null;
+    internalNotes: string | null;
+    notes: string | null;
+    rank: number | null;
+    notesHistory: Array<string> | null;
     createdAt: string;
     updatedAt: string;
-    owner: string | null;
+    org: {
+      __typename: "Org";
+      id: string;
+      name: string;
+      description: string | null;
+      addressID: string;
+      email: string | null;
+      primaryDomain: string | null;
+      privacyPolicy: string | null;
+      tags: Array<string> | null;
+      notes: string | null;
+      isActive: boolean;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
   };
-  locationInfoID: string;
-  locationInfo: {
-    __typename: "LocationInfo";
+};
+
+export type CreateUserMutation = {
+  __typename: "User";
+  id: string;
+  name: string;
+  orgID: string;
+  isActive: boolean;
+  tags: Array<string> | null;
+  images: Array<{
+    __typename: "Image";
     id: string;
-    locationLabel: string;
-    latitude: string;
-    longitude: string;
-    isActive: boolean;
+    altTex: string | null;
+    src: string;
+    createdAt: string;
+    updatedAt: string;
+  }> | null;
+  status: UserStatus;
+  statusHistory: Array<UserStatus> | null;
+  internalNotes: string | null;
+  notes: string | null;
+  rank: number | null;
+  notesHistory: Array<string> | null;
+  createdAt: string;
+  updatedAt: string;
+  org: {
+    __typename: "Org";
+    id: string;
+    name: string;
+    description: string | null;
     addressID: string;
+    email: string | null;
+    primaryPhone: {
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    otherPhones: Array<{
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    primaryDomain: string | null;
+    privacyPolicy: string | null;
+    tags: Array<string> | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    notes: string | null;
+    isActive: boolean;
+    createdAt: string;
+    updatedAt: string;
     address: {
       __typename: "Address";
       id: string;
@@ -2404,9 +2916,66 @@ export type DeleteBoxLocationMutation = {
       country: string;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null;
-    phones: Array<{
+    boxes: {
+      __typename: "ModelBoxConnection";
+      nextToken: string | null;
+    } | null;
+    users: {
+      __typename: "ModelUserConnection";
+      nextToken: string | null;
+    } | null;
+  } | null;
+  boxLocations: {
+    __typename: "ModelBoxLocationConnection";
+    items: Array<{
+      __typename: "BoxLocation";
+      id: string;
+      boxID: string;
+      locationInfoID: string;
+      userID: string;
+      notes: string | null;
+      isFinal: boolean;
+      tags: Array<string> | null;
+      isActive: boolean;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+};
+
+export type UpdateUserMutation = {
+  __typename: "User";
+  id: string;
+  name: string;
+  orgID: string;
+  isActive: boolean;
+  tags: Array<string> | null;
+  images: Array<{
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    createdAt: string;
+    updatedAt: string;
+  }> | null;
+  status: UserStatus;
+  statusHistory: Array<UserStatus> | null;
+  internalNotes: string | null;
+  notes: string | null;
+  rank: number | null;
+  notesHistory: Array<string> | null;
+  createdAt: string;
+  updatedAt: string;
+  org: {
+    __typename: "Org";
+    id: string;
+    name: string;
+    description: string | null;
+    addressID: string;
+    email: string | null;
+    primaryPhone: {
       __typename: "Phone";
       id: string;
       phone: string | null;
@@ -2414,25 +2983,200 @@ export type DeleteBoxLocationMutation = {
       type: PhoneType | null;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
-    } | null> | null;
-    plusCode: string | null;
-    website: Array<string> | null;
-    notes: string | null;
-    notesHistory: Array<string> | null;
+    } | null;
+    otherPhones: Array<{
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    primaryDomain: string | null;
+    privacyPolicy: string | null;
     tags: Array<string> | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    notes: string | null;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
-    owner: string | null;
-  };
-  notes: string | null;
-  isFinal: boolean;
-  tags: Array<string> | null;
-  photosUrls: Array<string> | null;
+    address: {
+      __typename: "Address";
+      id: string;
+      label: string;
+      addressLine1: string;
+      addressLine2: string | null;
+      city: string;
+      state: string | null;
+      province: string | null;
+      zipCode: string | null;
+      postalCode: string | null;
+      country: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    boxes: {
+      __typename: "ModelBoxConnection";
+      nextToken: string | null;
+    } | null;
+    users: {
+      __typename: "ModelUserConnection";
+      nextToken: string | null;
+    } | null;
+  } | null;
+  boxLocations: {
+    __typename: "ModelBoxLocationConnection";
+    items: Array<{
+      __typename: "BoxLocation";
+      id: string;
+      boxID: string;
+      locationInfoID: string;
+      userID: string;
+      notes: string | null;
+      isFinal: boolean;
+      tags: Array<string> | null;
+      isActive: boolean;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+};
+
+export type DeleteUserMutation = {
+  __typename: "User";
+  id: string;
+  name: string;
+  orgID: string;
   isActive: boolean;
+  tags: Array<string> | null;
+  images: Array<{
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    createdAt: string;
+    updatedAt: string;
+  }> | null;
+  status: UserStatus;
+  statusHistory: Array<UserStatus> | null;
+  internalNotes: string | null;
+  notes: string | null;
+  rank: number | null;
+  notesHistory: Array<string> | null;
   createdAt: string;
   updatedAt: string;
-  owner: string | null;
+  org: {
+    __typename: "Org";
+    id: string;
+    name: string;
+    description: string | null;
+    addressID: string;
+    email: string | null;
+    primaryPhone: {
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    otherPhones: Array<{
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    primaryDomain: string | null;
+    privacyPolicy: string | null;
+    tags: Array<string> | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    notes: string | null;
+    isActive: boolean;
+    createdAt: string;
+    updatedAt: string;
+    address: {
+      __typename: "Address";
+      id: string;
+      label: string;
+      addressLine1: string;
+      addressLine2: string | null;
+      city: string;
+      state: string | null;
+      province: string | null;
+      zipCode: string | null;
+      postalCode: string | null;
+      country: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    boxes: {
+      __typename: "ModelBoxConnection";
+      nextToken: string | null;
+    } | null;
+    users: {
+      __typename: "ModelUserConnection";
+      nextToken: string | null;
+    } | null;
+  } | null;
+  boxLocations: {
+    __typename: "ModelBoxLocationConnection";
+    items: Array<{
+      __typename: "BoxLocation";
+      id: string;
+      boxID: string;
+      locationInfoID: string;
+      userID: string;
+      notes: string | null;
+      isFinal: boolean;
+      tags: Array<string> | null;
+      isActive: boolean;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+};
+
+export type GetImageQuery = {
+  __typename: "Image";
+  id: string;
+  altTex: string | null;
+  src: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type ListImagesQuery = {
+  __typename: "ModelImageConnection";
+  items: Array<{
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    createdAt: string;
+    updatedAt: string;
+  } | null> | null;
+  nextToken: string | null;
 };
 
 export type GetApihealthCheckInfoQuery = {
@@ -2445,7 +3189,6 @@ export type GetApihealthCheckInfoQuery = {
   lastUpdated: string | null;
   createdAt: string;
   updatedAt: string;
-  owner: string | null;
 };
 
 export type ListApihealthCheckInfosQuery = {
@@ -2460,26 +3203,8 @@ export type ListApihealthCheckInfosQuery = {
     lastUpdated: string | null;
     createdAt: string;
     updatedAt: string;
-    owner: string | null;
   } | null> | null;
   nextToken: string | null;
-};
-
-export type GetAddressQuery = {
-  __typename: "Address";
-  id: string;
-  label: string;
-  addressLine1: string;
-  addressLine2: string | null;
-  city: string;
-  state: string | null;
-  province: string | null;
-  zipCode: string | null;
-  postalCode: string | null;
-  country: string;
-  createdAt: string;
-  updatedAt: string;
-  owner: string | null;
 };
 
 export type ListAddresssQuery = {
@@ -2498,9 +3223,24 @@ export type ListAddresssQuery = {
     country: string;
     createdAt: string;
     updatedAt: string;
-    owner: string | null;
   } | null> | null;
   nextToken: string | null;
+};
+
+export type GetAddressQuery = {
+  __typename: "Address";
+  id: string;
+  label: string;
+  addressLine1: string;
+  addressLine2: string | null;
+  city: string;
+  state: string | null;
+  province: string | null;
+  zipCode: string | null;
+  postalCode: string | null;
+  country: string;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type GetPhoneQuery = {
@@ -2511,7 +3251,6 @@ export type GetPhoneQuery = {
   type: PhoneType | null;
   createdAt: string;
   updatedAt: string;
-  owner: string | null;
 };
 
 export type ListPhonesQuery = {
@@ -2524,7 +3263,75 @@ export type ListPhonesQuery = {
     type: PhoneType | null;
     createdAt: string;
     updatedAt: string;
-    owner: string | null;
+  } | null> | null;
+  nextToken: string | null;
+};
+
+export type ListOrgsQuery = {
+  __typename: "ModelOrgConnection";
+  items: Array<{
+    __typename: "Org";
+    id: string;
+    name: string;
+    description: string | null;
+    addressID: string;
+    email: string | null;
+    primaryPhone: {
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    otherPhones: Array<{
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    primaryDomain: string | null;
+    privacyPolicy: string | null;
+    tags: Array<string> | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    notes: string | null;
+    isActive: boolean;
+    createdAt: string;
+    updatedAt: string;
+    address: {
+      __typename: "Address";
+      id: string;
+      label: string;
+      addressLine1: string;
+      addressLine2: string | null;
+      city: string;
+      state: string | null;
+      province: string | null;
+      zipCode: string | null;
+      postalCode: string | null;
+      country: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    boxes: {
+      __typename: "ModelBoxConnection";
+      nextToken: string | null;
+    } | null;
+    users: {
+      __typename: "ModelUserConnection";
+      nextToken: string | null;
+    } | null;
   } | null> | null;
   nextToken: string | null;
 };
@@ -2535,6 +3342,40 @@ export type GetOrgQuery = {
   name: string;
   description: string | null;
   addressID: string;
+  email: string | null;
+  primaryPhone: {
+    __typename: "Phone";
+    id: string;
+    phone: string | null;
+    isActive: boolean | null;
+    type: PhoneType | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+  otherPhones: Array<{
+    __typename: "Phone";
+    id: string;
+    phone: string | null;
+    isActive: boolean | null;
+    type: PhoneType | null;
+    createdAt: string;
+    updatedAt: string;
+  }> | null;
+  primaryDomain: string | null;
+  privacyPolicy: string | null;
+  tags: Array<string> | null;
+  images: Array<{
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    createdAt: string;
+    updatedAt: string;
+  }> | null;
+  notes: string | null;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
   address: {
     __typename: "Address";
     id: string;
@@ -2549,33 +3390,7 @@ export type GetOrgQuery = {
     country: string;
     createdAt: string;
     updatedAt: string;
-    owner: string | null;
   } | null;
-  email: string | null;
-  primaryPhone: {
-    __typename: "Phone";
-    id: string;
-    phone: string | null;
-    isActive: boolean | null;
-    type: PhoneType | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
-  } | null;
-  otherPhones: Array<{
-    __typename: "Phone";
-    id: string;
-    phone: string | null;
-    isActive: boolean | null;
-    type: PhoneType | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
-  }> | null;
-  tags: Array<string> | null;
-  photosUrls: Array<string> | null;
-  notes: string | null;
-  isActive: boolean;
   boxes: {
     __typename: "ModelBoxConnection";
     items: Array<{
@@ -2592,7 +3407,6 @@ export type GetOrgQuery = {
       barCodePhoto: string | null;
       qrCodePhoto: string | null;
       tags: Array<string> | null;
-      photosUrls: Array<string> | null;
       status: BoxStatus;
       statusHistory: Array<BoxStatus> | null;
       internalNotes: string | null;
@@ -2600,117 +3414,29 @@ export type GetOrgQuery = {
       notesHistory: Array<string> | null;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null> | null;
     nextToken: string | null;
   } | null;
-  createdAt: string;
-  updatedAt: string;
-  owner: string | null;
-};
-
-export type ListOrgsQuery = {
-  __typename: "ModelOrgConnection";
-  items: Array<{
-    __typename: "Org";
-    id: string;
-    name: string;
-    description: string | null;
-    addressID: string;
-    address: {
-      __typename: "Address";
+  users: {
+    __typename: "ModelUserConnection";
+    items: Array<{
+      __typename: "User";
       id: string;
-      label: string;
-      addressLine1: string;
-      addressLine2: string | null;
-      city: string;
-      state: string | null;
-      province: string | null;
-      zipCode: string | null;
-      postalCode: string | null;
-      country: string;
+      name: string;
+      orgID: string;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
-    } | null;
-    email: string | null;
-    primaryPhone: {
-      __typename: "Phone";
-      id: string;
-      phone: string | null;
-      isActive: boolean | null;
-      type: PhoneType | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null;
-    otherPhones: Array<{
-      __typename: "Phone";
-      id: string;
-      phone: string | null;
-      isActive: boolean | null;
-      type: PhoneType | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    }> | null;
-    tags: Array<string> | null;
-    photosUrls: Array<string> | null;
-    notes: string | null;
-    isActive: boolean;
-    boxes: {
-      __typename: "ModelBoxConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
-  } | null> | null;
-  nextToken: string | null;
-};
-
-export type GetLocationInfoQuery = {
-  __typename: "LocationInfo";
-  id: string;
-  locationLabel: string;
-  latitude: string;
-  longitude: string;
-  isActive: boolean;
-  addressID: string;
-  address: {
-    __typename: "Address";
-    id: string;
-    label: string;
-    addressLine1: string;
-    addressLine2: string | null;
-    city: string;
-    state: string | null;
-    province: string | null;
-    zipCode: string | null;
-    postalCode: string | null;
-    country: string;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
+    } | null> | null;
+    nextToken: string | null;
   } | null;
-  phones: Array<{
-    __typename: "Phone";
-    id: string;
-    phone: string | null;
-    isActive: boolean | null;
-    type: PhoneType | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
-  } | null> | null;
-  plusCode: string | null;
-  website: Array<string> | null;
-  notes: string | null;
-  notesHistory: Array<string> | null;
-  tags: Array<string> | null;
-  createdAt: string;
-  updatedAt: string;
-  owner: string | null;
 };
 
 export type ListLocationInfosQuery = {
@@ -2723,6 +3449,22 @@ export type ListLocationInfosQuery = {
     longitude: string;
     isActive: boolean;
     addressID: string;
+    phones: Array<{
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    plusCode: string | null;
+    website: Array<string> | null;
+    notes: string | null;
+    notesHistory: Array<string> | null;
+    tags: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
     address: {
       __typename: "Address";
       id: string;
@@ -2737,168 +3479,50 @@ export type ListLocationInfosQuery = {
       country: string;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null;
-    phones: Array<{
-      __typename: "Phone";
-      id: string;
-      phone: string | null;
-      isActive: boolean | null;
-      type: PhoneType | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null> | null;
-    plusCode: string | null;
-    website: Array<string> | null;
-    notes: string | null;
-    notesHistory: Array<string> | null;
-    tags: Array<string> | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
   } | null> | null;
   nextToken: string | null;
 };
 
-export type GetShipmentQuery = {
-  __typename: "Shipment";
+export type GetLocationInfoQuery = {
+  __typename: "LocationInfo";
   id: string;
-  name: string;
-  description: string | null;
+  locationLabel: string;
+  latitude: string;
+  longitude: string;
   isActive: boolean;
-  startDate: string | null;
-  deliveryDate: string | null;
-  startLocationID: string;
-  startLocation: {
-    __typename: "LocationInfo";
+  addressID: string;
+  phones: Array<{
+    __typename: "Phone";
     id: string;
-    locationLabel: string;
-    latitude: string;
-    longitude: string;
-    isActive: boolean;
-    addressID: string;
-    address: {
-      __typename: "Address";
-      id: string;
-      label: string;
-      addressLine1: string;
-      addressLine2: string | null;
-      city: string;
-      state: string | null;
-      province: string | null;
-      zipCode: string | null;
-      postalCode: string | null;
-      country: string;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null;
-    phones: Array<{
-      __typename: "Phone";
-      id: string;
-      phone: string | null;
-      isActive: boolean | null;
-      type: PhoneType | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null> | null;
-    plusCode: string | null;
-    website: Array<string> | null;
-    notes: string | null;
-    notesHistory: Array<string> | null;
-    tags: Array<string> | null;
+    phone: string | null;
+    isActive: boolean | null;
+    type: PhoneType | null;
     createdAt: string;
     updatedAt: string;
-    owner: string | null;
-  } | null;
-  destinationLocationID: string;
-  destinationLocation: {
-    __typename: "LocationInfo";
-    id: string;
-    locationLabel: string;
-    latitude: string;
-    longitude: string;
-    isActive: boolean;
-    addressID: string;
-    address: {
-      __typename: "Address";
-      id: string;
-      label: string;
-      addressLine1: string;
-      addressLine2: string | null;
-      city: string;
-      state: string | null;
-      province: string | null;
-      zipCode: string | null;
-      postalCode: string | null;
-      country: string;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null;
-    phones: Array<{
-      __typename: "Phone";
-      id: string;
-      phone: string | null;
-      isActive: boolean | null;
-      type: PhoneType | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null> | null;
-    plusCode: string | null;
-    website: Array<string> | null;
-    notes: string | null;
-    notesHistory: Array<string> | null;
-    tags: Array<string> | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
-  } | null;
-  shipmentNotes: string | null;
-  deliveryNotes: string | null;
-  trackingId: string | null;
-  weight: string | null;
-  shipmentReceiver: string | null;
-  status: ShippingStatus | null;
-  statusHistory: Array<string> | null;
-  tags: Array<string> | null;
-  photosUrls: Array<string> | null;
+  } | null> | null;
+  plusCode: string | null;
+  website: Array<string> | null;
   notes: string | null;
   notesHistory: Array<string> | null;
-  boxes: {
-    __typename: "ModelBoxConnection";
-    items: Array<{
-      __typename: "Box";
-      id: string;
-      title: string;
-      contents: string;
-      size: string;
-      orgID: string;
-      shipmentID: string;
-      isActive: boolean;
-      barCode: string | null;
-      qrCode: string | null;
-      barCodePhoto: string | null;
-      qrCodePhoto: string | null;
-      tags: Array<string> | null;
-      photosUrls: Array<string> | null;
-      status: BoxStatus;
-      statusHistory: Array<BoxStatus> | null;
-      internalNotes: string | null;
-      notes: string | null;
-      notesHistory: Array<string> | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
+  tags: Array<string> | null;
   createdAt: string;
   updatedAt: string;
-  owner: string | null;
+  address: {
+    __typename: "Address";
+    id: string;
+    label: string;
+    addressLine1: string;
+    addressLine2: string | null;
+    city: string;
+    state: string | null;
+    province: string | null;
+    zipCode: string | null;
+    postalCode: string | null;
+    country: string;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
 };
 
 export type ListShipmentsQuery = {
@@ -2912,6 +3536,27 @@ export type ListShipmentsQuery = {
     startDate: string | null;
     deliveryDate: string | null;
     startLocationID: string;
+    destinationLocationID: string;
+    shipmentNotes: string | null;
+    deliveryNotes: string | null;
+    trackingId: string | null;
+    weight: string | null;
+    shipmentReceiver: string | null;
+    status: ShippingStatus | null;
+    statusHistory: Array<string> | null;
+    tags: Array<string> | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    notes: string | null;
+    notesHistory: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
     startLocation: {
       __typename: "LocationInfo";
       id: string;
@@ -2927,9 +3572,7 @@ export type ListShipmentsQuery = {
       tags: Array<string> | null;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null;
-    destinationLocationID: string;
     destinationLocation: {
       __typename: "LocationInfo";
       id: string;
@@ -2945,338 +3588,46 @@ export type ListShipmentsQuery = {
       tags: Array<string> | null;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null;
-    shipmentNotes: string | null;
-    deliveryNotes: string | null;
-    trackingId: string | null;
-    weight: string | null;
-    shipmentReceiver: string | null;
-    status: ShippingStatus | null;
-    statusHistory: Array<string> | null;
-    tags: Array<string> | null;
-    photosUrls: Array<string> | null;
-    notes: string | null;
-    notesHistory: Array<string> | null;
     boxes: {
       __typename: "ModelBoxConnection";
       nextToken: string | null;
     } | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
   } | null> | null;
   nextToken: string | null;
 };
 
-export type GetBoxQuery = {
-  __typename: "Box";
+export type GetShipmentQuery = {
+  __typename: "Shipment";
   id: string;
-  title: string;
-  contents: string;
-  size: string;
-  orgID: string;
-  org: {
-    __typename: "Org";
-    id: string;
-    name: string;
-    description: string | null;
-    addressID: string;
-    address: {
-      __typename: "Address";
-      id: string;
-      label: string;
-      addressLine1: string;
-      addressLine2: string | null;
-      city: string;
-      state: string | null;
-      province: string | null;
-      zipCode: string | null;
-      postalCode: string | null;
-      country: string;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null;
-    email: string | null;
-    primaryPhone: {
-      __typename: "Phone";
-      id: string;
-      phone: string | null;
-      isActive: boolean | null;
-      type: PhoneType | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null;
-    otherPhones: Array<{
-      __typename: "Phone";
-      id: string;
-      phone: string | null;
-      isActive: boolean | null;
-      type: PhoneType | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    }> | null;
-    tags: Array<string> | null;
-    photosUrls: Array<string> | null;
-    notes: string | null;
-    isActive: boolean;
-    boxes: {
-      __typename: "ModelBoxConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
-  } | null;
-  shipmentID: string;
-  shipment: {
-    __typename: "Shipment";
-    id: string;
-    name: string;
-    description: string | null;
-    isActive: boolean;
-    startDate: string | null;
-    deliveryDate: string | null;
-    startLocationID: string;
-    startLocation: {
-      __typename: "LocationInfo";
-      id: string;
-      locationLabel: string;
-      latitude: string;
-      longitude: string;
-      isActive: boolean;
-      addressID: string;
-      plusCode: string | null;
-      website: Array<string> | null;
-      notes: string | null;
-      notesHistory: Array<string> | null;
-      tags: Array<string> | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null;
-    destinationLocationID: string;
-    destinationLocation: {
-      __typename: "LocationInfo";
-      id: string;
-      locationLabel: string;
-      latitude: string;
-      longitude: string;
-      isActive: boolean;
-      addressID: string;
-      plusCode: string | null;
-      website: Array<string> | null;
-      notes: string | null;
-      notesHistory: Array<string> | null;
-      tags: Array<string> | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null;
-    shipmentNotes: string | null;
-    deliveryNotes: string | null;
-    trackingId: string | null;
-    weight: string | null;
-    shipmentReceiver: string | null;
-    status: ShippingStatus | null;
-    statusHistory: Array<string> | null;
-    tags: Array<string> | null;
-    photosUrls: Array<string> | null;
-    notes: string | null;
-    notesHistory: Array<string> | null;
-    boxes: {
-      __typename: "ModelBoxConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
-  } | null;
+  name: string;
+  description: string | null;
   isActive: boolean;
-  barCode: string | null;
-  qrCode: string | null;
-  barCodePhoto: string | null;
-  qrCodePhoto: string | null;
+  startDate: string | null;
+  deliveryDate: string | null;
+  startLocationID: string;
+  destinationLocationID: string;
+  shipmentNotes: string | null;
+  deliveryNotes: string | null;
+  trackingId: string | null;
+  weight: string | null;
+  shipmentReceiver: string | null;
+  status: ShippingStatus | null;
+  statusHistory: Array<string> | null;
   tags: Array<string> | null;
-  photosUrls: Array<string> | null;
-  status: BoxStatus;
-  statusHistory: Array<BoxStatus> | null;
-  internalNotes: string | null;
+  images: Array<{
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    createdAt: string;
+    updatedAt: string;
+  }> | null;
   notes: string | null;
   notesHistory: Array<string> | null;
-  locations: {
-    __typename: "ModelBoxLocationConnection";
-    items: Array<{
-      __typename: "BoxLocation";
-      id: string;
-      boxID: string;
-      locationInfoID: string;
-      notes: string | null;
-      isFinal: boolean;
-      tags: Array<string> | null;
-      photosUrls: Array<string> | null;
-      isActive: boolean;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
   createdAt: string;
   updatedAt: string;
-  owner: string | null;
-};
-
-export type ListBoxsQuery = {
-  __typename: "ModelBoxConnection";
-  items: Array<{
-    __typename: "Box";
-    id: string;
-    title: string;
-    contents: string;
-    size: string;
-    orgID: string;
-    org: {
-      __typename: "Org";
-      id: string;
-      name: string;
-      description: string | null;
-      addressID: string;
-      email: string | null;
-      tags: Array<string> | null;
-      photosUrls: Array<string> | null;
-      notes: string | null;
-      isActive: boolean;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null;
-    shipmentID: string;
-    shipment: {
-      __typename: "Shipment";
-      id: string;
-      name: string;
-      description: string | null;
-      isActive: boolean;
-      startDate: string | null;
-      deliveryDate: string | null;
-      startLocationID: string;
-      destinationLocationID: string;
-      shipmentNotes: string | null;
-      deliveryNotes: string | null;
-      trackingId: string | null;
-      weight: string | null;
-      shipmentReceiver: string | null;
-      status: ShippingStatus | null;
-      statusHistory: Array<string> | null;
-      tags: Array<string> | null;
-      photosUrls: Array<string> | null;
-      notes: string | null;
-      notesHistory: Array<string> | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null;
-    isActive: boolean;
-    barCode: string | null;
-    qrCode: string | null;
-    barCodePhoto: string | null;
-    qrCodePhoto: string | null;
-    tags: Array<string> | null;
-    photosUrls: Array<string> | null;
-    status: BoxStatus;
-    statusHistory: Array<BoxStatus> | null;
-    internalNotes: string | null;
-    notes: string | null;
-    notesHistory: Array<string> | null;
-    locations: {
-      __typename: "ModelBoxLocationConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
-  } | null> | null;
-  nextToken: string | null;
-};
-
-export type GetBoxLocationQuery = {
-  __typename: "BoxLocation";
-  id: string;
-  boxID: string;
-  box: {
-    __typename: "Box";
-    id: string;
-    title: string;
-    contents: string;
-    size: string;
-    orgID: string;
-    org: {
-      __typename: "Org";
-      id: string;
-      name: string;
-      description: string | null;
-      addressID: string;
-      email: string | null;
-      tags: Array<string> | null;
-      photosUrls: Array<string> | null;
-      notes: string | null;
-      isActive: boolean;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null;
-    shipmentID: string;
-    shipment: {
-      __typename: "Shipment";
-      id: string;
-      name: string;
-      description: string | null;
-      isActive: boolean;
-      startDate: string | null;
-      deliveryDate: string | null;
-      startLocationID: string;
-      destinationLocationID: string;
-      shipmentNotes: string | null;
-      deliveryNotes: string | null;
-      trackingId: string | null;
-      weight: string | null;
-      shipmentReceiver: string | null;
-      status: ShippingStatus | null;
-      statusHistory: Array<string> | null;
-      tags: Array<string> | null;
-      photosUrls: Array<string> | null;
-      notes: string | null;
-      notesHistory: Array<string> | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null;
-    isActive: boolean;
-    barCode: string | null;
-    qrCode: string | null;
-    barCodePhoto: string | null;
-    qrCodePhoto: string | null;
-    tags: Array<string> | null;
-    photosUrls: Array<string> | null;
-    status: BoxStatus;
-    statusHistory: Array<BoxStatus> | null;
-    internalNotes: string | null;
-    notes: string | null;
-    notesHistory: Array<string> | null;
-    locations: {
-      __typename: "ModelBoxLocationConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
-  };
-  locationInfoID: string;
-  locationInfo: {
+  startLocation: {
     __typename: "LocationInfo";
     id: string;
     locationLabel: string;
@@ -3284,22 +3635,6 @@ export type GetBoxLocationQuery = {
     longitude: string;
     isActive: boolean;
     addressID: string;
-    address: {
-      __typename: "Address";
-      id: string;
-      label: string;
-      addressLine1: string;
-      addressLine2: string | null;
-      city: string;
-      state: string | null;
-      province: string | null;
-      zipCode: string | null;
-      postalCode: string | null;
-      country: string;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null;
     phones: Array<{
       __typename: "Phone";
       id: string;
@@ -3308,7 +3643,6 @@ export type GetBoxLocationQuery = {
       type: PhoneType | null;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null> | null;
     plusCode: string | null;
     website: Array<string> | null;
@@ -3317,25 +3651,65 @@ export type GetBoxLocationQuery = {
     tags: Array<string> | null;
     createdAt: string;
     updatedAt: string;
-    owner: string | null;
-  };
-  notes: string | null;
-  isFinal: boolean;
-  tags: Array<string> | null;
-  photosUrls: Array<string> | null;
-  isActive: boolean;
-  createdAt: string;
-  updatedAt: string;
-  owner: string | null;
-};
-
-export type ListBoxLocationsQuery = {
-  __typename: "ModelBoxLocationConnection";
-  items: Array<{
-    __typename: "BoxLocation";
+    address: {
+      __typename: "Address";
+      id: string;
+      label: string;
+      addressLine1: string;
+      addressLine2: string | null;
+      city: string;
+      state: string | null;
+      province: string | null;
+      zipCode: string | null;
+      postalCode: string | null;
+      country: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+  } | null;
+  destinationLocation: {
+    __typename: "LocationInfo";
     id: string;
-    boxID: string;
-    box: {
+    locationLabel: string;
+    latitude: string;
+    longitude: string;
+    isActive: boolean;
+    addressID: string;
+    phones: Array<{
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    plusCode: string | null;
+    website: Array<string> | null;
+    notes: string | null;
+    notesHistory: Array<string> | null;
+    tags: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
+    address: {
+      __typename: "Address";
+      id: string;
+      label: string;
+      addressLine1: string;
+      addressLine2: string | null;
+      city: string;
+      state: string | null;
+      province: string | null;
+      zipCode: string | null;
+      postalCode: string | null;
+      country: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+  } | null;
+  boxes: {
+    __typename: "ModelBoxConnection";
+    items: Array<{
       __typename: "Box";
       id: string;
       title: string;
@@ -3349,7 +3723,6 @@ export type ListBoxLocationsQuery = {
       barCodePhoto: string | null;
       qrCodePhoto: string | null;
       tags: Array<string> | null;
-      photosUrls: Array<string> | null;
       status: BoxStatus;
       statusHistory: Array<BoxStatus> | null;
       internalNotes: string | null;
@@ -3357,9 +3730,543 @@ export type ListBoxLocationsQuery = {
       notesHistory: Array<string> | null;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
-    };
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+};
+
+export type ListBoxsQuery = {
+  __typename: "ModelBoxConnection";
+  items: Array<{
+    __typename: "Box";
+    id: string;
+    title: string;
+    contents: string;
+    size: string;
+    orgID: string;
+    shipmentID: string;
+    isActive: boolean;
+    barCode: string | null;
+    qrCode: string | null;
+    barCodePhoto: string | null;
+    qrCodePhoto: string | null;
+    tags: Array<string> | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    status: BoxStatus;
+    statusHistory: Array<BoxStatus> | null;
+    internalNotes: string | null;
+    notes: string | null;
+    notesHistory: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
+    org: {
+      __typename: "Org";
+      id: string;
+      name: string;
+      description: string | null;
+      addressID: string;
+      email: string | null;
+      primaryDomain: string | null;
+      privacyPolicy: string | null;
+      tags: Array<string> | null;
+      notes: string | null;
+      isActive: boolean;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    shipment: {
+      __typename: "Shipment";
+      id: string;
+      name: string;
+      description: string | null;
+      isActive: boolean;
+      startDate: string | null;
+      deliveryDate: string | null;
+      startLocationID: string;
+      destinationLocationID: string;
+      shipmentNotes: string | null;
+      deliveryNotes: string | null;
+      trackingId: string | null;
+      weight: string | null;
+      shipmentReceiver: string | null;
+      status: ShippingStatus | null;
+      statusHistory: Array<string> | null;
+      tags: Array<string> | null;
+      notes: string | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    locations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
+  } | null> | null;
+  nextToken: string | null;
+};
+
+export type GetBoxQuery = {
+  __typename: "Box";
+  id: string;
+  title: string;
+  contents: string;
+  size: string;
+  orgID: string;
+  shipmentID: string;
+  isActive: boolean;
+  barCode: string | null;
+  qrCode: string | null;
+  barCodePhoto: string | null;
+  qrCodePhoto: string | null;
+  tags: Array<string> | null;
+  images: Array<{
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    createdAt: string;
+    updatedAt: string;
+  }> | null;
+  status: BoxStatus;
+  statusHistory: Array<BoxStatus> | null;
+  internalNotes: string | null;
+  notes: string | null;
+  notesHistory: Array<string> | null;
+  createdAt: string;
+  updatedAt: string;
+  org: {
+    __typename: "Org";
+    id: string;
+    name: string;
+    description: string | null;
+    addressID: string;
+    email: string | null;
+    primaryPhone: {
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    otherPhones: Array<{
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    primaryDomain: string | null;
+    privacyPolicy: string | null;
+    tags: Array<string> | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    notes: string | null;
+    isActive: boolean;
+    createdAt: string;
+    updatedAt: string;
+    address: {
+      __typename: "Address";
+      id: string;
+      label: string;
+      addressLine1: string;
+      addressLine2: string | null;
+      city: string;
+      state: string | null;
+      province: string | null;
+      zipCode: string | null;
+      postalCode: string | null;
+      country: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    boxes: {
+      __typename: "ModelBoxConnection";
+      nextToken: string | null;
+    } | null;
+    users: {
+      __typename: "ModelUserConnection";
+      nextToken: string | null;
+    } | null;
+  } | null;
+  shipment: {
+    __typename: "Shipment";
+    id: string;
+    name: string;
+    description: string | null;
+    isActive: boolean;
+    startDate: string | null;
+    deliveryDate: string | null;
+    startLocationID: string;
+    destinationLocationID: string;
+    shipmentNotes: string | null;
+    deliveryNotes: string | null;
+    trackingId: string | null;
+    weight: string | null;
+    shipmentReceiver: string | null;
+    status: ShippingStatus | null;
+    statusHistory: Array<string> | null;
+    tags: Array<string> | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    notes: string | null;
+    notesHistory: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
+    startLocation: {
+      __typename: "LocationInfo";
+      id: string;
+      locationLabel: string;
+      latitude: string;
+      longitude: string;
+      isActive: boolean;
+      addressID: string;
+      plusCode: string | null;
+      website: Array<string> | null;
+      notes: string | null;
+      notesHistory: Array<string> | null;
+      tags: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    destinationLocation: {
+      __typename: "LocationInfo";
+      id: string;
+      locationLabel: string;
+      latitude: string;
+      longitude: string;
+      isActive: boolean;
+      addressID: string;
+      plusCode: string | null;
+      website: Array<string> | null;
+      notes: string | null;
+      notesHistory: Array<string> | null;
+      tags: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    boxes: {
+      __typename: "ModelBoxConnection";
+      nextToken: string | null;
+    } | null;
+  } | null;
+  locations: {
+    __typename: "ModelBoxLocationConnection";
+    items: Array<{
+      __typename: "BoxLocation";
+      id: string;
+      boxID: string;
+      locationInfoID: string;
+      userID: string;
+      notes: string | null;
+      isFinal: boolean;
+      tags: Array<string> | null;
+      isActive: boolean;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+};
+
+export type ShipmentsByBoxIdQuery = {
+  __typename: "ModelBoxConnection";
+  items: Array<{
+    __typename: "Box";
+    id: string;
+    title: string;
+    contents: string;
+    size: string;
+    orgID: string;
+    shipmentID: string;
+    isActive: boolean;
+    barCode: string | null;
+    qrCode: string | null;
+    barCodePhoto: string | null;
+    qrCodePhoto: string | null;
+    tags: Array<string> | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    status: BoxStatus;
+    statusHistory: Array<BoxStatus> | null;
+    internalNotes: string | null;
+    notes: string | null;
+    notesHistory: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
+    org: {
+      __typename: "Org";
+      id: string;
+      name: string;
+      description: string | null;
+      addressID: string;
+      email: string | null;
+      primaryDomain: string | null;
+      privacyPolicy: string | null;
+      tags: Array<string> | null;
+      notes: string | null;
+      isActive: boolean;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    shipment: {
+      __typename: "Shipment";
+      id: string;
+      name: string;
+      description: string | null;
+      isActive: boolean;
+      startDate: string | null;
+      deliveryDate: string | null;
+      startLocationID: string;
+      destinationLocationID: string;
+      shipmentNotes: string | null;
+      deliveryNotes: string | null;
+      trackingId: string | null;
+      weight: string | null;
+      shipmentReceiver: string | null;
+      status: ShippingStatus | null;
+      statusHistory: Array<string> | null;
+      tags: Array<string> | null;
+      notes: string | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    locations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
+  } | null> | null;
+  nextToken: string | null;
+};
+
+export type GetBoxLocationQuery = {
+  __typename: "BoxLocation";
+  id: string;
+  boxID: string;
+  locationInfoID: string;
+  userID: string;
+  notes: string | null;
+  isFinal: boolean;
+  tags: Array<string> | null;
+  images: Array<{
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    createdAt: string;
+    updatedAt: string;
+  }> | null;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+  locationInfo: {
+    __typename: "LocationInfo";
+    id: string;
+    locationLabel: string;
+    latitude: string;
+    longitude: string;
+    isActive: boolean;
+    addressID: string;
+    phones: Array<{
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    plusCode: string | null;
+    website: Array<string> | null;
+    notes: string | null;
+    notesHistory: Array<string> | null;
+    tags: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
+    address: {
+      __typename: "Address";
+      id: string;
+      label: string;
+      addressLine1: string;
+      addressLine2: string | null;
+      city: string;
+      state: string | null;
+      province: string | null;
+      zipCode: string | null;
+      postalCode: string | null;
+      country: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+  };
+  box: {
+    __typename: "Box";
+    id: string;
+    title: string;
+    contents: string;
+    size: string;
+    orgID: string;
+    shipmentID: string;
+    isActive: boolean;
+    barCode: string | null;
+    qrCode: string | null;
+    barCodePhoto: string | null;
+    qrCodePhoto: string | null;
+    tags: Array<string> | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    status: BoxStatus;
+    statusHistory: Array<BoxStatus> | null;
+    internalNotes: string | null;
+    notes: string | null;
+    notesHistory: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
+    org: {
+      __typename: "Org";
+      id: string;
+      name: string;
+      description: string | null;
+      addressID: string;
+      email: string | null;
+      primaryDomain: string | null;
+      privacyPolicy: string | null;
+      tags: Array<string> | null;
+      notes: string | null;
+      isActive: boolean;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    shipment: {
+      __typename: "Shipment";
+      id: string;
+      name: string;
+      description: string | null;
+      isActive: boolean;
+      startDate: string | null;
+      deliveryDate: string | null;
+      startLocationID: string;
+      destinationLocationID: string;
+      shipmentNotes: string | null;
+      deliveryNotes: string | null;
+      trackingId: string | null;
+      weight: string | null;
+      shipmentReceiver: string | null;
+      status: ShippingStatus | null;
+      statusHistory: Array<string> | null;
+      tags: Array<string> | null;
+      notes: string | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    locations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
+  };
+  user: {
+    __typename: "User";
+    id: string;
+    name: string;
+    orgID: string;
+    isActive: boolean;
+    tags: Array<string> | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    status: UserStatus;
+    statusHistory: Array<UserStatus> | null;
+    internalNotes: string | null;
+    notes: string | null;
+    rank: number | null;
+    notesHistory: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
+    org: {
+      __typename: "Org";
+      id: string;
+      name: string;
+      description: string | null;
+      addressID: string;
+      email: string | null;
+      primaryDomain: string | null;
+      privacyPolicy: string | null;
+      tags: Array<string> | null;
+      notes: string | null;
+      isActive: boolean;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
+  };
+};
+
+export type ListBoxLocationsQuery = {
+  __typename: "ModelBoxLocationConnection";
+  items: Array<{
+    __typename: "BoxLocation";
+    id: string;
+    boxID: string;
     locationInfoID: string;
+    userID: string;
+    notes: string | null;
+    isFinal: boolean;
+    tags: Array<string> | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    isActive: boolean;
+    createdAt: string;
+    updatedAt: string;
     locationInfo: {
       __typename: "LocationInfo";
       id: string;
@@ -3375,29 +4282,74 @@ export type ListBoxLocationsQuery = {
       tags: Array<string> | null;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     };
-    notes: string | null;
-    isFinal: boolean;
-    tags: Array<string> | null;
-    photosUrls: Array<string> | null;
-    isActive: boolean;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
+    box: {
+      __typename: "Box";
+      id: string;
+      title: string;
+      contents: string;
+      size: string;
+      orgID: string;
+      shipmentID: string;
+      isActive: boolean;
+      barCode: string | null;
+      qrCode: string | null;
+      barCodePhoto: string | null;
+      qrCodePhoto: string | null;
+      tags: Array<string> | null;
+      status: BoxStatus;
+      statusHistory: Array<BoxStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
   } | null> | null;
   nextToken: string | null;
 };
 
-export type ShipmentsByBoxIdQuery = {
-  __typename: "ModelBoxConnection";
+export type ListUsersQuery = {
+  __typename: "ModelUserConnection";
   items: Array<{
-    __typename: "Box";
+    __typename: "User";
     id: string;
-    title: string;
-    contents: string;
-    size: string;
+    name: string;
     orgID: string;
+    isActive: boolean;
+    tags: Array<string> | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    status: UserStatus;
+    statusHistory: Array<UserStatus> | null;
+    internalNotes: string | null;
+    notes: string | null;
+    rank: number | null;
+    notesHistory: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
     org: {
       __typename: "Org";
       id: string;
@@ -3405,61 +4357,153 @@ export type ShipmentsByBoxIdQuery = {
       description: string | null;
       addressID: string;
       email: string | null;
+      primaryDomain: string | null;
+      privacyPolicy: string | null;
       tags: Array<string> | null;
-      photosUrls: Array<string> | null;
       notes: string | null;
       isActive: boolean;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null;
-    shipmentID: string;
-    shipment: {
-      __typename: "Shipment";
-      id: string;
-      name: string;
-      description: string | null;
-      isActive: boolean;
-      startDate: string | null;
-      deliveryDate: string | null;
-      startLocationID: string;
-      destinationLocationID: string;
-      shipmentNotes: string | null;
-      deliveryNotes: string | null;
-      trackingId: string | null;
-      weight: string | null;
-      shipmentReceiver: string | null;
-      status: ShippingStatus | null;
-      statusHistory: Array<string> | null;
-      tags: Array<string> | null;
-      photosUrls: Array<string> | null;
-      notes: string | null;
-      notesHistory: Array<string> | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null;
-    isActive: boolean;
-    barCode: string | null;
-    qrCode: string | null;
-    barCodePhoto: string | null;
-    qrCodePhoto: string | null;
-    tags: Array<string> | null;
-    photosUrls: Array<string> | null;
-    status: BoxStatus;
-    statusHistory: Array<BoxStatus> | null;
-    internalNotes: string | null;
-    notes: string | null;
-    notesHistory: Array<string> | null;
-    locations: {
+    boxLocations: {
       __typename: "ModelBoxLocationConnection";
       nextToken: string | null;
     } | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
   } | null> | null;
   nextToken: string | null;
+};
+
+export type GetUserQuery = {
+  __typename: "User";
+  id: string;
+  name: string;
+  orgID: string;
+  isActive: boolean;
+  tags: Array<string> | null;
+  images: Array<{
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    createdAt: string;
+    updatedAt: string;
+  }> | null;
+  status: UserStatus;
+  statusHistory: Array<UserStatus> | null;
+  internalNotes: string | null;
+  notes: string | null;
+  rank: number | null;
+  notesHistory: Array<string> | null;
+  createdAt: string;
+  updatedAt: string;
+  org: {
+    __typename: "Org";
+    id: string;
+    name: string;
+    description: string | null;
+    addressID: string;
+    email: string | null;
+    primaryPhone: {
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    otherPhones: Array<{
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    primaryDomain: string | null;
+    privacyPolicy: string | null;
+    tags: Array<string> | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    notes: string | null;
+    isActive: boolean;
+    createdAt: string;
+    updatedAt: string;
+    address: {
+      __typename: "Address";
+      id: string;
+      label: string;
+      addressLine1: string;
+      addressLine2: string | null;
+      city: string;
+      state: string | null;
+      province: string | null;
+      zipCode: string | null;
+      postalCode: string | null;
+      country: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    boxes: {
+      __typename: "ModelBoxConnection";
+      nextToken: string | null;
+    } | null;
+    users: {
+      __typename: "ModelUserConnection";
+      nextToken: string | null;
+    } | null;
+  } | null;
+  boxLocations: {
+    __typename: "ModelBoxLocationConnection";
+    items: Array<{
+      __typename: "BoxLocation";
+      id: string;
+      boxID: string;
+      locationInfoID: string;
+      userID: string;
+      notes: string | null;
+      isFinal: boolean;
+      tags: Array<string> | null;
+      isActive: boolean;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+};
+
+export type OnCreateImageSubscription = {
+  __typename: "Image";
+  id: string;
+  altTex: string | null;
+  src: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type OnUpdateImageSubscription = {
+  __typename: "Image";
+  id: string;
+  altTex: string | null;
+  src: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type OnDeleteImageSubscription = {
+  __typename: "Image";
+  id: string;
+  altTex: string | null;
+  src: string;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type OnCreateApihealthCheckInfoSubscription = {
@@ -3472,7 +4516,6 @@ export type OnCreateApihealthCheckInfoSubscription = {
   lastUpdated: string | null;
   createdAt: string;
   updatedAt: string;
-  owner: string | null;
 };
 
 export type OnUpdateApihealthCheckInfoSubscription = {
@@ -3485,7 +4528,6 @@ export type OnUpdateApihealthCheckInfoSubscription = {
   lastUpdated: string | null;
   createdAt: string;
   updatedAt: string;
-  owner: string | null;
 };
 
 export type OnDeleteApihealthCheckInfoSubscription = {
@@ -3498,7 +4540,6 @@ export type OnDeleteApihealthCheckInfoSubscription = {
   lastUpdated: string | null;
   createdAt: string;
   updatedAt: string;
-  owner: string | null;
 };
 
 export type OnCreateAddressSubscription = {
@@ -3515,7 +4556,6 @@ export type OnCreateAddressSubscription = {
   country: string;
   createdAt: string;
   updatedAt: string;
-  owner: string | null;
 };
 
 export type OnUpdateAddressSubscription = {
@@ -3532,7 +4572,6 @@ export type OnUpdateAddressSubscription = {
   country: string;
   createdAt: string;
   updatedAt: string;
-  owner: string | null;
 };
 
 export type OnDeleteAddressSubscription = {
@@ -3549,7 +4588,6 @@ export type OnDeleteAddressSubscription = {
   country: string;
   createdAt: string;
   updatedAt: string;
-  owner: string | null;
 };
 
 export type OnCreatePhoneSubscription = {
@@ -3560,7 +4598,6 @@ export type OnCreatePhoneSubscription = {
   type: PhoneType | null;
   createdAt: string;
   updatedAt: string;
-  owner: string | null;
 };
 
 export type OnUpdatePhoneSubscription = {
@@ -3571,7 +4608,6 @@ export type OnUpdatePhoneSubscription = {
   type: PhoneType | null;
   createdAt: string;
   updatedAt: string;
-  owner: string | null;
 };
 
 export type OnDeletePhoneSubscription = {
@@ -3582,7 +4618,6 @@ export type OnDeletePhoneSubscription = {
   type: PhoneType | null;
   createdAt: string;
   updatedAt: string;
-  owner: string | null;
 };
 
 export type OnCreateOrgSubscription = {
@@ -3591,6 +4626,40 @@ export type OnCreateOrgSubscription = {
   name: string;
   description: string | null;
   addressID: string;
+  email: string | null;
+  primaryPhone: {
+    __typename: "Phone";
+    id: string;
+    phone: string | null;
+    isActive: boolean | null;
+    type: PhoneType | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+  otherPhones: Array<{
+    __typename: "Phone";
+    id: string;
+    phone: string | null;
+    isActive: boolean | null;
+    type: PhoneType | null;
+    createdAt: string;
+    updatedAt: string;
+  }> | null;
+  primaryDomain: string | null;
+  privacyPolicy: string | null;
+  tags: Array<string> | null;
+  images: Array<{
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    createdAt: string;
+    updatedAt: string;
+  }> | null;
+  notes: string | null;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
   address: {
     __typename: "Address";
     id: string;
@@ -3605,33 +4674,7 @@ export type OnCreateOrgSubscription = {
     country: string;
     createdAt: string;
     updatedAt: string;
-    owner: string | null;
   } | null;
-  email: string | null;
-  primaryPhone: {
-    __typename: "Phone";
-    id: string;
-    phone: string | null;
-    isActive: boolean | null;
-    type: PhoneType | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
-  } | null;
-  otherPhones: Array<{
-    __typename: "Phone";
-    id: string;
-    phone: string | null;
-    isActive: boolean | null;
-    type: PhoneType | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
-  }> | null;
-  tags: Array<string> | null;
-  photosUrls: Array<string> | null;
-  notes: string | null;
-  isActive: boolean;
   boxes: {
     __typename: "ModelBoxConnection";
     items: Array<{
@@ -3648,7 +4691,6 @@ export type OnCreateOrgSubscription = {
       barCodePhoto: string | null;
       qrCodePhoto: string | null;
       tags: Array<string> | null;
-      photosUrls: Array<string> | null;
       status: BoxStatus;
       statusHistory: Array<BoxStatus> | null;
       internalNotes: string | null;
@@ -3656,13 +4698,29 @@ export type OnCreateOrgSubscription = {
       notesHistory: Array<string> | null;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null> | null;
     nextToken: string | null;
   } | null;
-  createdAt: string;
-  updatedAt: string;
-  owner: string | null;
+  users: {
+    __typename: "ModelUserConnection";
+    items: Array<{
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
 };
 
 export type OnUpdateOrgSubscription = {
@@ -3671,6 +4729,40 @@ export type OnUpdateOrgSubscription = {
   name: string;
   description: string | null;
   addressID: string;
+  email: string | null;
+  primaryPhone: {
+    __typename: "Phone";
+    id: string;
+    phone: string | null;
+    isActive: boolean | null;
+    type: PhoneType | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+  otherPhones: Array<{
+    __typename: "Phone";
+    id: string;
+    phone: string | null;
+    isActive: boolean | null;
+    type: PhoneType | null;
+    createdAt: string;
+    updatedAt: string;
+  }> | null;
+  primaryDomain: string | null;
+  privacyPolicy: string | null;
+  tags: Array<string> | null;
+  images: Array<{
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    createdAt: string;
+    updatedAt: string;
+  }> | null;
+  notes: string | null;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
   address: {
     __typename: "Address";
     id: string;
@@ -3685,33 +4777,7 @@ export type OnUpdateOrgSubscription = {
     country: string;
     createdAt: string;
     updatedAt: string;
-    owner: string | null;
   } | null;
-  email: string | null;
-  primaryPhone: {
-    __typename: "Phone";
-    id: string;
-    phone: string | null;
-    isActive: boolean | null;
-    type: PhoneType | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
-  } | null;
-  otherPhones: Array<{
-    __typename: "Phone";
-    id: string;
-    phone: string | null;
-    isActive: boolean | null;
-    type: PhoneType | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
-  }> | null;
-  tags: Array<string> | null;
-  photosUrls: Array<string> | null;
-  notes: string | null;
-  isActive: boolean;
   boxes: {
     __typename: "ModelBoxConnection";
     items: Array<{
@@ -3728,7 +4794,6 @@ export type OnUpdateOrgSubscription = {
       barCodePhoto: string | null;
       qrCodePhoto: string | null;
       tags: Array<string> | null;
-      photosUrls: Array<string> | null;
       status: BoxStatus;
       statusHistory: Array<BoxStatus> | null;
       internalNotes: string | null;
@@ -3736,13 +4801,29 @@ export type OnUpdateOrgSubscription = {
       notesHistory: Array<string> | null;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null> | null;
     nextToken: string | null;
   } | null;
-  createdAt: string;
-  updatedAt: string;
-  owner: string | null;
+  users: {
+    __typename: "ModelUserConnection";
+    items: Array<{
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
 };
 
 export type OnDeleteOrgSubscription = {
@@ -3751,6 +4832,40 @@ export type OnDeleteOrgSubscription = {
   name: string;
   description: string | null;
   addressID: string;
+  email: string | null;
+  primaryPhone: {
+    __typename: "Phone";
+    id: string;
+    phone: string | null;
+    isActive: boolean | null;
+    type: PhoneType | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+  otherPhones: Array<{
+    __typename: "Phone";
+    id: string;
+    phone: string | null;
+    isActive: boolean | null;
+    type: PhoneType | null;
+    createdAt: string;
+    updatedAt: string;
+  }> | null;
+  primaryDomain: string | null;
+  privacyPolicy: string | null;
+  tags: Array<string> | null;
+  images: Array<{
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    createdAt: string;
+    updatedAt: string;
+  }> | null;
+  notes: string | null;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
   address: {
     __typename: "Address";
     id: string;
@@ -3765,33 +4880,7 @@ export type OnDeleteOrgSubscription = {
     country: string;
     createdAt: string;
     updatedAt: string;
-    owner: string | null;
   } | null;
-  email: string | null;
-  primaryPhone: {
-    __typename: "Phone";
-    id: string;
-    phone: string | null;
-    isActive: boolean | null;
-    type: PhoneType | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
-  } | null;
-  otherPhones: Array<{
-    __typename: "Phone";
-    id: string;
-    phone: string | null;
-    isActive: boolean | null;
-    type: PhoneType | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
-  }> | null;
-  tags: Array<string> | null;
-  photosUrls: Array<string> | null;
-  notes: string | null;
-  isActive: boolean;
   boxes: {
     __typename: "ModelBoxConnection";
     items: Array<{
@@ -3808,7 +4897,6 @@ export type OnDeleteOrgSubscription = {
       barCodePhoto: string | null;
       qrCodePhoto: string | null;
       tags: Array<string> | null;
-      photosUrls: Array<string> | null;
       status: BoxStatus;
       statusHistory: Array<BoxStatus> | null;
       internalNotes: string | null;
@@ -3816,13 +4904,29 @@ export type OnDeleteOrgSubscription = {
       notesHistory: Array<string> | null;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null> | null;
     nextToken: string | null;
   } | null;
-  createdAt: string;
-  updatedAt: string;
-  owner: string | null;
+  users: {
+    __typename: "ModelUserConnection";
+    items: Array<{
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
 };
 
 export type OnCreateLocationInfoSubscription = {
@@ -3833,6 +4937,22 @@ export type OnCreateLocationInfoSubscription = {
   longitude: string;
   isActive: boolean;
   addressID: string;
+  phones: Array<{
+    __typename: "Phone";
+    id: string;
+    phone: string | null;
+    isActive: boolean | null;
+    type: PhoneType | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null> | null;
+  plusCode: string | null;
+  website: Array<string> | null;
+  notes: string | null;
+  notesHistory: Array<string> | null;
+  tags: Array<string> | null;
+  createdAt: string;
+  updatedAt: string;
   address: {
     __typename: "Address";
     id: string;
@@ -3847,26 +4967,7 @@ export type OnCreateLocationInfoSubscription = {
     country: string;
     createdAt: string;
     updatedAt: string;
-    owner: string | null;
   } | null;
-  phones: Array<{
-    __typename: "Phone";
-    id: string;
-    phone: string | null;
-    isActive: boolean | null;
-    type: PhoneType | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
-  } | null> | null;
-  plusCode: string | null;
-  website: Array<string> | null;
-  notes: string | null;
-  notesHistory: Array<string> | null;
-  tags: Array<string> | null;
-  createdAt: string;
-  updatedAt: string;
-  owner: string | null;
 };
 
 export type OnUpdateLocationInfoSubscription = {
@@ -3877,6 +4978,22 @@ export type OnUpdateLocationInfoSubscription = {
   longitude: string;
   isActive: boolean;
   addressID: string;
+  phones: Array<{
+    __typename: "Phone";
+    id: string;
+    phone: string | null;
+    isActive: boolean | null;
+    type: PhoneType | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null> | null;
+  plusCode: string | null;
+  website: Array<string> | null;
+  notes: string | null;
+  notesHistory: Array<string> | null;
+  tags: Array<string> | null;
+  createdAt: string;
+  updatedAt: string;
   address: {
     __typename: "Address";
     id: string;
@@ -3891,26 +5008,7 @@ export type OnUpdateLocationInfoSubscription = {
     country: string;
     createdAt: string;
     updatedAt: string;
-    owner: string | null;
   } | null;
-  phones: Array<{
-    __typename: "Phone";
-    id: string;
-    phone: string | null;
-    isActive: boolean | null;
-    type: PhoneType | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
-  } | null> | null;
-  plusCode: string | null;
-  website: Array<string> | null;
-  notes: string | null;
-  notesHistory: Array<string> | null;
-  tags: Array<string> | null;
-  createdAt: string;
-  updatedAt: string;
-  owner: string | null;
 };
 
 export type OnDeleteLocationInfoSubscription = {
@@ -3921,6 +5019,22 @@ export type OnDeleteLocationInfoSubscription = {
   longitude: string;
   isActive: boolean;
   addressID: string;
+  phones: Array<{
+    __typename: "Phone";
+    id: string;
+    phone: string | null;
+    isActive: boolean | null;
+    type: PhoneType | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null> | null;
+  plusCode: string | null;
+  website: Array<string> | null;
+  notes: string | null;
+  notesHistory: Array<string> | null;
+  tags: Array<string> | null;
+  createdAt: string;
+  updatedAt: string;
   address: {
     __typename: "Address";
     id: string;
@@ -3935,26 +5049,7 @@ export type OnDeleteLocationInfoSubscription = {
     country: string;
     createdAt: string;
     updatedAt: string;
-    owner: string | null;
   } | null;
-  phones: Array<{
-    __typename: "Phone";
-    id: string;
-    phone: string | null;
-    isActive: boolean | null;
-    type: PhoneType | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
-  } | null> | null;
-  plusCode: string | null;
-  website: Array<string> | null;
-  notes: string | null;
-  notesHistory: Array<string> | null;
-  tags: Array<string> | null;
-  createdAt: string;
-  updatedAt: string;
-  owner: string | null;
 };
 
 export type OnCreateShipmentSubscription = {
@@ -3966,93 +5061,7 @@ export type OnCreateShipmentSubscription = {
   startDate: string | null;
   deliveryDate: string | null;
   startLocationID: string;
-  startLocation: {
-    __typename: "LocationInfo";
-    id: string;
-    locationLabel: string;
-    latitude: string;
-    longitude: string;
-    isActive: boolean;
-    addressID: string;
-    address: {
-      __typename: "Address";
-      id: string;
-      label: string;
-      addressLine1: string;
-      addressLine2: string | null;
-      city: string;
-      state: string | null;
-      province: string | null;
-      zipCode: string | null;
-      postalCode: string | null;
-      country: string;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null;
-    phones: Array<{
-      __typename: "Phone";
-      id: string;
-      phone: string | null;
-      isActive: boolean | null;
-      type: PhoneType | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null> | null;
-    plusCode: string | null;
-    website: Array<string> | null;
-    notes: string | null;
-    notesHistory: Array<string> | null;
-    tags: Array<string> | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
-  } | null;
   destinationLocationID: string;
-  destinationLocation: {
-    __typename: "LocationInfo";
-    id: string;
-    locationLabel: string;
-    latitude: string;
-    longitude: string;
-    isActive: boolean;
-    addressID: string;
-    address: {
-      __typename: "Address";
-      id: string;
-      label: string;
-      addressLine1: string;
-      addressLine2: string | null;
-      city: string;
-      state: string | null;
-      province: string | null;
-      zipCode: string | null;
-      postalCode: string | null;
-      country: string;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null;
-    phones: Array<{
-      __typename: "Phone";
-      id: string;
-      phone: string | null;
-      isActive: boolean | null;
-      type: PhoneType | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null> | null;
-    plusCode: string | null;
-    website: Array<string> | null;
-    notes: string | null;
-    notesHistory: Array<string> | null;
-    tags: Array<string> | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
-  } | null;
   shipmentNotes: string | null;
   deliveryNotes: string | null;
   trackingId: string | null;
@@ -4061,9 +5070,98 @@ export type OnCreateShipmentSubscription = {
   status: ShippingStatus | null;
   statusHistory: Array<string> | null;
   tags: Array<string> | null;
-  photosUrls: Array<string> | null;
+  images: Array<{
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    createdAt: string;
+    updatedAt: string;
+  }> | null;
   notes: string | null;
   notesHistory: Array<string> | null;
+  createdAt: string;
+  updatedAt: string;
+  startLocation: {
+    __typename: "LocationInfo";
+    id: string;
+    locationLabel: string;
+    latitude: string;
+    longitude: string;
+    isActive: boolean;
+    addressID: string;
+    phones: Array<{
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    plusCode: string | null;
+    website: Array<string> | null;
+    notes: string | null;
+    notesHistory: Array<string> | null;
+    tags: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
+    address: {
+      __typename: "Address";
+      id: string;
+      label: string;
+      addressLine1: string;
+      addressLine2: string | null;
+      city: string;
+      state: string | null;
+      province: string | null;
+      zipCode: string | null;
+      postalCode: string | null;
+      country: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+  } | null;
+  destinationLocation: {
+    __typename: "LocationInfo";
+    id: string;
+    locationLabel: string;
+    latitude: string;
+    longitude: string;
+    isActive: boolean;
+    addressID: string;
+    phones: Array<{
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    plusCode: string | null;
+    website: Array<string> | null;
+    notes: string | null;
+    notesHistory: Array<string> | null;
+    tags: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
+    address: {
+      __typename: "Address";
+      id: string;
+      label: string;
+      addressLine1: string;
+      addressLine2: string | null;
+      city: string;
+      state: string | null;
+      province: string | null;
+      zipCode: string | null;
+      postalCode: string | null;
+      country: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+  } | null;
   boxes: {
     __typename: "ModelBoxConnection";
     items: Array<{
@@ -4080,7 +5178,6 @@ export type OnCreateShipmentSubscription = {
       barCodePhoto: string | null;
       qrCodePhoto: string | null;
       tags: Array<string> | null;
-      photosUrls: Array<string> | null;
       status: BoxStatus;
       statusHistory: Array<BoxStatus> | null;
       internalNotes: string | null;
@@ -4088,13 +5185,9 @@ export type OnCreateShipmentSubscription = {
       notesHistory: Array<string> | null;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null> | null;
     nextToken: string | null;
   } | null;
-  createdAt: string;
-  updatedAt: string;
-  owner: string | null;
 };
 
 export type OnUpdateShipmentSubscription = {
@@ -4106,93 +5199,7 @@ export type OnUpdateShipmentSubscription = {
   startDate: string | null;
   deliveryDate: string | null;
   startLocationID: string;
-  startLocation: {
-    __typename: "LocationInfo";
-    id: string;
-    locationLabel: string;
-    latitude: string;
-    longitude: string;
-    isActive: boolean;
-    addressID: string;
-    address: {
-      __typename: "Address";
-      id: string;
-      label: string;
-      addressLine1: string;
-      addressLine2: string | null;
-      city: string;
-      state: string | null;
-      province: string | null;
-      zipCode: string | null;
-      postalCode: string | null;
-      country: string;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null;
-    phones: Array<{
-      __typename: "Phone";
-      id: string;
-      phone: string | null;
-      isActive: boolean | null;
-      type: PhoneType | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null> | null;
-    plusCode: string | null;
-    website: Array<string> | null;
-    notes: string | null;
-    notesHistory: Array<string> | null;
-    tags: Array<string> | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
-  } | null;
   destinationLocationID: string;
-  destinationLocation: {
-    __typename: "LocationInfo";
-    id: string;
-    locationLabel: string;
-    latitude: string;
-    longitude: string;
-    isActive: boolean;
-    addressID: string;
-    address: {
-      __typename: "Address";
-      id: string;
-      label: string;
-      addressLine1: string;
-      addressLine2: string | null;
-      city: string;
-      state: string | null;
-      province: string | null;
-      zipCode: string | null;
-      postalCode: string | null;
-      country: string;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null;
-    phones: Array<{
-      __typename: "Phone";
-      id: string;
-      phone: string | null;
-      isActive: boolean | null;
-      type: PhoneType | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null> | null;
-    plusCode: string | null;
-    website: Array<string> | null;
-    notes: string | null;
-    notesHistory: Array<string> | null;
-    tags: Array<string> | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
-  } | null;
   shipmentNotes: string | null;
   deliveryNotes: string | null;
   trackingId: string | null;
@@ -4201,9 +5208,98 @@ export type OnUpdateShipmentSubscription = {
   status: ShippingStatus | null;
   statusHistory: Array<string> | null;
   tags: Array<string> | null;
-  photosUrls: Array<string> | null;
+  images: Array<{
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    createdAt: string;
+    updatedAt: string;
+  }> | null;
   notes: string | null;
   notesHistory: Array<string> | null;
+  createdAt: string;
+  updatedAt: string;
+  startLocation: {
+    __typename: "LocationInfo";
+    id: string;
+    locationLabel: string;
+    latitude: string;
+    longitude: string;
+    isActive: boolean;
+    addressID: string;
+    phones: Array<{
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    plusCode: string | null;
+    website: Array<string> | null;
+    notes: string | null;
+    notesHistory: Array<string> | null;
+    tags: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
+    address: {
+      __typename: "Address";
+      id: string;
+      label: string;
+      addressLine1: string;
+      addressLine2: string | null;
+      city: string;
+      state: string | null;
+      province: string | null;
+      zipCode: string | null;
+      postalCode: string | null;
+      country: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+  } | null;
+  destinationLocation: {
+    __typename: "LocationInfo";
+    id: string;
+    locationLabel: string;
+    latitude: string;
+    longitude: string;
+    isActive: boolean;
+    addressID: string;
+    phones: Array<{
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    plusCode: string | null;
+    website: Array<string> | null;
+    notes: string | null;
+    notesHistory: Array<string> | null;
+    tags: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
+    address: {
+      __typename: "Address";
+      id: string;
+      label: string;
+      addressLine1: string;
+      addressLine2: string | null;
+      city: string;
+      state: string | null;
+      province: string | null;
+      zipCode: string | null;
+      postalCode: string | null;
+      country: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+  } | null;
   boxes: {
     __typename: "ModelBoxConnection";
     items: Array<{
@@ -4220,7 +5316,6 @@ export type OnUpdateShipmentSubscription = {
       barCodePhoto: string | null;
       qrCodePhoto: string | null;
       tags: Array<string> | null;
-      photosUrls: Array<string> | null;
       status: BoxStatus;
       statusHistory: Array<BoxStatus> | null;
       internalNotes: string | null;
@@ -4228,13 +5323,9 @@ export type OnUpdateShipmentSubscription = {
       notesHistory: Array<string> | null;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null> | null;
     nextToken: string | null;
   } | null;
-  createdAt: string;
-  updatedAt: string;
-  owner: string | null;
 };
 
 export type OnDeleteShipmentSubscription = {
@@ -4246,93 +5337,7 @@ export type OnDeleteShipmentSubscription = {
   startDate: string | null;
   deliveryDate: string | null;
   startLocationID: string;
-  startLocation: {
-    __typename: "LocationInfo";
-    id: string;
-    locationLabel: string;
-    latitude: string;
-    longitude: string;
-    isActive: boolean;
-    addressID: string;
-    address: {
-      __typename: "Address";
-      id: string;
-      label: string;
-      addressLine1: string;
-      addressLine2: string | null;
-      city: string;
-      state: string | null;
-      province: string | null;
-      zipCode: string | null;
-      postalCode: string | null;
-      country: string;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null;
-    phones: Array<{
-      __typename: "Phone";
-      id: string;
-      phone: string | null;
-      isActive: boolean | null;
-      type: PhoneType | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null> | null;
-    plusCode: string | null;
-    website: Array<string> | null;
-    notes: string | null;
-    notesHistory: Array<string> | null;
-    tags: Array<string> | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
-  } | null;
   destinationLocationID: string;
-  destinationLocation: {
-    __typename: "LocationInfo";
-    id: string;
-    locationLabel: string;
-    latitude: string;
-    longitude: string;
-    isActive: boolean;
-    addressID: string;
-    address: {
-      __typename: "Address";
-      id: string;
-      label: string;
-      addressLine1: string;
-      addressLine2: string | null;
-      city: string;
-      state: string | null;
-      province: string | null;
-      zipCode: string | null;
-      postalCode: string | null;
-      country: string;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null;
-    phones: Array<{
-      __typename: "Phone";
-      id: string;
-      phone: string | null;
-      isActive: boolean | null;
-      type: PhoneType | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null> | null;
-    plusCode: string | null;
-    website: Array<string> | null;
-    notes: string | null;
-    notesHistory: Array<string> | null;
-    tags: Array<string> | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
-  } | null;
   shipmentNotes: string | null;
   deliveryNotes: string | null;
   trackingId: string | null;
@@ -4341,9 +5346,98 @@ export type OnDeleteShipmentSubscription = {
   status: ShippingStatus | null;
   statusHistory: Array<string> | null;
   tags: Array<string> | null;
-  photosUrls: Array<string> | null;
+  images: Array<{
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    createdAt: string;
+    updatedAt: string;
+  }> | null;
   notes: string | null;
   notesHistory: Array<string> | null;
+  createdAt: string;
+  updatedAt: string;
+  startLocation: {
+    __typename: "LocationInfo";
+    id: string;
+    locationLabel: string;
+    latitude: string;
+    longitude: string;
+    isActive: boolean;
+    addressID: string;
+    phones: Array<{
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    plusCode: string | null;
+    website: Array<string> | null;
+    notes: string | null;
+    notesHistory: Array<string> | null;
+    tags: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
+    address: {
+      __typename: "Address";
+      id: string;
+      label: string;
+      addressLine1: string;
+      addressLine2: string | null;
+      city: string;
+      state: string | null;
+      province: string | null;
+      zipCode: string | null;
+      postalCode: string | null;
+      country: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+  } | null;
+  destinationLocation: {
+    __typename: "LocationInfo";
+    id: string;
+    locationLabel: string;
+    latitude: string;
+    longitude: string;
+    isActive: boolean;
+    addressID: string;
+    phones: Array<{
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    plusCode: string | null;
+    website: Array<string> | null;
+    notes: string | null;
+    notesHistory: Array<string> | null;
+    tags: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
+    address: {
+      __typename: "Address";
+      id: string;
+      label: string;
+      addressLine1: string;
+      addressLine2: string | null;
+      city: string;
+      state: string | null;
+      province: string | null;
+      zipCode: string | null;
+      postalCode: string | null;
+      country: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+  } | null;
   boxes: {
     __typename: "ModelBoxConnection";
     items: Array<{
@@ -4360,7 +5454,6 @@ export type OnDeleteShipmentSubscription = {
       barCodePhoto: string | null;
       qrCodePhoto: string | null;
       tags: Array<string> | null;
-      photosUrls: Array<string> | null;
       status: BoxStatus;
       statusHistory: Array<BoxStatus> | null;
       internalNotes: string | null;
@@ -4368,13 +5461,9 @@ export type OnDeleteShipmentSubscription = {
       notesHistory: Array<string> | null;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null> | null;
     nextToken: string | null;
   } | null;
-  createdAt: string;
-  updatedAt: string;
-  owner: string | null;
 };
 
 export type OnCreateBoxSubscription = {
@@ -4384,12 +5473,68 @@ export type OnCreateBoxSubscription = {
   contents: string;
   size: string;
   orgID: string;
+  shipmentID: string;
+  isActive: boolean;
+  barCode: string | null;
+  qrCode: string | null;
+  barCodePhoto: string | null;
+  qrCodePhoto: string | null;
+  tags: Array<string> | null;
+  images: Array<{
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    createdAt: string;
+    updatedAt: string;
+  }> | null;
+  status: BoxStatus;
+  statusHistory: Array<BoxStatus> | null;
+  internalNotes: string | null;
+  notes: string | null;
+  notesHistory: Array<string> | null;
+  createdAt: string;
+  updatedAt: string;
   org: {
     __typename: "Org";
     id: string;
     name: string;
     description: string | null;
     addressID: string;
+    email: string | null;
+    primaryPhone: {
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    otherPhones: Array<{
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    primaryDomain: string | null;
+    privacyPolicy: string | null;
+    tags: Array<string> | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    notes: string | null;
+    isActive: boolean;
+    createdAt: string;
+    updatedAt: string;
     address: {
       __typename: "Address";
       id: string;
@@ -4404,42 +5549,16 @@ export type OnCreateBoxSubscription = {
       country: string;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null;
-    email: string | null;
-    primaryPhone: {
-      __typename: "Phone";
-      id: string;
-      phone: string | null;
-      isActive: boolean | null;
-      type: PhoneType | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null;
-    otherPhones: Array<{
-      __typename: "Phone";
-      id: string;
-      phone: string | null;
-      isActive: boolean | null;
-      type: PhoneType | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    }> | null;
-    tags: Array<string> | null;
-    photosUrls: Array<string> | null;
-    notes: string | null;
-    isActive: boolean;
     boxes: {
       __typename: "ModelBoxConnection";
       nextToken: string | null;
     } | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
+    users: {
+      __typename: "ModelUserConnection";
+      nextToken: string | null;
+    } | null;
   } | null;
-  shipmentID: string;
   shipment: {
     __typename: "Shipment";
     id: string;
@@ -4449,6 +5568,27 @@ export type OnCreateBoxSubscription = {
     startDate: string | null;
     deliveryDate: string | null;
     startLocationID: string;
+    destinationLocationID: string;
+    shipmentNotes: string | null;
+    deliveryNotes: string | null;
+    trackingId: string | null;
+    weight: string | null;
+    shipmentReceiver: string | null;
+    status: ShippingStatus | null;
+    statusHistory: Array<string> | null;
+    tags: Array<string> | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    notes: string | null;
+    notesHistory: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
     startLocation: {
       __typename: "LocationInfo";
       id: string;
@@ -4464,9 +5604,7 @@ export type OnCreateBoxSubscription = {
       tags: Array<string> | null;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null;
-    destinationLocationID: string;
     destinationLocation: {
       __typename: "LocationInfo";
       id: string;
@@ -4482,39 +5620,12 @@ export type OnCreateBoxSubscription = {
       tags: Array<string> | null;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null;
-    shipmentNotes: string | null;
-    deliveryNotes: string | null;
-    trackingId: string | null;
-    weight: string | null;
-    shipmentReceiver: string | null;
-    status: ShippingStatus | null;
-    statusHistory: Array<string> | null;
-    tags: Array<string> | null;
-    photosUrls: Array<string> | null;
-    notes: string | null;
-    notesHistory: Array<string> | null;
     boxes: {
       __typename: "ModelBoxConnection";
       nextToken: string | null;
     } | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
   } | null;
-  isActive: boolean;
-  barCode: string | null;
-  qrCode: string | null;
-  barCodePhoto: string | null;
-  qrCodePhoto: string | null;
-  tags: Array<string> | null;
-  photosUrls: Array<string> | null;
-  status: BoxStatus;
-  statusHistory: Array<BoxStatus> | null;
-  internalNotes: string | null;
-  notes: string | null;
-  notesHistory: Array<string> | null;
   locations: {
     __typename: "ModelBoxLocationConnection";
     items: Array<{
@@ -4522,20 +5633,16 @@ export type OnCreateBoxSubscription = {
       id: string;
       boxID: string;
       locationInfoID: string;
+      userID: string;
       notes: string | null;
       isFinal: boolean;
       tags: Array<string> | null;
-      photosUrls: Array<string> | null;
       isActive: boolean;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null> | null;
     nextToken: string | null;
   } | null;
-  createdAt: string;
-  updatedAt: string;
-  owner: string | null;
 };
 
 export type OnUpdateBoxSubscription = {
@@ -4545,12 +5652,68 @@ export type OnUpdateBoxSubscription = {
   contents: string;
   size: string;
   orgID: string;
+  shipmentID: string;
+  isActive: boolean;
+  barCode: string | null;
+  qrCode: string | null;
+  barCodePhoto: string | null;
+  qrCodePhoto: string | null;
+  tags: Array<string> | null;
+  images: Array<{
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    createdAt: string;
+    updatedAt: string;
+  }> | null;
+  status: BoxStatus;
+  statusHistory: Array<BoxStatus> | null;
+  internalNotes: string | null;
+  notes: string | null;
+  notesHistory: Array<string> | null;
+  createdAt: string;
+  updatedAt: string;
   org: {
     __typename: "Org";
     id: string;
     name: string;
     description: string | null;
     addressID: string;
+    email: string | null;
+    primaryPhone: {
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    otherPhones: Array<{
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    primaryDomain: string | null;
+    privacyPolicy: string | null;
+    tags: Array<string> | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    notes: string | null;
+    isActive: boolean;
+    createdAt: string;
+    updatedAt: string;
     address: {
       __typename: "Address";
       id: string;
@@ -4565,42 +5728,16 @@ export type OnUpdateBoxSubscription = {
       country: string;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null;
-    email: string | null;
-    primaryPhone: {
-      __typename: "Phone";
-      id: string;
-      phone: string | null;
-      isActive: boolean | null;
-      type: PhoneType | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null;
-    otherPhones: Array<{
-      __typename: "Phone";
-      id: string;
-      phone: string | null;
-      isActive: boolean | null;
-      type: PhoneType | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    }> | null;
-    tags: Array<string> | null;
-    photosUrls: Array<string> | null;
-    notes: string | null;
-    isActive: boolean;
     boxes: {
       __typename: "ModelBoxConnection";
       nextToken: string | null;
     } | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
+    users: {
+      __typename: "ModelUserConnection";
+      nextToken: string | null;
+    } | null;
   } | null;
-  shipmentID: string;
   shipment: {
     __typename: "Shipment";
     id: string;
@@ -4610,6 +5747,27 @@ export type OnUpdateBoxSubscription = {
     startDate: string | null;
     deliveryDate: string | null;
     startLocationID: string;
+    destinationLocationID: string;
+    shipmentNotes: string | null;
+    deliveryNotes: string | null;
+    trackingId: string | null;
+    weight: string | null;
+    shipmentReceiver: string | null;
+    status: ShippingStatus | null;
+    statusHistory: Array<string> | null;
+    tags: Array<string> | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    notes: string | null;
+    notesHistory: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
     startLocation: {
       __typename: "LocationInfo";
       id: string;
@@ -4625,9 +5783,7 @@ export type OnUpdateBoxSubscription = {
       tags: Array<string> | null;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null;
-    destinationLocationID: string;
     destinationLocation: {
       __typename: "LocationInfo";
       id: string;
@@ -4643,39 +5799,12 @@ export type OnUpdateBoxSubscription = {
       tags: Array<string> | null;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null;
-    shipmentNotes: string | null;
-    deliveryNotes: string | null;
-    trackingId: string | null;
-    weight: string | null;
-    shipmentReceiver: string | null;
-    status: ShippingStatus | null;
-    statusHistory: Array<string> | null;
-    tags: Array<string> | null;
-    photosUrls: Array<string> | null;
-    notes: string | null;
-    notesHistory: Array<string> | null;
     boxes: {
       __typename: "ModelBoxConnection";
       nextToken: string | null;
     } | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
   } | null;
-  isActive: boolean;
-  barCode: string | null;
-  qrCode: string | null;
-  barCodePhoto: string | null;
-  qrCodePhoto: string | null;
-  tags: Array<string> | null;
-  photosUrls: Array<string> | null;
-  status: BoxStatus;
-  statusHistory: Array<BoxStatus> | null;
-  internalNotes: string | null;
-  notes: string | null;
-  notesHistory: Array<string> | null;
   locations: {
     __typename: "ModelBoxLocationConnection";
     items: Array<{
@@ -4683,20 +5812,16 @@ export type OnUpdateBoxSubscription = {
       id: string;
       boxID: string;
       locationInfoID: string;
+      userID: string;
       notes: string | null;
       isFinal: boolean;
       tags: Array<string> | null;
-      photosUrls: Array<string> | null;
       isActive: boolean;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null> | null;
     nextToken: string | null;
   } | null;
-  createdAt: string;
-  updatedAt: string;
-  owner: string | null;
 };
 
 export type OnDeleteBoxSubscription = {
@@ -4706,12 +5831,68 @@ export type OnDeleteBoxSubscription = {
   contents: string;
   size: string;
   orgID: string;
+  shipmentID: string;
+  isActive: boolean;
+  barCode: string | null;
+  qrCode: string | null;
+  barCodePhoto: string | null;
+  qrCodePhoto: string | null;
+  tags: Array<string> | null;
+  images: Array<{
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    createdAt: string;
+    updatedAt: string;
+  }> | null;
+  status: BoxStatus;
+  statusHistory: Array<BoxStatus> | null;
+  internalNotes: string | null;
+  notes: string | null;
+  notesHistory: Array<string> | null;
+  createdAt: string;
+  updatedAt: string;
   org: {
     __typename: "Org";
     id: string;
     name: string;
     description: string | null;
     addressID: string;
+    email: string | null;
+    primaryPhone: {
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    otherPhones: Array<{
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    primaryDomain: string | null;
+    privacyPolicy: string | null;
+    tags: Array<string> | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    notes: string | null;
+    isActive: boolean;
+    createdAt: string;
+    updatedAt: string;
     address: {
       __typename: "Address";
       id: string;
@@ -4726,42 +5907,16 @@ export type OnDeleteBoxSubscription = {
       country: string;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null;
-    email: string | null;
-    primaryPhone: {
-      __typename: "Phone";
-      id: string;
-      phone: string | null;
-      isActive: boolean | null;
-      type: PhoneType | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null;
-    otherPhones: Array<{
-      __typename: "Phone";
-      id: string;
-      phone: string | null;
-      isActive: boolean | null;
-      type: PhoneType | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    }> | null;
-    tags: Array<string> | null;
-    photosUrls: Array<string> | null;
-    notes: string | null;
-    isActive: boolean;
     boxes: {
       __typename: "ModelBoxConnection";
       nextToken: string | null;
     } | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
+    users: {
+      __typename: "ModelUserConnection";
+      nextToken: string | null;
+    } | null;
   } | null;
-  shipmentID: string;
   shipment: {
     __typename: "Shipment";
     id: string;
@@ -4771,6 +5926,27 @@ export type OnDeleteBoxSubscription = {
     startDate: string | null;
     deliveryDate: string | null;
     startLocationID: string;
+    destinationLocationID: string;
+    shipmentNotes: string | null;
+    deliveryNotes: string | null;
+    trackingId: string | null;
+    weight: string | null;
+    shipmentReceiver: string | null;
+    status: ShippingStatus | null;
+    statusHistory: Array<string> | null;
+    tags: Array<string> | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    notes: string | null;
+    notesHistory: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
     startLocation: {
       __typename: "LocationInfo";
       id: string;
@@ -4786,9 +5962,7 @@ export type OnDeleteBoxSubscription = {
       tags: Array<string> | null;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null;
-    destinationLocationID: string;
     destinationLocation: {
       __typename: "LocationInfo";
       id: string;
@@ -4804,39 +5978,12 @@ export type OnDeleteBoxSubscription = {
       tags: Array<string> | null;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null;
-    shipmentNotes: string | null;
-    deliveryNotes: string | null;
-    trackingId: string | null;
-    weight: string | null;
-    shipmentReceiver: string | null;
-    status: ShippingStatus | null;
-    statusHistory: Array<string> | null;
-    tags: Array<string> | null;
-    photosUrls: Array<string> | null;
-    notes: string | null;
-    notesHistory: Array<string> | null;
     boxes: {
       __typename: "ModelBoxConnection";
       nextToken: string | null;
     } | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
   } | null;
-  isActive: boolean;
-  barCode: string | null;
-  qrCode: string | null;
-  barCodePhoto: string | null;
-  qrCodePhoto: string | null;
-  tags: Array<string> | null;
-  photosUrls: Array<string> | null;
-  status: BoxStatus;
-  statusHistory: Array<BoxStatus> | null;
-  internalNotes: string | null;
-  notes: string | null;
-  notesHistory: Array<string> | null;
   locations: {
     __typename: "ModelBoxLocationConnection";
     items: Array<{
@@ -4844,26 +5991,78 @@ export type OnDeleteBoxSubscription = {
       id: string;
       boxID: string;
       locationInfoID: string;
+      userID: string;
       notes: string | null;
       isFinal: boolean;
       tags: Array<string> | null;
-      photosUrls: Array<string> | null;
       isActive: boolean;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null> | null;
     nextToken: string | null;
   } | null;
-  createdAt: string;
-  updatedAt: string;
-  owner: string | null;
 };
 
 export type OnCreateBoxLocationSubscription = {
   __typename: "BoxLocation";
   id: string;
   boxID: string;
+  locationInfoID: string;
+  userID: string;
+  notes: string | null;
+  isFinal: boolean;
+  tags: Array<string> | null;
+  images: Array<{
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    createdAt: string;
+    updatedAt: string;
+  }> | null;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+  locationInfo: {
+    __typename: "LocationInfo";
+    id: string;
+    locationLabel: string;
+    latitude: string;
+    longitude: string;
+    isActive: boolean;
+    addressID: string;
+    phones: Array<{
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    plusCode: string | null;
+    website: Array<string> | null;
+    notes: string | null;
+    notesHistory: Array<string> | null;
+    tags: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
+    address: {
+      __typename: "Address";
+      id: string;
+      label: string;
+      addressLine1: string;
+      addressLine2: string | null;
+      city: string;
+      state: string | null;
+      province: string | null;
+      zipCode: string | null;
+      postalCode: string | null;
+      country: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+  };
   box: {
     __typename: "Box";
     id: string;
@@ -4871,6 +6070,28 @@ export type OnCreateBoxLocationSubscription = {
     contents: string;
     size: string;
     orgID: string;
+    shipmentID: string;
+    isActive: boolean;
+    barCode: string | null;
+    qrCode: string | null;
+    barCodePhoto: string | null;
+    qrCodePhoto: string | null;
+    tags: Array<string> | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    status: BoxStatus;
+    statusHistory: Array<BoxStatus> | null;
+    internalNotes: string | null;
+    notes: string | null;
+    notesHistory: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
     org: {
       __typename: "Org";
       id: string;
@@ -4878,15 +6099,14 @@ export type OnCreateBoxLocationSubscription = {
       description: string | null;
       addressID: string;
       email: string | null;
+      primaryDomain: string | null;
+      privacyPolicy: string | null;
       tags: Array<string> | null;
-      photosUrls: Array<string> | null;
       notes: string | null;
       isActive: boolean;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null;
-    shipmentID: string;
     shipment: {
       __typename: "Shipment";
       id: string;
@@ -4905,91 +6125,121 @@ export type OnCreateBoxLocationSubscription = {
       status: ShippingStatus | null;
       statusHistory: Array<string> | null;
       tags: Array<string> | null;
-      photosUrls: Array<string> | null;
       notes: string | null;
       notesHistory: Array<string> | null;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null;
-    isActive: boolean;
-    barCode: string | null;
-    qrCode: string | null;
-    barCodePhoto: string | null;
-    qrCodePhoto: string | null;
-    tags: Array<string> | null;
-    photosUrls: Array<string> | null;
-    status: BoxStatus;
-    statusHistory: Array<BoxStatus> | null;
-    internalNotes: string | null;
-    notes: string | null;
-    notesHistory: Array<string> | null;
     locations: {
       __typename: "ModelBoxLocationConnection";
       nextToken: string | null;
     } | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
   };
-  locationInfoID: string;
-  locationInfo: {
-    __typename: "LocationInfo";
+  user: {
+    __typename: "User";
     id: string;
-    locationLabel: string;
-    latitude: string;
-    longitude: string;
+    name: string;
+    orgID: string;
     isActive: boolean;
-    addressID: string;
-    address: {
-      __typename: "Address";
-      id: string;
-      label: string;
-      addressLine1: string;
-      addressLine2: string | null;
-      city: string;
-      state: string | null;
-      province: string | null;
-      zipCode: string | null;
-      postalCode: string | null;
-      country: string;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null;
-    phones: Array<{
-      __typename: "Phone";
-      id: string;
-      phone: string | null;
-      isActive: boolean | null;
-      type: PhoneType | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null> | null;
-    plusCode: string | null;
-    website: Array<string> | null;
-    notes: string | null;
-    notesHistory: Array<string> | null;
     tags: Array<string> | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    status: UserStatus;
+    statusHistory: Array<UserStatus> | null;
+    internalNotes: string | null;
+    notes: string | null;
+    rank: number | null;
+    notesHistory: Array<string> | null;
     createdAt: string;
     updatedAt: string;
-    owner: string | null;
+    org: {
+      __typename: "Org";
+      id: string;
+      name: string;
+      description: string | null;
+      addressID: string;
+      email: string | null;
+      primaryDomain: string | null;
+      privacyPolicy: string | null;
+      tags: Array<string> | null;
+      notes: string | null;
+      isActive: boolean;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
   };
-  notes: string | null;
-  isFinal: boolean;
-  tags: Array<string> | null;
-  photosUrls: Array<string> | null;
-  isActive: boolean;
-  createdAt: string;
-  updatedAt: string;
-  owner: string | null;
 };
 
 export type OnUpdateBoxLocationSubscription = {
   __typename: "BoxLocation";
   id: string;
   boxID: string;
+  locationInfoID: string;
+  userID: string;
+  notes: string | null;
+  isFinal: boolean;
+  tags: Array<string> | null;
+  images: Array<{
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    createdAt: string;
+    updatedAt: string;
+  }> | null;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+  locationInfo: {
+    __typename: "LocationInfo";
+    id: string;
+    locationLabel: string;
+    latitude: string;
+    longitude: string;
+    isActive: boolean;
+    addressID: string;
+    phones: Array<{
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    plusCode: string | null;
+    website: Array<string> | null;
+    notes: string | null;
+    notesHistory: Array<string> | null;
+    tags: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
+    address: {
+      __typename: "Address";
+      id: string;
+      label: string;
+      addressLine1: string;
+      addressLine2: string | null;
+      city: string;
+      state: string | null;
+      province: string | null;
+      zipCode: string | null;
+      postalCode: string | null;
+      country: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+  };
   box: {
     __typename: "Box";
     id: string;
@@ -4997,6 +6247,28 @@ export type OnUpdateBoxLocationSubscription = {
     contents: string;
     size: string;
     orgID: string;
+    shipmentID: string;
+    isActive: boolean;
+    barCode: string | null;
+    qrCode: string | null;
+    barCodePhoto: string | null;
+    qrCodePhoto: string | null;
+    tags: Array<string> | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    status: BoxStatus;
+    statusHistory: Array<BoxStatus> | null;
+    internalNotes: string | null;
+    notes: string | null;
+    notesHistory: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
     org: {
       __typename: "Org";
       id: string;
@@ -5004,15 +6276,14 @@ export type OnUpdateBoxLocationSubscription = {
       description: string | null;
       addressID: string;
       email: string | null;
+      primaryDomain: string | null;
+      privacyPolicy: string | null;
       tags: Array<string> | null;
-      photosUrls: Array<string> | null;
       notes: string | null;
       isActive: boolean;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null;
-    shipmentID: string;
     shipment: {
       __typename: "Shipment";
       id: string;
@@ -5031,91 +6302,121 @@ export type OnUpdateBoxLocationSubscription = {
       status: ShippingStatus | null;
       statusHistory: Array<string> | null;
       tags: Array<string> | null;
-      photosUrls: Array<string> | null;
       notes: string | null;
       notesHistory: Array<string> | null;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null;
-    isActive: boolean;
-    barCode: string | null;
-    qrCode: string | null;
-    barCodePhoto: string | null;
-    qrCodePhoto: string | null;
-    tags: Array<string> | null;
-    photosUrls: Array<string> | null;
-    status: BoxStatus;
-    statusHistory: Array<BoxStatus> | null;
-    internalNotes: string | null;
-    notes: string | null;
-    notesHistory: Array<string> | null;
     locations: {
       __typename: "ModelBoxLocationConnection";
       nextToken: string | null;
     } | null;
-    createdAt: string;
-    updatedAt: string;
-    owner: string | null;
   };
-  locationInfoID: string;
-  locationInfo: {
-    __typename: "LocationInfo";
+  user: {
+    __typename: "User";
     id: string;
-    locationLabel: string;
-    latitude: string;
-    longitude: string;
+    name: string;
+    orgID: string;
     isActive: boolean;
-    addressID: string;
-    address: {
-      __typename: "Address";
-      id: string;
-      label: string;
-      addressLine1: string;
-      addressLine2: string | null;
-      city: string;
-      state: string | null;
-      province: string | null;
-      zipCode: string | null;
-      postalCode: string | null;
-      country: string;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null;
-    phones: Array<{
-      __typename: "Phone";
-      id: string;
-      phone: string | null;
-      isActive: boolean | null;
-      type: PhoneType | null;
-      createdAt: string;
-      updatedAt: string;
-      owner: string | null;
-    } | null> | null;
-    plusCode: string | null;
-    website: Array<string> | null;
-    notes: string | null;
-    notesHistory: Array<string> | null;
     tags: Array<string> | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    status: UserStatus;
+    statusHistory: Array<UserStatus> | null;
+    internalNotes: string | null;
+    notes: string | null;
+    rank: number | null;
+    notesHistory: Array<string> | null;
     createdAt: string;
     updatedAt: string;
-    owner: string | null;
+    org: {
+      __typename: "Org";
+      id: string;
+      name: string;
+      description: string | null;
+      addressID: string;
+      email: string | null;
+      primaryDomain: string | null;
+      privacyPolicy: string | null;
+      tags: Array<string> | null;
+      notes: string | null;
+      isActive: boolean;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
   };
-  notes: string | null;
-  isFinal: boolean;
-  tags: Array<string> | null;
-  photosUrls: Array<string> | null;
-  isActive: boolean;
-  createdAt: string;
-  updatedAt: string;
-  owner: string | null;
 };
 
 export type OnDeleteBoxLocationSubscription = {
   __typename: "BoxLocation";
   id: string;
   boxID: string;
+  locationInfoID: string;
+  userID: string;
+  notes: string | null;
+  isFinal: boolean;
+  tags: Array<string> | null;
+  images: Array<{
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    createdAt: string;
+    updatedAt: string;
+  }> | null;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+  locationInfo: {
+    __typename: "LocationInfo";
+    id: string;
+    locationLabel: string;
+    latitude: string;
+    longitude: string;
+    isActive: boolean;
+    addressID: string;
+    phones: Array<{
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    plusCode: string | null;
+    website: Array<string> | null;
+    notes: string | null;
+    notesHistory: Array<string> | null;
+    tags: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
+    address: {
+      __typename: "Address";
+      id: string;
+      label: string;
+      addressLine1: string;
+      addressLine2: string | null;
+      city: string;
+      state: string | null;
+      province: string | null;
+      zipCode: string | null;
+      postalCode: string | null;
+      country: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+  };
   box: {
     __typename: "Box";
     id: string;
@@ -5123,6 +6424,28 @@ export type OnDeleteBoxLocationSubscription = {
     contents: string;
     size: string;
     orgID: string;
+    shipmentID: string;
+    isActive: boolean;
+    barCode: string | null;
+    qrCode: string | null;
+    barCodePhoto: string | null;
+    qrCodePhoto: string | null;
+    tags: Array<string> | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    status: BoxStatus;
+    statusHistory: Array<BoxStatus> | null;
+    internalNotes: string | null;
+    notes: string | null;
+    notesHistory: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
     org: {
       __typename: "Org";
       id: string;
@@ -5130,15 +6453,14 @@ export type OnDeleteBoxLocationSubscription = {
       description: string | null;
       addressID: string;
       email: string | null;
+      primaryDomain: string | null;
+      privacyPolicy: string | null;
       tags: Array<string> | null;
-      photosUrls: Array<string> | null;
       notes: string | null;
       isActive: boolean;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null;
-    shipmentID: string;
     shipment: {
       __typename: "Shipment";
       id: string;
@@ -5157,42 +6479,124 @@ export type OnDeleteBoxLocationSubscription = {
       status: ShippingStatus | null;
       statusHistory: Array<string> | null;
       tags: Array<string> | null;
-      photosUrls: Array<string> | null;
       notes: string | null;
       notesHistory: Array<string> | null;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null;
-    isActive: boolean;
-    barCode: string | null;
-    qrCode: string | null;
-    barCodePhoto: string | null;
-    qrCodePhoto: string | null;
-    tags: Array<string> | null;
-    photosUrls: Array<string> | null;
-    status: BoxStatus;
-    statusHistory: Array<BoxStatus> | null;
-    internalNotes: string | null;
-    notes: string | null;
-    notesHistory: Array<string> | null;
     locations: {
       __typename: "ModelBoxLocationConnection";
       nextToken: string | null;
     } | null;
+  };
+  user: {
+    __typename: "User";
+    id: string;
+    name: string;
+    orgID: string;
+    isActive: boolean;
+    tags: Array<string> | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    status: UserStatus;
+    statusHistory: Array<UserStatus> | null;
+    internalNotes: string | null;
+    notes: string | null;
+    rank: number | null;
+    notesHistory: Array<string> | null;
     createdAt: string;
     updatedAt: string;
-    owner: string | null;
+    org: {
+      __typename: "Org";
+      id: string;
+      name: string;
+      description: string | null;
+      addressID: string;
+      email: string | null;
+      primaryDomain: string | null;
+      privacyPolicy: string | null;
+      tags: Array<string> | null;
+      notes: string | null;
+      isActive: boolean;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
   };
-  locationInfoID: string;
-  locationInfo: {
-    __typename: "LocationInfo";
+};
+
+export type OnCreateUserSubscription = {
+  __typename: "User";
+  id: string;
+  name: string;
+  orgID: string;
+  isActive: boolean;
+  tags: Array<string> | null;
+  images: Array<{
+    __typename: "Image";
     id: string;
-    locationLabel: string;
-    latitude: string;
-    longitude: string;
-    isActive: boolean;
+    altTex: string | null;
+    src: string;
+    createdAt: string;
+    updatedAt: string;
+  }> | null;
+  status: UserStatus;
+  statusHistory: Array<UserStatus> | null;
+  internalNotes: string | null;
+  notes: string | null;
+  rank: number | null;
+  notesHistory: Array<string> | null;
+  createdAt: string;
+  updatedAt: string;
+  org: {
+    __typename: "Org";
+    id: string;
+    name: string;
+    description: string | null;
     addressID: string;
+    email: string | null;
+    primaryPhone: {
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    otherPhones: Array<{
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    primaryDomain: string | null;
+    privacyPolicy: string | null;
+    tags: Array<string> | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    notes: string | null;
+    isActive: boolean;
+    createdAt: string;
+    updatedAt: string;
     address: {
       __typename: "Address";
       id: string;
@@ -5207,9 +6611,66 @@ export type OnDeleteBoxLocationSubscription = {
       country: string;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
     } | null;
-    phones: Array<{
+    boxes: {
+      __typename: "ModelBoxConnection";
+      nextToken: string | null;
+    } | null;
+    users: {
+      __typename: "ModelUserConnection";
+      nextToken: string | null;
+    } | null;
+  } | null;
+  boxLocations: {
+    __typename: "ModelBoxLocationConnection";
+    items: Array<{
+      __typename: "BoxLocation";
+      id: string;
+      boxID: string;
+      locationInfoID: string;
+      userID: string;
+      notes: string | null;
+      isFinal: boolean;
+      tags: Array<string> | null;
+      isActive: boolean;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+};
+
+export type OnUpdateUserSubscription = {
+  __typename: "User";
+  id: string;
+  name: string;
+  orgID: string;
+  isActive: boolean;
+  tags: Array<string> | null;
+  images: Array<{
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    createdAt: string;
+    updatedAt: string;
+  }> | null;
+  status: UserStatus;
+  statusHistory: Array<UserStatus> | null;
+  internalNotes: string | null;
+  notes: string | null;
+  rank: number | null;
+  notesHistory: Array<string> | null;
+  createdAt: string;
+  updatedAt: string;
+  org: {
+    __typename: "Org";
+    id: string;
+    name: string;
+    description: string | null;
+    addressID: string;
+    email: string | null;
+    primaryPhone: {
       __typename: "Phone";
       id: string;
       phone: string | null;
@@ -5217,31 +6678,259 @@ export type OnDeleteBoxLocationSubscription = {
       type: PhoneType | null;
       createdAt: string;
       updatedAt: string;
-      owner: string | null;
-    } | null> | null;
-    plusCode: string | null;
-    website: Array<string> | null;
-    notes: string | null;
-    notesHistory: Array<string> | null;
+    } | null;
+    otherPhones: Array<{
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    primaryDomain: string | null;
+    privacyPolicy: string | null;
     tags: Array<string> | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    notes: string | null;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
-    owner: string | null;
-  };
-  notes: string | null;
-  isFinal: boolean;
-  tags: Array<string> | null;
-  photosUrls: Array<string> | null;
+    address: {
+      __typename: "Address";
+      id: string;
+      label: string;
+      addressLine1: string;
+      addressLine2: string | null;
+      city: string;
+      state: string | null;
+      province: string | null;
+      zipCode: string | null;
+      postalCode: string | null;
+      country: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    boxes: {
+      __typename: "ModelBoxConnection";
+      nextToken: string | null;
+    } | null;
+    users: {
+      __typename: "ModelUserConnection";
+      nextToken: string | null;
+    } | null;
+  } | null;
+  boxLocations: {
+    __typename: "ModelBoxLocationConnection";
+    items: Array<{
+      __typename: "BoxLocation";
+      id: string;
+      boxID: string;
+      locationInfoID: string;
+      userID: string;
+      notes: string | null;
+      isFinal: boolean;
+      tags: Array<string> | null;
+      isActive: boolean;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+};
+
+export type OnDeleteUserSubscription = {
+  __typename: "User";
+  id: string;
+  name: string;
+  orgID: string;
   isActive: boolean;
+  tags: Array<string> | null;
+  images: Array<{
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    createdAt: string;
+    updatedAt: string;
+  }> | null;
+  status: UserStatus;
+  statusHistory: Array<UserStatus> | null;
+  internalNotes: string | null;
+  notes: string | null;
+  rank: number | null;
+  notesHistory: Array<string> | null;
   createdAt: string;
   updatedAt: string;
-  owner: string | null;
+  org: {
+    __typename: "Org";
+    id: string;
+    name: string;
+    description: string | null;
+    addressID: string;
+    email: string | null;
+    primaryPhone: {
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    otherPhones: Array<{
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    primaryDomain: string | null;
+    privacyPolicy: string | null;
+    tags: Array<string> | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    notes: string | null;
+    isActive: boolean;
+    createdAt: string;
+    updatedAt: string;
+    address: {
+      __typename: "Address";
+      id: string;
+      label: string;
+      addressLine1: string;
+      addressLine2: string | null;
+      city: string;
+      state: string | null;
+      province: string | null;
+      zipCode: string | null;
+      postalCode: string | null;
+      country: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    boxes: {
+      __typename: "ModelBoxConnection";
+      nextToken: string | null;
+    } | null;
+    users: {
+      __typename: "ModelUserConnection";
+      nextToken: string | null;
+    } | null;
+  } | null;
+  boxLocations: {
+    __typename: "ModelBoxLocationConnection";
+    items: Array<{
+      __typename: "BoxLocation";
+      id: string;
+      boxID: string;
+      locationInfoID: string;
+      userID: string;
+      notes: string | null;
+      isFinal: boolean;
+      tags: Array<string> | null;
+      isActive: boolean;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
 };
 
 @Injectable({
   providedIn: "root"
 })
 export class APIService {
+  async CreateImage(
+    input: CreateImageInput,
+    condition?: ModelImageConditionInput
+  ): Promise<CreateImageMutation> {
+    const statement = `mutation CreateImage($input: CreateImageInput!, $condition: ModelImageConditionInput) {
+        createImage(input: $input, condition: $condition) {
+          __typename
+          id
+          altTex
+          src
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <CreateImageMutation>response.data.createImage;
+  }
+  async UpdateImage(
+    input: UpdateImageInput,
+    condition?: ModelImageConditionInput
+  ): Promise<UpdateImageMutation> {
+    const statement = `mutation UpdateImage($input: UpdateImageInput!, $condition: ModelImageConditionInput) {
+        updateImage(input: $input, condition: $condition) {
+          __typename
+          id
+          altTex
+          src
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <UpdateImageMutation>response.data.updateImage;
+  }
+  async DeleteImage(
+    input: DeleteImageInput,
+    condition?: ModelImageConditionInput
+  ): Promise<DeleteImageMutation> {
+    const statement = `mutation DeleteImage($input: DeleteImageInput!, $condition: ModelImageConditionInput) {
+        deleteImage(input: $input, condition: $condition) {
+          __typename
+          id
+          altTex
+          src
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <DeleteImageMutation>response.data.deleteImage;
+  }
   async CreateApihealthCheckInfo(
     input: CreateApihealthCheckInfoInput,
     condition?: ModelApihealthCheckInfoConditionInput
@@ -5257,7 +6946,6 @@ export class APIService {
           lastUpdated
           createdAt
           updatedAt
-          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -5288,7 +6976,6 @@ export class APIService {
           lastUpdated
           createdAt
           updatedAt
-          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -5319,7 +7006,6 @@ export class APIService {
           lastUpdated
           createdAt
           updatedAt
-          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -5354,7 +7040,6 @@ export class APIService {
           country
           createdAt
           updatedAt
-          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -5387,7 +7072,6 @@ export class APIService {
           country
           createdAt
           updatedAt
-          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -5420,7 +7104,6 @@ export class APIService {
           country
           createdAt
           updatedAt
-          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -5447,7 +7130,6 @@ export class APIService {
           type
           createdAt
           updatedAt
-          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -5474,7 +7156,6 @@ export class APIService {
           type
           createdAt
           updatedAt
-          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -5501,7 +7182,6 @@ export class APIService {
           type
           createdAt
           updatedAt
-          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -5526,6 +7206,40 @@ export class APIService {
           name
           description
           addressID
+          email
+          primaryPhone {
+            __typename
+            id
+            phone
+            isActive
+            type
+            createdAt
+            updatedAt
+          }
+          otherPhones {
+            __typename
+            id
+            phone
+            isActive
+            type
+            createdAt
+            updatedAt
+          }
+          primaryDomain
+          privacyPolicy
+          tags
+          images {
+            __typename
+            id
+            altTex
+            src
+            createdAt
+            updatedAt
+          }
+          notes
+          isActive
+          createdAt
+          updatedAt
           address {
             __typename
             id
@@ -5540,33 +7254,7 @@ export class APIService {
             country
             createdAt
             updatedAt
-            owner
           }
-          email
-          primaryPhone {
-            __typename
-            id
-            phone
-            isActive
-            type
-            createdAt
-            updatedAt
-            owner
-          }
-          otherPhones {
-            __typename
-            id
-            phone
-            isActive
-            type
-            createdAt
-            updatedAt
-            owner
-          }
-          tags
-          photosUrls
-          notes
-          isActive
           boxes {
             __typename
             items {
@@ -5583,7 +7271,6 @@ export class APIService {
               barCodePhoto
               qrCodePhoto
               tags
-              photosUrls
               status
               statusHistory
               internalNotes
@@ -5591,13 +7278,29 @@ export class APIService {
               notesHistory
               createdAt
               updatedAt
-              owner
             }
             nextToken
           }
-          createdAt
-          updatedAt
-          owner
+          users {
+            __typename
+            items {
+              __typename
+              id
+              name
+              orgID
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -5622,6 +7325,40 @@ export class APIService {
           name
           description
           addressID
+          email
+          primaryPhone {
+            __typename
+            id
+            phone
+            isActive
+            type
+            createdAt
+            updatedAt
+          }
+          otherPhones {
+            __typename
+            id
+            phone
+            isActive
+            type
+            createdAt
+            updatedAt
+          }
+          primaryDomain
+          privacyPolicy
+          tags
+          images {
+            __typename
+            id
+            altTex
+            src
+            createdAt
+            updatedAt
+          }
+          notes
+          isActive
+          createdAt
+          updatedAt
           address {
             __typename
             id
@@ -5636,33 +7373,7 @@ export class APIService {
             country
             createdAt
             updatedAt
-            owner
           }
-          email
-          primaryPhone {
-            __typename
-            id
-            phone
-            isActive
-            type
-            createdAt
-            updatedAt
-            owner
-          }
-          otherPhones {
-            __typename
-            id
-            phone
-            isActive
-            type
-            createdAt
-            updatedAt
-            owner
-          }
-          tags
-          photosUrls
-          notes
-          isActive
           boxes {
             __typename
             items {
@@ -5679,7 +7390,6 @@ export class APIService {
               barCodePhoto
               qrCodePhoto
               tags
-              photosUrls
               status
               statusHistory
               internalNotes
@@ -5687,13 +7397,29 @@ export class APIService {
               notesHistory
               createdAt
               updatedAt
-              owner
             }
             nextToken
           }
-          createdAt
-          updatedAt
-          owner
+          users {
+            __typename
+            items {
+              __typename
+              id
+              name
+              orgID
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -5718,6 +7444,40 @@ export class APIService {
           name
           description
           addressID
+          email
+          primaryPhone {
+            __typename
+            id
+            phone
+            isActive
+            type
+            createdAt
+            updatedAt
+          }
+          otherPhones {
+            __typename
+            id
+            phone
+            isActive
+            type
+            createdAt
+            updatedAt
+          }
+          primaryDomain
+          privacyPolicy
+          tags
+          images {
+            __typename
+            id
+            altTex
+            src
+            createdAt
+            updatedAt
+          }
+          notes
+          isActive
+          createdAt
+          updatedAt
           address {
             __typename
             id
@@ -5732,33 +7492,7 @@ export class APIService {
             country
             createdAt
             updatedAt
-            owner
           }
-          email
-          primaryPhone {
-            __typename
-            id
-            phone
-            isActive
-            type
-            createdAt
-            updatedAt
-            owner
-          }
-          otherPhones {
-            __typename
-            id
-            phone
-            isActive
-            type
-            createdAt
-            updatedAt
-            owner
-          }
-          tags
-          photosUrls
-          notes
-          isActive
           boxes {
             __typename
             items {
@@ -5775,7 +7509,6 @@ export class APIService {
               barCodePhoto
               qrCodePhoto
               tags
-              photosUrls
               status
               statusHistory
               internalNotes
@@ -5783,13 +7516,29 @@ export class APIService {
               notesHistory
               createdAt
               updatedAt
-              owner
             }
             nextToken
           }
-          createdAt
-          updatedAt
-          owner
+          users {
+            __typename
+            items {
+              __typename
+              id
+              name
+              orgID
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -5816,6 +7565,22 @@ export class APIService {
           longitude
           isActive
           addressID
+          phones {
+            __typename
+            id
+            phone
+            isActive
+            type
+            createdAt
+            updatedAt
+          }
+          plusCode
+          website
+          notes
+          notesHistory
+          tags
+          createdAt
+          updatedAt
           address {
             __typename
             id
@@ -5830,26 +7595,7 @@ export class APIService {
             country
             createdAt
             updatedAt
-            owner
           }
-          phones {
-            __typename
-            id
-            phone
-            isActive
-            type
-            createdAt
-            updatedAt
-            owner
-          }
-          plusCode
-          website
-          notes
-          notesHistory
-          tags
-          createdAt
-          updatedAt
-          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -5876,6 +7622,22 @@ export class APIService {
           longitude
           isActive
           addressID
+          phones {
+            __typename
+            id
+            phone
+            isActive
+            type
+            createdAt
+            updatedAt
+          }
+          plusCode
+          website
+          notes
+          notesHistory
+          tags
+          createdAt
+          updatedAt
           address {
             __typename
             id
@@ -5890,26 +7652,7 @@ export class APIService {
             country
             createdAt
             updatedAt
-            owner
           }
-          phones {
-            __typename
-            id
-            phone
-            isActive
-            type
-            createdAt
-            updatedAt
-            owner
-          }
-          plusCode
-          website
-          notes
-          notesHistory
-          tags
-          createdAt
-          updatedAt
-          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -5936,6 +7679,22 @@ export class APIService {
           longitude
           isActive
           addressID
+          phones {
+            __typename
+            id
+            phone
+            isActive
+            type
+            createdAt
+            updatedAt
+          }
+          plusCode
+          website
+          notes
+          notesHistory
+          tags
+          createdAt
+          updatedAt
           address {
             __typename
             id
@@ -5950,26 +7709,7 @@ export class APIService {
             country
             createdAt
             updatedAt
-            owner
           }
-          phones {
-            __typename
-            id
-            phone
-            isActive
-            type
-            createdAt
-            updatedAt
-            owner
-          }
-          plusCode
-          website
-          notes
-          notesHistory
-          tags
-          createdAt
-          updatedAt
-          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -5997,93 +7737,7 @@ export class APIService {
           startDate
           deliveryDate
           startLocationID
-          startLocation {
-            __typename
-            id
-            locationLabel
-            latitude
-            longitude
-            isActive
-            addressID
-            address {
-              __typename
-              id
-              label
-              addressLine1
-              addressLine2
-              city
-              state
-              province
-              zipCode
-              postalCode
-              country
-              createdAt
-              updatedAt
-              owner
-            }
-            phones {
-              __typename
-              id
-              phone
-              isActive
-              type
-              createdAt
-              updatedAt
-              owner
-            }
-            plusCode
-            website
-            notes
-            notesHistory
-            tags
-            createdAt
-            updatedAt
-            owner
-          }
           destinationLocationID
-          destinationLocation {
-            __typename
-            id
-            locationLabel
-            latitude
-            longitude
-            isActive
-            addressID
-            address {
-              __typename
-              id
-              label
-              addressLine1
-              addressLine2
-              city
-              state
-              province
-              zipCode
-              postalCode
-              country
-              createdAt
-              updatedAt
-              owner
-            }
-            phones {
-              __typename
-              id
-              phone
-              isActive
-              type
-              createdAt
-              updatedAt
-              owner
-            }
-            plusCode
-            website
-            notes
-            notesHistory
-            tags
-            createdAt
-            updatedAt
-            owner
-          }
           shipmentNotes
           deliveryNotes
           trackingId
@@ -6092,9 +7746,98 @@ export class APIService {
           status
           statusHistory
           tags
-          photosUrls
+          images {
+            __typename
+            id
+            altTex
+            src
+            createdAt
+            updatedAt
+          }
           notes
           notesHistory
+          createdAt
+          updatedAt
+          startLocation {
+            __typename
+            id
+            locationLabel
+            latitude
+            longitude
+            isActive
+            addressID
+            phones {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            plusCode
+            website
+            notes
+            notesHistory
+            tags
+            createdAt
+            updatedAt
+            address {
+              __typename
+              id
+              label
+              addressLine1
+              addressLine2
+              city
+              state
+              province
+              zipCode
+              postalCode
+              country
+              createdAt
+              updatedAt
+            }
+          }
+          destinationLocation {
+            __typename
+            id
+            locationLabel
+            latitude
+            longitude
+            isActive
+            addressID
+            phones {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            plusCode
+            website
+            notes
+            notesHistory
+            tags
+            createdAt
+            updatedAt
+            address {
+              __typename
+              id
+              label
+              addressLine1
+              addressLine2
+              city
+              state
+              province
+              zipCode
+              postalCode
+              country
+              createdAt
+              updatedAt
+            }
+          }
           boxes {
             __typename
             items {
@@ -6111,7 +7854,6 @@ export class APIService {
               barCodePhoto
               qrCodePhoto
               tags
-              photosUrls
               status
               statusHistory
               internalNotes
@@ -6119,13 +7861,9 @@ export class APIService {
               notesHistory
               createdAt
               updatedAt
-              owner
             }
             nextToken
           }
-          createdAt
-          updatedAt
-          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -6153,93 +7891,7 @@ export class APIService {
           startDate
           deliveryDate
           startLocationID
-          startLocation {
-            __typename
-            id
-            locationLabel
-            latitude
-            longitude
-            isActive
-            addressID
-            address {
-              __typename
-              id
-              label
-              addressLine1
-              addressLine2
-              city
-              state
-              province
-              zipCode
-              postalCode
-              country
-              createdAt
-              updatedAt
-              owner
-            }
-            phones {
-              __typename
-              id
-              phone
-              isActive
-              type
-              createdAt
-              updatedAt
-              owner
-            }
-            plusCode
-            website
-            notes
-            notesHistory
-            tags
-            createdAt
-            updatedAt
-            owner
-          }
           destinationLocationID
-          destinationLocation {
-            __typename
-            id
-            locationLabel
-            latitude
-            longitude
-            isActive
-            addressID
-            address {
-              __typename
-              id
-              label
-              addressLine1
-              addressLine2
-              city
-              state
-              province
-              zipCode
-              postalCode
-              country
-              createdAt
-              updatedAt
-              owner
-            }
-            phones {
-              __typename
-              id
-              phone
-              isActive
-              type
-              createdAt
-              updatedAt
-              owner
-            }
-            plusCode
-            website
-            notes
-            notesHistory
-            tags
-            createdAt
-            updatedAt
-            owner
-          }
           shipmentNotes
           deliveryNotes
           trackingId
@@ -6248,9 +7900,98 @@ export class APIService {
           status
           statusHistory
           tags
-          photosUrls
+          images {
+            __typename
+            id
+            altTex
+            src
+            createdAt
+            updatedAt
+          }
           notes
           notesHistory
+          createdAt
+          updatedAt
+          startLocation {
+            __typename
+            id
+            locationLabel
+            latitude
+            longitude
+            isActive
+            addressID
+            phones {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            plusCode
+            website
+            notes
+            notesHistory
+            tags
+            createdAt
+            updatedAt
+            address {
+              __typename
+              id
+              label
+              addressLine1
+              addressLine2
+              city
+              state
+              province
+              zipCode
+              postalCode
+              country
+              createdAt
+              updatedAt
+            }
+          }
+          destinationLocation {
+            __typename
+            id
+            locationLabel
+            latitude
+            longitude
+            isActive
+            addressID
+            phones {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            plusCode
+            website
+            notes
+            notesHistory
+            tags
+            createdAt
+            updatedAt
+            address {
+              __typename
+              id
+              label
+              addressLine1
+              addressLine2
+              city
+              state
+              province
+              zipCode
+              postalCode
+              country
+              createdAt
+              updatedAt
+            }
+          }
           boxes {
             __typename
             items {
@@ -6267,7 +8008,6 @@ export class APIService {
               barCodePhoto
               qrCodePhoto
               tags
-              photosUrls
               status
               statusHistory
               internalNotes
@@ -6275,13 +8015,9 @@ export class APIService {
               notesHistory
               createdAt
               updatedAt
-              owner
             }
             nextToken
           }
-          createdAt
-          updatedAt
-          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -6309,93 +8045,7 @@ export class APIService {
           startDate
           deliveryDate
           startLocationID
-          startLocation {
-            __typename
-            id
-            locationLabel
-            latitude
-            longitude
-            isActive
-            addressID
-            address {
-              __typename
-              id
-              label
-              addressLine1
-              addressLine2
-              city
-              state
-              province
-              zipCode
-              postalCode
-              country
-              createdAt
-              updatedAt
-              owner
-            }
-            phones {
-              __typename
-              id
-              phone
-              isActive
-              type
-              createdAt
-              updatedAt
-              owner
-            }
-            plusCode
-            website
-            notes
-            notesHistory
-            tags
-            createdAt
-            updatedAt
-            owner
-          }
           destinationLocationID
-          destinationLocation {
-            __typename
-            id
-            locationLabel
-            latitude
-            longitude
-            isActive
-            addressID
-            address {
-              __typename
-              id
-              label
-              addressLine1
-              addressLine2
-              city
-              state
-              province
-              zipCode
-              postalCode
-              country
-              createdAt
-              updatedAt
-              owner
-            }
-            phones {
-              __typename
-              id
-              phone
-              isActive
-              type
-              createdAt
-              updatedAt
-              owner
-            }
-            plusCode
-            website
-            notes
-            notesHistory
-            tags
-            createdAt
-            updatedAt
-            owner
-          }
           shipmentNotes
           deliveryNotes
           trackingId
@@ -6404,9 +8054,98 @@ export class APIService {
           status
           statusHistory
           tags
-          photosUrls
+          images {
+            __typename
+            id
+            altTex
+            src
+            createdAt
+            updatedAt
+          }
           notes
           notesHistory
+          createdAt
+          updatedAt
+          startLocation {
+            __typename
+            id
+            locationLabel
+            latitude
+            longitude
+            isActive
+            addressID
+            phones {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            plusCode
+            website
+            notes
+            notesHistory
+            tags
+            createdAt
+            updatedAt
+            address {
+              __typename
+              id
+              label
+              addressLine1
+              addressLine2
+              city
+              state
+              province
+              zipCode
+              postalCode
+              country
+              createdAt
+              updatedAt
+            }
+          }
+          destinationLocation {
+            __typename
+            id
+            locationLabel
+            latitude
+            longitude
+            isActive
+            addressID
+            phones {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            plusCode
+            website
+            notes
+            notesHistory
+            tags
+            createdAt
+            updatedAt
+            address {
+              __typename
+              id
+              label
+              addressLine1
+              addressLine2
+              city
+              state
+              province
+              zipCode
+              postalCode
+              country
+              createdAt
+              updatedAt
+            }
+          }
           boxes {
             __typename
             items {
@@ -6423,7 +8162,6 @@ export class APIService {
               barCodePhoto
               qrCodePhoto
               tags
-              photosUrls
               status
               statusHistory
               internalNotes
@@ -6431,13 +8169,9 @@ export class APIService {
               notesHistory
               createdAt
               updatedAt
-              owner
             }
             nextToken
           }
-          createdAt
-          updatedAt
-          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -6463,12 +8197,68 @@ export class APIService {
           contents
           size
           orgID
+          shipmentID
+          isActive
+          barCode
+          qrCode
+          barCodePhoto
+          qrCodePhoto
+          tags
+          images {
+            __typename
+            id
+            altTex
+            src
+            createdAt
+            updatedAt
+          }
+          status
+          statusHistory
+          internalNotes
+          notes
+          notesHistory
+          createdAt
+          updatedAt
           org {
             __typename
             id
             name
             description
             addressID
+            email
+            primaryPhone {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            otherPhones {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            primaryDomain
+            privacyPolicy
+            tags
+            images {
+              __typename
+              id
+              altTex
+              src
+              createdAt
+              updatedAt
+            }
+            notes
+            isActive
+            createdAt
+            updatedAt
             address {
               __typename
               id
@@ -6483,42 +8273,16 @@ export class APIService {
               country
               createdAt
               updatedAt
-              owner
             }
-            email
-            primaryPhone {
-              __typename
-              id
-              phone
-              isActive
-              type
-              createdAt
-              updatedAt
-              owner
-            }
-            otherPhones {
-              __typename
-              id
-              phone
-              isActive
-              type
-              createdAt
-              updatedAt
-              owner
-            }
-            tags
-            photosUrls
-            notes
-            isActive
             boxes {
               __typename
               nextToken
             }
-            createdAt
-            updatedAt
-            owner
+            users {
+              __typename
+              nextToken
+            }
           }
-          shipmentID
           shipment {
             __typename
             id
@@ -6528,6 +8292,27 @@ export class APIService {
             startDate
             deliveryDate
             startLocationID
+            destinationLocationID
+            shipmentNotes
+            deliveryNotes
+            trackingId
+            weight
+            shipmentReceiver
+            status
+            statusHistory
+            tags
+            images {
+              __typename
+              id
+              altTex
+              src
+              createdAt
+              updatedAt
+            }
+            notes
+            notesHistory
+            createdAt
+            updatedAt
             startLocation {
               __typename
               id
@@ -6543,9 +8328,7 @@ export class APIService {
               tags
               createdAt
               updatedAt
-              owner
             }
-            destinationLocationID
             destinationLocation {
               __typename
               id
@@ -6561,39 +8344,12 @@ export class APIService {
               tags
               createdAt
               updatedAt
-              owner
             }
-            shipmentNotes
-            deliveryNotes
-            trackingId
-            weight
-            shipmentReceiver
-            status
-            statusHistory
-            tags
-            photosUrls
-            notes
-            notesHistory
             boxes {
               __typename
               nextToken
             }
-            createdAt
-            updatedAt
-            owner
           }
-          isActive
-          barCode
-          qrCode
-          barCodePhoto
-          qrCodePhoto
-          tags
-          photosUrls
-          status
-          statusHistory
-          internalNotes
-          notes
-          notesHistory
           locations {
             __typename
             items {
@@ -6601,20 +8357,16 @@ export class APIService {
               id
               boxID
               locationInfoID
+              userID
               notes
               isFinal
               tags
-              photosUrls
               isActive
               createdAt
               updatedAt
-              owner
             }
             nextToken
           }
-          createdAt
-          updatedAt
-          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -6640,12 +8392,68 @@ export class APIService {
           contents
           size
           orgID
+          shipmentID
+          isActive
+          barCode
+          qrCode
+          barCodePhoto
+          qrCodePhoto
+          tags
+          images {
+            __typename
+            id
+            altTex
+            src
+            createdAt
+            updatedAt
+          }
+          status
+          statusHistory
+          internalNotes
+          notes
+          notesHistory
+          createdAt
+          updatedAt
           org {
             __typename
             id
             name
             description
             addressID
+            email
+            primaryPhone {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            otherPhones {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            primaryDomain
+            privacyPolicy
+            tags
+            images {
+              __typename
+              id
+              altTex
+              src
+              createdAt
+              updatedAt
+            }
+            notes
+            isActive
+            createdAt
+            updatedAt
             address {
               __typename
               id
@@ -6660,42 +8468,16 @@ export class APIService {
               country
               createdAt
               updatedAt
-              owner
             }
-            email
-            primaryPhone {
-              __typename
-              id
-              phone
-              isActive
-              type
-              createdAt
-              updatedAt
-              owner
-            }
-            otherPhones {
-              __typename
-              id
-              phone
-              isActive
-              type
-              createdAt
-              updatedAt
-              owner
-            }
-            tags
-            photosUrls
-            notes
-            isActive
             boxes {
               __typename
               nextToken
             }
-            createdAt
-            updatedAt
-            owner
+            users {
+              __typename
+              nextToken
+            }
           }
-          shipmentID
           shipment {
             __typename
             id
@@ -6705,6 +8487,27 @@ export class APIService {
             startDate
             deliveryDate
             startLocationID
+            destinationLocationID
+            shipmentNotes
+            deliveryNotes
+            trackingId
+            weight
+            shipmentReceiver
+            status
+            statusHistory
+            tags
+            images {
+              __typename
+              id
+              altTex
+              src
+              createdAt
+              updatedAt
+            }
+            notes
+            notesHistory
+            createdAt
+            updatedAt
             startLocation {
               __typename
               id
@@ -6720,9 +8523,7 @@ export class APIService {
               tags
               createdAt
               updatedAt
-              owner
             }
-            destinationLocationID
             destinationLocation {
               __typename
               id
@@ -6738,39 +8539,12 @@ export class APIService {
               tags
               createdAt
               updatedAt
-              owner
             }
-            shipmentNotes
-            deliveryNotes
-            trackingId
-            weight
-            shipmentReceiver
-            status
-            statusHistory
-            tags
-            photosUrls
-            notes
-            notesHistory
             boxes {
               __typename
               nextToken
             }
-            createdAt
-            updatedAt
-            owner
           }
-          isActive
-          barCode
-          qrCode
-          barCodePhoto
-          qrCodePhoto
-          tags
-          photosUrls
-          status
-          statusHistory
-          internalNotes
-          notes
-          notesHistory
           locations {
             __typename
             items {
@@ -6778,20 +8552,16 @@ export class APIService {
               id
               boxID
               locationInfoID
+              userID
               notes
               isFinal
               tags
-              photosUrls
               isActive
               createdAt
               updatedAt
-              owner
             }
             nextToken
           }
-          createdAt
-          updatedAt
-          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -6817,12 +8587,68 @@ export class APIService {
           contents
           size
           orgID
+          shipmentID
+          isActive
+          barCode
+          qrCode
+          barCodePhoto
+          qrCodePhoto
+          tags
+          images {
+            __typename
+            id
+            altTex
+            src
+            createdAt
+            updatedAt
+          }
+          status
+          statusHistory
+          internalNotes
+          notes
+          notesHistory
+          createdAt
+          updatedAt
           org {
             __typename
             id
             name
             description
             addressID
+            email
+            primaryPhone {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            otherPhones {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            primaryDomain
+            privacyPolicy
+            tags
+            images {
+              __typename
+              id
+              altTex
+              src
+              createdAt
+              updatedAt
+            }
+            notes
+            isActive
+            createdAt
+            updatedAt
             address {
               __typename
               id
@@ -6837,42 +8663,16 @@ export class APIService {
               country
               createdAt
               updatedAt
-              owner
             }
-            email
-            primaryPhone {
-              __typename
-              id
-              phone
-              isActive
-              type
-              createdAt
-              updatedAt
-              owner
-            }
-            otherPhones {
-              __typename
-              id
-              phone
-              isActive
-              type
-              createdAt
-              updatedAt
-              owner
-            }
-            tags
-            photosUrls
-            notes
-            isActive
             boxes {
               __typename
               nextToken
             }
-            createdAt
-            updatedAt
-            owner
+            users {
+              __typename
+              nextToken
+            }
           }
-          shipmentID
           shipment {
             __typename
             id
@@ -6882,6 +8682,27 @@ export class APIService {
             startDate
             deliveryDate
             startLocationID
+            destinationLocationID
+            shipmentNotes
+            deliveryNotes
+            trackingId
+            weight
+            shipmentReceiver
+            status
+            statusHistory
+            tags
+            images {
+              __typename
+              id
+              altTex
+              src
+              createdAt
+              updatedAt
+            }
+            notes
+            notesHistory
+            createdAt
+            updatedAt
             startLocation {
               __typename
               id
@@ -6897,9 +8718,7 @@ export class APIService {
               tags
               createdAt
               updatedAt
-              owner
             }
-            destinationLocationID
             destinationLocation {
               __typename
               id
@@ -6915,39 +8734,12 @@ export class APIService {
               tags
               createdAt
               updatedAt
-              owner
             }
-            shipmentNotes
-            deliveryNotes
-            trackingId
-            weight
-            shipmentReceiver
-            status
-            statusHistory
-            tags
-            photosUrls
-            notes
-            notesHistory
             boxes {
               __typename
               nextToken
             }
-            createdAt
-            updatedAt
-            owner
           }
-          isActive
-          barCode
-          qrCode
-          barCodePhoto
-          qrCodePhoto
-          tags
-          photosUrls
-          status
-          statusHistory
-          internalNotes
-          notes
-          notesHistory
           locations {
             __typename
             items {
@@ -6955,20 +8747,16 @@ export class APIService {
               id
               boxID
               locationInfoID
+              userID
               notes
               isFinal
               tags
-              photosUrls
               isActive
               createdAt
               updatedAt
-              owner
             }
             nextToken
           }
-          createdAt
-          updatedAt
-          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -6991,6 +8779,62 @@ export class APIService {
           __typename
           id
           boxID
+          locationInfoID
+          userID
+          notes
+          isFinal
+          tags
+          images {
+            __typename
+            id
+            altTex
+            src
+            createdAt
+            updatedAt
+          }
+          isActive
+          createdAt
+          updatedAt
+          locationInfo {
+            __typename
+            id
+            locationLabel
+            latitude
+            longitude
+            isActive
+            addressID
+            phones {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            plusCode
+            website
+            notes
+            notesHistory
+            tags
+            createdAt
+            updatedAt
+            address {
+              __typename
+              id
+              label
+              addressLine1
+              addressLine2
+              city
+              state
+              province
+              zipCode
+              postalCode
+              country
+              createdAt
+              updatedAt
+            }
+          }
           box {
             __typename
             id
@@ -6998,6 +8842,28 @@ export class APIService {
             contents
             size
             orgID
+            shipmentID
+            isActive
+            barCode
+            qrCode
+            barCodePhoto
+            qrCodePhoto
+            tags
+            images {
+              __typename
+              id
+              altTex
+              src
+              createdAt
+              updatedAt
+            }
+            status
+            statusHistory
+            internalNotes
+            notes
+            notesHistory
+            createdAt
+            updatedAt
             org {
               __typename
               id
@@ -7005,15 +8871,14 @@ export class APIService {
               description
               addressID
               email
+              primaryDomain
+              privacyPolicy
               tags
-              photosUrls
               notes
               isActive
               createdAt
               updatedAt
-              owner
             }
-            shipmentID
             shipment {
               __typename
               id
@@ -7032,85 +8897,59 @@ export class APIService {
               status
               statusHistory
               tags
-              photosUrls
               notes
               notesHistory
               createdAt
               updatedAt
-              owner
             }
-            isActive
-            barCode
-            qrCode
-            barCodePhoto
-            qrCodePhoto
-            tags
-            photosUrls
-            status
-            statusHistory
-            internalNotes
-            notes
-            notesHistory
             locations {
               __typename
               nextToken
             }
-            createdAt
-            updatedAt
-            owner
           }
-          locationInfoID
-          locationInfo {
+          user {
             __typename
             id
-            locationLabel
-            latitude
-            longitude
+            name
+            orgID
             isActive
-            addressID
-            address {
-              __typename
-              id
-              label
-              addressLine1
-              addressLine2
-              city
-              state
-              province
-              zipCode
-              postalCode
-              country
-              createdAt
-              updatedAt
-              owner
-            }
-            phones {
-              __typename
-              id
-              phone
-              isActive
-              type
-              createdAt
-              updatedAt
-              owner
-            }
-            plusCode
-            website
-            notes
-            notesHistory
             tags
+            images {
+              __typename
+              id
+              altTex
+              src
+              createdAt
+              updatedAt
+            }
+            status
+            statusHistory
+            internalNotes
+            notes
+            rank
+            notesHistory
             createdAt
             updatedAt
-            owner
+            org {
+              __typename
+              id
+              name
+              description
+              addressID
+              email
+              primaryDomain
+              privacyPolicy
+              tags
+              notes
+              isActive
+              createdAt
+              updatedAt
+            }
+            boxLocations {
+              __typename
+              nextToken
+            }
           }
-          notes
-          isFinal
-          tags
-          photosUrls
-          isActive
-          createdAt
-          updatedAt
-          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -7133,6 +8972,62 @@ export class APIService {
           __typename
           id
           boxID
+          locationInfoID
+          userID
+          notes
+          isFinal
+          tags
+          images {
+            __typename
+            id
+            altTex
+            src
+            createdAt
+            updatedAt
+          }
+          isActive
+          createdAt
+          updatedAt
+          locationInfo {
+            __typename
+            id
+            locationLabel
+            latitude
+            longitude
+            isActive
+            addressID
+            phones {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            plusCode
+            website
+            notes
+            notesHistory
+            tags
+            createdAt
+            updatedAt
+            address {
+              __typename
+              id
+              label
+              addressLine1
+              addressLine2
+              city
+              state
+              province
+              zipCode
+              postalCode
+              country
+              createdAt
+              updatedAt
+            }
+          }
           box {
             __typename
             id
@@ -7140,6 +9035,28 @@ export class APIService {
             contents
             size
             orgID
+            shipmentID
+            isActive
+            barCode
+            qrCode
+            barCodePhoto
+            qrCodePhoto
+            tags
+            images {
+              __typename
+              id
+              altTex
+              src
+              createdAt
+              updatedAt
+            }
+            status
+            statusHistory
+            internalNotes
+            notes
+            notesHistory
+            createdAt
+            updatedAt
             org {
               __typename
               id
@@ -7147,15 +9064,14 @@ export class APIService {
               description
               addressID
               email
+              primaryDomain
+              privacyPolicy
               tags
-              photosUrls
               notes
               isActive
               createdAt
               updatedAt
-              owner
             }
-            shipmentID
             shipment {
               __typename
               id
@@ -7174,85 +9090,59 @@ export class APIService {
               status
               statusHistory
               tags
-              photosUrls
               notes
               notesHistory
               createdAt
               updatedAt
-              owner
             }
-            isActive
-            barCode
-            qrCode
-            barCodePhoto
-            qrCodePhoto
-            tags
-            photosUrls
-            status
-            statusHistory
-            internalNotes
-            notes
-            notesHistory
             locations {
               __typename
               nextToken
             }
-            createdAt
-            updatedAt
-            owner
           }
-          locationInfoID
-          locationInfo {
+          user {
             __typename
             id
-            locationLabel
-            latitude
-            longitude
+            name
+            orgID
             isActive
-            addressID
-            address {
-              __typename
-              id
-              label
-              addressLine1
-              addressLine2
-              city
-              state
-              province
-              zipCode
-              postalCode
-              country
-              createdAt
-              updatedAt
-              owner
-            }
-            phones {
-              __typename
-              id
-              phone
-              isActive
-              type
-              createdAt
-              updatedAt
-              owner
-            }
-            plusCode
-            website
-            notes
-            notesHistory
             tags
+            images {
+              __typename
+              id
+              altTex
+              src
+              createdAt
+              updatedAt
+            }
+            status
+            statusHistory
+            internalNotes
+            notes
+            rank
+            notesHistory
             createdAt
             updatedAt
-            owner
+            org {
+              __typename
+              id
+              name
+              description
+              addressID
+              email
+              primaryDomain
+              privacyPolicy
+              tags
+              notes
+              isActive
+              createdAt
+              updatedAt
+            }
+            boxLocations {
+              __typename
+              nextToken
+            }
           }
-          notes
-          isFinal
-          tags
-          photosUrls
-          isActive
-          createdAt
-          updatedAt
-          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -7275,6 +9165,62 @@ export class APIService {
           __typename
           id
           boxID
+          locationInfoID
+          userID
+          notes
+          isFinal
+          tags
+          images {
+            __typename
+            id
+            altTex
+            src
+            createdAt
+            updatedAt
+          }
+          isActive
+          createdAt
+          updatedAt
+          locationInfo {
+            __typename
+            id
+            locationLabel
+            latitude
+            longitude
+            isActive
+            addressID
+            phones {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            plusCode
+            website
+            notes
+            notesHistory
+            tags
+            createdAt
+            updatedAt
+            address {
+              __typename
+              id
+              label
+              addressLine1
+              addressLine2
+              city
+              state
+              province
+              zipCode
+              postalCode
+              country
+              createdAt
+              updatedAt
+            }
+          }
           box {
             __typename
             id
@@ -7282,6 +9228,28 @@ export class APIService {
             contents
             size
             orgID
+            shipmentID
+            isActive
+            barCode
+            qrCode
+            barCodePhoto
+            qrCodePhoto
+            tags
+            images {
+              __typename
+              id
+              altTex
+              src
+              createdAt
+              updatedAt
+            }
+            status
+            statusHistory
+            internalNotes
+            notes
+            notesHistory
+            createdAt
+            updatedAt
             org {
               __typename
               id
@@ -7289,15 +9257,14 @@ export class APIService {
               description
               addressID
               email
+              primaryDomain
+              privacyPolicy
               tags
-              photosUrls
               notes
               isActive
               createdAt
               updatedAt
-              owner
             }
-            shipmentID
             shipment {
               __typename
               id
@@ -7316,42 +9283,140 @@ export class APIService {
               status
               statusHistory
               tags
-              photosUrls
               notes
               notesHistory
               createdAt
               updatedAt
-              owner
             }
-            isActive
-            barCode
-            qrCode
-            barCodePhoto
-            qrCodePhoto
-            tags
-            photosUrls
-            status
-            statusHistory
-            internalNotes
-            notes
-            notesHistory
             locations {
               __typename
               nextToken
             }
-            createdAt
-            updatedAt
-            owner
           }
-          locationInfoID
-          locationInfo {
+          user {
             __typename
             id
-            locationLabel
-            latitude
-            longitude
+            name
+            orgID
             isActive
+            tags
+            images {
+              __typename
+              id
+              altTex
+              src
+              createdAt
+              updatedAt
+            }
+            status
+            statusHistory
+            internalNotes
+            notes
+            rank
+            notesHistory
+            createdAt
+            updatedAt
+            org {
+              __typename
+              id
+              name
+              description
+              addressID
+              email
+              primaryDomain
+              privacyPolicy
+              tags
+              notes
+              isActive
+              createdAt
+              updatedAt
+            }
+            boxLocations {
+              __typename
+              nextToken
+            }
+          }
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <DeleteBoxLocationMutation>response.data.deleteBoxLocation;
+  }
+  async CreateUser(
+    input: CreateUserInput,
+    condition?: ModelUserConditionInput
+  ): Promise<CreateUserMutation> {
+    const statement = `mutation CreateUser($input: CreateUserInput!, $condition: ModelUserConditionInput) {
+        createUser(input: $input, condition: $condition) {
+          __typename
+          id
+          name
+          orgID
+          isActive
+          tags
+          images {
+            __typename
+            id
+            altTex
+            src
+            createdAt
+            updatedAt
+          }
+          status
+          statusHistory
+          internalNotes
+          notes
+          rank
+          notesHistory
+          createdAt
+          updatedAt
+          org {
+            __typename
+            id
+            name
+            description
             addressID
+            email
+            primaryPhone {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            otherPhones {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            primaryDomain
+            privacyPolicy
+            tags
+            images {
+              __typename
+              id
+              altTex
+              src
+              createdAt
+              updatedAt
+            }
+            notes
+            isActive
+            createdAt
+            updatedAt
             address {
               __typename
               id
@@ -7366,35 +9431,33 @@ export class APIService {
               country
               createdAt
               updatedAt
-              owner
             }
-            phones {
+            boxes {
+              __typename
+              nextToken
+            }
+            users {
+              __typename
+              nextToken
+            }
+          }
+          boxLocations {
+            __typename
+            items {
               __typename
               id
-              phone
+              boxID
+              locationInfoID
+              userID
+              notes
+              isFinal
+              tags
               isActive
-              type
               createdAt
               updatedAt
-              owner
             }
-            plusCode
-            website
-            notes
-            notesHistory
-            tags
-            createdAt
-            updatedAt
-            owner
+            nextToken
           }
-          notes
-          isFinal
-          tags
-          photosUrls
-          isActive
-          createdAt
-          updatedAt
-          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -7406,7 +9469,304 @@ export class APIService {
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
-    return <DeleteBoxLocationMutation>response.data.deleteBoxLocation;
+    return <CreateUserMutation>response.data.createUser;
+  }
+  async UpdateUser(
+    input: UpdateUserInput,
+    condition?: ModelUserConditionInput
+  ): Promise<UpdateUserMutation> {
+    const statement = `mutation UpdateUser($input: UpdateUserInput!, $condition: ModelUserConditionInput) {
+        updateUser(input: $input, condition: $condition) {
+          __typename
+          id
+          name
+          orgID
+          isActive
+          tags
+          images {
+            __typename
+            id
+            altTex
+            src
+            createdAt
+            updatedAt
+          }
+          status
+          statusHistory
+          internalNotes
+          notes
+          rank
+          notesHistory
+          createdAt
+          updatedAt
+          org {
+            __typename
+            id
+            name
+            description
+            addressID
+            email
+            primaryPhone {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            otherPhones {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            primaryDomain
+            privacyPolicy
+            tags
+            images {
+              __typename
+              id
+              altTex
+              src
+              createdAt
+              updatedAt
+            }
+            notes
+            isActive
+            createdAt
+            updatedAt
+            address {
+              __typename
+              id
+              label
+              addressLine1
+              addressLine2
+              city
+              state
+              province
+              zipCode
+              postalCode
+              country
+              createdAt
+              updatedAt
+            }
+            boxes {
+              __typename
+              nextToken
+            }
+            users {
+              __typename
+              nextToken
+            }
+          }
+          boxLocations {
+            __typename
+            items {
+              __typename
+              id
+              boxID
+              locationInfoID
+              userID
+              notes
+              isFinal
+              tags
+              isActive
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <UpdateUserMutation>response.data.updateUser;
+  }
+  async DeleteUser(
+    input: DeleteUserInput,
+    condition?: ModelUserConditionInput
+  ): Promise<DeleteUserMutation> {
+    const statement = `mutation DeleteUser($input: DeleteUserInput!, $condition: ModelUserConditionInput) {
+        deleteUser(input: $input, condition: $condition) {
+          __typename
+          id
+          name
+          orgID
+          isActive
+          tags
+          images {
+            __typename
+            id
+            altTex
+            src
+            createdAt
+            updatedAt
+          }
+          status
+          statusHistory
+          internalNotes
+          notes
+          rank
+          notesHistory
+          createdAt
+          updatedAt
+          org {
+            __typename
+            id
+            name
+            description
+            addressID
+            email
+            primaryPhone {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            otherPhones {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            primaryDomain
+            privacyPolicy
+            tags
+            images {
+              __typename
+              id
+              altTex
+              src
+              createdAt
+              updatedAt
+            }
+            notes
+            isActive
+            createdAt
+            updatedAt
+            address {
+              __typename
+              id
+              label
+              addressLine1
+              addressLine2
+              city
+              state
+              province
+              zipCode
+              postalCode
+              country
+              createdAt
+              updatedAt
+            }
+            boxes {
+              __typename
+              nextToken
+            }
+            users {
+              __typename
+              nextToken
+            }
+          }
+          boxLocations {
+            __typename
+            items {
+              __typename
+              id
+              boxID
+              locationInfoID
+              userID
+              notes
+              isFinal
+              tags
+              isActive
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <DeleteUserMutation>response.data.deleteUser;
+  }
+  async GetImage(id: string): Promise<GetImageQuery> {
+    const statement = `query GetImage($id: ID!) {
+        getImage(id: $id) {
+          __typename
+          id
+          altTex
+          src
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      id
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <GetImageQuery>response.data.getImage;
+  }
+  async ListImages(
+    filter?: ModelImageFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<ListImagesQuery> {
+    const statement = `query ListImages($filter: ModelImageFilterInput, $limit: Int, $nextToken: String) {
+        listImages(filter: $filter, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            altTex
+            src
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <ListImagesQuery>response.data.listImages;
   }
   async GetApihealthCheckInfo(id: string): Promise<GetApihealthCheckInfoQuery> {
     const statement = `query GetApihealthCheckInfo($id: ID!) {
@@ -7420,7 +9780,6 @@ export class APIService {
           lastUpdated
           createdAt
           updatedAt
-          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -7449,7 +9808,6 @@ export class APIService {
             lastUpdated
             createdAt
             updatedAt
-            owner
           }
           nextToken
         }
@@ -7468,33 +9826,6 @@ export class APIService {
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
     return <ListApihealthCheckInfosQuery>response.data.listApihealthCheckInfos;
-  }
-  async GetAddress(id: string): Promise<GetAddressQuery> {
-    const statement = `query GetAddress($id: ID!) {
-        getAddress(id: $id) {
-          __typename
-          id
-          label
-          addressLine1
-          addressLine2
-          city
-          state
-          province
-          zipCode
-          postalCode
-          country
-          createdAt
-          updatedAt
-          owner
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      id
-    };
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <GetAddressQuery>response.data.getAddress;
   }
   async ListAddresss(
     filter?: ModelAddressFilterInput,
@@ -7518,7 +9849,6 @@ export class APIService {
             country
             createdAt
             updatedAt
-            owner
           }
           nextToken
         }
@@ -7538,6 +9868,32 @@ export class APIService {
     )) as any;
     return <ListAddresssQuery>response.data.listAddresss;
   }
+  async GetAddress(id: string): Promise<GetAddressQuery> {
+    const statement = `query GetAddress($id: ID!) {
+        getAddress(id: $id) {
+          __typename
+          id
+          label
+          addressLine1
+          addressLine2
+          city
+          state
+          province
+          zipCode
+          postalCode
+          country
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      id
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <GetAddressQuery>response.data.getAddress;
+  }
   async GetPhone(id: string): Promise<GetPhoneQuery> {
     const statement = `query GetPhone($id: ID!) {
         getPhone(id: $id) {
@@ -7548,7 +9904,6 @@ export class APIService {
           type
           createdAt
           updatedAt
-          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -7575,7 +9930,6 @@ export class APIService {
             type
             createdAt
             updatedAt
-            owner
           }
           nextToken
         }
@@ -7595,96 +9949,6 @@ export class APIService {
     )) as any;
     return <ListPhonesQuery>response.data.listPhones;
   }
-  async GetOrg(id: string): Promise<GetOrgQuery> {
-    const statement = `query GetOrg($id: ID!) {
-        getOrg(id: $id) {
-          __typename
-          id
-          name
-          description
-          addressID
-          address {
-            __typename
-            id
-            label
-            addressLine1
-            addressLine2
-            city
-            state
-            province
-            zipCode
-            postalCode
-            country
-            createdAt
-            updatedAt
-            owner
-          }
-          email
-          primaryPhone {
-            __typename
-            id
-            phone
-            isActive
-            type
-            createdAt
-            updatedAt
-            owner
-          }
-          otherPhones {
-            __typename
-            id
-            phone
-            isActive
-            type
-            createdAt
-            updatedAt
-            owner
-          }
-          tags
-          photosUrls
-          notes
-          isActive
-          boxes {
-            __typename
-            items {
-              __typename
-              id
-              title
-              contents
-              size
-              orgID
-              shipmentID
-              isActive
-              barCode
-              qrCode
-              barCodePhoto
-              qrCodePhoto
-              tags
-              photosUrls
-              status
-              statusHistory
-              internalNotes
-              notes
-              notesHistory
-              createdAt
-              updatedAt
-              owner
-            }
-            nextToken
-          }
-          createdAt
-          updatedAt
-          owner
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      id
-    };
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <GetOrgQuery>response.data.getOrg;
-  }
   async ListOrgs(
     filter?: ModelOrgFilterInput,
     limit?: number,
@@ -7699,6 +9963,40 @@ export class APIService {
             name
             description
             addressID
+            email
+            primaryPhone {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            otherPhones {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            primaryDomain
+            privacyPolicy
+            tags
+            images {
+              __typename
+              id
+              altTex
+              src
+              createdAt
+              updatedAt
+            }
+            notes
+            isActive
+            createdAt
+            updatedAt
             address {
               __typename
               id
@@ -7713,40 +10011,15 @@ export class APIService {
               country
               createdAt
               updatedAt
-              owner
             }
-            email
-            primaryPhone {
-              __typename
-              id
-              phone
-              isActive
-              type
-              createdAt
-              updatedAt
-              owner
-            }
-            otherPhones {
-              __typename
-              id
-              phone
-              isActive
-              type
-              createdAt
-              updatedAt
-              owner
-            }
-            tags
-            photosUrls
-            notes
-            isActive
             boxes {
               __typename
               nextToken
             }
-            createdAt
-            updatedAt
-            owner
+            users {
+              __typename
+              nextToken
+            }
           }
           nextToken
         }
@@ -7766,16 +10039,48 @@ export class APIService {
     )) as any;
     return <ListOrgsQuery>response.data.listOrgs;
   }
-  async GetLocationInfo(id: string): Promise<GetLocationInfoQuery> {
-    const statement = `query GetLocationInfo($id: ID!) {
-        getLocationInfo(id: $id) {
+  async GetOrg(id: string): Promise<GetOrgQuery> {
+    const statement = `query GetOrg($id: ID!) {
+        getOrg(id: $id) {
           __typename
           id
-          locationLabel
-          latitude
-          longitude
-          isActive
+          name
+          description
           addressID
+          email
+          primaryPhone {
+            __typename
+            id
+            phone
+            isActive
+            type
+            createdAt
+            updatedAt
+          }
+          otherPhones {
+            __typename
+            id
+            phone
+            isActive
+            type
+            createdAt
+            updatedAt
+          }
+          primaryDomain
+          privacyPolicy
+          tags
+          images {
+            __typename
+            id
+            altTex
+            src
+            createdAt
+            updatedAt
+          }
+          notes
+          isActive
+          createdAt
+          updatedAt
           address {
             __typename
             id
@@ -7790,26 +10095,53 @@ export class APIService {
             country
             createdAt
             updatedAt
-            owner
           }
-          phones {
+          boxes {
             __typename
-            id
-            phone
-            isActive
-            type
-            createdAt
-            updatedAt
-            owner
+            items {
+              __typename
+              id
+              title
+              contents
+              size
+              orgID
+              shipmentID
+              isActive
+              barCode
+              qrCode
+              barCodePhoto
+              qrCodePhoto
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              notesHistory
+              createdAt
+              updatedAt
+            }
+            nextToken
           }
-          plusCode
-          website
-          notes
-          notesHistory
-          tags
-          createdAt
-          updatedAt
-          owner
+          users {
+            __typename
+            items {
+              __typename
+              id
+              name
+              orgID
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -7818,7 +10150,7 @@ export class APIService {
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
-    return <GetLocationInfoQuery>response.data.getLocationInfo;
+    return <GetOrgQuery>response.data.getOrg;
   }
   async ListLocationInfos(
     filter?: ModelLocationInfoFilterInput,
@@ -7836,6 +10168,22 @@ export class APIService {
             longitude
             isActive
             addressID
+            phones {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            plusCode
+            website
+            notes
+            notesHistory
+            tags
+            createdAt
+            updatedAt
             address {
               __typename
               id
@@ -7850,26 +10198,7 @@ export class APIService {
               country
               createdAt
               updatedAt
-              owner
             }
-            phones {
-              __typename
-              id
-              phone
-              isActive
-              type
-              createdAt
-              updatedAt
-              owner
-            }
-            plusCode
-            website
-            notes
-            notesHistory
-            tags
-            createdAt
-            updatedAt
-            owner
           }
           nextToken
         }
@@ -7889,146 +10218,47 @@ export class APIService {
     )) as any;
     return <ListLocationInfosQuery>response.data.listLocationInfos;
   }
-  async GetShipment(id: string): Promise<GetShipmentQuery> {
-    const statement = `query GetShipment($id: ID!) {
-        getShipment(id: $id) {
+  async GetLocationInfo(id: string): Promise<GetLocationInfoQuery> {
+    const statement = `query GetLocationInfo($id: ID!) {
+        getLocationInfo(id: $id) {
           __typename
           id
-          name
-          description
+          locationLabel
+          latitude
+          longitude
           isActive
-          startDate
-          deliveryDate
-          startLocationID
-          startLocation {
+          addressID
+          phones {
             __typename
             id
-            locationLabel
-            latitude
-            longitude
+            phone
             isActive
-            addressID
-            address {
-              __typename
-              id
-              label
-              addressLine1
-              addressLine2
-              city
-              state
-              province
-              zipCode
-              postalCode
-              country
-              createdAt
-              updatedAt
-              owner
-            }
-            phones {
-              __typename
-              id
-              phone
-              isActive
-              type
-              createdAt
-              updatedAt
-              owner
-            }
-            plusCode
-            website
-            notes
-            notesHistory
-            tags
+            type
             createdAt
             updatedAt
-            owner
           }
-          destinationLocationID
-          destinationLocation {
-            __typename
-            id
-            locationLabel
-            latitude
-            longitude
-            isActive
-            addressID
-            address {
-              __typename
-              id
-              label
-              addressLine1
-              addressLine2
-              city
-              state
-              province
-              zipCode
-              postalCode
-              country
-              createdAt
-              updatedAt
-              owner
-            }
-            phones {
-              __typename
-              id
-              phone
-              isActive
-              type
-              createdAt
-              updatedAt
-              owner
-            }
-            plusCode
-            website
-            notes
-            notesHistory
-            tags
-            createdAt
-            updatedAt
-            owner
-          }
-          shipmentNotes
-          deliveryNotes
-          trackingId
-          weight
-          shipmentReceiver
-          status
-          statusHistory
-          tags
-          photosUrls
+          plusCode
+          website
           notes
           notesHistory
-          boxes {
-            __typename
-            items {
-              __typename
-              id
-              title
-              contents
-              size
-              orgID
-              shipmentID
-              isActive
-              barCode
-              qrCode
-              barCodePhoto
-              qrCodePhoto
-              tags
-              photosUrls
-              status
-              statusHistory
-              internalNotes
-              notes
-              notesHistory
-              createdAt
-              updatedAt
-              owner
-            }
-            nextToken
-          }
+          tags
           createdAt
           updatedAt
-          owner
+          address {
+            __typename
+            id
+            label
+            addressLine1
+            addressLine2
+            city
+            state
+            province
+            zipCode
+            postalCode
+            country
+            createdAt
+            updatedAt
+          }
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -8037,7 +10267,7 @@ export class APIService {
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
-    return <GetShipmentQuery>response.data.getShipment;
+    return <GetLocationInfoQuery>response.data.getLocationInfo;
   }
   async ListShipments(
     filter?: ModelShipmentFilterInput,
@@ -8056,6 +10286,27 @@ export class APIService {
             startDate
             deliveryDate
             startLocationID
+            destinationLocationID
+            shipmentNotes
+            deliveryNotes
+            trackingId
+            weight
+            shipmentReceiver
+            status
+            statusHistory
+            tags
+            images {
+              __typename
+              id
+              altTex
+              src
+              createdAt
+              updatedAt
+            }
+            notes
+            notesHistory
+            createdAt
+            updatedAt
             startLocation {
               __typename
               id
@@ -8071,9 +10322,7 @@ export class APIService {
               tags
               createdAt
               updatedAt
-              owner
             }
-            destinationLocationID
             destinationLocation {
               __typename
               id
@@ -8089,26 +10338,11 @@ export class APIService {
               tags
               createdAt
               updatedAt
-              owner
             }
-            shipmentNotes
-            deliveryNotes
-            trackingId
-            weight
-            shipmentReceiver
-            status
-            statusHistory
-            tags
-            photosUrls
-            notes
-            notesHistory
             boxes {
               __typename
               nextToken
             }
-            createdAt
-            updatedAt
-            owner
           }
           nextToken
         }
@@ -8128,21 +10362,62 @@ export class APIService {
     )) as any;
     return <ListShipmentsQuery>response.data.listShipments;
   }
-  async GetBox(id: string): Promise<GetBoxQuery> {
-    const statement = `query GetBox($id: ID!) {
-        getBox(id: $id) {
+  async GetShipment(id: string): Promise<GetShipmentQuery> {
+    const statement = `query GetShipment($id: ID!) {
+        getShipment(id: $id) {
           __typename
           id
-          title
-          contents
-          size
-          orgID
-          org {
+          name
+          description
+          isActive
+          startDate
+          deliveryDate
+          startLocationID
+          destinationLocationID
+          shipmentNotes
+          deliveryNotes
+          trackingId
+          weight
+          shipmentReceiver
+          status
+          statusHistory
+          tags
+          images {
             __typename
             id
-            name
-            description
+            altTex
+            src
+            createdAt
+            updatedAt
+          }
+          notes
+          notesHistory
+          createdAt
+          updatedAt
+          startLocation {
+            __typename
+            id
+            locationLabel
+            latitude
+            longitude
+            isActive
             addressID
+            phones {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            plusCode
+            website
+            notes
+            notesHistory
+            tags
+            createdAt
+            updatedAt
             address {
               __typename
               id
@@ -8157,138 +10432,74 @@ export class APIService {
               country
               createdAt
               updatedAt
-              owner
             }
-            email
-            primaryPhone {
-              __typename
-              id
-              phone
-              isActive
-              type
-              createdAt
-              updatedAt
-              owner
-            }
-            otherPhones {
-              __typename
-              id
-              phone
-              isActive
-              type
-              createdAt
-              updatedAt
-              owner
-            }
-            tags
-            photosUrls
-            notes
-            isActive
-            boxes {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-            owner
           }
-          shipmentID
-          shipment {
+          destinationLocation {
             __typename
             id
-            name
-            description
+            locationLabel
+            latitude
+            longitude
             isActive
-            startDate
-            deliveryDate
-            startLocationID
-            startLocation {
+            addressID
+            phones {
               __typename
               id
-              locationLabel
-              latitude
-              longitude
+              phone
               isActive
-              addressID
-              plusCode
-              website
-              notes
-              notesHistory
-              tags
+              type
               createdAt
               updatedAt
-              owner
             }
-            destinationLocationID
-            destinationLocation {
-              __typename
-              id
-              locationLabel
-              latitude
-              longitude
-              isActive
-              addressID
-              plusCode
-              website
-              notes
-              notesHistory
-              tags
-              createdAt
-              updatedAt
-              owner
-            }
-            shipmentNotes
-            deliveryNotes
-            trackingId
-            weight
-            shipmentReceiver
-            status
-            statusHistory
-            tags
-            photosUrls
+            plusCode
+            website
             notes
             notesHistory
-            boxes {
-              __typename
-              nextToken
-            }
+            tags
             createdAt
             updatedAt
-            owner
+            address {
+              __typename
+              id
+              label
+              addressLine1
+              addressLine2
+              city
+              state
+              province
+              zipCode
+              postalCode
+              country
+              createdAt
+              updatedAt
+            }
           }
-          isActive
-          barCode
-          qrCode
-          barCodePhoto
-          qrCodePhoto
-          tags
-          photosUrls
-          status
-          statusHistory
-          internalNotes
-          notes
-          notesHistory
-          locations {
+          boxes {
             __typename
             items {
               __typename
               id
-              boxID
-              locationInfoID
-              notes
-              isFinal
-              tags
-              photosUrls
+              title
+              contents
+              size
+              orgID
+              shipmentID
               isActive
+              barCode
+              qrCode
+              barCodePhoto
+              qrCodePhoto
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              notesHistory
               createdAt
               updatedAt
-              owner
             }
             nextToken
           }
-          createdAt
-          updatedAt
-          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -8297,7 +10508,7 @@ export class APIService {
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
-    return <GetBoxQuery>response.data.getBox;
+    return <GetShipmentQuery>response.data.getShipment;
   }
   async ListBoxs(
     filter?: ModelBoxFilterInput,
@@ -8314,6 +10525,28 @@ export class APIService {
             contents
             size
             orgID
+            shipmentID
+            isActive
+            barCode
+            qrCode
+            barCodePhoto
+            qrCodePhoto
+            tags
+            images {
+              __typename
+              id
+              altTex
+              src
+              createdAt
+              updatedAt
+            }
+            status
+            statusHistory
+            internalNotes
+            notes
+            notesHistory
+            createdAt
+            updatedAt
             org {
               __typename
               id
@@ -8321,15 +10554,14 @@ export class APIService {
               description
               addressID
               email
+              primaryDomain
+              privacyPolicy
               tags
-              photosUrls
               notes
               isActive
               createdAt
               updatedAt
-              owner
             }
-            shipmentID
             shipment {
               __typename
               id
@@ -8348,32 +10580,15 @@ export class APIService {
               status
               statusHistory
               tags
-              photosUrls
               notes
               notesHistory
               createdAt
               updatedAt
-              owner
             }
-            isActive
-            barCode
-            qrCode
-            barCodePhoto
-            qrCodePhoto
-            tags
-            photosUrls
-            status
-            statusHistory
-            internalNotes
-            notes
-            notesHistory
             locations {
               __typename
               nextToken
             }
-            createdAt
-            updatedAt
-            owner
           }
           nextToken
         }
@@ -8393,89 +10608,77 @@ export class APIService {
     )) as any;
     return <ListBoxsQuery>response.data.listBoxs;
   }
-  async GetBoxLocation(id: string): Promise<GetBoxLocationQuery> {
-    const statement = `query GetBoxLocation($id: ID!) {
-        getBoxLocation(id: $id) {
+  async GetBox(id: string): Promise<GetBoxQuery> {
+    const statement = `query GetBox($id: ID!) {
+        getBox(id: $id) {
           __typename
           id
-          boxID
-          box {
+          title
+          contents
+          size
+          orgID
+          shipmentID
+          isActive
+          barCode
+          qrCode
+          barCodePhoto
+          qrCodePhoto
+          tags
+          images {
             __typename
             id
-            title
-            contents
-            size
-            orgID
-            org {
-              __typename
-              id
-              name
-              description
-              addressID
-              email
-              tags
-              photosUrls
-              notes
-              isActive
-              createdAt
-              updatedAt
-              owner
-            }
-            shipmentID
-            shipment {
-              __typename
-              id
-              name
-              description
-              isActive
-              startDate
-              deliveryDate
-              startLocationID
-              destinationLocationID
-              shipmentNotes
-              deliveryNotes
-              trackingId
-              weight
-              shipmentReceiver
-              status
-              statusHistory
-              tags
-              photosUrls
-              notes
-              notesHistory
-              createdAt
-              updatedAt
-              owner
-            }
-            isActive
-            barCode
-            qrCode
-            barCodePhoto
-            qrCodePhoto
-            tags
-            photosUrls
-            status
-            statusHistory
-            internalNotes
-            notes
-            notesHistory
-            locations {
-              __typename
-              nextToken
-            }
+            altTex
+            src
             createdAt
             updatedAt
-            owner
           }
-          locationInfoID
-          locationInfo {
+          status
+          statusHistory
+          internalNotes
+          notes
+          notesHistory
+          createdAt
+          updatedAt
+          org {
             __typename
             id
-            locationLabel
-            latitude
-            longitude
-            isActive
+            name
+            description
             addressID
+            email
+            primaryPhone {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            otherPhones {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            primaryDomain
+            privacyPolicy
+            tags
+            images {
+              __typename
+              id
+              altTex
+              src
+              createdAt
+              updatedAt
+            }
+            notes
+            isActive
+            createdAt
+            updatedAt
             address {
               __typename
               id
@@ -8490,83 +10693,47 @@ export class APIService {
               country
               createdAt
               updatedAt
-              owner
             }
-            phones {
+            boxes {
               __typename
-              id
-              phone
-              isActive
-              type
-              createdAt
-              updatedAt
-              owner
+              nextToken
             }
-            plusCode
-            website
-            notes
-            notesHistory
-            tags
-            createdAt
-            updatedAt
-            owner
+            users {
+              __typename
+              nextToken
+            }
           }
-          notes
-          isFinal
-          tags
-          photosUrls
-          isActive
-          createdAt
-          updatedAt
-          owner
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      id
-    };
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <GetBoxLocationQuery>response.data.getBoxLocation;
-  }
-  async ListBoxLocations(
-    filter?: ModelBoxLocationFilterInput,
-    limit?: number,
-    nextToken?: string
-  ): Promise<ListBoxLocationsQuery> {
-    const statement = `query ListBoxLocations($filter: ModelBoxLocationFilterInput, $limit: Int, $nextToken: String) {
-        listBoxLocations(filter: $filter, limit: $limit, nextToken: $nextToken) {
-          __typename
-          items {
+          shipment {
             __typename
             id
-            boxID
-            box {
+            name
+            description
+            isActive
+            startDate
+            deliveryDate
+            startLocationID
+            destinationLocationID
+            shipmentNotes
+            deliveryNotes
+            trackingId
+            weight
+            shipmentReceiver
+            status
+            statusHistory
+            tags
+            images {
               __typename
               id
-              title
-              contents
-              size
-              orgID
-              shipmentID
-              isActive
-              barCode
-              qrCode
-              barCodePhoto
-              qrCodePhoto
-              tags
-              photosUrls
-              status
-              statusHistory
-              internalNotes
-              notes
-              notesHistory
+              altTex
+              src
               createdAt
               updatedAt
-              owner
             }
-            locationInfoID
-            locationInfo {
+            notes
+            notesHistory
+            createdAt
+            updatedAt
+            startLocation {
               __typename
               id
               locationLabel
@@ -8581,34 +10748,54 @@ export class APIService {
               tags
               createdAt
               updatedAt
-              owner
             }
-            notes
-            isFinal
-            tags
-            photosUrls
-            isActive
-            createdAt
-            updatedAt
-            owner
+            destinationLocation {
+              __typename
+              id
+              locationLabel
+              latitude
+              longitude
+              isActive
+              addressID
+              plusCode
+              website
+              notes
+              notesHistory
+              tags
+              createdAt
+              updatedAt
+            }
+            boxes {
+              __typename
+              nextToken
+            }
           }
-          nextToken
+          locations {
+            __typename
+            items {
+              __typename
+              id
+              boxID
+              locationInfoID
+              userID
+              notes
+              isFinal
+              tags
+              isActive
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
         }
       }`;
-    const gqlAPIServiceArguments: any = {};
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    if (limit) {
-      gqlAPIServiceArguments.limit = limit;
-    }
-    if (nextToken) {
-      gqlAPIServiceArguments.nextToken = nextToken;
-    }
+    const gqlAPIServiceArguments: any = {
+      id
+    };
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
-    return <ListBoxLocationsQuery>response.data.listBoxLocations;
+    return <GetBoxQuery>response.data.getBox;
   }
   async ShipmentsByBoxId(
     shipmentID?: string,
@@ -8628,6 +10815,28 @@ export class APIService {
             contents
             size
             orgID
+            shipmentID
+            isActive
+            barCode
+            qrCode
+            barCodePhoto
+            qrCodePhoto
+            tags
+            images {
+              __typename
+              id
+              altTex
+              src
+              createdAt
+              updatedAt
+            }
+            status
+            statusHistory
+            internalNotes
+            notes
+            notesHistory
+            createdAt
+            updatedAt
             org {
               __typename
               id
@@ -8635,15 +10844,14 @@ export class APIService {
               description
               addressID
               email
+              primaryDomain
+              privacyPolicy
               tags
-              photosUrls
               notes
               isActive
               createdAt
               updatedAt
-              owner
             }
-            shipmentID
             shipment {
               __typename
               id
@@ -8662,32 +10870,15 @@ export class APIService {
               status
               statusHistory
               tags
-              photosUrls
               notes
               notesHistory
               createdAt
               updatedAt
-              owner
             }
-            isActive
-            barCode
-            qrCode
-            barCodePhoto
-            qrCodePhoto
-            tags
-            photosUrls
-            status
-            statusHistory
-            internalNotes
-            notes
-            notesHistory
             locations {
               __typename
               nextToken
             }
-            createdAt
-            updatedAt
-            owner
           }
           nextToken
         }
@@ -8716,12 +10907,530 @@ export class APIService {
     )) as any;
     return <ShipmentsByBoxIdQuery>response.data.shipmentsByBoxId;
   }
+  async GetBoxLocation(id: string): Promise<GetBoxLocationQuery> {
+    const statement = `query GetBoxLocation($id: ID!) {
+        getBoxLocation(id: $id) {
+          __typename
+          id
+          boxID
+          locationInfoID
+          userID
+          notes
+          isFinal
+          tags
+          images {
+            __typename
+            id
+            altTex
+            src
+            createdAt
+            updatedAt
+          }
+          isActive
+          createdAt
+          updatedAt
+          locationInfo {
+            __typename
+            id
+            locationLabel
+            latitude
+            longitude
+            isActive
+            addressID
+            phones {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            plusCode
+            website
+            notes
+            notesHistory
+            tags
+            createdAt
+            updatedAt
+            address {
+              __typename
+              id
+              label
+              addressLine1
+              addressLine2
+              city
+              state
+              province
+              zipCode
+              postalCode
+              country
+              createdAt
+              updatedAt
+            }
+          }
+          box {
+            __typename
+            id
+            title
+            contents
+            size
+            orgID
+            shipmentID
+            isActive
+            barCode
+            qrCode
+            barCodePhoto
+            qrCodePhoto
+            tags
+            images {
+              __typename
+              id
+              altTex
+              src
+              createdAt
+              updatedAt
+            }
+            status
+            statusHistory
+            internalNotes
+            notes
+            notesHistory
+            createdAt
+            updatedAt
+            org {
+              __typename
+              id
+              name
+              description
+              addressID
+              email
+              primaryDomain
+              privacyPolicy
+              tags
+              notes
+              isActive
+              createdAt
+              updatedAt
+            }
+            shipment {
+              __typename
+              id
+              name
+              description
+              isActive
+              startDate
+              deliveryDate
+              startLocationID
+              destinationLocationID
+              shipmentNotes
+              deliveryNotes
+              trackingId
+              weight
+              shipmentReceiver
+              status
+              statusHistory
+              tags
+              notes
+              notesHistory
+              createdAt
+              updatedAt
+            }
+            locations {
+              __typename
+              nextToken
+            }
+          }
+          user {
+            __typename
+            id
+            name
+            orgID
+            isActive
+            tags
+            images {
+              __typename
+              id
+              altTex
+              src
+              createdAt
+              updatedAt
+            }
+            status
+            statusHistory
+            internalNotes
+            notes
+            rank
+            notesHistory
+            createdAt
+            updatedAt
+            org {
+              __typename
+              id
+              name
+              description
+              addressID
+              email
+              primaryDomain
+              privacyPolicy
+              tags
+              notes
+              isActive
+              createdAt
+              updatedAt
+            }
+            boxLocations {
+              __typename
+              nextToken
+            }
+          }
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      id
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <GetBoxLocationQuery>response.data.getBoxLocation;
+  }
+  async ListBoxLocations(
+    filter?: ModelBoxLocationFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<ListBoxLocationsQuery> {
+    const statement = `query ListBoxLocations($filter: ModelBoxLocationFilterInput, $limit: Int, $nextToken: String) {
+        listBoxLocations(filter: $filter, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            boxID
+            locationInfoID
+            userID
+            notes
+            isFinal
+            tags
+            images {
+              __typename
+              id
+              altTex
+              src
+              createdAt
+              updatedAt
+            }
+            isActive
+            createdAt
+            updatedAt
+            locationInfo {
+              __typename
+              id
+              locationLabel
+              latitude
+              longitude
+              isActive
+              addressID
+              plusCode
+              website
+              notes
+              notesHistory
+              tags
+              createdAt
+              updatedAt
+            }
+            box {
+              __typename
+              id
+              title
+              contents
+              size
+              orgID
+              shipmentID
+              isActive
+              barCode
+              qrCode
+              barCodePhoto
+              qrCodePhoto
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              notesHistory
+              createdAt
+              updatedAt
+            }
+            user {
+              __typename
+              id
+              name
+              orgID
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <ListBoxLocationsQuery>response.data.listBoxLocations;
+  }
+  async ListUsers(
+    filter?: ModelUserFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<ListUsersQuery> {
+    const statement = `query ListUsers($filter: ModelUserFilterInput, $limit: Int, $nextToken: String) {
+        listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            name
+            orgID
+            isActive
+            tags
+            images {
+              __typename
+              id
+              altTex
+              src
+              createdAt
+              updatedAt
+            }
+            status
+            statusHistory
+            internalNotes
+            notes
+            rank
+            notesHistory
+            createdAt
+            updatedAt
+            org {
+              __typename
+              id
+              name
+              description
+              addressID
+              email
+              primaryDomain
+              privacyPolicy
+              tags
+              notes
+              isActive
+              createdAt
+              updatedAt
+            }
+            boxLocations {
+              __typename
+              nextToken
+            }
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <ListUsersQuery>response.data.listUsers;
+  }
+  async GetUser(id: string): Promise<GetUserQuery> {
+    const statement = `query GetUser($id: ID!) {
+        getUser(id: $id) {
+          __typename
+          id
+          name
+          orgID
+          isActive
+          tags
+          images {
+            __typename
+            id
+            altTex
+            src
+            createdAt
+            updatedAt
+          }
+          status
+          statusHistory
+          internalNotes
+          notes
+          rank
+          notesHistory
+          createdAt
+          updatedAt
+          org {
+            __typename
+            id
+            name
+            description
+            addressID
+            email
+            primaryPhone {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            otherPhones {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            primaryDomain
+            privacyPolicy
+            tags
+            images {
+              __typename
+              id
+              altTex
+              src
+              createdAt
+              updatedAt
+            }
+            notes
+            isActive
+            createdAt
+            updatedAt
+            address {
+              __typename
+              id
+              label
+              addressLine1
+              addressLine2
+              city
+              state
+              province
+              zipCode
+              postalCode
+              country
+              createdAt
+              updatedAt
+            }
+            boxes {
+              __typename
+              nextToken
+            }
+            users {
+              __typename
+              nextToken
+            }
+          }
+          boxLocations {
+            __typename
+            items {
+              __typename
+              id
+              boxID
+              locationInfoID
+              userID
+              notes
+              isFinal
+              tags
+              isActive
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      id
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <GetUserQuery>response.data.getUser;
+  }
+  OnCreateImageListener: Observable<OnCreateImageSubscription> = API.graphql(
+    graphqlOperation(
+      `subscription OnCreateImage {
+        onCreateImage {
+          __typename
+          id
+          altTex
+          src
+          createdAt
+          updatedAt
+        }
+      }`
+    )
+  ) as Observable<OnCreateImageSubscription>;
+
+  OnUpdateImageListener: Observable<OnUpdateImageSubscription> = API.graphql(
+    graphqlOperation(
+      `subscription OnUpdateImage {
+        onUpdateImage {
+          __typename
+          id
+          altTex
+          src
+          createdAt
+          updatedAt
+        }
+      }`
+    )
+  ) as Observable<OnUpdateImageSubscription>;
+
+  OnDeleteImageListener: Observable<OnDeleteImageSubscription> = API.graphql(
+    graphqlOperation(
+      `subscription OnDeleteImage {
+        onDeleteImage {
+          __typename
+          id
+          altTex
+          src
+          createdAt
+          updatedAt
+        }
+      }`
+    )
+  ) as Observable<OnDeleteImageSubscription>;
+
   OnCreateApihealthCheckInfoListener: Observable<
     OnCreateApihealthCheckInfoSubscription
   > = API.graphql(
     graphqlOperation(
-      `subscription OnCreateApihealthCheckInfo($owner: String!) {
-        onCreateApihealthCheckInfo(owner: $owner) {
+      `subscription OnCreateApihealthCheckInfo {
+        onCreateApihealthCheckInfo {
           __typename
           id
           status
@@ -8731,7 +11440,6 @@ export class APIService {
           lastUpdated
           createdAt
           updatedAt
-          owner
         }
       }`
     )
@@ -8741,8 +11449,8 @@ export class APIService {
     OnUpdateApihealthCheckInfoSubscription
   > = API.graphql(
     graphqlOperation(
-      `subscription OnUpdateApihealthCheckInfo($owner: String!) {
-        onUpdateApihealthCheckInfo(owner: $owner) {
+      `subscription OnUpdateApihealthCheckInfo {
+        onUpdateApihealthCheckInfo {
           __typename
           id
           status
@@ -8752,7 +11460,6 @@ export class APIService {
           lastUpdated
           createdAt
           updatedAt
-          owner
         }
       }`
     )
@@ -8762,8 +11469,8 @@ export class APIService {
     OnDeleteApihealthCheckInfoSubscription
   > = API.graphql(
     graphqlOperation(
-      `subscription OnDeleteApihealthCheckInfo($owner: String!) {
-        onDeleteApihealthCheckInfo(owner: $owner) {
+      `subscription OnDeleteApihealthCheckInfo {
+        onDeleteApihealthCheckInfo {
           __typename
           id
           status
@@ -8773,7 +11480,6 @@ export class APIService {
           lastUpdated
           createdAt
           updatedAt
-          owner
         }
       }`
     )
@@ -8783,8 +11489,8 @@ export class APIService {
     OnCreateAddressSubscription
   > = API.graphql(
     graphqlOperation(
-      `subscription OnCreateAddress($owner: String!) {
-        onCreateAddress(owner: $owner) {
+      `subscription OnCreateAddress {
+        onCreateAddress {
           __typename
           id
           label
@@ -8798,7 +11504,6 @@ export class APIService {
           country
           createdAt
           updatedAt
-          owner
         }
       }`
     )
@@ -8808,8 +11513,8 @@ export class APIService {
     OnUpdateAddressSubscription
   > = API.graphql(
     graphqlOperation(
-      `subscription OnUpdateAddress($owner: String!) {
-        onUpdateAddress(owner: $owner) {
+      `subscription OnUpdateAddress {
+        onUpdateAddress {
           __typename
           id
           label
@@ -8823,7 +11528,6 @@ export class APIService {
           country
           createdAt
           updatedAt
-          owner
         }
       }`
     )
@@ -8833,8 +11537,8 @@ export class APIService {
     OnDeleteAddressSubscription
   > = API.graphql(
     graphqlOperation(
-      `subscription OnDeleteAddress($owner: String!) {
-        onDeleteAddress(owner: $owner) {
+      `subscription OnDeleteAddress {
+        onDeleteAddress {
           __typename
           id
           label
@@ -8848,7 +11552,6 @@ export class APIService {
           country
           createdAt
           updatedAt
-          owner
         }
       }`
     )
@@ -8856,8 +11559,8 @@ export class APIService {
 
   OnCreatePhoneListener: Observable<OnCreatePhoneSubscription> = API.graphql(
     graphqlOperation(
-      `subscription OnCreatePhone($owner: String!) {
-        onCreatePhone(owner: $owner) {
+      `subscription OnCreatePhone {
+        onCreatePhone {
           __typename
           id
           phone
@@ -8865,7 +11568,6 @@ export class APIService {
           type
           createdAt
           updatedAt
-          owner
         }
       }`
     )
@@ -8873,8 +11575,8 @@ export class APIService {
 
   OnUpdatePhoneListener: Observable<OnUpdatePhoneSubscription> = API.graphql(
     graphqlOperation(
-      `subscription OnUpdatePhone($owner: String!) {
-        onUpdatePhone(owner: $owner) {
+      `subscription OnUpdatePhone {
+        onUpdatePhone {
           __typename
           id
           phone
@@ -8882,7 +11584,6 @@ export class APIService {
           type
           createdAt
           updatedAt
-          owner
         }
       }`
     )
@@ -8890,8 +11591,8 @@ export class APIService {
 
   OnDeletePhoneListener: Observable<OnDeletePhoneSubscription> = API.graphql(
     graphqlOperation(
-      `subscription OnDeletePhone($owner: String!) {
-        onDeletePhone(owner: $owner) {
+      `subscription OnDeletePhone {
+        onDeletePhone {
           __typename
           id
           phone
@@ -8899,7 +11600,6 @@ export class APIService {
           type
           createdAt
           updatedAt
-          owner
         }
       }`
     )
@@ -8907,13 +11607,47 @@ export class APIService {
 
   OnCreateOrgListener: Observable<OnCreateOrgSubscription> = API.graphql(
     graphqlOperation(
-      `subscription OnCreateOrg($owner: String!) {
-        onCreateOrg(owner: $owner) {
+      `subscription OnCreateOrg {
+        onCreateOrg {
           __typename
           id
           name
           description
           addressID
+          email
+          primaryPhone {
+            __typename
+            id
+            phone
+            isActive
+            type
+            createdAt
+            updatedAt
+          }
+          otherPhones {
+            __typename
+            id
+            phone
+            isActive
+            type
+            createdAt
+            updatedAt
+          }
+          primaryDomain
+          privacyPolicy
+          tags
+          images {
+            __typename
+            id
+            altTex
+            src
+            createdAt
+            updatedAt
+          }
+          notes
+          isActive
+          createdAt
+          updatedAt
           address {
             __typename
             id
@@ -8928,33 +11662,7 @@ export class APIService {
             country
             createdAt
             updatedAt
-            owner
           }
-          email
-          primaryPhone {
-            __typename
-            id
-            phone
-            isActive
-            type
-            createdAt
-            updatedAt
-            owner
-          }
-          otherPhones {
-            __typename
-            id
-            phone
-            isActive
-            type
-            createdAt
-            updatedAt
-            owner
-          }
-          tags
-          photosUrls
-          notes
-          isActive
           boxes {
             __typename
             items {
@@ -8971,7 +11679,6 @@ export class APIService {
               barCodePhoto
               qrCodePhoto
               tags
-              photosUrls
               status
               statusHistory
               internalNotes
@@ -8979,13 +11686,29 @@ export class APIService {
               notesHistory
               createdAt
               updatedAt
-              owner
             }
             nextToken
           }
-          createdAt
-          updatedAt
-          owner
+          users {
+            __typename
+            items {
+              __typename
+              id
+              name
+              orgID
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
         }
       }`
     )
@@ -8993,13 +11716,47 @@ export class APIService {
 
   OnUpdateOrgListener: Observable<OnUpdateOrgSubscription> = API.graphql(
     graphqlOperation(
-      `subscription OnUpdateOrg($owner: String!) {
-        onUpdateOrg(owner: $owner) {
+      `subscription OnUpdateOrg {
+        onUpdateOrg {
           __typename
           id
           name
           description
           addressID
+          email
+          primaryPhone {
+            __typename
+            id
+            phone
+            isActive
+            type
+            createdAt
+            updatedAt
+          }
+          otherPhones {
+            __typename
+            id
+            phone
+            isActive
+            type
+            createdAt
+            updatedAt
+          }
+          primaryDomain
+          privacyPolicy
+          tags
+          images {
+            __typename
+            id
+            altTex
+            src
+            createdAt
+            updatedAt
+          }
+          notes
+          isActive
+          createdAt
+          updatedAt
           address {
             __typename
             id
@@ -9014,33 +11771,7 @@ export class APIService {
             country
             createdAt
             updatedAt
-            owner
           }
-          email
-          primaryPhone {
-            __typename
-            id
-            phone
-            isActive
-            type
-            createdAt
-            updatedAt
-            owner
-          }
-          otherPhones {
-            __typename
-            id
-            phone
-            isActive
-            type
-            createdAt
-            updatedAt
-            owner
-          }
-          tags
-          photosUrls
-          notes
-          isActive
           boxes {
             __typename
             items {
@@ -9057,7 +11788,6 @@ export class APIService {
               barCodePhoto
               qrCodePhoto
               tags
-              photosUrls
               status
               statusHistory
               internalNotes
@@ -9065,13 +11795,29 @@ export class APIService {
               notesHistory
               createdAt
               updatedAt
-              owner
             }
             nextToken
           }
-          createdAt
-          updatedAt
-          owner
+          users {
+            __typename
+            items {
+              __typename
+              id
+              name
+              orgID
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
         }
       }`
     )
@@ -9079,13 +11825,47 @@ export class APIService {
 
   OnDeleteOrgListener: Observable<OnDeleteOrgSubscription> = API.graphql(
     graphqlOperation(
-      `subscription OnDeleteOrg($owner: String!) {
-        onDeleteOrg(owner: $owner) {
+      `subscription OnDeleteOrg {
+        onDeleteOrg {
           __typename
           id
           name
           description
           addressID
+          email
+          primaryPhone {
+            __typename
+            id
+            phone
+            isActive
+            type
+            createdAt
+            updatedAt
+          }
+          otherPhones {
+            __typename
+            id
+            phone
+            isActive
+            type
+            createdAt
+            updatedAt
+          }
+          primaryDomain
+          privacyPolicy
+          tags
+          images {
+            __typename
+            id
+            altTex
+            src
+            createdAt
+            updatedAt
+          }
+          notes
+          isActive
+          createdAt
+          updatedAt
           address {
             __typename
             id
@@ -9100,33 +11880,7 @@ export class APIService {
             country
             createdAt
             updatedAt
-            owner
           }
-          email
-          primaryPhone {
-            __typename
-            id
-            phone
-            isActive
-            type
-            createdAt
-            updatedAt
-            owner
-          }
-          otherPhones {
-            __typename
-            id
-            phone
-            isActive
-            type
-            createdAt
-            updatedAt
-            owner
-          }
-          tags
-          photosUrls
-          notes
-          isActive
           boxes {
             __typename
             items {
@@ -9143,7 +11897,6 @@ export class APIService {
               barCodePhoto
               qrCodePhoto
               tags
-              photosUrls
               status
               statusHistory
               internalNotes
@@ -9151,13 +11904,29 @@ export class APIService {
               notesHistory
               createdAt
               updatedAt
-              owner
             }
             nextToken
           }
-          createdAt
-          updatedAt
-          owner
+          users {
+            __typename
+            items {
+              __typename
+              id
+              name
+              orgID
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
         }
       }`
     )
@@ -9167,8 +11936,8 @@ export class APIService {
     OnCreateLocationInfoSubscription
   > = API.graphql(
     graphqlOperation(
-      `subscription OnCreateLocationInfo($owner: String!) {
-        onCreateLocationInfo(owner: $owner) {
+      `subscription OnCreateLocationInfo {
+        onCreateLocationInfo {
           __typename
           id
           locationLabel
@@ -9176,6 +11945,22 @@ export class APIService {
           longitude
           isActive
           addressID
+          phones {
+            __typename
+            id
+            phone
+            isActive
+            type
+            createdAt
+            updatedAt
+          }
+          plusCode
+          website
+          notes
+          notesHistory
+          tags
+          createdAt
+          updatedAt
           address {
             __typename
             id
@@ -9190,26 +11975,7 @@ export class APIService {
             country
             createdAt
             updatedAt
-            owner
           }
-          phones {
-            __typename
-            id
-            phone
-            isActive
-            type
-            createdAt
-            updatedAt
-            owner
-          }
-          plusCode
-          website
-          notes
-          notesHistory
-          tags
-          createdAt
-          updatedAt
-          owner
         }
       }`
     )
@@ -9219,8 +11985,8 @@ export class APIService {
     OnUpdateLocationInfoSubscription
   > = API.graphql(
     graphqlOperation(
-      `subscription OnUpdateLocationInfo($owner: String!) {
-        onUpdateLocationInfo(owner: $owner) {
+      `subscription OnUpdateLocationInfo {
+        onUpdateLocationInfo {
           __typename
           id
           locationLabel
@@ -9228,6 +11994,22 @@ export class APIService {
           longitude
           isActive
           addressID
+          phones {
+            __typename
+            id
+            phone
+            isActive
+            type
+            createdAt
+            updatedAt
+          }
+          plusCode
+          website
+          notes
+          notesHistory
+          tags
+          createdAt
+          updatedAt
           address {
             __typename
             id
@@ -9242,26 +12024,7 @@ export class APIService {
             country
             createdAt
             updatedAt
-            owner
           }
-          phones {
-            __typename
-            id
-            phone
-            isActive
-            type
-            createdAt
-            updatedAt
-            owner
-          }
-          plusCode
-          website
-          notes
-          notesHistory
-          tags
-          createdAt
-          updatedAt
-          owner
         }
       }`
     )
@@ -9271,8 +12034,8 @@ export class APIService {
     OnDeleteLocationInfoSubscription
   > = API.graphql(
     graphqlOperation(
-      `subscription OnDeleteLocationInfo($owner: String!) {
-        onDeleteLocationInfo(owner: $owner) {
+      `subscription OnDeleteLocationInfo {
+        onDeleteLocationInfo {
           __typename
           id
           locationLabel
@@ -9280,6 +12043,22 @@ export class APIService {
           longitude
           isActive
           addressID
+          phones {
+            __typename
+            id
+            phone
+            isActive
+            type
+            createdAt
+            updatedAt
+          }
+          plusCode
+          website
+          notes
+          notesHistory
+          tags
+          createdAt
+          updatedAt
           address {
             __typename
             id
@@ -9294,26 +12073,7 @@ export class APIService {
             country
             createdAt
             updatedAt
-            owner
           }
-          phones {
-            __typename
-            id
-            phone
-            isActive
-            type
-            createdAt
-            updatedAt
-            owner
-          }
-          plusCode
-          website
-          notes
-          notesHistory
-          tags
-          createdAt
-          updatedAt
-          owner
         }
       }`
     )
@@ -9323,8 +12083,8 @@ export class APIService {
     OnCreateShipmentSubscription
   > = API.graphql(
     graphqlOperation(
-      `subscription OnCreateShipment($owner: String!) {
-        onCreateShipment(owner: $owner) {
+      `subscription OnCreateShipment {
+        onCreateShipment {
           __typename
           id
           name
@@ -9333,93 +12093,7 @@ export class APIService {
           startDate
           deliveryDate
           startLocationID
-          startLocation {
-            __typename
-            id
-            locationLabel
-            latitude
-            longitude
-            isActive
-            addressID
-            address {
-              __typename
-              id
-              label
-              addressLine1
-              addressLine2
-              city
-              state
-              province
-              zipCode
-              postalCode
-              country
-              createdAt
-              updatedAt
-              owner
-            }
-            phones {
-              __typename
-              id
-              phone
-              isActive
-              type
-              createdAt
-              updatedAt
-              owner
-            }
-            plusCode
-            website
-            notes
-            notesHistory
-            tags
-            createdAt
-            updatedAt
-            owner
-          }
           destinationLocationID
-          destinationLocation {
-            __typename
-            id
-            locationLabel
-            latitude
-            longitude
-            isActive
-            addressID
-            address {
-              __typename
-              id
-              label
-              addressLine1
-              addressLine2
-              city
-              state
-              province
-              zipCode
-              postalCode
-              country
-              createdAt
-              updatedAt
-              owner
-            }
-            phones {
-              __typename
-              id
-              phone
-              isActive
-              type
-              createdAt
-              updatedAt
-              owner
-            }
-            plusCode
-            website
-            notes
-            notesHistory
-            tags
-            createdAt
-            updatedAt
-            owner
-          }
           shipmentNotes
           deliveryNotes
           trackingId
@@ -9428,9 +12102,98 @@ export class APIService {
           status
           statusHistory
           tags
-          photosUrls
+          images {
+            __typename
+            id
+            altTex
+            src
+            createdAt
+            updatedAt
+          }
           notes
           notesHistory
+          createdAt
+          updatedAt
+          startLocation {
+            __typename
+            id
+            locationLabel
+            latitude
+            longitude
+            isActive
+            addressID
+            phones {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            plusCode
+            website
+            notes
+            notesHistory
+            tags
+            createdAt
+            updatedAt
+            address {
+              __typename
+              id
+              label
+              addressLine1
+              addressLine2
+              city
+              state
+              province
+              zipCode
+              postalCode
+              country
+              createdAt
+              updatedAt
+            }
+          }
+          destinationLocation {
+            __typename
+            id
+            locationLabel
+            latitude
+            longitude
+            isActive
+            addressID
+            phones {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            plusCode
+            website
+            notes
+            notesHistory
+            tags
+            createdAt
+            updatedAt
+            address {
+              __typename
+              id
+              label
+              addressLine1
+              addressLine2
+              city
+              state
+              province
+              zipCode
+              postalCode
+              country
+              createdAt
+              updatedAt
+            }
+          }
           boxes {
             __typename
             items {
@@ -9447,7 +12210,6 @@ export class APIService {
               barCodePhoto
               qrCodePhoto
               tags
-              photosUrls
               status
               statusHistory
               internalNotes
@@ -9455,13 +12217,9 @@ export class APIService {
               notesHistory
               createdAt
               updatedAt
-              owner
             }
             nextToken
           }
-          createdAt
-          updatedAt
-          owner
         }
       }`
     )
@@ -9471,8 +12229,8 @@ export class APIService {
     OnUpdateShipmentSubscription
   > = API.graphql(
     graphqlOperation(
-      `subscription OnUpdateShipment($owner: String!) {
-        onUpdateShipment(owner: $owner) {
+      `subscription OnUpdateShipment {
+        onUpdateShipment {
           __typename
           id
           name
@@ -9481,93 +12239,7 @@ export class APIService {
           startDate
           deliveryDate
           startLocationID
-          startLocation {
-            __typename
-            id
-            locationLabel
-            latitude
-            longitude
-            isActive
-            addressID
-            address {
-              __typename
-              id
-              label
-              addressLine1
-              addressLine2
-              city
-              state
-              province
-              zipCode
-              postalCode
-              country
-              createdAt
-              updatedAt
-              owner
-            }
-            phones {
-              __typename
-              id
-              phone
-              isActive
-              type
-              createdAt
-              updatedAt
-              owner
-            }
-            plusCode
-            website
-            notes
-            notesHistory
-            tags
-            createdAt
-            updatedAt
-            owner
-          }
           destinationLocationID
-          destinationLocation {
-            __typename
-            id
-            locationLabel
-            latitude
-            longitude
-            isActive
-            addressID
-            address {
-              __typename
-              id
-              label
-              addressLine1
-              addressLine2
-              city
-              state
-              province
-              zipCode
-              postalCode
-              country
-              createdAt
-              updatedAt
-              owner
-            }
-            phones {
-              __typename
-              id
-              phone
-              isActive
-              type
-              createdAt
-              updatedAt
-              owner
-            }
-            plusCode
-            website
-            notes
-            notesHistory
-            tags
-            createdAt
-            updatedAt
-            owner
-          }
           shipmentNotes
           deliveryNotes
           trackingId
@@ -9576,9 +12248,98 @@ export class APIService {
           status
           statusHistory
           tags
-          photosUrls
+          images {
+            __typename
+            id
+            altTex
+            src
+            createdAt
+            updatedAt
+          }
           notes
           notesHistory
+          createdAt
+          updatedAt
+          startLocation {
+            __typename
+            id
+            locationLabel
+            latitude
+            longitude
+            isActive
+            addressID
+            phones {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            plusCode
+            website
+            notes
+            notesHistory
+            tags
+            createdAt
+            updatedAt
+            address {
+              __typename
+              id
+              label
+              addressLine1
+              addressLine2
+              city
+              state
+              province
+              zipCode
+              postalCode
+              country
+              createdAt
+              updatedAt
+            }
+          }
+          destinationLocation {
+            __typename
+            id
+            locationLabel
+            latitude
+            longitude
+            isActive
+            addressID
+            phones {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            plusCode
+            website
+            notes
+            notesHistory
+            tags
+            createdAt
+            updatedAt
+            address {
+              __typename
+              id
+              label
+              addressLine1
+              addressLine2
+              city
+              state
+              province
+              zipCode
+              postalCode
+              country
+              createdAt
+              updatedAt
+            }
+          }
           boxes {
             __typename
             items {
@@ -9595,7 +12356,6 @@ export class APIService {
               barCodePhoto
               qrCodePhoto
               tags
-              photosUrls
               status
               statusHistory
               internalNotes
@@ -9603,13 +12363,9 @@ export class APIService {
               notesHistory
               createdAt
               updatedAt
-              owner
             }
             nextToken
           }
-          createdAt
-          updatedAt
-          owner
         }
       }`
     )
@@ -9619,8 +12375,8 @@ export class APIService {
     OnDeleteShipmentSubscription
   > = API.graphql(
     graphqlOperation(
-      `subscription OnDeleteShipment($owner: String!) {
-        onDeleteShipment(owner: $owner) {
+      `subscription OnDeleteShipment {
+        onDeleteShipment {
           __typename
           id
           name
@@ -9629,93 +12385,7 @@ export class APIService {
           startDate
           deliveryDate
           startLocationID
-          startLocation {
-            __typename
-            id
-            locationLabel
-            latitude
-            longitude
-            isActive
-            addressID
-            address {
-              __typename
-              id
-              label
-              addressLine1
-              addressLine2
-              city
-              state
-              province
-              zipCode
-              postalCode
-              country
-              createdAt
-              updatedAt
-              owner
-            }
-            phones {
-              __typename
-              id
-              phone
-              isActive
-              type
-              createdAt
-              updatedAt
-              owner
-            }
-            plusCode
-            website
-            notes
-            notesHistory
-            tags
-            createdAt
-            updatedAt
-            owner
-          }
           destinationLocationID
-          destinationLocation {
-            __typename
-            id
-            locationLabel
-            latitude
-            longitude
-            isActive
-            addressID
-            address {
-              __typename
-              id
-              label
-              addressLine1
-              addressLine2
-              city
-              state
-              province
-              zipCode
-              postalCode
-              country
-              createdAt
-              updatedAt
-              owner
-            }
-            phones {
-              __typename
-              id
-              phone
-              isActive
-              type
-              createdAt
-              updatedAt
-              owner
-            }
-            plusCode
-            website
-            notes
-            notesHistory
-            tags
-            createdAt
-            updatedAt
-            owner
-          }
           shipmentNotes
           deliveryNotes
           trackingId
@@ -9724,9 +12394,98 @@ export class APIService {
           status
           statusHistory
           tags
-          photosUrls
+          images {
+            __typename
+            id
+            altTex
+            src
+            createdAt
+            updatedAt
+          }
           notes
           notesHistory
+          createdAt
+          updatedAt
+          startLocation {
+            __typename
+            id
+            locationLabel
+            latitude
+            longitude
+            isActive
+            addressID
+            phones {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            plusCode
+            website
+            notes
+            notesHistory
+            tags
+            createdAt
+            updatedAt
+            address {
+              __typename
+              id
+              label
+              addressLine1
+              addressLine2
+              city
+              state
+              province
+              zipCode
+              postalCode
+              country
+              createdAt
+              updatedAt
+            }
+          }
+          destinationLocation {
+            __typename
+            id
+            locationLabel
+            latitude
+            longitude
+            isActive
+            addressID
+            phones {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            plusCode
+            website
+            notes
+            notesHistory
+            tags
+            createdAt
+            updatedAt
+            address {
+              __typename
+              id
+              label
+              addressLine1
+              addressLine2
+              city
+              state
+              province
+              zipCode
+              postalCode
+              country
+              createdAt
+              updatedAt
+            }
+          }
           boxes {
             __typename
             items {
@@ -9743,7 +12502,6 @@ export class APIService {
               barCodePhoto
               qrCodePhoto
               tags
-              photosUrls
               status
               statusHistory
               internalNotes
@@ -9751,13 +12509,9 @@ export class APIService {
               notesHistory
               createdAt
               updatedAt
-              owner
             }
             nextToken
           }
-          createdAt
-          updatedAt
-          owner
         }
       }`
     )
@@ -9765,20 +12519,76 @@ export class APIService {
 
   OnCreateBoxListener: Observable<OnCreateBoxSubscription> = API.graphql(
     graphqlOperation(
-      `subscription OnCreateBox($owner: String!) {
-        onCreateBox(owner: $owner) {
+      `subscription OnCreateBox {
+        onCreateBox {
           __typename
           id
           title
           contents
           size
           orgID
+          shipmentID
+          isActive
+          barCode
+          qrCode
+          barCodePhoto
+          qrCodePhoto
+          tags
+          images {
+            __typename
+            id
+            altTex
+            src
+            createdAt
+            updatedAt
+          }
+          status
+          statusHistory
+          internalNotes
+          notes
+          notesHistory
+          createdAt
+          updatedAt
           org {
             __typename
             id
             name
             description
             addressID
+            email
+            primaryPhone {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            otherPhones {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            primaryDomain
+            privacyPolicy
+            tags
+            images {
+              __typename
+              id
+              altTex
+              src
+              createdAt
+              updatedAt
+            }
+            notes
+            isActive
+            createdAt
+            updatedAt
             address {
               __typename
               id
@@ -9793,42 +12603,16 @@ export class APIService {
               country
               createdAt
               updatedAt
-              owner
             }
-            email
-            primaryPhone {
-              __typename
-              id
-              phone
-              isActive
-              type
-              createdAt
-              updatedAt
-              owner
-            }
-            otherPhones {
-              __typename
-              id
-              phone
-              isActive
-              type
-              createdAt
-              updatedAt
-              owner
-            }
-            tags
-            photosUrls
-            notes
-            isActive
             boxes {
               __typename
               nextToken
             }
-            createdAt
-            updatedAt
-            owner
+            users {
+              __typename
+              nextToken
+            }
           }
-          shipmentID
           shipment {
             __typename
             id
@@ -9838,6 +12622,27 @@ export class APIService {
             startDate
             deliveryDate
             startLocationID
+            destinationLocationID
+            shipmentNotes
+            deliveryNotes
+            trackingId
+            weight
+            shipmentReceiver
+            status
+            statusHistory
+            tags
+            images {
+              __typename
+              id
+              altTex
+              src
+              createdAt
+              updatedAt
+            }
+            notes
+            notesHistory
+            createdAt
+            updatedAt
             startLocation {
               __typename
               id
@@ -9853,9 +12658,7 @@ export class APIService {
               tags
               createdAt
               updatedAt
-              owner
             }
-            destinationLocationID
             destinationLocation {
               __typename
               id
@@ -9871,39 +12674,12 @@ export class APIService {
               tags
               createdAt
               updatedAt
-              owner
             }
-            shipmentNotes
-            deliveryNotes
-            trackingId
-            weight
-            shipmentReceiver
-            status
-            statusHistory
-            tags
-            photosUrls
-            notes
-            notesHistory
             boxes {
               __typename
               nextToken
             }
-            createdAt
-            updatedAt
-            owner
           }
-          isActive
-          barCode
-          qrCode
-          barCodePhoto
-          qrCodePhoto
-          tags
-          photosUrls
-          status
-          statusHistory
-          internalNotes
-          notes
-          notesHistory
           locations {
             __typename
             items {
@@ -9911,20 +12687,16 @@ export class APIService {
               id
               boxID
               locationInfoID
+              userID
               notes
               isFinal
               tags
-              photosUrls
               isActive
               createdAt
               updatedAt
-              owner
             }
             nextToken
           }
-          createdAt
-          updatedAt
-          owner
         }
       }`
     )
@@ -9932,20 +12704,76 @@ export class APIService {
 
   OnUpdateBoxListener: Observable<OnUpdateBoxSubscription> = API.graphql(
     graphqlOperation(
-      `subscription OnUpdateBox($owner: String!) {
-        onUpdateBox(owner: $owner) {
+      `subscription OnUpdateBox {
+        onUpdateBox {
           __typename
           id
           title
           contents
           size
           orgID
+          shipmentID
+          isActive
+          barCode
+          qrCode
+          barCodePhoto
+          qrCodePhoto
+          tags
+          images {
+            __typename
+            id
+            altTex
+            src
+            createdAt
+            updatedAt
+          }
+          status
+          statusHistory
+          internalNotes
+          notes
+          notesHistory
+          createdAt
+          updatedAt
           org {
             __typename
             id
             name
             description
             addressID
+            email
+            primaryPhone {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            otherPhones {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            primaryDomain
+            privacyPolicy
+            tags
+            images {
+              __typename
+              id
+              altTex
+              src
+              createdAt
+              updatedAt
+            }
+            notes
+            isActive
+            createdAt
+            updatedAt
             address {
               __typename
               id
@@ -9960,42 +12788,16 @@ export class APIService {
               country
               createdAt
               updatedAt
-              owner
             }
-            email
-            primaryPhone {
-              __typename
-              id
-              phone
-              isActive
-              type
-              createdAt
-              updatedAt
-              owner
-            }
-            otherPhones {
-              __typename
-              id
-              phone
-              isActive
-              type
-              createdAt
-              updatedAt
-              owner
-            }
-            tags
-            photosUrls
-            notes
-            isActive
             boxes {
               __typename
               nextToken
             }
-            createdAt
-            updatedAt
-            owner
+            users {
+              __typename
+              nextToken
+            }
           }
-          shipmentID
           shipment {
             __typename
             id
@@ -10005,6 +12807,27 @@ export class APIService {
             startDate
             deliveryDate
             startLocationID
+            destinationLocationID
+            shipmentNotes
+            deliveryNotes
+            trackingId
+            weight
+            shipmentReceiver
+            status
+            statusHistory
+            tags
+            images {
+              __typename
+              id
+              altTex
+              src
+              createdAt
+              updatedAt
+            }
+            notes
+            notesHistory
+            createdAt
+            updatedAt
             startLocation {
               __typename
               id
@@ -10020,9 +12843,7 @@ export class APIService {
               tags
               createdAt
               updatedAt
-              owner
             }
-            destinationLocationID
             destinationLocation {
               __typename
               id
@@ -10038,39 +12859,12 @@ export class APIService {
               tags
               createdAt
               updatedAt
-              owner
             }
-            shipmentNotes
-            deliveryNotes
-            trackingId
-            weight
-            shipmentReceiver
-            status
-            statusHistory
-            tags
-            photosUrls
-            notes
-            notesHistory
             boxes {
               __typename
               nextToken
             }
-            createdAt
-            updatedAt
-            owner
           }
-          isActive
-          barCode
-          qrCode
-          barCodePhoto
-          qrCodePhoto
-          tags
-          photosUrls
-          status
-          statusHistory
-          internalNotes
-          notes
-          notesHistory
           locations {
             __typename
             items {
@@ -10078,20 +12872,16 @@ export class APIService {
               id
               boxID
               locationInfoID
+              userID
               notes
               isFinal
               tags
-              photosUrls
               isActive
               createdAt
               updatedAt
-              owner
             }
             nextToken
           }
-          createdAt
-          updatedAt
-          owner
         }
       }`
     )
@@ -10099,20 +12889,76 @@ export class APIService {
 
   OnDeleteBoxListener: Observable<OnDeleteBoxSubscription> = API.graphql(
     graphqlOperation(
-      `subscription OnDeleteBox($owner: String!) {
-        onDeleteBox(owner: $owner) {
+      `subscription OnDeleteBox {
+        onDeleteBox {
           __typename
           id
           title
           contents
           size
           orgID
+          shipmentID
+          isActive
+          barCode
+          qrCode
+          barCodePhoto
+          qrCodePhoto
+          tags
+          images {
+            __typename
+            id
+            altTex
+            src
+            createdAt
+            updatedAt
+          }
+          status
+          statusHistory
+          internalNotes
+          notes
+          notesHistory
+          createdAt
+          updatedAt
           org {
             __typename
             id
             name
             description
             addressID
+            email
+            primaryPhone {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            otherPhones {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            primaryDomain
+            privacyPolicy
+            tags
+            images {
+              __typename
+              id
+              altTex
+              src
+              createdAt
+              updatedAt
+            }
+            notes
+            isActive
+            createdAt
+            updatedAt
             address {
               __typename
               id
@@ -10127,42 +12973,16 @@ export class APIService {
               country
               createdAt
               updatedAt
-              owner
             }
-            email
-            primaryPhone {
-              __typename
-              id
-              phone
-              isActive
-              type
-              createdAt
-              updatedAt
-              owner
-            }
-            otherPhones {
-              __typename
-              id
-              phone
-              isActive
-              type
-              createdAt
-              updatedAt
-              owner
-            }
-            tags
-            photosUrls
-            notes
-            isActive
             boxes {
               __typename
               nextToken
             }
-            createdAt
-            updatedAt
-            owner
+            users {
+              __typename
+              nextToken
+            }
           }
-          shipmentID
           shipment {
             __typename
             id
@@ -10172,6 +12992,27 @@ export class APIService {
             startDate
             deliveryDate
             startLocationID
+            destinationLocationID
+            shipmentNotes
+            deliveryNotes
+            trackingId
+            weight
+            shipmentReceiver
+            status
+            statusHistory
+            tags
+            images {
+              __typename
+              id
+              altTex
+              src
+              createdAt
+              updatedAt
+            }
+            notes
+            notesHistory
+            createdAt
+            updatedAt
             startLocation {
               __typename
               id
@@ -10187,9 +13028,7 @@ export class APIService {
               tags
               createdAt
               updatedAt
-              owner
             }
-            destinationLocationID
             destinationLocation {
               __typename
               id
@@ -10205,39 +13044,12 @@ export class APIService {
               tags
               createdAt
               updatedAt
-              owner
             }
-            shipmentNotes
-            deliveryNotes
-            trackingId
-            weight
-            shipmentReceiver
-            status
-            statusHistory
-            tags
-            photosUrls
-            notes
-            notesHistory
             boxes {
               __typename
               nextToken
             }
-            createdAt
-            updatedAt
-            owner
           }
-          isActive
-          barCode
-          qrCode
-          barCodePhoto
-          qrCodePhoto
-          tags
-          photosUrls
-          status
-          statusHistory
-          internalNotes
-          notes
-          notesHistory
           locations {
             __typename
             items {
@@ -10245,20 +13057,16 @@ export class APIService {
               id
               boxID
               locationInfoID
+              userID
               notes
               isFinal
               tags
-              photosUrls
               isActive
               createdAt
               updatedAt
-              owner
             }
             nextToken
           }
-          createdAt
-          updatedAt
-          owner
         }
       }`
     )
@@ -10268,11 +13076,67 @@ export class APIService {
     OnCreateBoxLocationSubscription
   > = API.graphql(
     graphqlOperation(
-      `subscription OnCreateBoxLocation($owner: String!) {
-        onCreateBoxLocation(owner: $owner) {
+      `subscription OnCreateBoxLocation {
+        onCreateBoxLocation {
           __typename
           id
           boxID
+          locationInfoID
+          userID
+          notes
+          isFinal
+          tags
+          images {
+            __typename
+            id
+            altTex
+            src
+            createdAt
+            updatedAt
+          }
+          isActive
+          createdAt
+          updatedAt
+          locationInfo {
+            __typename
+            id
+            locationLabel
+            latitude
+            longitude
+            isActive
+            addressID
+            phones {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            plusCode
+            website
+            notes
+            notesHistory
+            tags
+            createdAt
+            updatedAt
+            address {
+              __typename
+              id
+              label
+              addressLine1
+              addressLine2
+              city
+              state
+              province
+              zipCode
+              postalCode
+              country
+              createdAt
+              updatedAt
+            }
+          }
           box {
             __typename
             id
@@ -10280,6 +13144,28 @@ export class APIService {
             contents
             size
             orgID
+            shipmentID
+            isActive
+            barCode
+            qrCode
+            barCodePhoto
+            qrCodePhoto
+            tags
+            images {
+              __typename
+              id
+              altTex
+              src
+              createdAt
+              updatedAt
+            }
+            status
+            statusHistory
+            internalNotes
+            notes
+            notesHistory
+            createdAt
+            updatedAt
             org {
               __typename
               id
@@ -10287,15 +13173,14 @@ export class APIService {
               description
               addressID
               email
+              primaryDomain
+              privacyPolicy
               tags
-              photosUrls
               notes
               isActive
               createdAt
               updatedAt
-              owner
             }
-            shipmentID
             shipment {
               __typename
               id
@@ -10314,85 +13199,59 @@ export class APIService {
               status
               statusHistory
               tags
-              photosUrls
               notes
               notesHistory
               createdAt
               updatedAt
-              owner
             }
-            isActive
-            barCode
-            qrCode
-            barCodePhoto
-            qrCodePhoto
-            tags
-            photosUrls
-            status
-            statusHistory
-            internalNotes
-            notes
-            notesHistory
             locations {
               __typename
               nextToken
             }
-            createdAt
-            updatedAt
-            owner
           }
-          locationInfoID
-          locationInfo {
+          user {
             __typename
             id
-            locationLabel
-            latitude
-            longitude
+            name
+            orgID
             isActive
-            addressID
-            address {
-              __typename
-              id
-              label
-              addressLine1
-              addressLine2
-              city
-              state
-              province
-              zipCode
-              postalCode
-              country
-              createdAt
-              updatedAt
-              owner
-            }
-            phones {
-              __typename
-              id
-              phone
-              isActive
-              type
-              createdAt
-              updatedAt
-              owner
-            }
-            plusCode
-            website
-            notes
-            notesHistory
             tags
+            images {
+              __typename
+              id
+              altTex
+              src
+              createdAt
+              updatedAt
+            }
+            status
+            statusHistory
+            internalNotes
+            notes
+            rank
+            notesHistory
             createdAt
             updatedAt
-            owner
+            org {
+              __typename
+              id
+              name
+              description
+              addressID
+              email
+              primaryDomain
+              privacyPolicy
+              tags
+              notes
+              isActive
+              createdAt
+              updatedAt
+            }
+            boxLocations {
+              __typename
+              nextToken
+            }
           }
-          notes
-          isFinal
-          tags
-          photosUrls
-          isActive
-          createdAt
-          updatedAt
-          owner
         }
       }`
     )
@@ -10402,11 +13261,67 @@ export class APIService {
     OnUpdateBoxLocationSubscription
   > = API.graphql(
     graphqlOperation(
-      `subscription OnUpdateBoxLocation($owner: String!) {
-        onUpdateBoxLocation(owner: $owner) {
+      `subscription OnUpdateBoxLocation {
+        onUpdateBoxLocation {
           __typename
           id
           boxID
+          locationInfoID
+          userID
+          notes
+          isFinal
+          tags
+          images {
+            __typename
+            id
+            altTex
+            src
+            createdAt
+            updatedAt
+          }
+          isActive
+          createdAt
+          updatedAt
+          locationInfo {
+            __typename
+            id
+            locationLabel
+            latitude
+            longitude
+            isActive
+            addressID
+            phones {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            plusCode
+            website
+            notes
+            notesHistory
+            tags
+            createdAt
+            updatedAt
+            address {
+              __typename
+              id
+              label
+              addressLine1
+              addressLine2
+              city
+              state
+              province
+              zipCode
+              postalCode
+              country
+              createdAt
+              updatedAt
+            }
+          }
           box {
             __typename
             id
@@ -10414,6 +13329,28 @@ export class APIService {
             contents
             size
             orgID
+            shipmentID
+            isActive
+            barCode
+            qrCode
+            barCodePhoto
+            qrCodePhoto
+            tags
+            images {
+              __typename
+              id
+              altTex
+              src
+              createdAt
+              updatedAt
+            }
+            status
+            statusHistory
+            internalNotes
+            notes
+            notesHistory
+            createdAt
+            updatedAt
             org {
               __typename
               id
@@ -10421,15 +13358,14 @@ export class APIService {
               description
               addressID
               email
+              primaryDomain
+              privacyPolicy
               tags
-              photosUrls
               notes
               isActive
               createdAt
               updatedAt
-              owner
             }
-            shipmentID
             shipment {
               __typename
               id
@@ -10448,85 +13384,59 @@ export class APIService {
               status
               statusHistory
               tags
-              photosUrls
               notes
               notesHistory
               createdAt
               updatedAt
-              owner
             }
-            isActive
-            barCode
-            qrCode
-            barCodePhoto
-            qrCodePhoto
-            tags
-            photosUrls
-            status
-            statusHistory
-            internalNotes
-            notes
-            notesHistory
             locations {
               __typename
               nextToken
             }
-            createdAt
-            updatedAt
-            owner
           }
-          locationInfoID
-          locationInfo {
+          user {
             __typename
             id
-            locationLabel
-            latitude
-            longitude
+            name
+            orgID
             isActive
-            addressID
-            address {
-              __typename
-              id
-              label
-              addressLine1
-              addressLine2
-              city
-              state
-              province
-              zipCode
-              postalCode
-              country
-              createdAt
-              updatedAt
-              owner
-            }
-            phones {
-              __typename
-              id
-              phone
-              isActive
-              type
-              createdAt
-              updatedAt
-              owner
-            }
-            plusCode
-            website
-            notes
-            notesHistory
             tags
+            images {
+              __typename
+              id
+              altTex
+              src
+              createdAt
+              updatedAt
+            }
+            status
+            statusHistory
+            internalNotes
+            notes
+            rank
+            notesHistory
             createdAt
             updatedAt
-            owner
+            org {
+              __typename
+              id
+              name
+              description
+              addressID
+              email
+              primaryDomain
+              privacyPolicy
+              tags
+              notes
+              isActive
+              createdAt
+              updatedAt
+            }
+            boxLocations {
+              __typename
+              nextToken
+            }
           }
-          notes
-          isFinal
-          tags
-          photosUrls
-          isActive
-          createdAt
-          updatedAt
-          owner
         }
       }`
     )
@@ -10536,11 +13446,67 @@ export class APIService {
     OnDeleteBoxLocationSubscription
   > = API.graphql(
     graphqlOperation(
-      `subscription OnDeleteBoxLocation($owner: String!) {
-        onDeleteBoxLocation(owner: $owner) {
+      `subscription OnDeleteBoxLocation {
+        onDeleteBoxLocation {
           __typename
           id
           boxID
+          locationInfoID
+          userID
+          notes
+          isFinal
+          tags
+          images {
+            __typename
+            id
+            altTex
+            src
+            createdAt
+            updatedAt
+          }
+          isActive
+          createdAt
+          updatedAt
+          locationInfo {
+            __typename
+            id
+            locationLabel
+            latitude
+            longitude
+            isActive
+            addressID
+            phones {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            plusCode
+            website
+            notes
+            notesHistory
+            tags
+            createdAt
+            updatedAt
+            address {
+              __typename
+              id
+              label
+              addressLine1
+              addressLine2
+              city
+              state
+              province
+              zipCode
+              postalCode
+              country
+              createdAt
+              updatedAt
+            }
+          }
           box {
             __typename
             id
@@ -10548,6 +13514,28 @@ export class APIService {
             contents
             size
             orgID
+            shipmentID
+            isActive
+            barCode
+            qrCode
+            barCodePhoto
+            qrCodePhoto
+            tags
+            images {
+              __typename
+              id
+              altTex
+              src
+              createdAt
+              updatedAt
+            }
+            status
+            statusHistory
+            internalNotes
+            notes
+            notesHistory
+            createdAt
+            updatedAt
             org {
               __typename
               id
@@ -10555,15 +13543,14 @@ export class APIService {
               description
               addressID
               email
+              primaryDomain
+              privacyPolicy
               tags
-              photosUrls
               notes
               isActive
               createdAt
               updatedAt
-              owner
             }
-            shipmentID
             shipment {
               __typename
               id
@@ -10582,42 +13569,130 @@ export class APIService {
               status
               statusHistory
               tags
-              photosUrls
               notes
               notesHistory
               createdAt
               updatedAt
-              owner
             }
-            isActive
-            barCode
-            qrCode
-            barCodePhoto
-            qrCodePhoto
-            tags
-            photosUrls
-            status
-            statusHistory
-            internalNotes
-            notes
-            notesHistory
             locations {
               __typename
               nextToken
             }
-            createdAt
-            updatedAt
-            owner
           }
-          locationInfoID
-          locationInfo {
+          user {
             __typename
             id
-            locationLabel
-            latitude
-            longitude
+            name
+            orgID
             isActive
+            tags
+            images {
+              __typename
+              id
+              altTex
+              src
+              createdAt
+              updatedAt
+            }
+            status
+            statusHistory
+            internalNotes
+            notes
+            rank
+            notesHistory
+            createdAt
+            updatedAt
+            org {
+              __typename
+              id
+              name
+              description
+              addressID
+              email
+              primaryDomain
+              privacyPolicy
+              tags
+              notes
+              isActive
+              createdAt
+              updatedAt
+            }
+            boxLocations {
+              __typename
+              nextToken
+            }
+          }
+        }
+      }`
+    )
+  ) as Observable<OnDeleteBoxLocationSubscription>;
+
+  OnCreateUserListener: Observable<OnCreateUserSubscription> = API.graphql(
+    graphqlOperation(
+      `subscription OnCreateUser {
+        onCreateUser {
+          __typename
+          id
+          name
+          orgID
+          isActive
+          tags
+          images {
+            __typename
+            id
+            altTex
+            src
+            createdAt
+            updatedAt
+          }
+          status
+          statusHistory
+          internalNotes
+          notes
+          rank
+          notesHistory
+          createdAt
+          updatedAt
+          org {
+            __typename
+            id
+            name
+            description
             addressID
+            email
+            primaryPhone {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            otherPhones {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            primaryDomain
+            privacyPolicy
+            tags
+            images {
+              __typename
+              id
+              altTex
+              src
+              createdAt
+              updatedAt
+            }
+            notes
+            isActive
+            createdAt
+            updatedAt
             address {
               __typename
               id
@@ -10632,9 +13707,72 @@ export class APIService {
               country
               createdAt
               updatedAt
-              owner
             }
-            phones {
+            boxes {
+              __typename
+              nextToken
+            }
+            users {
+              __typename
+              nextToken
+            }
+          }
+          boxLocations {
+            __typename
+            items {
+              __typename
+              id
+              boxID
+              locationInfoID
+              userID
+              notes
+              isFinal
+              tags
+              isActive
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+        }
+      }`
+    )
+  ) as Observable<OnCreateUserSubscription>;
+
+  OnUpdateUserListener: Observable<OnUpdateUserSubscription> = API.graphql(
+    graphqlOperation(
+      `subscription OnUpdateUser {
+        onUpdateUser {
+          __typename
+          id
+          name
+          orgID
+          isActive
+          tags
+          images {
+            __typename
+            id
+            altTex
+            src
+            createdAt
+            updatedAt
+          }
+          status
+          statusHistory
+          internalNotes
+          notes
+          rank
+          notesHistory
+          createdAt
+          updatedAt
+          org {
+            __typename
+            id
+            name
+            description
+            addressID
+            email
+            primaryPhone {
               __typename
               id
               phone
@@ -10642,27 +13780,186 @@ export class APIService {
               type
               createdAt
               updatedAt
-              owner
             }
-            plusCode
-            website
-            notes
-            notesHistory
+            otherPhones {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            primaryDomain
+            privacyPolicy
             tags
+            images {
+              __typename
+              id
+              altTex
+              src
+              createdAt
+              updatedAt
+            }
+            notes
+            isActive
             createdAt
             updatedAt
-            owner
+            address {
+              __typename
+              id
+              label
+              addressLine1
+              addressLine2
+              city
+              state
+              province
+              zipCode
+              postalCode
+              country
+              createdAt
+              updatedAt
+            }
+            boxes {
+              __typename
+              nextToken
+            }
+            users {
+              __typename
+              nextToken
+            }
           }
-          notes
-          isFinal
-          tags
-          photosUrls
-          isActive
-          createdAt
-          updatedAt
-          owner
+          boxLocations {
+            __typename
+            items {
+              __typename
+              id
+              boxID
+              locationInfoID
+              userID
+              notes
+              isFinal
+              tags
+              isActive
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
         }
       }`
     )
-  ) as Observable<OnDeleteBoxLocationSubscription>;
+  ) as Observable<OnUpdateUserSubscription>;
+
+  OnDeleteUserListener: Observable<OnDeleteUserSubscription> = API.graphql(
+    graphqlOperation(
+      `subscription OnDeleteUser {
+        onDeleteUser {
+          __typename
+          id
+          name
+          orgID
+          isActive
+          tags
+          images {
+            __typename
+            id
+            altTex
+            src
+            createdAt
+            updatedAt
+          }
+          status
+          statusHistory
+          internalNotes
+          notes
+          rank
+          notesHistory
+          createdAt
+          updatedAt
+          org {
+            __typename
+            id
+            name
+            description
+            addressID
+            email
+            primaryPhone {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            otherPhones {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            primaryDomain
+            privacyPolicy
+            tags
+            images {
+              __typename
+              id
+              altTex
+              src
+              createdAt
+              updatedAt
+            }
+            notes
+            isActive
+            createdAt
+            updatedAt
+            address {
+              __typename
+              id
+              label
+              addressLine1
+              addressLine2
+              city
+              state
+              province
+              zipCode
+              postalCode
+              country
+              createdAt
+              updatedAt
+            }
+            boxes {
+              __typename
+              nextToken
+            }
+            users {
+              __typename
+              nextToken
+            }
+          }
+          boxLocations {
+            __typename
+            items {
+              __typename
+              id
+              boxID
+              locationInfoID
+              userID
+              notes
+              isFinal
+              tags
+              isActive
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+        }
+      }`
+    )
+  ) as Observable<OnDeleteUserSubscription>;
 }

@@ -39,18 +39,37 @@ enum BoxStatus {
   ERROR
 }
 
+enum UserStatus {
+  PENDING_VERIFICATION
+  ACTIVE
+  DISABLED
+  FLAGGED
+}
+
+type Image 
+@model
+@auth(
+  rules: [
+   { allow: owner },
+   { allow: public, provider: apiKey }, 
+   { allow: groups, groups: ["haaApiAdmins", "haaApiDataAdmins"] },
+   { allow: private, operations: [read]}
+  ]
+) 
+{
+  id: ID!
+  altTex: String
+  src: AWSURL!
+}
+
 type ApihealthCheckInfo
 @model
 @auth(
   rules: [
-    # Defaults to use the "owner" field.
-    { allow: owner }
-    # Admins can access any operation, but allow any authenticated user to read the objects
-    {
-      allow: groups
-      groups: ["haaApiAdmins", "haaApiDataAdmins"]
-      operations: [create, delete, update]
-    }
+   { allow: owner },
+   { allow: public, provider: apiKey }, 
+   { allow: groups, groups: ["haaApiAdmins", "haaApiDataAdmins"] },
+   { allow: private, operations: [read]}
   ]
 ) {
   id: ID!
@@ -65,14 +84,10 @@ type Address
 @model
 @auth(
   rules: [
-    # Defaults to use the "owner" field.
-    { allow: owner }
-    # Admins can access any operation, but allow any authenticated user to read the objects
-    {
-      allow: groups
-      groups: ["haaApiAdmins", "haaApiDataAdmins"]
-      operations: [create, delete, update]
-    }
+   { allow: owner },
+   { allow: public, provider: apiKey }, 
+   { allow: groups, groups: ["haaApiAdmins", "haaApiDataAdmins"] },
+   { allow: private, operations: [read]}
   ]
 ) {
   id: ID!
@@ -91,14 +106,10 @@ type Phone
 @model
 @auth(
   rules: [
-    # Defaults to use the "owner" field.
-    { allow: owner }
-    # Admins can access any operation, but allow any authenticated user to read the objects
-    {
-      allow: groups
-      groups: ["haaApiAdmins", "haaApiDataAdmins"]
-      operations: [create, delete, update]
-    }
+   { allow: owner },
+   { allow: public, provider: apiKey }, 
+   { allow: groups, groups: ["haaApiAdmins", "haaApiDataAdmins"] },
+   { allow: private, operations: [read]}
   ]
 ) {
   id: ID!
@@ -111,14 +122,10 @@ type Org
 @model
 @auth(
   rules: [
-    # Defaults to use the "owner" field.
-    { allow: owner }
-    # Admins can access any operation, but allow any authenticated user to read the objects
-    {
-      allow: groups
-      groups: ["haaApiAdmins", "haaApiDataAdmins"]
-      operations: [create, delete, update]
-    }
+   { allow: owner },
+   { allow: public, provider: apiKey }, 
+   { allow: groups, groups: ["haaApiAdmins", "haaApiDataAdmins"] },
+   { allow: private, operations: [read]}
   ]
 ) {
   id: ID!
@@ -129,25 +136,24 @@ type Org
   email: AWSEmail
   primaryPhone: Phone
   otherPhones: [Phone!]
+  primaryDomain: String
+  privacyPolicy: String
   tags: [String!]
-  photosUrls: [AWSURL!]
+  images: [Image!]
   notes: String
   isActive: Boolean!
   boxes: [Box] @connection(keyName: "byOrg", fields: ["id"])
+  users: [User] @connection(keyName: "byOrg", fields: ["id"])
 }
 
 type LocationInfo
 @model
 @auth(
   rules: [
-    # Defaults to use the "owner" field.
-    { allow: owner }
-    # Admins can access any operation, but allow any authenticated user to read the objects
-    {
-      allow: groups
-      groups: ["haaApiAdmins", "haaApiDataAdmins"]
-      operations: [create, delete, update]
-    }
+   { allow: owner },
+   { allow: public, provider: apiKey }, 
+   { allow: groups, groups: ["haaApiAdmins", "haaApiDataAdmins"] },
+   { allow: private, operations: [read]}
   ]
 ) {
   id: ID!
@@ -171,14 +177,10 @@ type Shipment
 @model
 @auth(
   rules: [
-    # Defaults to use the "owner" field.
-    { allow: owner }
-    # Admins can access any operation.
-    {
-      allow: groups
-      groups: ["haaApiAdmins", "haaApiDataAdmins"]
-      operations: [create, delete, update]
-    }
+   { allow: owner },
+   { allow: public, provider: apiKey }, 
+   { allow: groups, groups: ["haaApiAdmins", "haaApiDataAdmins"] },
+   { allow: private, operations: [read]}
   ]
 ) {
   id: ID!
@@ -200,7 +202,7 @@ type Shipment
   status: ShippingStatus
   statusHistory: [String!]
   tags: [String!]
-  photosUrls: [AWSURL!]
+  images: [Image!]
   notes: String
   notesHistory: [String!]
   boxes: [Box] @connection(keyName: "byBoxShipment", fields: ["id"])
@@ -216,14 +218,10 @@ type Box
 )
 @auth(
   rules: [
-    # Defaults to use the "owner" field.
-    { allow: owner }
-    # Admins can access any operation, but allow any authenticated user to read the objects
-    {
-      allow: groups
-      groups: ["haaApiAdmins", "haaApiDataAdmins"]
-      operations: [create, delete, update]
-    }
+   { allow: owner },
+   { allow: public, provider: apiKey }, 
+   { allow: groups, groups: ["haaApiAdmins", "haaApiDataAdmins"] },
+   { allow: private, operations: [read]}
   ]
 ) {
   id: ID!
@@ -240,7 +238,7 @@ type Box
   barCodePhoto: AWSURL
   qrCodePhoto: AWSURL
   tags: [String!]
-  photosUrls: [AWSURL!]
+  images: [Image!]
   status: BoxStatus!
   statusHistory: [BoxStatus!]
   internalNotes: String
@@ -253,16 +251,13 @@ type Box
 type BoxLocation
 @model
 @key(name: "locationForBox", fields: ["boxID", "locationInfoID"])
+@key(name: "userForBox", fields: ["userID", "boxID"])
 @auth(
   rules: [
-    # Defaults to use the "owner" field.
-    { allow: owner }
-    # Admins can access any operation, but allow any authenticated user to read the objects
-    {
-      allow: groups
-      groups: ["haaApiAdmins", "haaApiDataAdmins"]
-      operations: [create, delete, update]
-    }
+   { allow: owner },
+   { allow: public, provider: apiKey }, 
+   { allow: groups, groups: ["haaApiAdmins", "haaApiDataAdmins"] },
+   { allow: private, operations: [read]}
   ]
 ) {
   id: ID!
@@ -271,9 +266,40 @@ type BoxLocation
 
   locationInfoID: ID!
   locationInfo: LocationInfo! @connection(fields: ["locationInfoID"])
+
+  userID: ID!
+  user: User! @connection(fields: ["userID"])
+
   notes: String
   isFinal: Boolean!
   tags: [String!]
-  photosUrls: [AWSURL!]
+  images: [Image!]
   isActive: Boolean!
+}
+
+type User
+@model
+@key(name: "byOrg", fields: ["orgID"])
+@auth(
+  rules: [
+   { allow: owner },
+   { allow: public, provider: apiKey }, 
+   { allow: groups, groups: ["haaApiAdmins", "haaApiDataAdmins"] },
+   { allow: private, operations: [read]}
+  ]
+) {
+  id: ID!
+  name: String!
+  orgID: ID!
+  org: Org @connection(fields: ["orgID"])
+  isActive: Boolean!
+  tags: [String!]
+  images: [Image!]
+  status: UserStatus!
+  statusHistory: [UserStatus!]
+  internalNotes: String
+  notes: String
+  rank: Float
+  notesHistory: [String!]
+  boxLocations: [BoxLocation]  @connection(keyName: "userForBox", fields: ["id"])
 }

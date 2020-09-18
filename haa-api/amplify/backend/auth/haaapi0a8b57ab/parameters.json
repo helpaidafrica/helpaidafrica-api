@@ -1,4 +1,6 @@
 {
+    "identityPoolName": "haaapi0a8b57ab_identitypool_df5aba2f",
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "haaapi0a8b57ab",
     "userPoolName": "haaapi0a8b57ab_userpool_0a8b57ab",
     "autoVerifiedAttributes": [
@@ -8,9 +10,9 @@
     "mfaTypes": [
         "SMS Text Message"
     ],
-    "smsAuthenticationMessage": "HelpAidAfrica: Your auth code is: {####}",
+    "smsAuthenticationMessage": "Your authentication code is {####}",
     "smsVerificationMessage": "Your verification code is {####}",
-    "emailVerificationSubject": "Your verification code from HelpAidAfrica API",
+    "emailVerificationSubject": "HelpAidAfrica.org API - Here is your verification code",
     "emailVerificationMessage": "Your verification code is {####}",
     "defaultPasswordPolicy": false,
     "passwordPolicyMinLength": 8,
@@ -19,7 +21,7 @@
         "email"
     ],
     "userpoolClientGenerateSecret": true,
-    "userpoolClientRefreshTokenValidity": "90",
+    "userpoolClientRefreshTokenValidity": "30",
     "userpoolClientWriteAttributes": [
         "email"
     ],
@@ -30,7 +32,7 @@
     "userpoolClientSetAttributes": false,
     "sharedId": "0a8b57ab",
     "resourceName": "haaapi0a8b57ab",
-    "authSelections": "userPoolOnly",
+    "authSelections": "identityPoolAndUserPool",
     "authRoleArn": {
         "Fn::GetAtt": [
             "AuthRole",
@@ -64,7 +66,7 @@
             ]
         }
     ],
-    "userPoolGroups": true,
+    "userPoolGroups": false,
     "adminQueries": false,
     "triggers": "{\n  \"PostConfirmation\": [\n    \"add-to-group\"\n  ]\n}",
     "hostedUI": false,
@@ -73,5 +75,6 @@
     },
     "permissions": [
         "{\n  \"policyName\": \"AddToGroupCognito\",\n  \"trigger\": \"PostConfirmation\",\n  \"effect\": \"Allow\",\n  \"actions\": [\n    \"cognito-idp:AdminAddUserToGroup\",\n    \"cognito-idp:GetGroup\",\n    \"cognito-idp:CreateGroup\"\n  ],\n  \"resource\": {\n    \"paramType\": \"!GetAtt\",\n    \"keys\": [\n      \"UserPool\",\n      \"Arn\"\n    ]\n  }\n}"
-    ]
+    ],
+    "thirdPartyAuth": false
 }

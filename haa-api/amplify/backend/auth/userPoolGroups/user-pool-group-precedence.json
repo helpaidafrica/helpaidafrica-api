@@ -1,14 +1,14 @@
 [
-  {
-    "groupName": "haaApiAdmins",
-    "precedence": 1
-  },
-  {
-    "groupName": "haaApiDataAdmins",
-    "precedence": 2
-  },
-  {
-    "groupName": "haaApiUsers",
-    "precedence": 3
-  }
+    {
+        "groupName": "haaApiAdmins",
+        "precedence": 1
+    },
+    {
+        "groupName": "haaApiDataAdmins",
+        "precedence": 2
+    },
+    {
+        "groupName": "haaApiUsers",
+        "precedence": 3
+    }
 ]

@@ -1,4 +1,40 @@
 # this is an auto generated file. This will be overwritten
+mutation CreateImage(
+  $input: CreateImageInput!
+  $condition: ModelImageConditionInput
+) {
+  createImage(input: $input, condition: $condition) {
+    id
+    altTex
+    src
+    createdAt
+    updatedAt
+  }
+}
+mutation UpdateImage(
+  $input: UpdateImageInput!
+  $condition: ModelImageConditionInput
+) {
+  updateImage(input: $input, condition: $condition) {
+    id
+    altTex
+    src
+    createdAt
+    updatedAt
+  }
+}
+mutation DeleteImage(
+  $input: DeleteImageInput!
+  $condition: ModelImageConditionInput
+) {
+  deleteImage(input: $input, condition: $condition) {
+    id
+    altTex
+    src
+    createdAt
+    updatedAt
+  }
+}
 mutation CreateApihealthCheckInfo(
   $input: CreateApihealthCheckInfoInput!
   $condition: ModelApihealthCheckInfoConditionInput
@@ -12,7 +48,6 @@ mutation CreateApihealthCheckInfo(
     lastUpdated
     createdAt
     updatedAt
-    owner
   }
 }
 mutation UpdateApihealthCheckInfo(
@@ -28,7 +63,6 @@ mutation UpdateApihealthCheckInfo(
     lastUpdated
     createdAt
     updatedAt
-    owner
   }
 }
 mutation DeleteApihealthCheckInfo(
@@ -44,7 +78,6 @@ mutation DeleteApihealthCheckInfo(
     lastUpdated
     createdAt
     updatedAt
-    owner
   }
 }
 mutation CreateAddress(
@@ -64,7 +97,6 @@ mutation CreateAddress(
     country
     createdAt
     updatedAt
-    owner
   }
 }
 mutation UpdateAddress(
@@ -84,7 +116,6 @@ mutation UpdateAddress(
     country
     createdAt
     updatedAt
-    owner
   }
 }
 mutation DeleteAddress(
@@ -104,7 +135,6 @@ mutation DeleteAddress(
     country
     createdAt
     updatedAt
-    owner
   }
 }
 mutation CreatePhone(
@@ -118,7 +148,6 @@ mutation CreatePhone(
     type
     createdAt
     updatedAt
-    owner
   }
 }
 mutation UpdatePhone(
@@ -132,7 +161,6 @@ mutation UpdatePhone(
     type
     createdAt
     updatedAt
-    owner
   }
 }
 mutation DeletePhone(
@@ -146,7 +174,6 @@ mutation DeletePhone(
     type
     createdAt
     updatedAt
-    owner
   }
 }
 mutation CreateOrg(
@@ -158,6 +185,37 @@ mutation CreateOrg(
     name
     description
     addressID
+    email
+    primaryPhone {
+      id
+      phone
+      isActive
+      type
+      createdAt
+      updatedAt
+    }
+    otherPhones {
+      id
+      phone
+      isActive
+      type
+      createdAt
+      updatedAt
+    }
+    primaryDomain
+    privacyPolicy
+    tags
+    images {
+      id
+      altTex
+      src
+      createdAt
+      updatedAt
+    }
+    notes
+    isActive
+    createdAt
+    updatedAt
     address {
       id
       label
@@ -171,31 +229,7 @@ mutation CreateOrg(
       country
       createdAt
       updatedAt
-      owner
     }
-    email
-    primaryPhone {
-      id
-      phone
-      isActive
-      type
-      createdAt
-      updatedAt
-      owner
-    }
-    otherPhones {
-      id
-      phone
-      isActive
-      type
-      createdAt
-      updatedAt
-      owner
-    }
-    tags
-    photosUrls
-    notes
-    isActive
     boxes {
       items {
         id
@@ -210,7 +244,6 @@ mutation CreateOrg(
         barCodePhoto
         qrCodePhoto
         tags
-        photosUrls
         status
         statusHistory
         internalNotes
@@ -218,13 +251,27 @@ mutation CreateOrg(
         notesHistory
         createdAt
         updatedAt
-        owner
       }
       nextToken
     }
-    createdAt
-    updatedAt
-    owner
+    users {
+      items {
+        id
+        name
+        orgID
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
   }
 }
 mutation UpdateOrg(
@@ -236,6 +283,37 @@ mutation UpdateOrg(
     name
     description
     addressID
+    email
+    primaryPhone {
+      id
+      phone
+      isActive
+      type
+      createdAt
+      updatedAt
+    }
+    otherPhones {
+      id
+      phone
+      isActive
+      type
+      createdAt
+      updatedAt
+    }
+    primaryDomain
+    privacyPolicy
+    tags
+    images {
+      id
+      altTex
+      src
+      createdAt
+      updatedAt
+    }
+    notes
+    isActive
+    createdAt
+    updatedAt
     address {
       id
       label
@@ -249,31 +327,7 @@ mutation UpdateOrg(
       country
       createdAt
       updatedAt
-      owner
     }
-    email
-    primaryPhone {
-      id
-      phone
-      isActive
-      type
-      createdAt
-      updatedAt
-      owner
-    }
-    otherPhones {
-      id
-      phone
-      isActive
-      type
-      createdAt
-      updatedAt
-      owner
-    }
-    tags
-    photosUrls
-    notes
-    isActive
     boxes {
       items {
         id
@@ -288,7 +342,6 @@ mutation UpdateOrg(
         barCodePhoto
         qrCodePhoto
         tags
-        photosUrls
         status
         statusHistory
         internalNotes
@@ -296,13 +349,27 @@ mutation UpdateOrg(
         notesHistory
         createdAt
         updatedAt
-        owner
       }
       nextToken
     }
-    createdAt
-    updatedAt
-    owner
+    users {
+      items {
+        id
+        name
+        orgID
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
   }
 }
 mutation DeleteOrg(
@@ -314,6 +381,37 @@ mutation DeleteOrg(
     name
     description
     addressID
+    email
+    primaryPhone {
+      id
+      phone
+      isActive
+      type
+      createdAt
+      updatedAt
+    }
+    otherPhones {
+      id
+      phone
+      isActive
+      type
+      createdAt
+      updatedAt
+    }
+    primaryDomain
+    privacyPolicy
+    tags
+    images {
+      id
+      altTex
+      src
+      createdAt
+      updatedAt
+    }
+    notes
+    isActive
+    createdAt
+    updatedAt
     address {
       id
       label
@@ -327,31 +425,7 @@ mutation DeleteOrg(
       country
       createdAt
       updatedAt
-      owner
     }
-    email
-    primaryPhone {
-      id
-      phone
-      isActive
-      type
-      createdAt
-      updatedAt
-      owner
-    }
-    otherPhones {
-      id
-      phone
-      isActive
-      type
-      createdAt
-      updatedAt
-      owner
-    }
-    tags
-    photosUrls
-    notes
-    isActive
     boxes {
       items {
         id
@@ -366,7 +440,6 @@ mutation DeleteOrg(
         barCodePhoto
         qrCodePhoto
         tags
-        photosUrls
         status
         statusHistory
         internalNotes
@@ -374,13 +447,27 @@ mutation DeleteOrg(
         notesHistory
         createdAt
         updatedAt
-        owner
       }
       nextToken
     }
-    createdAt
-    updatedAt
-    owner
+    users {
+      items {
+        id
+        name
+        orgID
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
   }
 }
 mutation CreateLocationInfo(
@@ -394,6 +481,21 @@ mutation CreateLocationInfo(
     longitude
     isActive
     addressID
+    phones {
+      id
+      phone
+      isActive
+      type
+      createdAt
+      updatedAt
+    }
+    plusCode
+    website
+    notes
+    notesHistory
+    tags
+    createdAt
+    updatedAt
     address {
       id
       label
@@ -407,25 +509,7 @@ mutation CreateLocationInfo(
       country
       createdAt
       updatedAt
-      owner
     }
-    phones {
-      id
-      phone
-      isActive
-      type
-      createdAt
-      updatedAt
-      owner
-    }
-    plusCode
-    website
-    notes
-    notesHistory
-    tags
-    createdAt
-    updatedAt
-    owner
   }
 }
 mutation UpdateLocationInfo(
@@ -439,6 +523,21 @@ mutation UpdateLocationInfo(
     longitude
     isActive
     addressID
+    phones {
+      id
+      phone
+      isActive
+      type
+      createdAt
+      updatedAt
+    }
+    plusCode
+    website
+    notes
+    notesHistory
+    tags
+    createdAt
+    updatedAt
     address {
       id
       label
@@ -452,25 +551,7 @@ mutation UpdateLocationInfo(
       country
       createdAt
       updatedAt
-      owner
     }
-    phones {
-      id
-      phone
-      isActive
-      type
-      createdAt
-      updatedAt
-      owner
-    }
-    plusCode
-    website
-    notes
-    notesHistory
-    tags
-    createdAt
-    updatedAt
-    owner
   }
 }
 mutation DeleteLocationInfo(
@@ -484,6 +565,21 @@ mutation DeleteLocationInfo(
     longitude
     isActive
     addressID
+    phones {
+      id
+      phone
+      isActive
+      type
+      createdAt
+      updatedAt
+    }
+    plusCode
+    website
+    notes
+    notesHistory
+    tags
+    createdAt
+    updatedAt
     address {
       id
       label
@@ -497,25 +593,7 @@ mutation DeleteLocationInfo(
       country
       createdAt
       updatedAt
-      owner
     }
-    phones {
-      id
-      phone
-      isActive
-      type
-      createdAt
-      updatedAt
-      owner
-    }
-    plusCode
-    website
-    notes
-    notesHistory
-    tags
-    createdAt
-    updatedAt
-    owner
   }
 }
 mutation CreateShipment(
@@ -530,87 +608,7 @@ mutation CreateShipment(
     startDate
     deliveryDate
     startLocationID
-    startLocation {
-      id
-      locationLabel
-      latitude
-      longitude
-      isActive
-      addressID
-      address {
-        id
-        label
-        addressLine1
-        addressLine2
-        city
-        state
-        province
-        zipCode
-        postalCode
-        country
-        createdAt
-        updatedAt
-        owner
-      }
-      phones {
-        id
-        phone
-        isActive
-        type
-        createdAt
-        updatedAt
-        owner
-      }
-      plusCode
-      website
-      notes
-      notesHistory
-      tags
-      createdAt
-      updatedAt
-      owner
-    }
     destinationLocationID
-    destinationLocation {
-      id
-      locationLabel
-      latitude
-      longitude
-      isActive
-      addressID
-      address {
-        id
-        label
-        addressLine1
-        addressLine2
-        city
-        state
-        province
-        zipCode
-        postalCode
-        country
-        createdAt
-        updatedAt
-        owner
-      }
-      phones {
-        id
-        phone
-        isActive
-        type
-        createdAt
-        updatedAt
-        owner
-      }
-      plusCode
-      website
-      notes
-      notesHistory
-      tags
-      createdAt
-      updatedAt
-      owner
-    }
     shipmentNotes
     deliveryNotes
     trackingId
@@ -619,9 +617,91 @@ mutation CreateShipment(
     status
     statusHistory
     tags
-    photosUrls
+    images {
+      id
+      altTex
+      src
+      createdAt
+      updatedAt
+    }
     notes
     notesHistory
+    createdAt
+    updatedAt
+    startLocation {
+      id
+      locationLabel
+      latitude
+      longitude
+      isActive
+      addressID
+      phones {
+        id
+        phone
+        isActive
+        type
+        createdAt
+        updatedAt
+      }
+      plusCode
+      website
+      notes
+      notesHistory
+      tags
+      createdAt
+      updatedAt
+      address {
+        id
+        label
+        addressLine1
+        addressLine2
+        city
+        state
+        province
+        zipCode
+        postalCode
+        country
+        createdAt
+        updatedAt
+      }
+    }
+    destinationLocation {
+      id
+      locationLabel
+      latitude
+      longitude
+      isActive
+      addressID
+      phones {
+        id
+        phone
+        isActive
+        type
+        createdAt
+        updatedAt
+      }
+      plusCode
+      website
+      notes
+      notesHistory
+      tags
+      createdAt
+      updatedAt
+      address {
+        id
+        label
+        addressLine1
+        addressLine2
+        city
+        state
+        province
+        zipCode
+        postalCode
+        country
+        createdAt
+        updatedAt
+      }
+    }
     boxes {
       items {
         id
@@ -636,7 +716,6 @@ mutation CreateShipment(
         barCodePhoto
         qrCodePhoto
         tags
-        photosUrls
         status
         statusHistory
         internalNotes
@@ -644,13 +723,9 @@ mutation CreateShipment(
         notesHistory
         createdAt
         updatedAt
-        owner
       }
       nextToken
     }
-    createdAt
-    updatedAt
-    owner
   }
 }
 mutation UpdateShipment(
@@ -665,87 +740,7 @@ mutation UpdateShipment(
     startDate
     deliveryDate
     startLocationID
-    startLocation {
-      id
-      locationLabel
-      latitude
-      longitude
-      isActive
-      addressID
-      address {
-        id
-        label
-        addressLine1
-        addressLine2
-        city
-        state
-        province
-        zipCode
-        postalCode
-        country
-        createdAt
-        updatedAt
-        owner
-      }
-      phones {
-        id
-        phone
-        isActive
-        type
-        createdAt
-        updatedAt
-        owner
-      }
-      plusCode
-      website
-      notes
-      notesHistory
-      tags
-      createdAt
-      updatedAt
-      owner
-    }
     destinationLocationID
-    destinationLocation {
-      id
-      locationLabel
-      latitude
-      longitude
-      isActive
-      addressID
-      address {
-        id
-        label
-        addressLine1
-        addressLine2
-        city
-        state
-        province
-        zipCode
-        postalCode
-        country
-        createdAt
-        updatedAt
-        owner
-      }
-      phones {
-        id
-        phone
-        isActive
-        type
-        createdAt
-        updatedAt
-        owner
-      }
-      plusCode
-      website
-      notes
-      notesHistory
-      tags
-      createdAt
-      updatedAt
-      owner
-    }
     shipmentNotes
     deliveryNotes
     trackingId
@@ -754,9 +749,91 @@ mutation UpdateShipment(
     status
     statusHistory
     tags
-    photosUrls
+    images {
+      id
+      altTex
+      src
+      createdAt
+      updatedAt
+    }
     notes
     notesHistory
+    createdAt
+    updatedAt
+    startLocation {
+      id
+      locationLabel
+      latitude
+      longitude
+      isActive
+      addressID
+      phones {
+        id
+        phone
+        isActive
+        type
+        createdAt
+        updatedAt
+      }
+      plusCode
+      website
+      notes
+      notesHistory
+      tags
+      createdAt
+      updatedAt
+      address {
+        id
+        label
+        addressLine1
+        addressLine2
+        city
+        state
+        province
+        zipCode
+        postalCode
+        country
+        createdAt
+        updatedAt
+      }
+    }
+    destinationLocation {
+      id
+      locationLabel
+      latitude
+      longitude
+      isActive
+      addressID
+      phones {
+        id
+        phone
+        isActive
+        type
+        createdAt
+        updatedAt
+      }
+      plusCode
+      website
+      notes
+      notesHistory
+      tags
+      createdAt
+      updatedAt
+      address {
+        id
+        label
+        addressLine1
+        addressLine2
+        city
+        state
+        province
+        zipCode
+        postalCode
+        country
+        createdAt
+        updatedAt
+      }
+    }
     boxes {
       items {
         id
@@ -771,7 +848,6 @@ mutation UpdateShipment(
         barCodePhoto
         qrCodePhoto
         tags
-        photosUrls
         status
         statusHistory
         internalNotes
@@ -779,13 +855,9 @@ mutation UpdateShipment(
         notesHistory
         createdAt
         updatedAt
-        owner
       }
       nextToken
     }
-    createdAt
-    updatedAt
-    owner
   }
 }
 mutation DeleteShipment(
@@ -800,87 +872,7 @@ mutation DeleteShipment(
     startDate
     deliveryDate
     startLocationID
-    startLocation {
-      id
-      locationLabel
-      latitude
-      longitude
-      isActive
-      addressID
-      address {
-        id
-        label
-        addressLine1
-        addressLine2
-        city
-        state
-        province
-        zipCode
-        postalCode
-        country
-        createdAt
-        updatedAt
-        owner
-      }
-      phones {
-        id
-        phone
-        isActive
-        type
-        createdAt
-        updatedAt
-        owner
-      }
-      plusCode
-      website
-      notes
-      notesHistory
-      tags
-      createdAt
-      updatedAt
-      owner
-    }
     destinationLocationID
-    destinationLocation {
-      id
-      locationLabel
-      latitude
-      longitude
-      isActive
-      addressID
-      address {
-        id
-        label
-        addressLine1
-        addressLine2
-        city
-        state
-        province
-        zipCode
-        postalCode
-        country
-        createdAt
-        updatedAt
-        owner
-      }
-      phones {
-        id
-        phone
-        isActive
-        type
-        createdAt
-        updatedAt
-        owner
-      }
-      plusCode
-      website
-      notes
-      notesHistory
-      tags
-      createdAt
-      updatedAt
-      owner
-    }
     shipmentNotes
     deliveryNotes
     trackingId
@@ -889,9 +881,91 @@ mutation DeleteShipment(
     status
     statusHistory
     tags
-    photosUrls
+    images {
+      id
+      altTex
+      src
+      createdAt
+      updatedAt
+    }
     notes
     notesHistory
+    createdAt
+    updatedAt
+    startLocation {
+      id
+      locationLabel
+      latitude
+      longitude
+      isActive
+      addressID
+      phones {
+        id
+        phone
+        isActive
+        type
+        createdAt
+        updatedAt
+      }
+      plusCode
+      website
+      notes
+      notesHistory
+      tags
+      createdAt
+      updatedAt
+      address {
+        id
+        label
+        addressLine1
+        addressLine2
+        city
+        state
+        province
+        zipCode
+        postalCode
+        country
+        createdAt
+        updatedAt
+      }
+    }
+    destinationLocation {
+      id
+      locationLabel
+      latitude
+      longitude
+      isActive
+      addressID
+      phones {
+        id
+        phone
+        isActive
+        type
+        createdAt
+        updatedAt
+      }
+      plusCode
+      website
+      notes
+      notesHistory
+      tags
+      createdAt
+      updatedAt
+      address {
+        id
+        label
+        addressLine1
+        addressLine2
+        city
+        state
+        province
+        zipCode
+        postalCode
+        country
+        createdAt
+        updatedAt
+      }
+    }
     boxes {
       items {
         id
@@ -906,7 +980,6 @@ mutation DeleteShipment(
         barCodePhoto
         qrCodePhoto
         tags
-        photosUrls
         status
         statusHistory
         internalNotes
@@ -914,13 +987,9 @@ mutation DeleteShipment(
         notesHistory
         createdAt
         updatedAt
-        owner
       }
       nextToken
     }
-    createdAt
-    updatedAt
-    owner
   }
 }
 mutation CreateBox(
@@ -933,11 +1002,63 @@ mutation CreateBox(
     contents
     size
     orgID
+    shipmentID
+    isActive
+    barCode
+    qrCode
+    barCodePhoto
+    qrCodePhoto
+    tags
+    images {
+      id
+      altTex
+      src
+      createdAt
+      updatedAt
+    }
+    status
+    statusHistory
+    internalNotes
+    notes
+    notesHistory
+    createdAt
+    updatedAt
     org {
       id
       name
       description
       addressID
+      email
+      primaryPhone {
+        id
+        phone
+        isActive
+        type
+        createdAt
+        updatedAt
+      }
+      otherPhones {
+        id
+        phone
+        isActive
+        type
+        createdAt
+        updatedAt
+      }
+      primaryDomain
+      privacyPolicy
+      tags
+      images {
+        id
+        altTex
+        src
+        createdAt
+        updatedAt
+      }
+      notes
+      isActive
+      createdAt
+      updatedAt
       address {
         id
         label
@@ -951,39 +1072,14 @@ mutation CreateBox(
         country
         createdAt
         updatedAt
-        owner
       }
-      email
-      primaryPhone {
-        id
-        phone
-        isActive
-        type
-        createdAt
-        updatedAt
-        owner
-      }
-      otherPhones {
-        id
-        phone
-        isActive
-        type
-        createdAt
-        updatedAt
-        owner
-      }
-      tags
-      photosUrls
-      notes
-      isActive
       boxes {
         nextToken
       }
-      createdAt
-      updatedAt
-      owner
+      users {
+        nextToken
+      }
     }
-    shipmentID
     shipment {
       id
       name
@@ -992,6 +1088,26 @@ mutation CreateBox(
       startDate
       deliveryDate
       startLocationID
+      destinationLocationID
+      shipmentNotes
+      deliveryNotes
+      trackingId
+      weight
+      shipmentReceiver
+      status
+      statusHistory
+      tags
+      images {
+        id
+        altTex
+        src
+        createdAt
+        updatedAt
+      }
+      notes
+      notesHistory
+      createdAt
+      updatedAt
       startLocation {
         id
         locationLabel
@@ -1006,9 +1122,7 @@ mutation CreateBox(
         tags
         createdAt
         updatedAt
-        owner
       }
-      destinationLocationID
       destinationLocation {
         id
         locationLabel
@@ -1023,57 +1137,26 @@ mutation CreateBox(
         tags
         createdAt
         updatedAt
-        owner
       }
-      shipmentNotes
-      deliveryNotes
-      trackingId
-      weight
-      shipmentReceiver
-      status
-      statusHistory
-      tags
-      photosUrls
-      notes
-      notesHistory
       boxes {
         nextToken
       }
-      createdAt
-      updatedAt
-      owner
     }
-    isActive
-    barCode
-    qrCode
-    barCodePhoto
-    qrCodePhoto
-    tags
-    photosUrls
-    status
-    statusHistory
-    internalNotes
-    notes
-    notesHistory
     locations {
       items {
         id
         boxID
         locationInfoID
+        userID
         notes
         isFinal
         tags
-        photosUrls
         isActive
         createdAt
         updatedAt
-        owner
       }
       nextToken
     }
-    createdAt
-    updatedAt
-    owner
   }
 }
 mutation UpdateBox(
@@ -1086,11 +1169,63 @@ mutation UpdateBox(
     contents
     size
     orgID
+    shipmentID
+    isActive
+    barCode
+    qrCode
+    barCodePhoto
+    qrCodePhoto
+    tags
+    images {
+      id
+      altTex
+      src
+      createdAt
+      updatedAt
+    }
+    status
+    statusHistory
+    internalNotes
+    notes
+    notesHistory
+    createdAt
+    updatedAt
     org {
       id
       name
       description
       addressID
+      email
+      primaryPhone {
+        id
+        phone
+        isActive
+        type
+        createdAt
+        updatedAt
+      }
+      otherPhones {
+        id
+        phone
+        isActive
+        type
+        createdAt
+        updatedAt
+      }
+      primaryDomain
+      privacyPolicy
+      tags
+      images {
+        id
+        altTex
+        src
+        createdAt
+        updatedAt
+      }
+      notes
+      isActive
+      createdAt
+      updatedAt
       address {
         id
         label
@@ -1104,39 +1239,14 @@ mutation UpdateBox(
         country
         createdAt
         updatedAt
-        owner
       }
-      email
-      primaryPhone {
-        id
-        phone
-        isActive
-        type
-        createdAt
-        updatedAt
-        owner
-      }
-      otherPhones {
-        id
-        phone
-        isActive
-        type
-        createdAt
-        updatedAt
-        owner
-      }
-      tags
-      photosUrls
-      notes
-      isActive
       boxes {
         nextToken
       }
-      createdAt
-      updatedAt
-      owner
+      users {
+        nextToken
+      }
     }
-    shipmentID
     shipment {
       id
       name
@@ -1145,6 +1255,26 @@ mutation UpdateBox(
       startDate
       deliveryDate
       startLocationID
+      destinationLocationID
+      shipmentNotes
+      deliveryNotes
+      trackingId
+      weight
+      shipmentReceiver
+      status
+      statusHistory
+      tags
+      images {
+        id
+        altTex
+        src
+        createdAt
+        updatedAt
+      }
+      notes
+      notesHistory
+      createdAt
+      updatedAt
       startLocation {
         id
         locationLabel
@@ -1159,9 +1289,7 @@ mutation UpdateBox(
         tags
         createdAt
         updatedAt
-        owner
       }
-      destinationLocationID
       destinationLocation {
         id
         locationLabel
@@ -1176,57 +1304,26 @@ mutation UpdateBox(
         tags
         createdAt
         updatedAt
-        owner
       }
-      shipmentNotes
-      deliveryNotes
-      trackingId
-      weight
-      shipmentReceiver
-      status
-      statusHistory
-      tags
-      photosUrls
-      notes
-      notesHistory
       boxes {
         nextToken
       }
-      createdAt
-      updatedAt
-      owner
     }
-    isActive
-    barCode
-    qrCode
-    barCodePhoto
-    qrCodePhoto
-    tags
-    photosUrls
-    status
-    statusHistory
-    internalNotes
-    notes
-    notesHistory
     locations {
       items {
         id
         boxID
         locationInfoID
+        userID
         notes
         isFinal
         tags
-        photosUrls
         isActive
         createdAt
         updatedAt
-        owner
       }
       nextToken
     }
-    createdAt
-    updatedAt
-    owner
   }
 }
 mutation DeleteBox(
@@ -1239,11 +1336,63 @@ mutation DeleteBox(
     contents
     size
     orgID
+    shipmentID
+    isActive
+    barCode
+    qrCode
+    barCodePhoto
+    qrCodePhoto
+    tags
+    images {
+      id
+      altTex
+      src
+      createdAt
+      updatedAt
+    }
+    status
+    statusHistory
+    internalNotes
+    notes
+    notesHistory
+    createdAt
+    updatedAt
     org {
       id
       name
       description
       addressID
+      email
+      primaryPhone {
+        id
+        phone
+        isActive
+        type
+        createdAt
+        updatedAt
+      }
+      otherPhones {
+        id
+        phone
+        isActive
+        type
+        createdAt
+        updatedAt
+      }
+      primaryDomain
+      privacyPolicy
+      tags
+      images {
+        id
+        altTex
+        src
+        createdAt
+        updatedAt
+      }
+      notes
+      isActive
+      createdAt
+      updatedAt
       address {
         id
         label
@@ -1257,39 +1406,14 @@ mutation DeleteBox(
         country
         createdAt
         updatedAt
-        owner
       }
-      email
-      primaryPhone {
-        id
-        phone
-        isActive
-        type
-        createdAt
-        updatedAt
-        owner
-      }
-      otherPhones {
-        id
-        phone
-        isActive
-        type
-        createdAt
-        updatedAt
-        owner
-      }
-      tags
-      photosUrls
-      notes
-      isActive
       boxes {
         nextToken
       }
-      createdAt
-      updatedAt
-      owner
+      users {
+        nextToken
+      }
     }
-    shipmentID
     shipment {
       id
       name
@@ -1298,6 +1422,26 @@ mutation DeleteBox(
       startDate
       deliveryDate
       startLocationID
+      destinationLocationID
+      shipmentNotes
+      deliveryNotes
+      trackingId
+      weight
+      shipmentReceiver
+      status
+      statusHistory
+      tags
+      images {
+        id
+        altTex
+        src
+        createdAt
+        updatedAt
+      }
+      notes
+      notesHistory
+      createdAt
+      updatedAt
       startLocation {
         id
         locationLabel
@@ -1312,9 +1456,7 @@ mutation DeleteBox(
         tags
         createdAt
         updatedAt
-        owner
       }
-      destinationLocationID
       destinationLocation {
         id
         locationLabel
@@ -1329,57 +1471,26 @@ mutation DeleteBox(
         tags
         createdAt
         updatedAt
-        owner
       }
-      shipmentNotes
-      deliveryNotes
-      trackingId
-      weight
-      shipmentReceiver
-      status
-      statusHistory
-      tags
-      photosUrls
-      notes
-      notesHistory
       boxes {
         nextToken
       }
-      createdAt
-      updatedAt
-      owner
     }
-    isActive
-    barCode
-    qrCode
-    barCodePhoto
-    qrCodePhoto
-    tags
-    photosUrls
-    status
-    statusHistory
-    internalNotes
-    notes
-    notesHistory
     locations {
       items {
         id
         boxID
         locationInfoID
+        userID
         notes
         isFinal
         tags
-        photosUrls
         isActive
         createdAt
         updatedAt
-        owner
       }
       nextToken
     }
-    createdAt
-    updatedAt
-    owner
   }
 }
 mutation CreateBoxLocation(
@@ -1389,27 +1500,99 @@ mutation CreateBoxLocation(
   createBoxLocation(input: $input, condition: $condition) {
     id
     boxID
+    locationInfoID
+    userID
+    notes
+    isFinal
+    tags
+    images {
+      id
+      altTex
+      src
+      createdAt
+      updatedAt
+    }
+    isActive
+    createdAt
+    updatedAt
+    locationInfo {
+      id
+      locationLabel
+      latitude
+      longitude
+      isActive
+      addressID
+      phones {
+        id
+        phone
+        isActive
+        type
+        createdAt
+        updatedAt
+      }
+      plusCode
+      website
+      notes
+      notesHistory
+      tags
+      createdAt
+      updatedAt
+      address {
+        id
+        label
+        addressLine1
+        addressLine2
+        city
+        state
+        province
+        zipCode
+        postalCode
+        country
+        createdAt
+        updatedAt
+      }
+    }
     box {
       id
       title
       contents
       size
       orgID
+      shipmentID
+      isActive
+      barCode
+      qrCode
+      barCodePhoto
+      qrCodePhoto
+      tags
+      images {
+        id
+        altTex
+        src
+        createdAt
+        updatedAt
+      }
+      status
+      statusHistory
+      internalNotes
+      notes
+      notesHistory
+      createdAt
+      updatedAt
       org {
         id
         name
         description
         addressID
         email
+        primaryDomain
+        privacyPolicy
         tags
-        photosUrls
         notes
         isActive
         createdAt
         updatedAt
-        owner
       }
-      shipmentID
       shipment {
         id
         name
@@ -1427,81 +1610,54 @@ mutation CreateBoxLocation(
         status
         statusHistory
         tags
-        photosUrls
         notes
         notesHistory
         createdAt
         updatedAt
-        owner
       }
+      locations {
+        nextToken
+      }
+    }
+    user {
+      id
+      name
+      orgID
       isActive
-      barCode
-      qrCode
-      barCodePhoto
-      qrCodePhoto
       tags
-      photosUrls
+      images {
+        id
+        altTex
+        src
+        createdAt
+        updatedAt
+      }
       status
       statusHistory
       internalNotes
       notes
+      rank
       notesHistory
-      locations {
+      createdAt
+      updatedAt
+      org {
+        id
+        name
+        description
+        addressID
+        email
+        primaryDomain
+        privacyPolicy
+        tags
+        notes
+        isActive
+        createdAt
+        updatedAt
+      }
+      boxLocations {
         nextToken
       }
-      createdAt
-      updatedAt
-      owner
     }
-    locationInfoID
-    locationInfo {
-      id
-      locationLabel
-      latitude
-      longitude
-      isActive
-      addressID
-      address {
-        id
-        label
-        addressLine1
-        addressLine2
-        city
-        state
-        province
-        zipCode
-        postalCode
-        country
-        createdAt
-        updatedAt
-        owner
-      }
-      phones {
-        id
-        phone
-        isActive
-        type
-        createdAt
-        updatedAt
-        owner
-      }
-      plusCode
-      website
-      notes
-      notesHistory
-      tags
-      createdAt
-      updatedAt
-      owner
-    }
-    notes
-    isFinal
-    tags
-    photosUrls
-    isActive
-    createdAt
-    updatedAt
-    owner
   }
 }
 mutation UpdateBoxLocation(
@@ -1511,27 +1667,99 @@ mutation UpdateBoxLocation(
   updateBoxLocation(input: $input, condition: $condition) {
     id
     boxID
+    locationInfoID
+    userID
+    notes
+    isFinal
+    tags
+    images {
+      id
+      altTex
+      src
+      createdAt
+      updatedAt
+    }
+    isActive
+    createdAt
+    updatedAt
+    locationInfo {
+      id
+      locationLabel
+      latitude
+      longitude
+      isActive
+      addressID
+      phones {
+        id
+        phone
+        isActive
+        type
+        createdAt
+        updatedAt
+      }
+      plusCode
+      website
+      notes
+      notesHistory
+      tags
+      createdAt
+      updatedAt
+      address {
+        id
+        label
+        addressLine1
+        addressLine2
+        city
+        state
+        province
+        zipCode
+        postalCode
+        country
+        createdAt
+        updatedAt
+      }
+    }
     box {
       id
       title
       contents
       size
       orgID
+      shipmentID
+      isActive
+      barCode
+      qrCode
+      barCodePhoto
+      qrCodePhoto
+      tags
+      images {
+        id
+        altTex
+        src
+        createdAt
+        updatedAt
+      }
+      status
+      statusHistory
+      internalNotes
+      notes
+      notesHistory
+      createdAt
+      updatedAt
       org {
         id
         name
         description
         addressID
         email
+        primaryDomain
+        privacyPolicy
         tags
-        photosUrls
         notes
         isActive
         createdAt
         updatedAt
-        owner
       }
-      shipmentID
       shipment {
         id
         name
@@ -1549,81 +1777,54 @@ mutation UpdateBoxLocation(
         status
         statusHistory
         tags
-        photosUrls
         notes
         notesHistory
         createdAt
         updatedAt
-        owner
       }
+      locations {
+        nextToken
+      }
+    }
+    user {
+      id
+      name
+      orgID
       isActive
-      barCode
-      qrCode
-      barCodePhoto
-      qrCodePhoto
       tags
-      photosUrls
+      images {
+        id
+        altTex
+        src
+        createdAt
+        updatedAt
+      }
       status
       statusHistory
       internalNotes
       notes
+      rank
       notesHistory
-      locations {
+      createdAt
+      updatedAt
+      org {
+        id
+        name
+        description
+        addressID
+        email
+        primaryDomain
+        privacyPolicy
+        tags
+        notes
+        isActive
+        createdAt
+        updatedAt
+      }
+      boxLocations {
         nextToken
       }
-      createdAt
-      updatedAt
-      owner
     }
-    locationInfoID
-    locationInfo {
-      id
-      locationLabel
-      latitude
-      longitude
-      isActive
-      addressID
-      address {
-        id
-        label
-        addressLine1
-        addressLine2
-        city
-        state
-        province
-        zipCode
-        postalCode
-        country
-        createdAt
-        updatedAt
-        owner
-      }
-      phones {
-        id
-        phone
-        isActive
-        type
-        createdAt
-        updatedAt
-        owner
-      }
-      plusCode
-      website
-      notes
-      notesHistory
-      tags
-      createdAt
-      updatedAt
-      owner
-    }
-    notes
-    isFinal
-    tags
-    photosUrls
-    isActive
-    createdAt
-    updatedAt
-    owner
   }
 }
 mutation DeleteBoxLocation(
@@ -1633,27 +1834,99 @@ mutation DeleteBoxLocation(
   deleteBoxLocation(input: $input, condition: $condition) {
     id
     boxID
+    locationInfoID
+    userID
+    notes
+    isFinal
+    tags
+    images {
+      id
+      altTex
+      src
+      createdAt
+      updatedAt
+    }
+    isActive
+    createdAt
+    updatedAt
+    locationInfo {
+      id
+      locationLabel
+      latitude
+      longitude
+      isActive
+      addressID
+      phones {
+        id
+        phone
+        isActive
+        type
+        createdAt
+        updatedAt
+      }
+      plusCode
+      website
+      notes
+      notesHistory
+      tags
+      createdAt
+      updatedAt
+      address {
+        id
+        label
+        addressLine1
+        addressLine2
+        city
+        state
+        province
+        zipCode
+        postalCode
+        country
+        createdAt
+        updatedAt
+      }
+    }
     box {
       id
       title
       contents
       size
       orgID
+      shipmentID
+      isActive
+      barCode
+      qrCode
+      barCodePhoto
+      qrCodePhoto
+      tags
+      images {
+        id
+        altTex
+        src
+        createdAt
+        updatedAt
+      }
+      status
+      statusHistory
+      internalNotes
+      notes
+      notesHistory
+      createdAt
+      updatedAt
       org {
         id
         name
         description
         addressID
         email
+        primaryDomain
+        privacyPolicy
         tags
-        photosUrls
         notes
         isActive
         createdAt
         updatedAt
-        owner
       }
-      shipmentID
       shipment {
         id
         name
@@ -1671,40 +1944,117 @@ mutation DeleteBoxLocation(
         status
         statusHistory
         tags
-        photosUrls
         notes
         notesHistory
         createdAt
         updatedAt
-        owner
       }
+      locations {
+        nextToken
+      }
+    }
+    user {
+      id
+      name
+      orgID
       isActive
-      barCode
-      qrCode
-      barCodePhoto
-      qrCodePhoto
       tags
-      photosUrls
+      images {
+        id
+        altTex
+        src
+        createdAt
+        updatedAt
+      }
       status
       statusHistory
       internalNotes
       notes
+      rank
       notesHistory
-      locations {
-        nextToken
-      }
       createdAt
       updatedAt
-      owner
+      org {
+        id
+        name
+        description
+        addressID
+        email
+        primaryDomain
+        privacyPolicy
+        tags
+        notes
+        isActive
+        createdAt
+        updatedAt
+      }
+      boxLocations {
+        nextToken
+      }
     }
-    locationInfoID
-    locationInfo {
+  }
+}
+mutation CreateUser(
+  $input: CreateUserInput!
+  $condition: ModelUserConditionInput
+) {
+  createUser(input: $input, condition: $condition) {
+    id
+    name
+    orgID
+    isActive
+    tags
+    images {
       id
-      locationLabel
-      latitude
-      longitude
-      isActive
+      altTex
+      src
+      createdAt
+      updatedAt
+    }
+    status
+    statusHistory
+    internalNotes
+    notes
+    rank
+    notesHistory
+    createdAt
+    updatedAt
+    org {
+      id
+      name
+      description
       addressID
+      email
+      primaryPhone {
+        id
+        phone
+        isActive
+        type
+        createdAt
+        updatedAt
+      }
+      otherPhones {
+        id
+        phone
+        isActive
+        type
+        createdAt
+        updatedAt
+      }
+      primaryDomain
+      privacyPolicy
+      tags
+      images {
+        id
+        altTex
+        src
+        createdAt
+        updatedAt
+      }
+      notes
+      isActive
+      createdAt
+      updatedAt
       address {
         id
         label
@@ -1718,33 +2068,226 @@ mutation DeleteBoxLocation(
         country
         createdAt
         updatedAt
-        owner
       }
-      phones {
+      boxes {
+        nextToken
+      }
+      users {
+        nextToken
+      }
+    }
+    boxLocations {
+      items {
+        id
+        boxID
+        locationInfoID
+        userID
+        notes
+        isFinal
+        tags
+        isActive
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+}
+mutation UpdateUser(
+  $input: UpdateUserInput!
+  $condition: ModelUserConditionInput
+) {
+  updateUser(input: $input, condition: $condition) {
+    id
+    name
+    orgID
+    isActive
+    tags
+    images {
+      id
+      altTex
+      src
+      createdAt
+      updatedAt
+    }
+    status
+    statusHistory
+    internalNotes
+    notes
+    rank
+    notesHistory
+    createdAt
+    updatedAt
+    org {
+      id
+      name
+      description
+      addressID
+      email
+      primaryPhone {
         id
         phone
         isActive
         type
         createdAt
         updatedAt
-        owner
       }
-      plusCode
-      website
-      notes
-      notesHistory
+      otherPhones {
+        id
+        phone
+        isActive
+        type
+        createdAt
+        updatedAt
+      }
+      primaryDomain
+      privacyPolicy
       tags
+      images {
+        id
+        altTex
+        src
+        createdAt
+        updatedAt
+      }
+      notes
+      isActive
       createdAt
       updatedAt
-      owner
+      address {
+        id
+        label
+        addressLine1
+        addressLine2
+        city
+        state
+        province
+        zipCode
+        postalCode
+        country
+        createdAt
+        updatedAt
+      }
+      boxes {
+        nextToken
+      }
+      users {
+        nextToken
+      }
     }
-    notes
-    isFinal
-    tags
-    photosUrls
+    boxLocations {
+      items {
+        id
+        boxID
+        locationInfoID
+        userID
+        notes
+        isFinal
+        tags
+        isActive
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+}
+mutation DeleteUser(
+  $input: DeleteUserInput!
+  $condition: ModelUserConditionInput
+) {
+  deleteUser(input: $input, condition: $condition) {
+    id
+    name
+    orgID
     isActive
+    tags
+    images {
+      id
+      altTex
+      src
+      createdAt
+      updatedAt
+    }
+    status
+    statusHistory
+    internalNotes
+    notes
+    rank
+    notesHistory
     createdAt
     updatedAt
-    owner
+    org {
+      id
+      name
+      description
+      addressID
+      email
+      primaryPhone {
+        id
+        phone
+        isActive
+        type
+        createdAt
+        updatedAt
+      }
+      otherPhones {
+        id
+        phone
+        isActive
+        type
+        createdAt
+        updatedAt
+      }
+      primaryDomain
+      privacyPolicy
+      tags
+      images {
+        id
+        altTex
+        src
+        createdAt
+        updatedAt
+      }
+      notes
+      isActive
+      createdAt
+      updatedAt
+      address {
+        id
+        label
+        addressLine1
+        addressLine2
+        city
+        state
+        province
+        zipCode
+        postalCode
+        country
+        createdAt
+        updatedAt
+      }
+      boxes {
+        nextToken
+      }
+      users {
+        nextToken
+      }
+    }
+    boxLocations {
+      items {
+        id
+        boxID
+        locationInfoID
+        userID
+        notes
+        isFinal
+        tags
+        isActive
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
   }
 }
