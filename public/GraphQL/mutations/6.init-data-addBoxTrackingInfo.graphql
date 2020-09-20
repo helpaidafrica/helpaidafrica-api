@@ -1,0 +1,98 @@
+## step 1: add images
+mutation addTrackingInfoImage($userID: ID = "1") {
+  createImage(input: {userID: $userID, altTex: "image_saba.jpb", src: "https://bucket/foo.jpg"}) {
+    id
+    altTex
+    src
+  }
+}
+
+mutation addBoxImage($userID: ID = "1") {
+  createImage(input: {userID: $userID, altTex: "image_box_2020-08-A-Box-1-saba.jpb", src: "https://bucket/foo.jpg"}) {
+    id
+    altTex
+    src
+  }
+}
+
+# step 2: create tracking info record
+mutation createTrackingInfo(
+    $userID: ID = "1", $isActive: Boolean = true, $Notes: String = "some notes",
+    $imageID: ID = "d417de7d-1042-4c86-b77d-60b96f09fb47") {
+  createTrackingInfo(input: {
+    isActive: $isActive, 
+    timeOfDelivery: "2020-09-21T00:00:00Z", 
+    userID: $userID, notes: $Notes, 
+    id: "1", 
+    image: $imageID
+    }) {
+    id
+    isActive
+    timeOfDelivery
+    userID
+  }
+}
+
+## step 3: Track Boxes
+
+mutation Track_Box_1 (
+  $trackingInfoID: ID = "1",
+  $userID: ID = "1", 
+  $locationInfoID: ID = "2", 
+  $isFinal: Boolean = true, 
+  $isActive: Boolean = true,
+  $boxID: ID = "2020-08-A-Box-1",
+  $boxTrackingImageId: ID = "box_1_tracking_image_id",
+  $status: BoxStatus = DELIVERED   
+  ) {
+
+    # add tracking location for box 1 
+    track_box_1 : createBoxLocation
+    (input: {
+      boxID: $boxID, 
+      isActive: $isActive, 
+      isFinal: $isFinal, 
+      locationInfoID: $locationInfoID, 
+      trackingInfoID: $trackingInfoID, 
+      userID: $userID, 
+      image: $boxTrackingImageId })
+    { boxID    isActive    trackingInfoID }
+
+    # update box 1 status 
+    update_boxstatus: updateBox(input: { 
+      status: $status, 
+      id: $boxID
+    }) 
+    { id isActive status }
+}
+
+
+mutation Track_Box_2 (
+  $trackingInfoID: ID = "1",
+  $userID: ID = "1", 
+  $locationInfoID: ID = "2", 
+  $isFinal: Boolean = true, 
+  $isActive: Boolean = true,
+  $boxID: ID = "2020-08-A-Box-2",
+  $status: BoxStatus = DELIVERED   
+  ) {
+
+    # add tracking location for box 2
+    track_box_1 : createBoxLocation
+    (input: {
+      boxID: $boxID, 
+      isActive: $isActive, 
+      isFinal: $isFinal, 
+      locationInfoID: $locationInfoID, 
+      trackingInfoID: $trackingInfoID, 
+      userID: $userID
+    })
+    { boxID    isActive    trackingInfoID }
+
+    # update box 2 status 
+    update_boxstatus: updateBox(input: { 
+      status: $status, 
+      id: $boxID
+    }) 
+    { id isActive status }
+}

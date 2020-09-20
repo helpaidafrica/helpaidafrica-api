@@ -1,0 +1,44 @@
+
+mutation CreateFirstShipment($id: ID = "2020-08-A") {
+  createShipment(input: 
+    {
+      destinationLocationID: "0", 
+      isActive: true, 
+      name: "2020-08-A", 
+      id: $id, 
+      description: "Container Shipment A from Aug 18th 2020", 
+      startLocationID: "2", 
+      status: IN_PROGRESS, 
+      startDate: "2020-08-18T00:00Z"}) {
+    id
+    isActive
+    name
+    description
+    startLocation {
+      locationLabel
+    }
+    status
+  }
+}
+
+mutation CreateSecondShipment($id: ID = "2020-08-B") {
+  createShipment(input: 
+    {
+      destinationLocationID: "0", 
+      isActive: true, 
+      name: "2020-08-B", 
+      id: $id, 
+      description: "Container Shipment B from Aug 18th 2020", 
+      startLocationID: "2", 
+      status: IN_PROGRESS, 
+      startDate: "2020-08-18T00:00Z"}) {
+    id
+    isActive
+    name
+    description
+    startLocation {
+      locationLabel
+    }
+    status
+  }
+}

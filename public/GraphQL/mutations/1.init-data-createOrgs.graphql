@@ -1,0 +1,108 @@
+mutation CreateOrgs {
+UnknownOrg: createOrg(input: {id: "0", addressID: "0", description: "Placeholder for an Unknown Org", isActive: true, name: "Unknown Org"}) {
+    addressID
+    id
+    name
+    address {
+      label
+    }
+    primaryDomain
+  }
+
+
+HelpAidAfrica: createOrg(input: {id: "Help Aid Africa", addressID: "0", email: "info@helpaidafrica.org", description: "Help Aid Africa is a non-profit charitable organization helping communities across Africa in areas of education, health, and living conditions!", isActive: true, name: "Help Aid Africa", notes: "", primaryDomain: "Help Aid Africa primary domain", privacyPolicy: "linktoprivacypolicy/"}) {
+    addressID
+    id
+    name
+    address {
+      label
+    }
+    primaryDomain
+  }
+
+
+ MasaiMara: createOrg(input: {id: "Masai Mara", addressID: "0", description: "",  isActive: true, name: "Masai Mara"}) {
+    addressID
+    id
+    name
+    address {
+      label
+    }
+    primaryDomain
+  }
+
+
+LadyofMercy: createOrg(input: {id: "Lady of Mercy", addressID: "0", description: "",  isActive: true, name: "Lady of Mercy"}) {
+    addressID
+    id
+    name
+    address {
+      label
+    }
+    primaryDomain
+  }
+
+
+KBF: createOrg(input: {id: "KBF", addressID: "0", description: "",  isActive: true, name: "KBF"}) {
+    addressID
+    id
+    name
+    address {
+      label
+    }
+    primaryDomain
+  }
+
+  DarulMuslemeen: createOrg(input: {id: "DarulMuslemeen", addressID: "0", description: "",  isActive: true, name: "Dar-ul-Muslemeen"}) {
+    addressID
+    id
+    name
+    address {
+      label
+    }
+    primaryDomain
+  }
+
+VOI: createOrg(input: {id: "VOI", addressID: "0", description: "", isActive: true, name: "VOI"}) {
+    addressID
+    id
+    name
+    address {
+      label
+    }
+    primaryDomain
+  }
+
+
+ XMasaiMara: createOrg(input: {id: "X Masai Mara", addressID: "0", description: "",  isActive: true, name: "X Masai Mara"}) {
+    addressID
+    id
+    name
+    address {
+      label
+    }
+    primaryDomain
+  }
+
+
+ Xladyofmercy: createOrg(input: {id: "X lady of mercy", addressID: "0", description: "",  isActive: true, name: "X lady of mercy"}) {
+    addressID
+    id
+    name
+    address {
+      label
+    }
+    primaryDomain
+  }
+
+
+ org143: createOrg(input: {id: "143", addressID: "0", description: "",  isActive: true, name: "143"}) {
+    addressID
+    id
+    name
+    address {
+      label
+    }
+  }
+}
+

@@ -1,0 +1,47 @@
+mutation CreateThreeUsers {
+  user1Org1: createUser(input: {id: "1", internalNotes: "", isActive: true, name: "user 1", notes: "", notesHistory: "", orgID: "1", rank: 0, status: ACTIVE, statusHistory: [PENDING_VERIFICATION, ACTIVE], tags: "haa-user"}) {
+    id
+    internalNotes
+    isActive
+    name
+    notes
+    notesHistory
+    orgID
+    rank
+    status
+    statusHistory
+    tags
+    updatedAt
+  }
+
+  user2OrgKBF: createUser(input: {id: "2", internalNotes: "", isActive: true, name: "user 2", notes: "", notesHistory: "", orgID: "KBF", rank: 0, status: ACTIVE, statusHistory: [PENDING_VERIFICATION, ACTIVE], tags: "haa-user"}) {
+    id
+    internalNotes
+    isActive
+    name
+    notes
+    notesHistory
+    orgID
+    rank
+    status
+    statusHistory
+    tags
+    updatedAt
+  }
+
+  user3OrgKBF: createUser(input: {id: "3", internalNotes: "", isActive: true, name: "user 2", notes: "", notesHistory: "", orgID: "KBF", rank: 0, status: ACTIVE, statusHistory: [PENDING_VERIFICATION, ACTIVE], tags: "haa-user"}) {
+    id
+    internalNotes
+    isActive
+    name
+    notes
+    notesHistory
+    orgID
+    rank
+    status
+    statusHistory
+    tags
+    updatedAt
+  }  
+  
+}

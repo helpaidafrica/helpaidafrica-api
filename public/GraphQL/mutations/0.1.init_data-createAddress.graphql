@@ -1,0 +1,65 @@
+mutation CreateUnknownAddress {
+  createAddress(input: {id: "Unknown Address", addressLine1: "", addressLine2: "", country: "", city: "", id: "0", label: "Unknown address", postalCode: "", state: "", province: "", zipCode: ""}) {
+    id
+    label
+  }
+}
+
+mutation CreateGoldenGateParkAddress {
+  createAddress(input: 
+    { id: "1", 
+      label: "Golden Gate Park", 
+      addressLine1: "Golden Gate Park"
+      addressLine2: "", 
+      province: "", 
+      city: "San Francisco", 
+      state: "CA", 
+      postalCode: "", 
+      zipCode: "94121", 
+      country: "USA", 
+    }) {
+    zipCode
+    updatedAt
+    state
+    province
+    postalCode
+    owner
+    label
+    id
+    createdAt
+    country
+    city
+    addressLine2
+    addressLine1
+  }
+}
+
+
+mutation CreateSABAAddress {
+  createAddress(input: 
+    { id: "2", 
+      label: "SABA Islamic Center", 
+      addressLine1: "4415 Fortran Ct"
+      addressLine2: "", 
+      province: "", 
+      city: "San Jose", 
+      state: "CA", 
+      postalCode: "", 
+      zipCode: "95134", 
+      country: "USA", 
+    }) {
+    zipCode
+    updatedAt
+    state
+    province
+    postalCode
+    owner
+    label
+    id
+    createdAt
+    country
+    city
+    addressLine2
+    addressLine1
+  }
+}

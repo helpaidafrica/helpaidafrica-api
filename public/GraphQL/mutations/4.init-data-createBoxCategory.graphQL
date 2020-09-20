@@ -1,0 +1,29 @@
+mutation CreateBoxCategory {
+accessories_stationary_BoxCategory: createBoxCategory(input: {id: "Accessories/Stationary", active: true, name: "Accessories/Stationary"}) {    id    name    active  }
+bags_purses_BoxCategory: createBoxCategory(input: {id: "Bags/ Purses", active: true, name: "Bags/ Purses"}) {    id    name    active  }
+bedding_blankets_BoxCategory: createBoxCategory(input: {id: "Bedding-Blankets", active: true, name: "Bedding-Blankets"}) {    id    name    active  }
+bedding_pillows_cushions_BoxCategory: createBoxCategory(input: {id: "Bedding-Pillows/ Cushions", active: true, name: "Bedding-Pillows/ Cushions"}) {    id    name    active  }
+bedding_sheets_pillowcases_BoxCategory: createBoxCategory(input: {id: "Bedding-Sheets/ Pillowcases", active: true, name: "Bedding-Sheets/ Pillowcases"}) {    id    name    active  }
+boys_clothes_western_BoxCategory: createBoxCategory(input: {id: "Boys Clothes-Western", active: true, name: "Boys Clothes-Western"}) {    id    name    active  }
+girls_clothes_eastern_BoxCategory: createBoxCategory(input: {id: "Girls Clothes-Eastern", active: true, name: "Girls Clothes-Eastern"}) {    id    name    active  }
+girls_clothes_western_BoxCategory: createBoxCategory(input: {id: "Girls Clothes-Western", active: true, name: "Girls Clothes-Western"}) {    id    name    active  }
+household_items_BoxCategory: createBoxCategory(input: {id: "Household Items", active: true, name: "Household Items"}) {    id    name    active  }
+hygiene_BoxCategory: createBoxCategory(input: {id: "Hygiene", active: true, name: "Hygiene"}) {    id    name    active  }
+kids_babies_BoxCategory: createBoxCategory(input: {id: "Kids/ Babies", active: true, name: "Kids/ Babies"}) {    id    name    active  }
+mens_clothes_eastern_BoxCategory: createBoxCategory(input: {id: "Mens Clothes-Eastern", active: true, name: "Mens Clothes-Eastern"}) {    id    name    active  }
+mens_clothes_socks_BoxCategory: createBoxCategory(input: {id: "Mens Clothes-Socks", active: true, name: "Mens Clothes-Socks"}) {    id    name    active  }
+mens_clothes_warm_BoxCategory: createBoxCategory(input: {id: "Mens Clothes-Warm", active: true, name: "Mens Clothes-Warm"}) {    id    name    active  }
+mens_clothes_western_BoxCategory: createBoxCategory(input: {id: "Mens Clothes-Western", active: true, name: "Mens Clothes-Western"}) {    id    name    active  }
+shoes_kids_girls_boys_BoxCategory: createBoxCategory(input: {id: "Shoes-Kids(Girls/Boys", active: true, name: "Shoes-Kids(Girls/Boys"}) {    id    name    active  }
+shoes_mens_BoxCategory: createBoxCategory(input: {id: "Shoes-Mens", active: true, name: "Shoes-Mens"}) {    id    name    active  }
+shoes_womens_BoxCategory: createBoxCategory(input: {id: "Shoes-Womens", active: true, name: "Shoes-Womens"}) {    id    name    active  }
+towels_BoxCategory: createBoxCategory(input: {id: "Towels", active: true, name: "Towels"}) {    id    name    active  }
+toys_BoxCategory: createBoxCategory(input: {id: "Toys", active: true, name: "Toys"}) {    id    name    active  }
+unknown_BoxCategory: createBoxCategory(input: {id: "0", active: true, name: "Unknown Box Category"}) {    id    name    active  }
+womens_clothes_eastern_BoxCategory: createBoxCategory(input: {id: "Womens Clothes-Eastern", active: true, name: "Womens Clothes-Eastern"}) {    id    name    active  }
+womens_clothes_formal_wedding_BoxCategory: createBoxCategory(input: {id: "Womens Clothes-Formal/ Wedding", active: true, name: "Womens Clothes-Formal/ Wedding"}) {    id    name    active  }
+womens_clothes_scarves_BoxCategory: createBoxCategory(input: {id: "Womens Clothes-Scarves", active: true, name: "Womens Clothes-Scarves"}) {    id    name    active  }
+womens_clothes_warm_BoxCategory: createBoxCategory(input: {id: "Womens Clothes-Warm", active: true, name: "Womens Clothes-Warm"}) {    id    name    active  }
+womens_clothes_western_BoxCategory: createBoxCategory(input: {id: "Womens Clothes-Western", active: true, name: "Womens Clothes-Western"}) {    id    name    active  }
+
+}

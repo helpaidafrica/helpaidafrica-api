@@ -1,0 +1,7 @@
+mutation addUnknownImage($userID: ID = "1") {
+  createImage(input: {id: "0", userID: $userID, altTex: "unknown image source", src: "https://bucket/unknown.jpg"}) {
+    id
+    altTex
+    src
+  }
+}
