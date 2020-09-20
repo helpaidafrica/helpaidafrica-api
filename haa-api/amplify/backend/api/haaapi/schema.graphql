@@ -60,6 +60,25 @@ type Image
   id: ID!
   altTex: String
   src: AWSURL!
+  userID: ID!
+  user: User! @connection(fields: ["userID"])
+}
+
+type BoxCategory 
+@model
+@auth(
+  rules: [
+   { allow: owner },
+   { allow: public, provider: apiKey }, 
+   { allow: groups, groups: ["haaApiAdmins", "haaApiDataAdmins"] },
+   { allow: private, operations: [read]}
+  ]
+) 
+{
+  id: ID!
+  name: String!
+  active: Boolean!
+  boxes: [Box] @connection(keyName: "byBoxCategory", fields: ["id"])
 }
 
 type ApihealthCheckInfo
@@ -139,6 +158,7 @@ type Org
   primaryDomain: String
   privacyPolicy: String
   tags: [String!]
+  image: Image
   images: [Image!]
   notes: String
   isActive: Boolean!
@@ -192,8 +212,7 @@ type Shipment
   startLocationID: ID!
   startLocation: LocationInfo @connection(fields: ["startLocationID"])
   destinationLocationID: ID!
-  destinationLocation: LocationInfo
-  @connection(fields: ["destinationLocationID"])
+  destinationLocation: LocationInfo @connection(fields: ["destinationLocationID"])
   shipmentNotes: String
   deliveryNotes: String
   trackingId: String
@@ -202,6 +221,7 @@ type Shipment
   status: ShippingStatus
   statusHistory: [String!]
   tags: [String!]
+  image: Image
   images: [Image!]
   notes: String
   notesHistory: [String!]
@@ -210,12 +230,11 @@ type Shipment
 
 type Box
 @model
-@key(name: "byOrg", fields: ["orgID"])
-@key(
-  name: "byBoxShipment"
-  fields: ["shipmentID", "id"]
-  queryField: "shipmentsByBoxId"
-)
+@key(name: "byOrg", fields: ["orgID"], queryField: "BoxByOrgID")
+@key(name: "byBoxShipment", fields: ["shipmentID", "id"], queryField: "BoxByShipmentID")
+@key(name: "byBoxCategory", fields: ["boxCategoryID"], queryField: "BoxByCategory")
+@key(name: "byTitle", fields: ["title"], queryField: "BoxByTitle")
+@key(name: "byQRCode", fields: ["qrCode"], queryField: "BoxByQRCode")
 @auth(
   rules: [
    { allow: owner },
@@ -232,26 +251,30 @@ type Box
   org: Org @connection(fields: ["orgID"])
   shipmentID: ID!
   shipment: Shipment @connection(fields: ["shipmentID"])
+  boxCategoryID: ID!
+  boxCategory: BoxCategory @connection(fields: ["boxCategoryID"])
+  additionalBoxCategories: [BoxCategory!] 
   isActive: Boolean!
   barCode: String
   qrCode: String
   barCodePhoto: AWSURL
   qrCodePhoto: AWSURL
   tags: [String!]
+  image: Image
   images: [Image!]
   status: BoxStatus!
   statusHistory: [BoxStatus!]
   internalNotes: String
   notes: String
   notesHistory: [String!]
-  locations: [BoxLocation]
-  @connection(keyName: "locationForBox", fields: ["id"])
+  locations: [BoxLocation] @connection(keyName: "locationForBox", fields: ["id"])
 }
 
 type BoxLocation
 @model
 @key(name: "locationForBox", fields: ["boxID", "locationInfoID"])
 @key(name: "userForBox", fields: ["userID", "boxID"])
+@key(name: "trackingInfoForBox", fields: ["trackingInfoID", "userID"])
 @auth(
   rules: [
    { allow: owner },
@@ -273,8 +296,36 @@ type BoxLocation
   notes: String
   isFinal: Boolean!
   tags: [String!]
+  image: Image!
   images: [Image!]
   isActive: Boolean!
+
+  trackingInfoID: ID!
+  trackingInfo: TrackingInfo! @connection(fields: ["trackingInfoID"]) 
+
+}
+
+type TrackingInfo
+@model
+@auth(
+  rules: [
+   { allow: owner },
+   { allow: public, provider: apiKey }, 
+   { allow: groups, groups: ["haaApiAdmins", "haaApiDataAdmins"] },
+   { allow: private, operations: [read]}
+  ]
+) {
+  id: ID!
+  timeOfDelivery: AWSDateTime!
+  boxLocations: [BoxLocation]  @connection(keyName: "trackingInfoForBox", fields: ["id"])
+  userID: ID!
+  user: User! @connection(fields: ["userID"])
+  isActive: Boolean!
+  tags: [String!]
+  image: Image!
+  images: [Image!]
+  internalNotes: String
+  notes: String
 }
 
 type User
@@ -292,8 +343,10 @@ type User
   name: String!
   orgID: ID!
   org: Org @connection(fields: ["orgID"])
+  hashedSecret: String
   isActive: Boolean!
   tags: [String!]
+  image: Image
   images: [Image!]
   status: UserStatus!
   statusHistory: [UserStatus!]

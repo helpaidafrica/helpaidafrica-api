@@ -4,8 +4,58 @@ subscription OnCreateImage {
     id
     altTex
     src
+    userID
     createdAt
     updatedAt
+    user {
+      id
+      name
+      orgID
+      hashedSecret
+      isActive
+      tags
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
+      images {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
+      status
+      statusHistory
+      internalNotes
+      notes
+      rank
+      notesHistory
+      createdAt
+      updatedAt
+      org {
+        id
+        name
+        description
+        addressID
+        email
+        primaryDomain
+        privacyPolicy
+        tags
+        notes
+        isActive
+        createdAt
+        updatedAt
+      }
+      boxLocations {
+        nextToken
+      }
+    }
   }
 }
 subscription OnUpdateImage {
@@ -13,8 +63,58 @@ subscription OnUpdateImage {
     id
     altTex
     src
+    userID
     createdAt
     updatedAt
+    user {
+      id
+      name
+      orgID
+      hashedSecret
+      isActive
+      tags
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
+      images {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
+      status
+      statusHistory
+      internalNotes
+      notes
+      rank
+      notesHistory
+      createdAt
+      updatedAt
+      org {
+        id
+        name
+        description
+        addressID
+        email
+        primaryDomain
+        privacyPolicy
+        tags
+        notes
+        isActive
+        createdAt
+        updatedAt
+      }
+      boxLocations {
+        nextToken
+      }
+    }
   }
 }
 subscription OnDeleteImage {
@@ -22,8 +122,160 @@ subscription OnDeleteImage {
     id
     altTex
     src
+    userID
     createdAt
     updatedAt
+    user {
+      id
+      name
+      orgID
+      hashedSecret
+      isActive
+      tags
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
+      images {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
+      status
+      statusHistory
+      internalNotes
+      notes
+      rank
+      notesHistory
+      createdAt
+      updatedAt
+      org {
+        id
+        name
+        description
+        addressID
+        email
+        primaryDomain
+        privacyPolicy
+        tags
+        notes
+        isActive
+        createdAt
+        updatedAt
+      }
+      boxLocations {
+        nextToken
+      }
+    }
+  }
+}
+subscription OnCreateBoxCategory {
+  onCreateBoxCategory {
+    id
+    name
+    active
+    createdAt
+    updatedAt
+    boxes {
+      items {
+        id
+        title
+        contents
+        size
+        orgID
+        shipmentID
+        boxCategoryID
+        isActive
+        barCode
+        qrCode
+        barCodePhoto
+        qrCodePhoto
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+}
+subscription OnUpdateBoxCategory {
+  onUpdateBoxCategory {
+    id
+    name
+    active
+    createdAt
+    updatedAt
+    boxes {
+      items {
+        id
+        title
+        contents
+        size
+        orgID
+        shipmentID
+        boxCategoryID
+        isActive
+        barCode
+        qrCode
+        barCodePhoto
+        qrCodePhoto
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+}
+subscription OnDeleteBoxCategory {
+  onDeleteBoxCategory {
+    id
+    name
+    active
+    createdAt
+    updatedAt
+    boxes {
+      items {
+        id
+        title
+        contents
+        size
+        orgID
+        shipmentID
+        boxCategoryID
+        isActive
+        barCode
+        qrCode
+        barCodePhoto
+        qrCodePhoto
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
   }
 }
 subscription OnCreateApihealthCheckInfo {
@@ -166,12 +418,53 @@ subscription OnCreateOrg {
     primaryDomain
     privacyPolicy
     tags
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     images {
       id
       altTex
       src
+      userID
       createdAt
       updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
     }
     notes
     isActive
@@ -199,6 +492,7 @@ subscription OnCreateOrg {
         size
         orgID
         shipmentID
+        boxCategoryID
         isActive
         barCode
         qrCode
@@ -220,6 +514,7 @@ subscription OnCreateOrg {
         id
         name
         orgID
+        hashedSecret
         isActive
         tags
         status
@@ -261,12 +556,53 @@ subscription OnUpdateOrg {
     primaryDomain
     privacyPolicy
     tags
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     images {
       id
       altTex
       src
+      userID
       createdAt
       updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
     }
     notes
     isActive
@@ -294,6 +630,7 @@ subscription OnUpdateOrg {
         size
         orgID
         shipmentID
+        boxCategoryID
         isActive
         barCode
         qrCode
@@ -315,6 +652,7 @@ subscription OnUpdateOrg {
         id
         name
         orgID
+        hashedSecret
         isActive
         tags
         status
@@ -356,12 +694,53 @@ subscription OnDeleteOrg {
     primaryDomain
     privacyPolicy
     tags
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     images {
       id
       altTex
       src
+      userID
       createdAt
       updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
     }
     notes
     isActive
@@ -389,6 +768,7 @@ subscription OnDeleteOrg {
         size
         orgID
         shipmentID
+        boxCategoryID
         isActive
         barCode
         qrCode
@@ -410,6 +790,7 @@ subscription OnDeleteOrg {
         id
         name
         orgID
+        hashedSecret
         isActive
         tags
         status
@@ -560,12 +941,53 @@ subscription OnCreateShipment {
     status
     statusHistory
     tags
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     images {
       id
       altTex
       src
+      userID
       createdAt
       updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
     }
     notes
     notesHistory
@@ -653,6 +1075,7 @@ subscription OnCreateShipment {
         size
         orgID
         shipmentID
+        boxCategoryID
         isActive
         barCode
         qrCode
@@ -689,12 +1112,53 @@ subscription OnUpdateShipment {
     status
     statusHistory
     tags
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     images {
       id
       altTex
       src
+      userID
       createdAt
       updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
     }
     notes
     notesHistory
@@ -782,6 +1246,7 @@ subscription OnUpdateShipment {
         size
         orgID
         shipmentID
+        boxCategoryID
         isActive
         barCode
         qrCode
@@ -818,12 +1283,53 @@ subscription OnDeleteShipment {
     status
     statusHistory
     tags
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     images {
       id
       altTex
       src
+      userID
       createdAt
       updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
     }
     notes
     notesHistory
@@ -911,6 +1417,7 @@ subscription OnDeleteShipment {
         size
         orgID
         shipmentID
+        boxCategoryID
         isActive
         barCode
         qrCode
@@ -937,18 +1444,70 @@ subscription OnCreateBox {
     size
     orgID
     shipmentID
+    boxCategoryID
+    additionalBoxCategories {
+      id
+      name
+      active
+      createdAt
+      updatedAt
+      boxes {
+        nextToken
+      }
+    }
     isActive
     barCode
     qrCode
     barCodePhoto
     qrCodePhoto
     tags
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     images {
       id
       altTex
       src
+      userID
       createdAt
       updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
     }
     status
     statusHistory
@@ -957,6 +1516,16 @@ subscription OnCreateBox {
     notesHistory
     createdAt
     updatedAt
+    boxCategory {
+      id
+      name
+      active
+      createdAt
+      updatedAt
+      boxes {
+        nextToken
+      }
+    }
     org {
       id
       name
@@ -982,10 +1551,19 @@ subscription OnCreateBox {
       primaryDomain
       privacyPolicy
       tags
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       images {
         id
         altTex
         src
+        userID
         createdAt
         updatedAt
       }
@@ -1031,10 +1609,19 @@ subscription OnCreateBox {
       status
       statusHistory
       tags
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       images {
         id
         altTex
         src
+        userID
         createdAt
         updatedAt
       }
@@ -1086,6 +1673,7 @@ subscription OnCreateBox {
         isFinal
         tags
         isActive
+        trackingInfoID
         createdAt
         updatedAt
       }
@@ -1101,18 +1689,70 @@ subscription OnUpdateBox {
     size
     orgID
     shipmentID
+    boxCategoryID
+    additionalBoxCategories {
+      id
+      name
+      active
+      createdAt
+      updatedAt
+      boxes {
+        nextToken
+      }
+    }
     isActive
     barCode
     qrCode
     barCodePhoto
     qrCodePhoto
     tags
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     images {
       id
       altTex
       src
+      userID
       createdAt
       updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
     }
     status
     statusHistory
@@ -1121,6 +1761,16 @@ subscription OnUpdateBox {
     notesHistory
     createdAt
     updatedAt
+    boxCategory {
+      id
+      name
+      active
+      createdAt
+      updatedAt
+      boxes {
+        nextToken
+      }
+    }
     org {
       id
       name
@@ -1146,10 +1796,19 @@ subscription OnUpdateBox {
       primaryDomain
       privacyPolicy
       tags
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       images {
         id
         altTex
         src
+        userID
         createdAt
         updatedAt
       }
@@ -1195,10 +1854,19 @@ subscription OnUpdateBox {
       status
       statusHistory
       tags
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       images {
         id
         altTex
         src
+        userID
         createdAt
         updatedAt
       }
@@ -1250,6 +1918,7 @@ subscription OnUpdateBox {
         isFinal
         tags
         isActive
+        trackingInfoID
         createdAt
         updatedAt
       }
@@ -1265,18 +1934,70 @@ subscription OnDeleteBox {
     size
     orgID
     shipmentID
+    boxCategoryID
+    additionalBoxCategories {
+      id
+      name
+      active
+      createdAt
+      updatedAt
+      boxes {
+        nextToken
+      }
+    }
     isActive
     barCode
     qrCode
     barCodePhoto
     qrCodePhoto
     tags
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     images {
       id
       altTex
       src
+      userID
       createdAt
       updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
     }
     status
     statusHistory
@@ -1285,6 +2006,16 @@ subscription OnDeleteBox {
     notesHistory
     createdAt
     updatedAt
+    boxCategory {
+      id
+      name
+      active
+      createdAt
+      updatedAt
+      boxes {
+        nextToken
+      }
+    }
     org {
       id
       name
@@ -1310,10 +2041,19 @@ subscription OnDeleteBox {
       primaryDomain
       privacyPolicy
       tags
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       images {
         id
         altTex
         src
+        userID
         createdAt
         updatedAt
       }
@@ -1359,10 +2099,19 @@ subscription OnDeleteBox {
       status
       statusHistory
       tags
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       images {
         id
         altTex
         src
+        userID
         createdAt
         updatedAt
       }
@@ -1414,6 +2163,7 @@ subscription OnDeleteBox {
         isFinal
         tags
         isActive
+        trackingInfoID
         createdAt
         updatedAt
       }
@@ -1430,14 +2180,56 @@ subscription OnCreateBoxLocation {
     notes
     isFinal
     tags
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     images {
       id
       altTex
       src
+      userID
       createdAt
       updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
     }
     isActive
+    trackingInfoID
     createdAt
     updatedAt
     locationInfo {
@@ -1484,16 +2276,33 @@ subscription OnCreateBoxLocation {
       size
       orgID
       shipmentID
+      boxCategoryID
+      additionalBoxCategories {
+        id
+        name
+        active
+        createdAt
+        updatedAt
+      }
       isActive
       barCode
       qrCode
       barCodePhoto
       qrCodePhoto
       tags
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       images {
         id
         altTex
         src
+        userID
         createdAt
         updatedAt
       }
@@ -1504,6 +2313,13 @@ subscription OnCreateBoxLocation {
       notesHistory
       createdAt
       updatedAt
+      boxCategory {
+        id
+        name
+        active
+        createdAt
+        updatedAt
+      }
       org {
         id
         name
@@ -1544,16 +2360,72 @@ subscription OnCreateBoxLocation {
         nextToken
       }
     }
-    user {
+    trackingInfo {
       id
-      name
-      orgID
+      timeOfDelivery
+      userID
       isActive
       tags
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       images {
         id
         altTex
         src
+        userID
+        createdAt
+        updatedAt
+      }
+      internalNotes
+      notes
+      createdAt
+      updatedAt
+      boxLocations {
+        nextToken
+      }
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
+    user {
+      id
+      name
+      orgID
+      hashedSecret
+      isActive
+      tags
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
+      images {
+        id
+        altTex
+        src
+        userID
         createdAt
         updatedAt
       }
@@ -1594,14 +2466,56 @@ subscription OnUpdateBoxLocation {
     notes
     isFinal
     tags
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     images {
       id
       altTex
       src
+      userID
       createdAt
       updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
     }
     isActive
+    trackingInfoID
     createdAt
     updatedAt
     locationInfo {
@@ -1648,16 +2562,33 @@ subscription OnUpdateBoxLocation {
       size
       orgID
       shipmentID
+      boxCategoryID
+      additionalBoxCategories {
+        id
+        name
+        active
+        createdAt
+        updatedAt
+      }
       isActive
       barCode
       qrCode
       barCodePhoto
       qrCodePhoto
       tags
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       images {
         id
         altTex
         src
+        userID
         createdAt
         updatedAt
       }
@@ -1668,6 +2599,13 @@ subscription OnUpdateBoxLocation {
       notesHistory
       createdAt
       updatedAt
+      boxCategory {
+        id
+        name
+        active
+        createdAt
+        updatedAt
+      }
       org {
         id
         name
@@ -1708,16 +2646,72 @@ subscription OnUpdateBoxLocation {
         nextToken
       }
     }
-    user {
+    trackingInfo {
       id
-      name
-      orgID
+      timeOfDelivery
+      userID
       isActive
       tags
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       images {
         id
         altTex
         src
+        userID
+        createdAt
+        updatedAt
+      }
+      internalNotes
+      notes
+      createdAt
+      updatedAt
+      boxLocations {
+        nextToken
+      }
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
+    user {
+      id
+      name
+      orgID
+      hashedSecret
+      isActive
+      tags
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
+      images {
+        id
+        altTex
+        src
+        userID
         createdAt
         updatedAt
       }
@@ -1758,14 +2752,56 @@ subscription OnDeleteBoxLocation {
     notes
     isFinal
     tags
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     images {
       id
       altTex
       src
+      userID
       createdAt
       updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
     }
     isActive
+    trackingInfoID
     createdAt
     updatedAt
     locationInfo {
@@ -1812,16 +2848,33 @@ subscription OnDeleteBoxLocation {
       size
       orgID
       shipmentID
+      boxCategoryID
+      additionalBoxCategories {
+        id
+        name
+        active
+        createdAt
+        updatedAt
+      }
       isActive
       barCode
       qrCode
       barCodePhoto
       qrCodePhoto
       tags
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       images {
         id
         altTex
         src
+        userID
         createdAt
         updatedAt
       }
@@ -1832,6 +2885,13 @@ subscription OnDeleteBoxLocation {
       notesHistory
       createdAt
       updatedAt
+      boxCategory {
+        id
+        name
+        active
+        createdAt
+        updatedAt
+      }
       org {
         id
         name
@@ -1872,16 +2932,450 @@ subscription OnDeleteBoxLocation {
         nextToken
       }
     }
-    user {
+    trackingInfo {
       id
-      name
-      orgID
+      timeOfDelivery
+      userID
       isActive
       tags
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       images {
         id
         altTex
         src
+        userID
+        createdAt
+        updatedAt
+      }
+      internalNotes
+      notes
+      createdAt
+      updatedAt
+      boxLocations {
+        nextToken
+      }
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
+    user {
+      id
+      name
+      orgID
+      hashedSecret
+      isActive
+      tags
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
+      images {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
+      status
+      statusHistory
+      internalNotes
+      notes
+      rank
+      notesHistory
+      createdAt
+      updatedAt
+      org {
+        id
+        name
+        description
+        addressID
+        email
+        primaryDomain
+        privacyPolicy
+        tags
+        notes
+        isActive
+        createdAt
+        updatedAt
+      }
+      boxLocations {
+        nextToken
+      }
+    }
+  }
+}
+subscription OnCreateTrackingInfo {
+  onCreateTrackingInfo {
+    id
+    timeOfDelivery
+    userID
+    isActive
+    tags
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
+    images {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
+    internalNotes
+    notes
+    createdAt
+    updatedAt
+    boxLocations {
+      items {
+        id
+        boxID
+        locationInfoID
+        userID
+        notes
+        isFinal
+        tags
+        isActive
+        trackingInfoID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    user {
+      id
+      name
+      orgID
+      hashedSecret
+      isActive
+      tags
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
+      images {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
+      status
+      statusHistory
+      internalNotes
+      notes
+      rank
+      notesHistory
+      createdAt
+      updatedAt
+      org {
+        id
+        name
+        description
+        addressID
+        email
+        primaryDomain
+        privacyPolicy
+        tags
+        notes
+        isActive
+        createdAt
+        updatedAt
+      }
+      boxLocations {
+        nextToken
+      }
+    }
+  }
+}
+subscription OnUpdateTrackingInfo {
+  onUpdateTrackingInfo {
+    id
+    timeOfDelivery
+    userID
+    isActive
+    tags
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
+    images {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
+    internalNotes
+    notes
+    createdAt
+    updatedAt
+    boxLocations {
+      items {
+        id
+        boxID
+        locationInfoID
+        userID
+        notes
+        isFinal
+        tags
+        isActive
+        trackingInfoID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    user {
+      id
+      name
+      orgID
+      hashedSecret
+      isActive
+      tags
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
+      images {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
+      status
+      statusHistory
+      internalNotes
+      notes
+      rank
+      notesHistory
+      createdAt
+      updatedAt
+      org {
+        id
+        name
+        description
+        addressID
+        email
+        primaryDomain
+        privacyPolicy
+        tags
+        notes
+        isActive
+        createdAt
+        updatedAt
+      }
+      boxLocations {
+        nextToken
+      }
+    }
+  }
+}
+subscription OnDeleteTrackingInfo {
+  onDeleteTrackingInfo {
+    id
+    timeOfDelivery
+    userID
+    isActive
+    tags
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
+    images {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
+    internalNotes
+    notes
+    createdAt
+    updatedAt
+    boxLocations {
+      items {
+        id
+        boxID
+        locationInfoID
+        userID
+        notes
+        isFinal
+        tags
+        isActive
+        trackingInfoID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    user {
+      id
+      name
+      orgID
+      hashedSecret
+      isActive
+      tags
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
+      images {
+        id
+        altTex
+        src
+        userID
         createdAt
         updatedAt
       }
@@ -1918,14 +3412,56 @@ subscription OnCreateUser {
     id
     name
     orgID
+    hashedSecret
     isActive
     tags
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     images {
       id
       altTex
       src
+      userID
       createdAt
       updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
     }
     status
     statusHistory
@@ -1960,10 +3496,19 @@ subscription OnCreateUser {
       primaryDomain
       privacyPolicy
       tags
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       images {
         id
         altTex
         src
+        userID
         createdAt
         updatedAt
       }
@@ -2002,6 +3547,7 @@ subscription OnCreateUser {
         isFinal
         tags
         isActive
+        trackingInfoID
         createdAt
         updatedAt
       }
@@ -2014,14 +3560,56 @@ subscription OnUpdateUser {
     id
     name
     orgID
+    hashedSecret
     isActive
     tags
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     images {
       id
       altTex
       src
+      userID
       createdAt
       updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
     }
     status
     statusHistory
@@ -2056,10 +3644,19 @@ subscription OnUpdateUser {
       primaryDomain
       privacyPolicy
       tags
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       images {
         id
         altTex
         src
+        userID
         createdAt
         updatedAt
       }
@@ -2098,6 +3695,7 @@ subscription OnUpdateUser {
         isFinal
         tags
         isActive
+        trackingInfoID
         createdAt
         updatedAt
       }
@@ -2110,14 +3708,56 @@ subscription OnDeleteUser {
     id
     name
     orgID
+    hashedSecret
     isActive
     tags
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     images {
       id
       altTex
       src
+      userID
       createdAt
       updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
     }
     status
     statusHistory
@@ -2152,10 +3792,19 @@ subscription OnDeleteUser {
       primaryDomain
       privacyPolicy
       tags
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       images {
         id
         altTex
         src
+        userID
         createdAt
         updatedAt
       }
@@ -2194,6 +3843,7 @@ subscription OnDeleteUser {
         isFinal
         tags
         isActive
+        trackingInfoID
         createdAt
         updatedAt
       }

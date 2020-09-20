@@ -4,8 +4,58 @@ query GetImage($id: ID!) {
     id
     altTex
     src
+    userID
     createdAt
     updatedAt
+    user {
+      id
+      name
+      orgID
+      hashedSecret
+      isActive
+      tags
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
+      images {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
+      status
+      statusHistory
+      internalNotes
+      notes
+      rank
+      notesHistory
+      createdAt
+      updatedAt
+      org {
+        id
+        name
+        description
+        addressID
+        email
+        primaryDomain
+        privacyPolicy
+        tags
+        notes
+        isActive
+        createdAt
+        updatedAt
+      }
+      boxLocations {
+        nextToken
+      }
+    }
   }
 }
 query ListImages(
@@ -18,10 +68,80 @@ query ListImages(
       id
       altTex
       src
+      userID
       createdAt
       updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
     }
     nextToken
+  }
+}
+query ListBoxCategorys(
+  $filter: ModelBoxCategoryFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listBoxCategorys(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      name
+      active
+      createdAt
+      updatedAt
+      boxes {
+        nextToken
+      }
+    }
+    nextToken
+  }
+}
+query GetBoxCategory($id: ID!) {
+  getBoxCategory(id: $id) {
+    id
+    name
+    active
+    createdAt
+    updatedAt
+    boxes {
+      items {
+        id
+        title
+        contents
+        size
+        orgID
+        shipmentID
+        boxCategoryID
+        isActive
+        barCode
+        qrCode
+        barCodePhoto
+        qrCodePhoto
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
   }
 }
 query GetApihealthCheckInfo($id: ID!) {
@@ -152,10 +272,19 @@ query ListOrgs($filter: ModelOrgFilterInput, $limit: Int, $nextToken: String) {
       primaryDomain
       privacyPolicy
       tags
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       images {
         id
         altTex
         src
+        userID
         createdAt
         updatedAt
       }
@@ -213,12 +342,53 @@ query GetOrg($id: ID!) {
     primaryDomain
     privacyPolicy
     tags
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     images {
       id
       altTex
       src
+      userID
       createdAt
       updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
     }
     notes
     isActive
@@ -246,6 +416,7 @@ query GetOrg($id: ID!) {
         size
         orgID
         shipmentID
+        boxCategoryID
         isActive
         barCode
         qrCode
@@ -267,6 +438,7 @@ query GetOrg($id: ID!) {
         id
         name
         orgID
+        hashedSecret
         isActive
         tags
         status
@@ -390,10 +562,19 @@ query ListShipments(
       status
       statusHistory
       tags
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       images {
         id
         altTex
         src
+        userID
         createdAt
         updatedAt
       }
@@ -456,12 +637,53 @@ query GetShipment($id: ID!) {
     status
     statusHistory
     tags
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     images {
       id
       altTex
       src
+      userID
       createdAt
       updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
     }
     notes
     notesHistory
@@ -549,6 +771,7 @@ query GetShipment($id: ID!) {
         size
         orgID
         shipmentID
+        boxCategoryID
         isActive
         barCode
         qrCode
@@ -576,16 +799,33 @@ query ListBoxs($filter: ModelBoxFilterInput, $limit: Int, $nextToken: String) {
       size
       orgID
       shipmentID
+      boxCategoryID
+      additionalBoxCategories {
+        id
+        name
+        active
+        createdAt
+        updatedAt
+      }
       isActive
       barCode
       qrCode
       barCodePhoto
       qrCodePhoto
       tags
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       images {
         id
         altTex
         src
+        userID
         createdAt
         updatedAt
       }
@@ -596,6 +836,13 @@ query ListBoxs($filter: ModelBoxFilterInput, $limit: Int, $nextToken: String) {
       notesHistory
       createdAt
       updatedAt
+      boxCategory {
+        id
+        name
+        active
+        createdAt
+        updatedAt
+      }
       org {
         id
         name
@@ -647,18 +894,70 @@ query GetBox($id: ID!) {
     size
     orgID
     shipmentID
+    boxCategoryID
+    additionalBoxCategories {
+      id
+      name
+      active
+      createdAt
+      updatedAt
+      boxes {
+        nextToken
+      }
+    }
     isActive
     barCode
     qrCode
     barCodePhoto
     qrCodePhoto
     tags
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     images {
       id
       altTex
       src
+      userID
       createdAt
       updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
     }
     status
     statusHistory
@@ -667,6 +966,16 @@ query GetBox($id: ID!) {
     notesHistory
     createdAt
     updatedAt
+    boxCategory {
+      id
+      name
+      active
+      createdAt
+      updatedAt
+      boxes {
+        nextToken
+      }
+    }
     org {
       id
       name
@@ -692,10 +1001,19 @@ query GetBox($id: ID!) {
       primaryDomain
       privacyPolicy
       tags
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       images {
         id
         altTex
         src
+        userID
         createdAt
         updatedAt
       }
@@ -741,10 +1059,19 @@ query GetBox($id: ID!) {
       status
       statusHistory
       tags
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       images {
         id
         altTex
         src
+        userID
         createdAt
         updatedAt
       }
@@ -796,6 +1123,7 @@ query GetBox($id: ID!) {
         isFinal
         tags
         isActive
+        trackingInfoID
         createdAt
         updatedAt
       }
@@ -803,7 +1131,115 @@ query GetBox($id: ID!) {
     }
   }
 }
-query ShipmentsByBoxId(
+query BoxByOrgId(
+  $orgID: ID
+  $sortDirection: ModelSortDirection
+  $filter: ModelBoxFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  BoxByOrgID(
+    orgID: $orgID
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      title
+      contents
+      size
+      orgID
+      shipmentID
+      boxCategoryID
+      additionalBoxCategories {
+        id
+        name
+        active
+        createdAt
+        updatedAt
+      }
+      isActive
+      barCode
+      qrCode
+      barCodePhoto
+      qrCodePhoto
+      tags
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
+      images {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
+      status
+      statusHistory
+      internalNotes
+      notes
+      notesHistory
+      createdAt
+      updatedAt
+      boxCategory {
+        id
+        name
+        active
+        createdAt
+        updatedAt
+      }
+      org {
+        id
+        name
+        description
+        addressID
+        email
+        primaryDomain
+        privacyPolicy
+        tags
+        notes
+        isActive
+        createdAt
+        updatedAt
+      }
+      shipment {
+        id
+        name
+        description
+        isActive
+        startDate
+        deliveryDate
+        startLocationID
+        destinationLocationID
+        shipmentNotes
+        deliveryNotes
+        trackingId
+        weight
+        shipmentReceiver
+        status
+        statusHistory
+        tags
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+      }
+      locations {
+        nextToken
+      }
+    }
+    nextToken
+  }
+}
+query BoxByShipmentId(
   $shipmentID: ID
   $id: ModelIDKeyConditionInput
   $sortDirection: ModelSortDirection
@@ -811,7 +1247,7 @@ query ShipmentsByBoxId(
   $limit: Int
   $nextToken: String
 ) {
-  shipmentsByBoxId(
+  BoxByShipmentID(
     shipmentID: $shipmentID
     id: $id
     sortDirection: $sortDirection
@@ -826,16 +1262,33 @@ query ShipmentsByBoxId(
       size
       orgID
       shipmentID
+      boxCategoryID
+      additionalBoxCategories {
+        id
+        name
+        active
+        createdAt
+        updatedAt
+      }
       isActive
       barCode
       qrCode
       barCodePhoto
       qrCodePhoto
       tags
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       images {
         id
         altTex
         src
+        userID
         createdAt
         updatedAt
       }
@@ -846,6 +1299,337 @@ query ShipmentsByBoxId(
       notesHistory
       createdAt
       updatedAt
+      boxCategory {
+        id
+        name
+        active
+        createdAt
+        updatedAt
+      }
+      org {
+        id
+        name
+        description
+        addressID
+        email
+        primaryDomain
+        privacyPolicy
+        tags
+        notes
+        isActive
+        createdAt
+        updatedAt
+      }
+      shipment {
+        id
+        name
+        description
+        isActive
+        startDate
+        deliveryDate
+        startLocationID
+        destinationLocationID
+        shipmentNotes
+        deliveryNotes
+        trackingId
+        weight
+        shipmentReceiver
+        status
+        statusHistory
+        tags
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+      }
+      locations {
+        nextToken
+      }
+    }
+    nextToken
+  }
+}
+query BoxByCategory(
+  $boxCategoryID: ID
+  $sortDirection: ModelSortDirection
+  $filter: ModelBoxFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  BoxByCategory(
+    boxCategoryID: $boxCategoryID
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      title
+      contents
+      size
+      orgID
+      shipmentID
+      boxCategoryID
+      additionalBoxCategories {
+        id
+        name
+        active
+        createdAt
+        updatedAt
+      }
+      isActive
+      barCode
+      qrCode
+      barCodePhoto
+      qrCodePhoto
+      tags
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
+      images {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
+      status
+      statusHistory
+      internalNotes
+      notes
+      notesHistory
+      createdAt
+      updatedAt
+      boxCategory {
+        id
+        name
+        active
+        createdAt
+        updatedAt
+      }
+      org {
+        id
+        name
+        description
+        addressID
+        email
+        primaryDomain
+        privacyPolicy
+        tags
+        notes
+        isActive
+        createdAt
+        updatedAt
+      }
+      shipment {
+        id
+        name
+        description
+        isActive
+        startDate
+        deliveryDate
+        startLocationID
+        destinationLocationID
+        shipmentNotes
+        deliveryNotes
+        trackingId
+        weight
+        shipmentReceiver
+        status
+        statusHistory
+        tags
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+      }
+      locations {
+        nextToken
+      }
+    }
+    nextToken
+  }
+}
+query BoxByTitle(
+  $title: String
+  $sortDirection: ModelSortDirection
+  $filter: ModelBoxFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  BoxByTitle(
+    title: $title
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      title
+      contents
+      size
+      orgID
+      shipmentID
+      boxCategoryID
+      additionalBoxCategories {
+        id
+        name
+        active
+        createdAt
+        updatedAt
+      }
+      isActive
+      barCode
+      qrCode
+      barCodePhoto
+      qrCodePhoto
+      tags
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
+      images {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
+      status
+      statusHistory
+      internalNotes
+      notes
+      notesHistory
+      createdAt
+      updatedAt
+      boxCategory {
+        id
+        name
+        active
+        createdAt
+        updatedAt
+      }
+      org {
+        id
+        name
+        description
+        addressID
+        email
+        primaryDomain
+        privacyPolicy
+        tags
+        notes
+        isActive
+        createdAt
+        updatedAt
+      }
+      shipment {
+        id
+        name
+        description
+        isActive
+        startDate
+        deliveryDate
+        startLocationID
+        destinationLocationID
+        shipmentNotes
+        deliveryNotes
+        trackingId
+        weight
+        shipmentReceiver
+        status
+        statusHistory
+        tags
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+      }
+      locations {
+        nextToken
+      }
+    }
+    nextToken
+  }
+}
+query BoxByQrCode(
+  $qrCode: String
+  $sortDirection: ModelSortDirection
+  $filter: ModelBoxFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  BoxByQRCode(
+    qrCode: $qrCode
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      title
+      contents
+      size
+      orgID
+      shipmentID
+      boxCategoryID
+      additionalBoxCategories {
+        id
+        name
+        active
+        createdAt
+        updatedAt
+      }
+      isActive
+      barCode
+      qrCode
+      barCodePhoto
+      qrCodePhoto
+      tags
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
+      images {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
+      status
+      statusHistory
+      internalNotes
+      notes
+      notesHistory
+      createdAt
+      updatedAt
+      boxCategory {
+        id
+        name
+        active
+        createdAt
+        updatedAt
+      }
       org {
         id
         name
@@ -898,14 +1682,56 @@ query GetBoxLocation($id: ID!) {
     notes
     isFinal
     tags
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     images {
       id
       altTex
       src
+      userID
       createdAt
       updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
     }
     isActive
+    trackingInfoID
     createdAt
     updatedAt
     locationInfo {
@@ -952,16 +1778,33 @@ query GetBoxLocation($id: ID!) {
       size
       orgID
       shipmentID
+      boxCategoryID
+      additionalBoxCategories {
+        id
+        name
+        active
+        createdAt
+        updatedAt
+      }
       isActive
       barCode
       qrCode
       barCodePhoto
       qrCodePhoto
       tags
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       images {
         id
         altTex
         src
+        userID
         createdAt
         updatedAt
       }
@@ -972,6 +1815,13 @@ query GetBoxLocation($id: ID!) {
       notesHistory
       createdAt
       updatedAt
+      boxCategory {
+        id
+        name
+        active
+        createdAt
+        updatedAt
+      }
       org {
         id
         name
@@ -1012,16 +1862,72 @@ query GetBoxLocation($id: ID!) {
         nextToken
       }
     }
-    user {
+    trackingInfo {
       id
-      name
-      orgID
+      timeOfDelivery
+      userID
       isActive
       tags
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       images {
         id
         altTex
         src
+        userID
+        createdAt
+        updatedAt
+      }
+      internalNotes
+      notes
+      createdAt
+      updatedAt
+      boxLocations {
+        nextToken
+      }
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
+    user {
+      id
+      name
+      orgID
+      hashedSecret
+      isActive
+      tags
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
+      images {
+        id
+        altTex
+        src
+        userID
         createdAt
         updatedAt
       }
@@ -1067,14 +1973,24 @@ query ListBoxLocations(
       notes
       isFinal
       tags
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       images {
         id
         altTex
         src
+        userID
         createdAt
         updatedAt
       }
       isActive
+      trackingInfoID
       createdAt
       updatedAt
       locationInfo {
@@ -1099,6 +2015,7 @@ query ListBoxLocations(
         size
         orgID
         shipmentID
+        boxCategoryID
         isActive
         barCode
         qrCode
@@ -1113,10 +2030,22 @@ query ListBoxLocations(
         createdAt
         updatedAt
       }
+      trackingInfo {
+        id
+        timeOfDelivery
+        userID
+        isActive
+        tags
+        internalNotes
+        notes
+        createdAt
+        updatedAt
+      }
       user {
         id
         name
         orgID
+        hashedSecret
         isActive
         tags
         status
@@ -1132,6 +2061,187 @@ query ListBoxLocations(
     nextToken
   }
 }
+query ListTrackingInfos(
+  $filter: ModelTrackingInfoFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listTrackingInfos(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      timeOfDelivery
+      userID
+      isActive
+      tags
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
+      images {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
+      internalNotes
+      notes
+      createdAt
+      updatedAt
+      boxLocations {
+        nextToken
+      }
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
+    nextToken
+  }
+}
+query GetTrackingInfo($id: ID!) {
+  getTrackingInfo(id: $id) {
+    id
+    timeOfDelivery
+    userID
+    isActive
+    tags
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
+    images {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
+    internalNotes
+    notes
+    createdAt
+    updatedAt
+    boxLocations {
+      items {
+        id
+        boxID
+        locationInfoID
+        userID
+        notes
+        isFinal
+        tags
+        isActive
+        trackingInfoID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    user {
+      id
+      name
+      orgID
+      hashedSecret
+      isActive
+      tags
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
+      images {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
+      status
+      statusHistory
+      internalNotes
+      notes
+      rank
+      notesHistory
+      createdAt
+      updatedAt
+      org {
+        id
+        name
+        description
+        addressID
+        email
+        primaryDomain
+        privacyPolicy
+        tags
+        notes
+        isActive
+        createdAt
+        updatedAt
+      }
+      boxLocations {
+        nextToken
+      }
+    }
+  }
+}
 query ListUsers(
   $filter: ModelUserFilterInput
   $limit: Int
@@ -1142,12 +2252,22 @@ query ListUsers(
       id
       name
       orgID
+      hashedSecret
       isActive
       tags
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       images {
         id
         altTex
         src
+        userID
         createdAt
         updatedAt
       }
@@ -1185,14 +2305,56 @@ query GetUser($id: ID!) {
     id
     name
     orgID
+    hashedSecret
     isActive
     tags
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     images {
       id
       altTex
       src
+      userID
       createdAt
       updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
     }
     status
     statusHistory
@@ -1227,10 +2389,19 @@ query GetUser($id: ID!) {
       primaryDomain
       privacyPolicy
       tags
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       images {
         id
         altTex
         src
+        userID
         createdAt
         updatedAt
       }
@@ -1269,6 +2440,7 @@ query GetUser($id: ID!) {
         isFinal
         tags
         isActive
+        trackingInfoID
         createdAt
         updatedAt
       }

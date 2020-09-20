@@ -10,11 +10,13 @@ export type CreateImageInput = {
   id?: string | null;
   altTex?: string | null;
   src: string;
+  userID: string;
 };
 
 export type ModelImageConditionInput = {
   altTex?: ModelStringInput | null;
   src?: ModelStringInput | null;
+  userID?: ModelIDInput | null;
   and?: Array<ModelImageConditionInput | null> | null;
   or?: Array<ModelImageConditionInput | null> | null;
   not?: ModelImageConditionInput | null;
@@ -59,13 +61,87 @@ export type ModelSizeInput = {
   between?: Array<number | null> | null;
 };
 
+export type ModelIDInput = {
+  ne?: string | null;
+  eq?: string | null;
+  le?: string | null;
+  lt?: string | null;
+  ge?: string | null;
+  gt?: string | null;
+  contains?: string | null;
+  notContains?: string | null;
+  between?: Array<string | null> | null;
+  beginsWith?: string | null;
+  attributeExists?: boolean | null;
+  attributeType?: ModelAttributeTypes | null;
+  size?: ModelSizeInput | null;
+};
+
+export enum UserStatus {
+  PENDING_VERIFICATION = "PENDING_VERIFICATION",
+  ACTIVE = "ACTIVE",
+  DISABLED = "DISABLED",
+  FLAGGED = "FLAGGED"
+}
+
 export type UpdateImageInput = {
   id: string;
   altTex?: string | null;
   src?: string | null;
+  userID?: string | null;
 };
 
 export type DeleteImageInput = {
+  id?: string | null;
+};
+
+export type CreateBoxCategoryInput = {
+  id?: string | null;
+  name: string;
+  active: boolean;
+};
+
+export type ModelBoxCategoryConditionInput = {
+  name?: ModelStringInput | null;
+  active?: ModelBooleanInput | null;
+  and?: Array<ModelBoxCategoryConditionInput | null> | null;
+  or?: Array<ModelBoxCategoryConditionInput | null> | null;
+  not?: ModelBoxCategoryConditionInput | null;
+};
+
+export type ModelBooleanInput = {
+  ne?: boolean | null;
+  eq?: boolean | null;
+  attributeExists?: boolean | null;
+  attributeType?: ModelAttributeTypes | null;
+};
+
+export enum BoxStatus {
+  NEW = "NEW",
+  PACKAGED = "PACKAGED",
+  PICKUP_IN_TRANSIT = "PICKUP_IN_TRANSIT",
+  PICKUP_COMPLETED = "PICKUP_COMPLETED",
+  READY_TO_SHIP = "READY_TO_SHIP",
+  IN_TRANSIT = "IN_TRANSIT",
+  DELIVERED = "DELIVERED",
+  FAILED_TO_DELIVER = "FAILED_TO_DELIVER",
+  CANCELLED = "CANCELLED",
+  REJECTED = "REJECTED",
+  DAMAGED = "DAMAGED",
+  PARTIALLY_DAMAGED = "PARTIALLY_DAMAGED",
+  LOST = "LOST",
+  DUPLICATE = "DUPLICATE",
+  DIVERTED = "DIVERTED",
+  ERROR = "ERROR"
+}
+
+export type UpdateBoxCategoryInput = {
+  id: string;
+  name?: string | null;
+  active?: boolean | null;
+};
+
+export type DeleteBoxCategoryInput = {
   id?: string | null;
 };
 
@@ -97,13 +173,6 @@ export type ModelApihealthCheckInfoConditionInput = {
 export type ModelApiHealthStatusInput = {
   eq?: ApiHealthStatus | null;
   ne?: ApiHealthStatus | null;
-};
-
-export type ModelBooleanInput = {
-  ne?: boolean | null;
-  eq?: boolean | null;
-  attributeExists?: boolean | null;
-  attributeType?: ModelAttributeTypes | null;
 };
 
 export type UpdateApihealthCheckInfoInput = {
@@ -230,48 +299,6 @@ export type ModelOrgConditionInput = {
   or?: Array<ModelOrgConditionInput | null> | null;
   not?: ModelOrgConditionInput | null;
 };
-
-export type ModelIDInput = {
-  ne?: string | null;
-  eq?: string | null;
-  le?: string | null;
-  lt?: string | null;
-  ge?: string | null;
-  gt?: string | null;
-  contains?: string | null;
-  notContains?: string | null;
-  between?: Array<string | null> | null;
-  beginsWith?: string | null;
-  attributeExists?: boolean | null;
-  attributeType?: ModelAttributeTypes | null;
-  size?: ModelSizeInput | null;
-};
-
-export enum BoxStatus {
-  NEW = "NEW",
-  PACKAGED = "PACKAGED",
-  PICKUP_IN_TRANSIT = "PICKUP_IN_TRANSIT",
-  PICKUP_COMPLETED = "PICKUP_COMPLETED",
-  READY_TO_SHIP = "READY_TO_SHIP",
-  IN_TRANSIT = "IN_TRANSIT",
-  DELIVERED = "DELIVERED",
-  FAILED_TO_DELIVER = "FAILED_TO_DELIVER",
-  CANCELLED = "CANCELLED",
-  REJECTED = "REJECTED",
-  DAMAGED = "DAMAGED",
-  PARTIALLY_DAMAGED = "PARTIALLY_DAMAGED",
-  LOST = "LOST",
-  DUPLICATE = "DUPLICATE",
-  DIVERTED = "DIVERTED",
-  ERROR = "ERROR"
-}
-
-export enum UserStatus {
-  PENDING_VERIFICATION = "PENDING_VERIFICATION",
-  ACTIVE = "ACTIVE",
-  DISABLED = "DISABLED",
-  FLAGGED = "FLAGGED"
-}
 
 export type UpdateOrgInput = {
   id: string;
@@ -429,6 +456,7 @@ export type CreateBoxInput = {
   size: string;
   orgID: string;
   shipmentID: string;
+  boxCategoryID: string;
   isActive: boolean;
   barCode?: string | null;
   qrCode?: string | null;
@@ -448,6 +476,7 @@ export type ModelBoxConditionInput = {
   size?: ModelStringInput | null;
   orgID?: ModelIDInput | null;
   shipmentID?: ModelIDInput | null;
+  boxCategoryID?: ModelIDInput | null;
   isActive?: ModelBooleanInput | null;
   barCode?: ModelStringInput | null;
   qrCode?: ModelStringInput | null;
@@ -483,6 +512,7 @@ export type UpdateBoxInput = {
   size?: string | null;
   orgID?: string | null;
   shipmentID?: string | null;
+  boxCategoryID?: string | null;
   isActive?: boolean | null;
   barCode?: string | null;
   qrCode?: string | null;
@@ -509,6 +539,7 @@ export type CreateBoxLocationInput = {
   isFinal: boolean;
   tags?: Array<string> | null;
   isActive: boolean;
+  trackingInfoID: string;
 };
 
 export type ModelBoxLocationConditionInput = {
@@ -519,6 +550,7 @@ export type ModelBoxLocationConditionInput = {
   isFinal?: ModelBooleanInput | null;
   tags?: ModelStringInput | null;
   isActive?: ModelBooleanInput | null;
+  trackingInfoID?: ModelIDInput | null;
   and?: Array<ModelBoxLocationConditionInput | null> | null;
   or?: Array<ModelBoxLocationConditionInput | null> | null;
   not?: ModelBoxLocationConditionInput | null;
@@ -533,9 +565,46 @@ export type UpdateBoxLocationInput = {
   isFinal?: boolean | null;
   tags?: Array<string> | null;
   isActive?: boolean | null;
+  trackingInfoID?: string | null;
 };
 
 export type DeleteBoxLocationInput = {
+  id?: string | null;
+};
+
+export type CreateTrackingInfoInput = {
+  id?: string | null;
+  timeOfDelivery: string;
+  userID: string;
+  isActive: boolean;
+  tags?: Array<string> | null;
+  internalNotes?: string | null;
+  notes?: string | null;
+};
+
+export type ModelTrackingInfoConditionInput = {
+  timeOfDelivery?: ModelStringInput | null;
+  userID?: ModelIDInput | null;
+  isActive?: ModelBooleanInput | null;
+  tags?: ModelStringInput | null;
+  internalNotes?: ModelStringInput | null;
+  notes?: ModelStringInput | null;
+  and?: Array<ModelTrackingInfoConditionInput | null> | null;
+  or?: Array<ModelTrackingInfoConditionInput | null> | null;
+  not?: ModelTrackingInfoConditionInput | null;
+};
+
+export type UpdateTrackingInfoInput = {
+  id: string;
+  timeOfDelivery?: string | null;
+  userID?: string | null;
+  isActive?: boolean | null;
+  tags?: Array<string> | null;
+  internalNotes?: string | null;
+  notes?: string | null;
+};
+
+export type DeleteTrackingInfoInput = {
   id?: string | null;
 };
 
@@ -543,6 +612,7 @@ export type CreateUserInput = {
   id?: string | null;
   name: string;
   orgID: string;
+  hashedSecret?: string | null;
   isActive: boolean;
   tags?: Array<string> | null;
   status: UserStatus;
@@ -556,6 +626,7 @@ export type CreateUserInput = {
 export type ModelUserConditionInput = {
   name?: ModelStringInput | null;
   orgID?: ModelIDInput | null;
+  hashedSecret?: ModelStringInput | null;
   isActive?: ModelBooleanInput | null;
   tags?: ModelStringInput | null;
   status?: ModelUserStatusInput | null;
@@ -597,6 +668,7 @@ export type UpdateUserInput = {
   id: string;
   name?: string | null;
   orgID?: string | null;
+  hashedSecret?: string | null;
   isActive?: boolean | null;
   tags?: Array<string> | null;
   status?: UserStatus | null;
@@ -615,9 +687,19 @@ export type ModelImageFilterInput = {
   id?: ModelIDInput | null;
   altTex?: ModelStringInput | null;
   src?: ModelStringInput | null;
+  userID?: ModelIDInput | null;
   and?: Array<ModelImageFilterInput | null> | null;
   or?: Array<ModelImageFilterInput | null> | null;
   not?: ModelImageFilterInput | null;
+};
+
+export type ModelBoxCategoryFilterInput = {
+  id?: ModelIDInput | null;
+  name?: ModelStringInput | null;
+  active?: ModelBooleanInput | null;
+  and?: Array<ModelBoxCategoryFilterInput | null> | null;
+  or?: Array<ModelBoxCategoryFilterInput | null> | null;
+  not?: ModelBoxCategoryFilterInput | null;
 };
 
 export type ModelApihealthCheckInfoFilterInput = {
@@ -722,6 +804,7 @@ export type ModelBoxFilterInput = {
   size?: ModelStringInput | null;
   orgID?: ModelIDInput | null;
   shipmentID?: ModelIDInput | null;
+  boxCategoryID?: ModelIDInput | null;
   isActive?: ModelBooleanInput | null;
   barCode?: ModelStringInput | null;
   qrCode?: ModelStringInput | null;
@@ -738,6 +821,11 @@ export type ModelBoxFilterInput = {
   not?: ModelBoxFilterInput | null;
 };
 
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC"
+}
+
 export type ModelIDKeyConditionInput = {
   eq?: string | null;
   le?: string | null;
@@ -748,11 +836,6 @@ export type ModelIDKeyConditionInput = {
   beginsWith?: string | null;
 };
 
-export enum ModelSortDirection {
-  ASC = "ASC",
-  DESC = "DESC"
-}
-
 export type ModelBoxLocationFilterInput = {
   id?: ModelIDInput | null;
   boxID?: ModelIDInput | null;
@@ -762,15 +845,30 @@ export type ModelBoxLocationFilterInput = {
   isFinal?: ModelBooleanInput | null;
   tags?: ModelStringInput | null;
   isActive?: ModelBooleanInput | null;
+  trackingInfoID?: ModelIDInput | null;
   and?: Array<ModelBoxLocationFilterInput | null> | null;
   or?: Array<ModelBoxLocationFilterInput | null> | null;
   not?: ModelBoxLocationFilterInput | null;
+};
+
+export type ModelTrackingInfoFilterInput = {
+  id?: ModelIDInput | null;
+  timeOfDelivery?: ModelStringInput | null;
+  userID?: ModelIDInput | null;
+  isActive?: ModelBooleanInput | null;
+  tags?: ModelStringInput | null;
+  internalNotes?: ModelStringInput | null;
+  notes?: ModelStringInput | null;
+  and?: Array<ModelTrackingInfoFilterInput | null> | null;
+  or?: Array<ModelTrackingInfoFilterInput | null> | null;
+  not?: ModelTrackingInfoFilterInput | null;
 };
 
 export type ModelUserFilterInput = {
   id?: ModelIDInput | null;
   name?: ModelStringInput | null;
   orgID?: ModelIDInput | null;
+  hashedSecret?: ModelStringInput | null;
   isActive?: ModelBooleanInput | null;
   tags?: ModelStringInput | null;
   status?: ModelUserStatusInput | null;
@@ -789,8 +887,63 @@ export type CreateImageMutation = {
   id: string;
   altTex: string | null;
   src: string;
+  userID: string;
   createdAt: string;
   updatedAt: string;
+  user: {
+    __typename: "User";
+    id: string;
+    name: string;
+    orgID: string;
+    hashedSecret: string | null;
+    isActive: boolean;
+    tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    status: UserStatus;
+    statusHistory: Array<UserStatus> | null;
+    internalNotes: string | null;
+    notes: string | null;
+    rank: number | null;
+    notesHistory: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
+    org: {
+      __typename: "Org";
+      id: string;
+      name: string;
+      description: string | null;
+      addressID: string;
+      email: string | null;
+      primaryDomain: string | null;
+      privacyPolicy: string | null;
+      tags: Array<string> | null;
+      notes: string | null;
+      isActive: boolean;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
+  };
 };
 
 export type UpdateImageMutation = {
@@ -798,8 +951,63 @@ export type UpdateImageMutation = {
   id: string;
   altTex: string | null;
   src: string;
+  userID: string;
   createdAt: string;
   updatedAt: string;
+  user: {
+    __typename: "User";
+    id: string;
+    name: string;
+    orgID: string;
+    hashedSecret: string | null;
+    isActive: boolean;
+    tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    status: UserStatus;
+    statusHistory: Array<UserStatus> | null;
+    internalNotes: string | null;
+    notes: string | null;
+    rank: number | null;
+    notesHistory: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
+    org: {
+      __typename: "Org";
+      id: string;
+      name: string;
+      description: string | null;
+      addressID: string;
+      email: string | null;
+      primaryDomain: string | null;
+      privacyPolicy: string | null;
+      tags: Array<string> | null;
+      notes: string | null;
+      isActive: boolean;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
+  };
 };
 
 export type DeleteImageMutation = {
@@ -807,8 +1015,171 @@ export type DeleteImageMutation = {
   id: string;
   altTex: string | null;
   src: string;
+  userID: string;
   createdAt: string;
   updatedAt: string;
+  user: {
+    __typename: "User";
+    id: string;
+    name: string;
+    orgID: string;
+    hashedSecret: string | null;
+    isActive: boolean;
+    tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    status: UserStatus;
+    statusHistory: Array<UserStatus> | null;
+    internalNotes: string | null;
+    notes: string | null;
+    rank: number | null;
+    notesHistory: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
+    org: {
+      __typename: "Org";
+      id: string;
+      name: string;
+      description: string | null;
+      addressID: string;
+      email: string | null;
+      primaryDomain: string | null;
+      privacyPolicy: string | null;
+      tags: Array<string> | null;
+      notes: string | null;
+      isActive: boolean;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
+  };
+};
+
+export type CreateBoxCategoryMutation = {
+  __typename: "BoxCategory";
+  id: string;
+  name: string;
+  active: boolean;
+  createdAt: string;
+  updatedAt: string;
+  boxes: {
+    __typename: "ModelBoxConnection";
+    items: Array<{
+      __typename: "Box";
+      id: string;
+      title: string;
+      contents: string;
+      size: string;
+      orgID: string;
+      shipmentID: string;
+      boxCategoryID: string;
+      isActive: boolean;
+      barCode: string | null;
+      qrCode: string | null;
+      barCodePhoto: string | null;
+      qrCodePhoto: string | null;
+      tags: Array<string> | null;
+      status: BoxStatus;
+      statusHistory: Array<BoxStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+};
+
+export type UpdateBoxCategoryMutation = {
+  __typename: "BoxCategory";
+  id: string;
+  name: string;
+  active: boolean;
+  createdAt: string;
+  updatedAt: string;
+  boxes: {
+    __typename: "ModelBoxConnection";
+    items: Array<{
+      __typename: "Box";
+      id: string;
+      title: string;
+      contents: string;
+      size: string;
+      orgID: string;
+      shipmentID: string;
+      boxCategoryID: string;
+      isActive: boolean;
+      barCode: string | null;
+      qrCode: string | null;
+      barCodePhoto: string | null;
+      qrCodePhoto: string | null;
+      tags: Array<string> | null;
+      status: BoxStatus;
+      statusHistory: Array<BoxStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+};
+
+export type DeleteBoxCategoryMutation = {
+  __typename: "BoxCategory";
+  id: string;
+  name: string;
+  active: boolean;
+  createdAt: string;
+  updatedAt: string;
+  boxes: {
+    __typename: "ModelBoxConnection";
+    items: Array<{
+      __typename: "Box";
+      id: string;
+      title: string;
+      contents: string;
+      size: string;
+      orgID: string;
+      shipmentID: string;
+      boxCategoryID: string;
+      isActive: boolean;
+      barCode: string | null;
+      qrCode: string | null;
+      barCodePhoto: string | null;
+      qrCodePhoto: string | null;
+      tags: Array<string> | null;
+      status: BoxStatus;
+      statusHistory: Array<BoxStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
 };
 
 export type CreateApihealthCheckInfoMutation = {
@@ -953,13 +1324,57 @@ export type CreateOrgMutation = {
   primaryDomain: string | null;
   privacyPolicy: string | null;
   tags: Array<string> | null;
+  image: {
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    userID: string;
+    createdAt: string;
+    updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  } | null;
   images: Array<{
     __typename: "Image";
     id: string;
     altTex: string | null;
     src: string;
+    userID: string;
     createdAt: string;
     updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
   }> | null;
   notes: string | null;
   isActive: boolean;
@@ -990,6 +1405,7 @@ export type CreateOrgMutation = {
       size: string;
       orgID: string;
       shipmentID: string;
+      boxCategoryID: string;
       isActive: boolean;
       barCode: string | null;
       qrCode: string | null;
@@ -1013,6 +1429,7 @@ export type CreateOrgMutation = {
       id: string;
       name: string;
       orgID: string;
+      hashedSecret: string | null;
       isActive: boolean;
       tags: Array<string> | null;
       status: UserStatus;
@@ -1056,13 +1473,57 @@ export type UpdateOrgMutation = {
   primaryDomain: string | null;
   privacyPolicy: string | null;
   tags: Array<string> | null;
+  image: {
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    userID: string;
+    createdAt: string;
+    updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  } | null;
   images: Array<{
     __typename: "Image";
     id: string;
     altTex: string | null;
     src: string;
+    userID: string;
     createdAt: string;
     updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
   }> | null;
   notes: string | null;
   isActive: boolean;
@@ -1093,6 +1554,7 @@ export type UpdateOrgMutation = {
       size: string;
       orgID: string;
       shipmentID: string;
+      boxCategoryID: string;
       isActive: boolean;
       barCode: string | null;
       qrCode: string | null;
@@ -1116,6 +1578,7 @@ export type UpdateOrgMutation = {
       id: string;
       name: string;
       orgID: string;
+      hashedSecret: string | null;
       isActive: boolean;
       tags: Array<string> | null;
       status: UserStatus;
@@ -1159,13 +1622,57 @@ export type DeleteOrgMutation = {
   primaryDomain: string | null;
   privacyPolicy: string | null;
   tags: Array<string> | null;
+  image: {
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    userID: string;
+    createdAt: string;
+    updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  } | null;
   images: Array<{
     __typename: "Image";
     id: string;
     altTex: string | null;
     src: string;
+    userID: string;
     createdAt: string;
     updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
   }> | null;
   notes: string | null;
   isActive: boolean;
@@ -1196,6 +1703,7 @@ export type DeleteOrgMutation = {
       size: string;
       orgID: string;
       shipmentID: string;
+      boxCategoryID: string;
       isActive: boolean;
       barCode: string | null;
       qrCode: string | null;
@@ -1219,6 +1727,7 @@ export type DeleteOrgMutation = {
       id: string;
       name: string;
       orgID: string;
+      hashedSecret: string | null;
       isActive: boolean;
       tags: Array<string> | null;
       status: UserStatus;
@@ -1375,13 +1884,57 @@ export type CreateShipmentMutation = {
   status: ShippingStatus | null;
   statusHistory: Array<string> | null;
   tags: Array<string> | null;
+  image: {
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    userID: string;
+    createdAt: string;
+    updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  } | null;
   images: Array<{
     __typename: "Image";
     id: string;
     altTex: string | null;
     src: string;
+    userID: string;
     createdAt: string;
     updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
   }> | null;
   notes: string | null;
   notesHistory: Array<string> | null;
@@ -1477,6 +2030,7 @@ export type CreateShipmentMutation = {
       size: string;
       orgID: string;
       shipmentID: string;
+      boxCategoryID: string;
       isActive: boolean;
       barCode: string | null;
       qrCode: string | null;
@@ -1513,13 +2067,57 @@ export type UpdateShipmentMutation = {
   status: ShippingStatus | null;
   statusHistory: Array<string> | null;
   tags: Array<string> | null;
+  image: {
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    userID: string;
+    createdAt: string;
+    updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  } | null;
   images: Array<{
     __typename: "Image";
     id: string;
     altTex: string | null;
     src: string;
+    userID: string;
     createdAt: string;
     updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
   }> | null;
   notes: string | null;
   notesHistory: Array<string> | null;
@@ -1615,6 +2213,7 @@ export type UpdateShipmentMutation = {
       size: string;
       orgID: string;
       shipmentID: string;
+      boxCategoryID: string;
       isActive: boolean;
       barCode: string | null;
       qrCode: string | null;
@@ -1651,13 +2250,57 @@ export type DeleteShipmentMutation = {
   status: ShippingStatus | null;
   statusHistory: Array<string> | null;
   tags: Array<string> | null;
+  image: {
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    userID: string;
+    createdAt: string;
+    updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  } | null;
   images: Array<{
     __typename: "Image";
     id: string;
     altTex: string | null;
     src: string;
+    userID: string;
     createdAt: string;
     updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
   }> | null;
   notes: string | null;
   notesHistory: Array<string> | null;
@@ -1753,6 +2396,7 @@ export type DeleteShipmentMutation = {
       size: string;
       orgID: string;
       shipmentID: string;
+      boxCategoryID: string;
       isActive: boolean;
       barCode: string | null;
       qrCode: string | null;
@@ -1779,19 +2423,76 @@ export type CreateBoxMutation = {
   size: string;
   orgID: string;
   shipmentID: string;
+  boxCategoryID: string;
+  additionalBoxCategories: Array<{
+    __typename: "BoxCategory";
+    id: string;
+    name: string;
+    active: boolean;
+    createdAt: string;
+    updatedAt: string;
+    boxes: {
+      __typename: "ModelBoxConnection";
+      nextToken: string | null;
+    } | null;
+  }> | null;
   isActive: boolean;
   barCode: string | null;
   qrCode: string | null;
   barCodePhoto: string | null;
   qrCodePhoto: string | null;
   tags: Array<string> | null;
+  image: {
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    userID: string;
+    createdAt: string;
+    updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  } | null;
   images: Array<{
     __typename: "Image";
     id: string;
     altTex: string | null;
     src: string;
+    userID: string;
     createdAt: string;
     updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
   }> | null;
   status: BoxStatus;
   statusHistory: Array<BoxStatus> | null;
@@ -1800,6 +2501,18 @@ export type CreateBoxMutation = {
   notesHistory: Array<string> | null;
   createdAt: string;
   updatedAt: string;
+  boxCategory: {
+    __typename: "BoxCategory";
+    id: string;
+    name: string;
+    active: boolean;
+    createdAt: string;
+    updatedAt: string;
+    boxes: {
+      __typename: "ModelBoxConnection";
+      nextToken: string | null;
+    } | null;
+  } | null;
   org: {
     __typename: "Org";
     id: string;
@@ -1828,11 +2541,21 @@ export type CreateBoxMutation = {
     primaryDomain: string | null;
     privacyPolicy: string | null;
     tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
     images: Array<{
       __typename: "Image";
       id: string;
       altTex: string | null;
       src: string;
+      userID: string;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -1882,11 +2605,21 @@ export type CreateBoxMutation = {
     status: ShippingStatus | null;
     statusHistory: Array<string> | null;
     tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
     images: Array<{
       __typename: "Image";
       id: string;
       altTex: string | null;
       src: string;
+      userID: string;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -1943,6 +2676,7 @@ export type CreateBoxMutation = {
       isFinal: boolean;
       tags: Array<string> | null;
       isActive: boolean;
+      trackingInfoID: string;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
@@ -1958,19 +2692,76 @@ export type UpdateBoxMutation = {
   size: string;
   orgID: string;
   shipmentID: string;
+  boxCategoryID: string;
+  additionalBoxCategories: Array<{
+    __typename: "BoxCategory";
+    id: string;
+    name: string;
+    active: boolean;
+    createdAt: string;
+    updatedAt: string;
+    boxes: {
+      __typename: "ModelBoxConnection";
+      nextToken: string | null;
+    } | null;
+  }> | null;
   isActive: boolean;
   barCode: string | null;
   qrCode: string | null;
   barCodePhoto: string | null;
   qrCodePhoto: string | null;
   tags: Array<string> | null;
+  image: {
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    userID: string;
+    createdAt: string;
+    updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  } | null;
   images: Array<{
     __typename: "Image";
     id: string;
     altTex: string | null;
     src: string;
+    userID: string;
     createdAt: string;
     updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
   }> | null;
   status: BoxStatus;
   statusHistory: Array<BoxStatus> | null;
@@ -1979,6 +2770,18 @@ export type UpdateBoxMutation = {
   notesHistory: Array<string> | null;
   createdAt: string;
   updatedAt: string;
+  boxCategory: {
+    __typename: "BoxCategory";
+    id: string;
+    name: string;
+    active: boolean;
+    createdAt: string;
+    updatedAt: string;
+    boxes: {
+      __typename: "ModelBoxConnection";
+      nextToken: string | null;
+    } | null;
+  } | null;
   org: {
     __typename: "Org";
     id: string;
@@ -2007,11 +2810,21 @@ export type UpdateBoxMutation = {
     primaryDomain: string | null;
     privacyPolicy: string | null;
     tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
     images: Array<{
       __typename: "Image";
       id: string;
       altTex: string | null;
       src: string;
+      userID: string;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -2061,11 +2874,21 @@ export type UpdateBoxMutation = {
     status: ShippingStatus | null;
     statusHistory: Array<string> | null;
     tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
     images: Array<{
       __typename: "Image";
       id: string;
       altTex: string | null;
       src: string;
+      userID: string;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -2122,6 +2945,7 @@ export type UpdateBoxMutation = {
       isFinal: boolean;
       tags: Array<string> | null;
       isActive: boolean;
+      trackingInfoID: string;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
@@ -2137,19 +2961,76 @@ export type DeleteBoxMutation = {
   size: string;
   orgID: string;
   shipmentID: string;
+  boxCategoryID: string;
+  additionalBoxCategories: Array<{
+    __typename: "BoxCategory";
+    id: string;
+    name: string;
+    active: boolean;
+    createdAt: string;
+    updatedAt: string;
+    boxes: {
+      __typename: "ModelBoxConnection";
+      nextToken: string | null;
+    } | null;
+  }> | null;
   isActive: boolean;
   barCode: string | null;
   qrCode: string | null;
   barCodePhoto: string | null;
   qrCodePhoto: string | null;
   tags: Array<string> | null;
+  image: {
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    userID: string;
+    createdAt: string;
+    updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  } | null;
   images: Array<{
     __typename: "Image";
     id: string;
     altTex: string | null;
     src: string;
+    userID: string;
     createdAt: string;
     updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
   }> | null;
   status: BoxStatus;
   statusHistory: Array<BoxStatus> | null;
@@ -2158,6 +3039,18 @@ export type DeleteBoxMutation = {
   notesHistory: Array<string> | null;
   createdAt: string;
   updatedAt: string;
+  boxCategory: {
+    __typename: "BoxCategory";
+    id: string;
+    name: string;
+    active: boolean;
+    createdAt: string;
+    updatedAt: string;
+    boxes: {
+      __typename: "ModelBoxConnection";
+      nextToken: string | null;
+    } | null;
+  } | null;
   org: {
     __typename: "Org";
     id: string;
@@ -2186,11 +3079,21 @@ export type DeleteBoxMutation = {
     primaryDomain: string | null;
     privacyPolicy: string | null;
     tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
     images: Array<{
       __typename: "Image";
       id: string;
       altTex: string | null;
       src: string;
+      userID: string;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -2240,11 +3143,21 @@ export type DeleteBoxMutation = {
     status: ShippingStatus | null;
     statusHistory: Array<string> | null;
     tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
     images: Array<{
       __typename: "Image";
       id: string;
       altTex: string | null;
       src: string;
+      userID: string;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -2301,6 +3214,7 @@ export type DeleteBoxMutation = {
       isFinal: boolean;
       tags: Array<string> | null;
       isActive: boolean;
+      trackingInfoID: string;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
@@ -2317,15 +3231,60 @@ export type CreateBoxLocationMutation = {
   notes: string | null;
   isFinal: boolean;
   tags: Array<string> | null;
+  image: {
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    userID: string;
+    createdAt: string;
+    updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  };
   images: Array<{
     __typename: "Image";
     id: string;
     altTex: string | null;
     src: string;
+    userID: string;
     createdAt: string;
     updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
   }> | null;
   isActive: boolean;
+  trackingInfoID: string;
   createdAt: string;
   updatedAt: string;
   locationInfo: {
@@ -2376,17 +3335,36 @@ export type CreateBoxLocationMutation = {
     size: string;
     orgID: string;
     shipmentID: string;
+    boxCategoryID: string;
+    additionalBoxCategories: Array<{
+      __typename: "BoxCategory";
+      id: string;
+      name: string;
+      active: boolean;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
     isActive: boolean;
     barCode: string | null;
     qrCode: string | null;
     barCodePhoto: string | null;
     qrCodePhoto: string | null;
     tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
     images: Array<{
       __typename: "Image";
       id: string;
       altTex: string | null;
       src: string;
+      userID: string;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -2397,6 +3375,14 @@ export type CreateBoxLocationMutation = {
     notesHistory: Array<string> | null;
     createdAt: string;
     updatedAt: string;
+    boxCategory: {
+      __typename: "BoxCategory";
+      id: string;
+      name: string;
+      active: boolean;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
     org: {
       __typename: "Org";
       id: string;
@@ -2440,18 +3426,80 @@ export type CreateBoxLocationMutation = {
       nextToken: string | null;
     } | null;
   };
-  user: {
-    __typename: "User";
+  trackingInfo: {
+    __typename: "TrackingInfo";
     id: string;
-    name: string;
-    orgID: string;
+    timeOfDelivery: string;
+    userID: string;
     isActive: boolean;
     tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    };
     images: Array<{
       __typename: "Image";
       id: string;
       altTex: string | null;
       src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    internalNotes: string | null;
+    notes: string | null;
+    createdAt: string;
+    updatedAt: string;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  };
+  user: {
+    __typename: "User";
+    id: string;
+    name: string;
+    orgID: string;
+    hashedSecret: string | null;
+    isActive: boolean;
+    tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -2494,15 +3542,60 @@ export type UpdateBoxLocationMutation = {
   notes: string | null;
   isFinal: boolean;
   tags: Array<string> | null;
+  image: {
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    userID: string;
+    createdAt: string;
+    updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  };
   images: Array<{
     __typename: "Image";
     id: string;
     altTex: string | null;
     src: string;
+    userID: string;
     createdAt: string;
     updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
   }> | null;
   isActive: boolean;
+  trackingInfoID: string;
   createdAt: string;
   updatedAt: string;
   locationInfo: {
@@ -2553,17 +3646,36 @@ export type UpdateBoxLocationMutation = {
     size: string;
     orgID: string;
     shipmentID: string;
+    boxCategoryID: string;
+    additionalBoxCategories: Array<{
+      __typename: "BoxCategory";
+      id: string;
+      name: string;
+      active: boolean;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
     isActive: boolean;
     barCode: string | null;
     qrCode: string | null;
     barCodePhoto: string | null;
     qrCodePhoto: string | null;
     tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
     images: Array<{
       __typename: "Image";
       id: string;
       altTex: string | null;
       src: string;
+      userID: string;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -2574,6 +3686,14 @@ export type UpdateBoxLocationMutation = {
     notesHistory: Array<string> | null;
     createdAt: string;
     updatedAt: string;
+    boxCategory: {
+      __typename: "BoxCategory";
+      id: string;
+      name: string;
+      active: boolean;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
     org: {
       __typename: "Org";
       id: string;
@@ -2617,18 +3737,80 @@ export type UpdateBoxLocationMutation = {
       nextToken: string | null;
     } | null;
   };
-  user: {
-    __typename: "User";
+  trackingInfo: {
+    __typename: "TrackingInfo";
     id: string;
-    name: string;
-    orgID: string;
+    timeOfDelivery: string;
+    userID: string;
     isActive: boolean;
     tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    };
     images: Array<{
       __typename: "Image";
       id: string;
       altTex: string | null;
       src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    internalNotes: string | null;
+    notes: string | null;
+    createdAt: string;
+    updatedAt: string;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  };
+  user: {
+    __typename: "User";
+    id: string;
+    name: string;
+    orgID: string;
+    hashedSecret: string | null;
+    isActive: boolean;
+    tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -2671,15 +3853,60 @@ export type DeleteBoxLocationMutation = {
   notes: string | null;
   isFinal: boolean;
   tags: Array<string> | null;
+  image: {
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    userID: string;
+    createdAt: string;
+    updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  };
   images: Array<{
     __typename: "Image";
     id: string;
     altTex: string | null;
     src: string;
+    userID: string;
     createdAt: string;
     updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
   }> | null;
   isActive: boolean;
+  trackingInfoID: string;
   createdAt: string;
   updatedAt: string;
   locationInfo: {
@@ -2730,17 +3957,36 @@ export type DeleteBoxLocationMutation = {
     size: string;
     orgID: string;
     shipmentID: string;
+    boxCategoryID: string;
+    additionalBoxCategories: Array<{
+      __typename: "BoxCategory";
+      id: string;
+      name: string;
+      active: boolean;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
     isActive: boolean;
     barCode: string | null;
     qrCode: string | null;
     barCodePhoto: string | null;
     qrCodePhoto: string | null;
     tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
     images: Array<{
       __typename: "Image";
       id: string;
       altTex: string | null;
       src: string;
+      userID: string;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -2751,6 +3997,14 @@ export type DeleteBoxLocationMutation = {
     notesHistory: Array<string> | null;
     createdAt: string;
     updatedAt: string;
+    boxCategory: {
+      __typename: "BoxCategory";
+      id: string;
+      name: string;
+      active: boolean;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
     org: {
       __typename: "Org";
       id: string;
@@ -2794,18 +4048,491 @@ export type DeleteBoxLocationMutation = {
       nextToken: string | null;
     } | null;
   };
-  user: {
-    __typename: "User";
+  trackingInfo: {
+    __typename: "TrackingInfo";
     id: string;
-    name: string;
-    orgID: string;
+    timeOfDelivery: string;
+    userID: string;
     isActive: boolean;
     tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    };
     images: Array<{
       __typename: "Image";
       id: string;
       altTex: string | null;
       src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    internalNotes: string | null;
+    notes: string | null;
+    createdAt: string;
+    updatedAt: string;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  };
+  user: {
+    __typename: "User";
+    id: string;
+    name: string;
+    orgID: string;
+    hashedSecret: string | null;
+    isActive: boolean;
+    tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    status: UserStatus;
+    statusHistory: Array<UserStatus> | null;
+    internalNotes: string | null;
+    notes: string | null;
+    rank: number | null;
+    notesHistory: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
+    org: {
+      __typename: "Org";
+      id: string;
+      name: string;
+      description: string | null;
+      addressID: string;
+      email: string | null;
+      primaryDomain: string | null;
+      privacyPolicy: string | null;
+      tags: Array<string> | null;
+      notes: string | null;
+      isActive: boolean;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
+  };
+};
+
+export type CreateTrackingInfoMutation = {
+  __typename: "TrackingInfo";
+  id: string;
+  timeOfDelivery: string;
+  userID: string;
+  isActive: boolean;
+  tags: Array<string> | null;
+  image: {
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    userID: string;
+    createdAt: string;
+    updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  };
+  images: Array<{
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    userID: string;
+    createdAt: string;
+    updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  }> | null;
+  internalNotes: string | null;
+  notes: string | null;
+  createdAt: string;
+  updatedAt: string;
+  boxLocations: {
+    __typename: "ModelBoxLocationConnection";
+    items: Array<{
+      __typename: "BoxLocation";
+      id: string;
+      boxID: string;
+      locationInfoID: string;
+      userID: string;
+      notes: string | null;
+      isFinal: boolean;
+      tags: Array<string> | null;
+      isActive: boolean;
+      trackingInfoID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  user: {
+    __typename: "User";
+    id: string;
+    name: string;
+    orgID: string;
+    hashedSecret: string | null;
+    isActive: boolean;
+    tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    status: UserStatus;
+    statusHistory: Array<UserStatus> | null;
+    internalNotes: string | null;
+    notes: string | null;
+    rank: number | null;
+    notesHistory: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
+    org: {
+      __typename: "Org";
+      id: string;
+      name: string;
+      description: string | null;
+      addressID: string;
+      email: string | null;
+      primaryDomain: string | null;
+      privacyPolicy: string | null;
+      tags: Array<string> | null;
+      notes: string | null;
+      isActive: boolean;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
+  };
+};
+
+export type UpdateTrackingInfoMutation = {
+  __typename: "TrackingInfo";
+  id: string;
+  timeOfDelivery: string;
+  userID: string;
+  isActive: boolean;
+  tags: Array<string> | null;
+  image: {
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    userID: string;
+    createdAt: string;
+    updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  };
+  images: Array<{
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    userID: string;
+    createdAt: string;
+    updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  }> | null;
+  internalNotes: string | null;
+  notes: string | null;
+  createdAt: string;
+  updatedAt: string;
+  boxLocations: {
+    __typename: "ModelBoxLocationConnection";
+    items: Array<{
+      __typename: "BoxLocation";
+      id: string;
+      boxID: string;
+      locationInfoID: string;
+      userID: string;
+      notes: string | null;
+      isFinal: boolean;
+      tags: Array<string> | null;
+      isActive: boolean;
+      trackingInfoID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  user: {
+    __typename: "User";
+    id: string;
+    name: string;
+    orgID: string;
+    hashedSecret: string | null;
+    isActive: boolean;
+    tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    status: UserStatus;
+    statusHistory: Array<UserStatus> | null;
+    internalNotes: string | null;
+    notes: string | null;
+    rank: number | null;
+    notesHistory: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
+    org: {
+      __typename: "Org";
+      id: string;
+      name: string;
+      description: string | null;
+      addressID: string;
+      email: string | null;
+      primaryDomain: string | null;
+      privacyPolicy: string | null;
+      tags: Array<string> | null;
+      notes: string | null;
+      isActive: boolean;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
+  };
+};
+
+export type DeleteTrackingInfoMutation = {
+  __typename: "TrackingInfo";
+  id: string;
+  timeOfDelivery: string;
+  userID: string;
+  isActive: boolean;
+  tags: Array<string> | null;
+  image: {
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    userID: string;
+    createdAt: string;
+    updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  };
+  images: Array<{
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    userID: string;
+    createdAt: string;
+    updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  }> | null;
+  internalNotes: string | null;
+  notes: string | null;
+  createdAt: string;
+  updatedAt: string;
+  boxLocations: {
+    __typename: "ModelBoxLocationConnection";
+    items: Array<{
+      __typename: "BoxLocation";
+      id: string;
+      boxID: string;
+      locationInfoID: string;
+      userID: string;
+      notes: string | null;
+      isFinal: boolean;
+      tags: Array<string> | null;
+      isActive: boolean;
+      trackingInfoID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  user: {
+    __typename: "User";
+    id: string;
+    name: string;
+    orgID: string;
+    hashedSecret: string | null;
+    isActive: boolean;
+    tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -2844,15 +4571,60 @@ export type CreateUserMutation = {
   id: string;
   name: string;
   orgID: string;
+  hashedSecret: string | null;
   isActive: boolean;
   tags: Array<string> | null;
+  image: {
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    userID: string;
+    createdAt: string;
+    updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  } | null;
   images: Array<{
     __typename: "Image";
     id: string;
     altTex: string | null;
     src: string;
+    userID: string;
     createdAt: string;
     updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
   }> | null;
   status: UserStatus;
   statusHistory: Array<UserStatus> | null;
@@ -2890,11 +4662,21 @@ export type CreateUserMutation = {
     primaryDomain: string | null;
     privacyPolicy: string | null;
     tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
     images: Array<{
       __typename: "Image";
       id: string;
       altTex: string | null;
       src: string;
+      userID: string;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -2938,6 +4720,7 @@ export type CreateUserMutation = {
       isFinal: boolean;
       tags: Array<string> | null;
       isActive: boolean;
+      trackingInfoID: string;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
@@ -2950,15 +4733,60 @@ export type UpdateUserMutation = {
   id: string;
   name: string;
   orgID: string;
+  hashedSecret: string | null;
   isActive: boolean;
   tags: Array<string> | null;
+  image: {
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    userID: string;
+    createdAt: string;
+    updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  } | null;
   images: Array<{
     __typename: "Image";
     id: string;
     altTex: string | null;
     src: string;
+    userID: string;
     createdAt: string;
     updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
   }> | null;
   status: UserStatus;
   statusHistory: Array<UserStatus> | null;
@@ -2996,11 +4824,21 @@ export type UpdateUserMutation = {
     primaryDomain: string | null;
     privacyPolicy: string | null;
     tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
     images: Array<{
       __typename: "Image";
       id: string;
       altTex: string | null;
       src: string;
+      userID: string;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -3044,6 +4882,7 @@ export type UpdateUserMutation = {
       isFinal: boolean;
       tags: Array<string> | null;
       isActive: boolean;
+      trackingInfoID: string;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
@@ -3056,15 +4895,60 @@ export type DeleteUserMutation = {
   id: string;
   name: string;
   orgID: string;
+  hashedSecret: string | null;
   isActive: boolean;
   tags: Array<string> | null;
+  image: {
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    userID: string;
+    createdAt: string;
+    updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  } | null;
   images: Array<{
     __typename: "Image";
     id: string;
     altTex: string | null;
     src: string;
+    userID: string;
     createdAt: string;
     updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
   }> | null;
   status: UserStatus;
   statusHistory: Array<UserStatus> | null;
@@ -3102,11 +4986,21 @@ export type DeleteUserMutation = {
     primaryDomain: string | null;
     privacyPolicy: string | null;
     tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
     images: Array<{
       __typename: "Image";
       id: string;
       altTex: string | null;
       src: string;
+      userID: string;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -3150,6 +5044,7 @@ export type DeleteUserMutation = {
       isFinal: boolean;
       tags: Array<string> | null;
       isActive: boolean;
+      trackingInfoID: string;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
@@ -3162,8 +5057,63 @@ export type GetImageQuery = {
   id: string;
   altTex: string | null;
   src: string;
+  userID: string;
   createdAt: string;
   updatedAt: string;
+  user: {
+    __typename: "User";
+    id: string;
+    name: string;
+    orgID: string;
+    hashedSecret: string | null;
+    isActive: boolean;
+    tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    status: UserStatus;
+    statusHistory: Array<UserStatus> | null;
+    internalNotes: string | null;
+    notes: string | null;
+    rank: number | null;
+    notesHistory: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
+    org: {
+      __typename: "Org";
+      id: string;
+      name: string;
+      description: string | null;
+      addressID: string;
+      email: string | null;
+      primaryDomain: string | null;
+      privacyPolicy: string | null;
+      tags: Array<string> | null;
+      notes: string | null;
+      isActive: boolean;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
+  };
 };
 
 export type ListImagesQuery = {
@@ -3173,10 +5123,81 @@ export type ListImagesQuery = {
     id: string;
     altTex: string | null;
     src: string;
+    userID: string;
     createdAt: string;
     updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
   } | null> | null;
   nextToken: string | null;
+};
+
+export type ListBoxCategorysQuery = {
+  __typename: "ModelBoxCategoryConnection";
+  items: Array<{
+    __typename: "BoxCategory";
+    id: string;
+    name: string;
+    active: boolean;
+    createdAt: string;
+    updatedAt: string;
+    boxes: {
+      __typename: "ModelBoxConnection";
+      nextToken: string | null;
+    } | null;
+  } | null> | null;
+  nextToken: string | null;
+};
+
+export type GetBoxCategoryQuery = {
+  __typename: "BoxCategory";
+  id: string;
+  name: string;
+  active: boolean;
+  createdAt: string;
+  updatedAt: string;
+  boxes: {
+    __typename: "ModelBoxConnection";
+    items: Array<{
+      __typename: "Box";
+      id: string;
+      title: string;
+      contents: string;
+      size: string;
+      orgID: string;
+      shipmentID: string;
+      boxCategoryID: string;
+      isActive: boolean;
+      barCode: string | null;
+      qrCode: string | null;
+      barCodePhoto: string | null;
+      qrCodePhoto: string | null;
+      tags: Array<string> | null;
+      status: BoxStatus;
+      statusHistory: Array<BoxStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
 };
 
 export type GetApihealthCheckInfoQuery = {
@@ -3297,11 +5318,21 @@ export type ListOrgsQuery = {
     primaryDomain: string | null;
     privacyPolicy: string | null;
     tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
     images: Array<{
       __typename: "Image";
       id: string;
       altTex: string | null;
       src: string;
+      userID: string;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -3364,13 +5395,57 @@ export type GetOrgQuery = {
   primaryDomain: string | null;
   privacyPolicy: string | null;
   tags: Array<string> | null;
+  image: {
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    userID: string;
+    createdAt: string;
+    updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  } | null;
   images: Array<{
     __typename: "Image";
     id: string;
     altTex: string | null;
     src: string;
+    userID: string;
     createdAt: string;
     updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
   }> | null;
   notes: string | null;
   isActive: boolean;
@@ -3401,6 +5476,7 @@ export type GetOrgQuery = {
       size: string;
       orgID: string;
       shipmentID: string;
+      boxCategoryID: string;
       isActive: boolean;
       barCode: string | null;
       qrCode: string | null;
@@ -3424,6 +5500,7 @@ export type GetOrgQuery = {
       id: string;
       name: string;
       orgID: string;
+      hashedSecret: string | null;
       isActive: boolean;
       tags: Array<string> | null;
       status: UserStatus;
@@ -3545,11 +5622,21 @@ export type ListShipmentsQuery = {
     status: ShippingStatus | null;
     statusHistory: Array<string> | null;
     tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
     images: Array<{
       __typename: "Image";
       id: string;
       altTex: string | null;
       src: string;
+      userID: string;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -3615,13 +5702,57 @@ export type GetShipmentQuery = {
   status: ShippingStatus | null;
   statusHistory: Array<string> | null;
   tags: Array<string> | null;
+  image: {
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    userID: string;
+    createdAt: string;
+    updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  } | null;
   images: Array<{
     __typename: "Image";
     id: string;
     altTex: string | null;
     src: string;
+    userID: string;
     createdAt: string;
     updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
   }> | null;
   notes: string | null;
   notesHistory: Array<string> | null;
@@ -3717,6 +5848,7 @@ export type GetShipmentQuery = {
       size: string;
       orgID: string;
       shipmentID: string;
+      boxCategoryID: string;
       isActive: boolean;
       barCode: string | null;
       qrCode: string | null;
@@ -3745,17 +5877,36 @@ export type ListBoxsQuery = {
     size: string;
     orgID: string;
     shipmentID: string;
+    boxCategoryID: string;
+    additionalBoxCategories: Array<{
+      __typename: "BoxCategory";
+      id: string;
+      name: string;
+      active: boolean;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
     isActive: boolean;
     barCode: string | null;
     qrCode: string | null;
     barCodePhoto: string | null;
     qrCodePhoto: string | null;
     tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
     images: Array<{
       __typename: "Image";
       id: string;
       altTex: string | null;
       src: string;
+      userID: string;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -3766,6 +5917,14 @@ export type ListBoxsQuery = {
     notesHistory: Array<string> | null;
     createdAt: string;
     updatedAt: string;
+    boxCategory: {
+      __typename: "BoxCategory";
+      id: string;
+      name: string;
+      active: boolean;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
     org: {
       __typename: "Org";
       id: string;
@@ -3820,19 +5979,76 @@ export type GetBoxQuery = {
   size: string;
   orgID: string;
   shipmentID: string;
+  boxCategoryID: string;
+  additionalBoxCategories: Array<{
+    __typename: "BoxCategory";
+    id: string;
+    name: string;
+    active: boolean;
+    createdAt: string;
+    updatedAt: string;
+    boxes: {
+      __typename: "ModelBoxConnection";
+      nextToken: string | null;
+    } | null;
+  }> | null;
   isActive: boolean;
   barCode: string | null;
   qrCode: string | null;
   barCodePhoto: string | null;
   qrCodePhoto: string | null;
   tags: Array<string> | null;
+  image: {
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    userID: string;
+    createdAt: string;
+    updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  } | null;
   images: Array<{
     __typename: "Image";
     id: string;
     altTex: string | null;
     src: string;
+    userID: string;
     createdAt: string;
     updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
   }> | null;
   status: BoxStatus;
   statusHistory: Array<BoxStatus> | null;
@@ -3841,6 +6057,18 @@ export type GetBoxQuery = {
   notesHistory: Array<string> | null;
   createdAt: string;
   updatedAt: string;
+  boxCategory: {
+    __typename: "BoxCategory";
+    id: string;
+    name: string;
+    active: boolean;
+    createdAt: string;
+    updatedAt: string;
+    boxes: {
+      __typename: "ModelBoxConnection";
+      nextToken: string | null;
+    } | null;
+  } | null;
   org: {
     __typename: "Org";
     id: string;
@@ -3869,11 +6097,21 @@ export type GetBoxQuery = {
     primaryDomain: string | null;
     privacyPolicy: string | null;
     tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
     images: Array<{
       __typename: "Image";
       id: string;
       altTex: string | null;
       src: string;
+      userID: string;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -3923,11 +6161,21 @@ export type GetBoxQuery = {
     status: ShippingStatus | null;
     statusHistory: Array<string> | null;
     tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
     images: Array<{
       __typename: "Image";
       id: string;
       altTex: string | null;
       src: string;
+      userID: string;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -3984,6 +6232,7 @@ export type GetBoxQuery = {
       isFinal: boolean;
       tags: Array<string> | null;
       isActive: boolean;
+      trackingInfoID: string;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
@@ -3991,7 +6240,7 @@ export type GetBoxQuery = {
   } | null;
 };
 
-export type ShipmentsByBoxIdQuery = {
+export type BoxByOrgIdQuery = {
   __typename: "ModelBoxConnection";
   items: Array<{
     __typename: "Box";
@@ -4001,17 +6250,36 @@ export type ShipmentsByBoxIdQuery = {
     size: string;
     orgID: string;
     shipmentID: string;
+    boxCategoryID: string;
+    additionalBoxCategories: Array<{
+      __typename: "BoxCategory";
+      id: string;
+      name: string;
+      active: boolean;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
     isActive: boolean;
     barCode: string | null;
     qrCode: string | null;
     barCodePhoto: string | null;
     qrCodePhoto: string | null;
     tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
     images: Array<{
       __typename: "Image";
       id: string;
       altTex: string | null;
       src: string;
+      userID: string;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -4022,6 +6290,430 @@ export type ShipmentsByBoxIdQuery = {
     notesHistory: Array<string> | null;
     createdAt: string;
     updatedAt: string;
+    boxCategory: {
+      __typename: "BoxCategory";
+      id: string;
+      name: string;
+      active: boolean;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    org: {
+      __typename: "Org";
+      id: string;
+      name: string;
+      description: string | null;
+      addressID: string;
+      email: string | null;
+      primaryDomain: string | null;
+      privacyPolicy: string | null;
+      tags: Array<string> | null;
+      notes: string | null;
+      isActive: boolean;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    shipment: {
+      __typename: "Shipment";
+      id: string;
+      name: string;
+      description: string | null;
+      isActive: boolean;
+      startDate: string | null;
+      deliveryDate: string | null;
+      startLocationID: string;
+      destinationLocationID: string;
+      shipmentNotes: string | null;
+      deliveryNotes: string | null;
+      trackingId: string | null;
+      weight: string | null;
+      shipmentReceiver: string | null;
+      status: ShippingStatus | null;
+      statusHistory: Array<string> | null;
+      tags: Array<string> | null;
+      notes: string | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    locations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
+  } | null> | null;
+  nextToken: string | null;
+};
+
+export type BoxByShipmentIdQuery = {
+  __typename: "ModelBoxConnection";
+  items: Array<{
+    __typename: "Box";
+    id: string;
+    title: string;
+    contents: string;
+    size: string;
+    orgID: string;
+    shipmentID: string;
+    boxCategoryID: string;
+    additionalBoxCategories: Array<{
+      __typename: "BoxCategory";
+      id: string;
+      name: string;
+      active: boolean;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    isActive: boolean;
+    barCode: string | null;
+    qrCode: string | null;
+    barCodePhoto: string | null;
+    qrCodePhoto: string | null;
+    tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    status: BoxStatus;
+    statusHistory: Array<BoxStatus> | null;
+    internalNotes: string | null;
+    notes: string | null;
+    notesHistory: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
+    boxCategory: {
+      __typename: "BoxCategory";
+      id: string;
+      name: string;
+      active: boolean;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    org: {
+      __typename: "Org";
+      id: string;
+      name: string;
+      description: string | null;
+      addressID: string;
+      email: string | null;
+      primaryDomain: string | null;
+      privacyPolicy: string | null;
+      tags: Array<string> | null;
+      notes: string | null;
+      isActive: boolean;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    shipment: {
+      __typename: "Shipment";
+      id: string;
+      name: string;
+      description: string | null;
+      isActive: boolean;
+      startDate: string | null;
+      deliveryDate: string | null;
+      startLocationID: string;
+      destinationLocationID: string;
+      shipmentNotes: string | null;
+      deliveryNotes: string | null;
+      trackingId: string | null;
+      weight: string | null;
+      shipmentReceiver: string | null;
+      status: ShippingStatus | null;
+      statusHistory: Array<string> | null;
+      tags: Array<string> | null;
+      notes: string | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    locations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
+  } | null> | null;
+  nextToken: string | null;
+};
+
+export type BoxByCategoryQuery = {
+  __typename: "ModelBoxConnection";
+  items: Array<{
+    __typename: "Box";
+    id: string;
+    title: string;
+    contents: string;
+    size: string;
+    orgID: string;
+    shipmentID: string;
+    boxCategoryID: string;
+    additionalBoxCategories: Array<{
+      __typename: "BoxCategory";
+      id: string;
+      name: string;
+      active: boolean;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    isActive: boolean;
+    barCode: string | null;
+    qrCode: string | null;
+    barCodePhoto: string | null;
+    qrCodePhoto: string | null;
+    tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    status: BoxStatus;
+    statusHistory: Array<BoxStatus> | null;
+    internalNotes: string | null;
+    notes: string | null;
+    notesHistory: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
+    boxCategory: {
+      __typename: "BoxCategory";
+      id: string;
+      name: string;
+      active: boolean;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    org: {
+      __typename: "Org";
+      id: string;
+      name: string;
+      description: string | null;
+      addressID: string;
+      email: string | null;
+      primaryDomain: string | null;
+      privacyPolicy: string | null;
+      tags: Array<string> | null;
+      notes: string | null;
+      isActive: boolean;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    shipment: {
+      __typename: "Shipment";
+      id: string;
+      name: string;
+      description: string | null;
+      isActive: boolean;
+      startDate: string | null;
+      deliveryDate: string | null;
+      startLocationID: string;
+      destinationLocationID: string;
+      shipmentNotes: string | null;
+      deliveryNotes: string | null;
+      trackingId: string | null;
+      weight: string | null;
+      shipmentReceiver: string | null;
+      status: ShippingStatus | null;
+      statusHistory: Array<string> | null;
+      tags: Array<string> | null;
+      notes: string | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    locations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
+  } | null> | null;
+  nextToken: string | null;
+};
+
+export type BoxByTitleQuery = {
+  __typename: "ModelBoxConnection";
+  items: Array<{
+    __typename: "Box";
+    id: string;
+    title: string;
+    contents: string;
+    size: string;
+    orgID: string;
+    shipmentID: string;
+    boxCategoryID: string;
+    additionalBoxCategories: Array<{
+      __typename: "BoxCategory";
+      id: string;
+      name: string;
+      active: boolean;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    isActive: boolean;
+    barCode: string | null;
+    qrCode: string | null;
+    barCodePhoto: string | null;
+    qrCodePhoto: string | null;
+    tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    status: BoxStatus;
+    statusHistory: Array<BoxStatus> | null;
+    internalNotes: string | null;
+    notes: string | null;
+    notesHistory: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
+    boxCategory: {
+      __typename: "BoxCategory";
+      id: string;
+      name: string;
+      active: boolean;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    org: {
+      __typename: "Org";
+      id: string;
+      name: string;
+      description: string | null;
+      addressID: string;
+      email: string | null;
+      primaryDomain: string | null;
+      privacyPolicy: string | null;
+      tags: Array<string> | null;
+      notes: string | null;
+      isActive: boolean;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    shipment: {
+      __typename: "Shipment";
+      id: string;
+      name: string;
+      description: string | null;
+      isActive: boolean;
+      startDate: string | null;
+      deliveryDate: string | null;
+      startLocationID: string;
+      destinationLocationID: string;
+      shipmentNotes: string | null;
+      deliveryNotes: string | null;
+      trackingId: string | null;
+      weight: string | null;
+      shipmentReceiver: string | null;
+      status: ShippingStatus | null;
+      statusHistory: Array<string> | null;
+      tags: Array<string> | null;
+      notes: string | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    locations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
+  } | null> | null;
+  nextToken: string | null;
+};
+
+export type BoxByQrCodeQuery = {
+  __typename: "ModelBoxConnection";
+  items: Array<{
+    __typename: "Box";
+    id: string;
+    title: string;
+    contents: string;
+    size: string;
+    orgID: string;
+    shipmentID: string;
+    boxCategoryID: string;
+    additionalBoxCategories: Array<{
+      __typename: "BoxCategory";
+      id: string;
+      name: string;
+      active: boolean;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    isActive: boolean;
+    barCode: string | null;
+    qrCode: string | null;
+    barCodePhoto: string | null;
+    qrCodePhoto: string | null;
+    tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    status: BoxStatus;
+    statusHistory: Array<BoxStatus> | null;
+    internalNotes: string | null;
+    notes: string | null;
+    notesHistory: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
+    boxCategory: {
+      __typename: "BoxCategory";
+      id: string;
+      name: string;
+      active: boolean;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
     org: {
       __typename: "Org";
       id: string;
@@ -4077,15 +6769,60 @@ export type GetBoxLocationQuery = {
   notes: string | null;
   isFinal: boolean;
   tags: Array<string> | null;
+  image: {
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    userID: string;
+    createdAt: string;
+    updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  };
   images: Array<{
     __typename: "Image";
     id: string;
     altTex: string | null;
     src: string;
+    userID: string;
     createdAt: string;
     updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
   }> | null;
   isActive: boolean;
+  trackingInfoID: string;
   createdAt: string;
   updatedAt: string;
   locationInfo: {
@@ -4136,17 +6873,36 @@ export type GetBoxLocationQuery = {
     size: string;
     orgID: string;
     shipmentID: string;
+    boxCategoryID: string;
+    additionalBoxCategories: Array<{
+      __typename: "BoxCategory";
+      id: string;
+      name: string;
+      active: boolean;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
     isActive: boolean;
     barCode: string | null;
     qrCode: string | null;
     barCodePhoto: string | null;
     qrCodePhoto: string | null;
     tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
     images: Array<{
       __typename: "Image";
       id: string;
       altTex: string | null;
       src: string;
+      userID: string;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -4157,6 +6913,14 @@ export type GetBoxLocationQuery = {
     notesHistory: Array<string> | null;
     createdAt: string;
     updatedAt: string;
+    boxCategory: {
+      __typename: "BoxCategory";
+      id: string;
+      name: string;
+      active: boolean;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
     org: {
       __typename: "Org";
       id: string;
@@ -4200,18 +6964,80 @@ export type GetBoxLocationQuery = {
       nextToken: string | null;
     } | null;
   };
-  user: {
-    __typename: "User";
+  trackingInfo: {
+    __typename: "TrackingInfo";
     id: string;
-    name: string;
-    orgID: string;
+    timeOfDelivery: string;
+    userID: string;
     isActive: boolean;
     tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    };
     images: Array<{
       __typename: "Image";
       id: string;
       altTex: string | null;
       src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    internalNotes: string | null;
+    notes: string | null;
+    createdAt: string;
+    updatedAt: string;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  };
+  user: {
+    __typename: "User";
+    id: string;
+    name: string;
+    orgID: string;
+    hashedSecret: string | null;
+    isActive: boolean;
+    tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -4256,15 +7082,26 @@ export type ListBoxLocationsQuery = {
     notes: string | null;
     isFinal: boolean;
     tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    };
     images: Array<{
       __typename: "Image";
       id: string;
       altTex: string | null;
       src: string;
+      userID: string;
       createdAt: string;
       updatedAt: string;
     }> | null;
     isActive: boolean;
+    trackingInfoID: string;
     createdAt: string;
     updatedAt: string;
     locationInfo: {
@@ -4291,6 +7128,7 @@ export type ListBoxLocationsQuery = {
       size: string;
       orgID: string;
       shipmentID: string;
+      boxCategoryID: string;
       isActive: boolean;
       barCode: string | null;
       qrCode: string | null;
@@ -4305,11 +7143,24 @@ export type ListBoxLocationsQuery = {
       createdAt: string;
       updatedAt: string;
     };
+    trackingInfo: {
+      __typename: "TrackingInfo";
+      id: string;
+      timeOfDelivery: string;
+      userID: string;
+      isActive: boolean;
+      tags: Array<string> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      createdAt: string;
+      updatedAt: string;
+    };
     user: {
       __typename: "User";
       id: string;
       name: string;
       orgID: string;
+      hashedSecret: string | null;
       isActive: boolean;
       tags: Array<string> | null;
       status: UserStatus;
@@ -4325,6 +7176,199 @@ export type ListBoxLocationsQuery = {
   nextToken: string | null;
 };
 
+export type ListTrackingInfosQuery = {
+  __typename: "ModelTrackingInfoConnection";
+  items: Array<{
+    __typename: "TrackingInfo";
+    id: string;
+    timeOfDelivery: string;
+    userID: string;
+    isActive: boolean;
+    tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    internalNotes: string | null;
+    notes: string | null;
+    createdAt: string;
+    updatedAt: string;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  } | null> | null;
+  nextToken: string | null;
+};
+
+export type GetTrackingInfoQuery = {
+  __typename: "TrackingInfo";
+  id: string;
+  timeOfDelivery: string;
+  userID: string;
+  isActive: boolean;
+  tags: Array<string> | null;
+  image: {
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    userID: string;
+    createdAt: string;
+    updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  };
+  images: Array<{
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    userID: string;
+    createdAt: string;
+    updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  }> | null;
+  internalNotes: string | null;
+  notes: string | null;
+  createdAt: string;
+  updatedAt: string;
+  boxLocations: {
+    __typename: "ModelBoxLocationConnection";
+    items: Array<{
+      __typename: "BoxLocation";
+      id: string;
+      boxID: string;
+      locationInfoID: string;
+      userID: string;
+      notes: string | null;
+      isFinal: boolean;
+      tags: Array<string> | null;
+      isActive: boolean;
+      trackingInfoID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  user: {
+    __typename: "User";
+    id: string;
+    name: string;
+    orgID: string;
+    hashedSecret: string | null;
+    isActive: boolean;
+    tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    status: UserStatus;
+    statusHistory: Array<UserStatus> | null;
+    internalNotes: string | null;
+    notes: string | null;
+    rank: number | null;
+    notesHistory: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
+    org: {
+      __typename: "Org";
+      id: string;
+      name: string;
+      description: string | null;
+      addressID: string;
+      email: string | null;
+      primaryDomain: string | null;
+      privacyPolicy: string | null;
+      tags: Array<string> | null;
+      notes: string | null;
+      isActive: boolean;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
+  };
+};
+
 export type ListUsersQuery = {
   __typename: "ModelUserConnection";
   items: Array<{
@@ -4332,13 +7376,24 @@ export type ListUsersQuery = {
     id: string;
     name: string;
     orgID: string;
+    hashedSecret: string | null;
     isActive: boolean;
     tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
     images: Array<{
       __typename: "Image";
       id: string;
       altTex: string | null;
       src: string;
+      userID: string;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -4378,15 +7433,60 @@ export type GetUserQuery = {
   id: string;
   name: string;
   orgID: string;
+  hashedSecret: string | null;
   isActive: boolean;
   tags: Array<string> | null;
+  image: {
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    userID: string;
+    createdAt: string;
+    updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  } | null;
   images: Array<{
     __typename: "Image";
     id: string;
     altTex: string | null;
     src: string;
+    userID: string;
     createdAt: string;
     updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
   }> | null;
   status: UserStatus;
   statusHistory: Array<UserStatus> | null;
@@ -4424,11 +7524,21 @@ export type GetUserQuery = {
     primaryDomain: string | null;
     privacyPolicy: string | null;
     tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
     images: Array<{
       __typename: "Image";
       id: string;
       altTex: string | null;
       src: string;
+      userID: string;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -4472,6 +7582,7 @@ export type GetUserQuery = {
       isFinal: boolean;
       tags: Array<string> | null;
       isActive: boolean;
+      trackingInfoID: string;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
@@ -4484,8 +7595,63 @@ export type OnCreateImageSubscription = {
   id: string;
   altTex: string | null;
   src: string;
+  userID: string;
   createdAt: string;
   updatedAt: string;
+  user: {
+    __typename: "User";
+    id: string;
+    name: string;
+    orgID: string;
+    hashedSecret: string | null;
+    isActive: boolean;
+    tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    status: UserStatus;
+    statusHistory: Array<UserStatus> | null;
+    internalNotes: string | null;
+    notes: string | null;
+    rank: number | null;
+    notesHistory: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
+    org: {
+      __typename: "Org";
+      id: string;
+      name: string;
+      description: string | null;
+      addressID: string;
+      email: string | null;
+      primaryDomain: string | null;
+      privacyPolicy: string | null;
+      tags: Array<string> | null;
+      notes: string | null;
+      isActive: boolean;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
+  };
 };
 
 export type OnUpdateImageSubscription = {
@@ -4493,8 +7659,63 @@ export type OnUpdateImageSubscription = {
   id: string;
   altTex: string | null;
   src: string;
+  userID: string;
   createdAt: string;
   updatedAt: string;
+  user: {
+    __typename: "User";
+    id: string;
+    name: string;
+    orgID: string;
+    hashedSecret: string | null;
+    isActive: boolean;
+    tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    status: UserStatus;
+    statusHistory: Array<UserStatus> | null;
+    internalNotes: string | null;
+    notes: string | null;
+    rank: number | null;
+    notesHistory: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
+    org: {
+      __typename: "Org";
+      id: string;
+      name: string;
+      description: string | null;
+      addressID: string;
+      email: string | null;
+      primaryDomain: string | null;
+      privacyPolicy: string | null;
+      tags: Array<string> | null;
+      notes: string | null;
+      isActive: boolean;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
+  };
 };
 
 export type OnDeleteImageSubscription = {
@@ -4502,8 +7723,171 @@ export type OnDeleteImageSubscription = {
   id: string;
   altTex: string | null;
   src: string;
+  userID: string;
   createdAt: string;
   updatedAt: string;
+  user: {
+    __typename: "User";
+    id: string;
+    name: string;
+    orgID: string;
+    hashedSecret: string | null;
+    isActive: boolean;
+    tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    status: UserStatus;
+    statusHistory: Array<UserStatus> | null;
+    internalNotes: string | null;
+    notes: string | null;
+    rank: number | null;
+    notesHistory: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
+    org: {
+      __typename: "Org";
+      id: string;
+      name: string;
+      description: string | null;
+      addressID: string;
+      email: string | null;
+      primaryDomain: string | null;
+      privacyPolicy: string | null;
+      tags: Array<string> | null;
+      notes: string | null;
+      isActive: boolean;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
+  };
+};
+
+export type OnCreateBoxCategorySubscription = {
+  __typename: "BoxCategory";
+  id: string;
+  name: string;
+  active: boolean;
+  createdAt: string;
+  updatedAt: string;
+  boxes: {
+    __typename: "ModelBoxConnection";
+    items: Array<{
+      __typename: "Box";
+      id: string;
+      title: string;
+      contents: string;
+      size: string;
+      orgID: string;
+      shipmentID: string;
+      boxCategoryID: string;
+      isActive: boolean;
+      barCode: string | null;
+      qrCode: string | null;
+      barCodePhoto: string | null;
+      qrCodePhoto: string | null;
+      tags: Array<string> | null;
+      status: BoxStatus;
+      statusHistory: Array<BoxStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+};
+
+export type OnUpdateBoxCategorySubscription = {
+  __typename: "BoxCategory";
+  id: string;
+  name: string;
+  active: boolean;
+  createdAt: string;
+  updatedAt: string;
+  boxes: {
+    __typename: "ModelBoxConnection";
+    items: Array<{
+      __typename: "Box";
+      id: string;
+      title: string;
+      contents: string;
+      size: string;
+      orgID: string;
+      shipmentID: string;
+      boxCategoryID: string;
+      isActive: boolean;
+      barCode: string | null;
+      qrCode: string | null;
+      barCodePhoto: string | null;
+      qrCodePhoto: string | null;
+      tags: Array<string> | null;
+      status: BoxStatus;
+      statusHistory: Array<BoxStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+};
+
+export type OnDeleteBoxCategorySubscription = {
+  __typename: "BoxCategory";
+  id: string;
+  name: string;
+  active: boolean;
+  createdAt: string;
+  updatedAt: string;
+  boxes: {
+    __typename: "ModelBoxConnection";
+    items: Array<{
+      __typename: "Box";
+      id: string;
+      title: string;
+      contents: string;
+      size: string;
+      orgID: string;
+      shipmentID: string;
+      boxCategoryID: string;
+      isActive: boolean;
+      barCode: string | null;
+      qrCode: string | null;
+      barCodePhoto: string | null;
+      qrCodePhoto: string | null;
+      tags: Array<string> | null;
+      status: BoxStatus;
+      statusHistory: Array<BoxStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
 };
 
 export type OnCreateApihealthCheckInfoSubscription = {
@@ -4648,13 +8032,57 @@ export type OnCreateOrgSubscription = {
   primaryDomain: string | null;
   privacyPolicy: string | null;
   tags: Array<string> | null;
+  image: {
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    userID: string;
+    createdAt: string;
+    updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  } | null;
   images: Array<{
     __typename: "Image";
     id: string;
     altTex: string | null;
     src: string;
+    userID: string;
     createdAt: string;
     updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
   }> | null;
   notes: string | null;
   isActive: boolean;
@@ -4685,6 +8113,7 @@ export type OnCreateOrgSubscription = {
       size: string;
       orgID: string;
       shipmentID: string;
+      boxCategoryID: string;
       isActive: boolean;
       barCode: string | null;
       qrCode: string | null;
@@ -4708,6 +8137,7 @@ export type OnCreateOrgSubscription = {
       id: string;
       name: string;
       orgID: string;
+      hashedSecret: string | null;
       isActive: boolean;
       tags: Array<string> | null;
       status: UserStatus;
@@ -4751,13 +8181,57 @@ export type OnUpdateOrgSubscription = {
   primaryDomain: string | null;
   privacyPolicy: string | null;
   tags: Array<string> | null;
+  image: {
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    userID: string;
+    createdAt: string;
+    updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  } | null;
   images: Array<{
     __typename: "Image";
     id: string;
     altTex: string | null;
     src: string;
+    userID: string;
     createdAt: string;
     updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
   }> | null;
   notes: string | null;
   isActive: boolean;
@@ -4788,6 +8262,7 @@ export type OnUpdateOrgSubscription = {
       size: string;
       orgID: string;
       shipmentID: string;
+      boxCategoryID: string;
       isActive: boolean;
       barCode: string | null;
       qrCode: string | null;
@@ -4811,6 +8286,7 @@ export type OnUpdateOrgSubscription = {
       id: string;
       name: string;
       orgID: string;
+      hashedSecret: string | null;
       isActive: boolean;
       tags: Array<string> | null;
       status: UserStatus;
@@ -4854,13 +8330,57 @@ export type OnDeleteOrgSubscription = {
   primaryDomain: string | null;
   privacyPolicy: string | null;
   tags: Array<string> | null;
+  image: {
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    userID: string;
+    createdAt: string;
+    updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  } | null;
   images: Array<{
     __typename: "Image";
     id: string;
     altTex: string | null;
     src: string;
+    userID: string;
     createdAt: string;
     updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
   }> | null;
   notes: string | null;
   isActive: boolean;
@@ -4891,6 +8411,7 @@ export type OnDeleteOrgSubscription = {
       size: string;
       orgID: string;
       shipmentID: string;
+      boxCategoryID: string;
       isActive: boolean;
       barCode: string | null;
       qrCode: string | null;
@@ -4914,6 +8435,7 @@ export type OnDeleteOrgSubscription = {
       id: string;
       name: string;
       orgID: string;
+      hashedSecret: string | null;
       isActive: boolean;
       tags: Array<string> | null;
       status: UserStatus;
@@ -5070,13 +8592,57 @@ export type OnCreateShipmentSubscription = {
   status: ShippingStatus | null;
   statusHistory: Array<string> | null;
   tags: Array<string> | null;
+  image: {
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    userID: string;
+    createdAt: string;
+    updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  } | null;
   images: Array<{
     __typename: "Image";
     id: string;
     altTex: string | null;
     src: string;
+    userID: string;
     createdAt: string;
     updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
   }> | null;
   notes: string | null;
   notesHistory: Array<string> | null;
@@ -5172,6 +8738,7 @@ export type OnCreateShipmentSubscription = {
       size: string;
       orgID: string;
       shipmentID: string;
+      boxCategoryID: string;
       isActive: boolean;
       barCode: string | null;
       qrCode: string | null;
@@ -5208,13 +8775,57 @@ export type OnUpdateShipmentSubscription = {
   status: ShippingStatus | null;
   statusHistory: Array<string> | null;
   tags: Array<string> | null;
+  image: {
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    userID: string;
+    createdAt: string;
+    updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  } | null;
   images: Array<{
     __typename: "Image";
     id: string;
     altTex: string | null;
     src: string;
+    userID: string;
     createdAt: string;
     updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
   }> | null;
   notes: string | null;
   notesHistory: Array<string> | null;
@@ -5310,6 +8921,7 @@ export type OnUpdateShipmentSubscription = {
       size: string;
       orgID: string;
       shipmentID: string;
+      boxCategoryID: string;
       isActive: boolean;
       barCode: string | null;
       qrCode: string | null;
@@ -5346,13 +8958,57 @@ export type OnDeleteShipmentSubscription = {
   status: ShippingStatus | null;
   statusHistory: Array<string> | null;
   tags: Array<string> | null;
+  image: {
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    userID: string;
+    createdAt: string;
+    updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  } | null;
   images: Array<{
     __typename: "Image";
     id: string;
     altTex: string | null;
     src: string;
+    userID: string;
     createdAt: string;
     updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
   }> | null;
   notes: string | null;
   notesHistory: Array<string> | null;
@@ -5448,6 +9104,7 @@ export type OnDeleteShipmentSubscription = {
       size: string;
       orgID: string;
       shipmentID: string;
+      boxCategoryID: string;
       isActive: boolean;
       barCode: string | null;
       qrCode: string | null;
@@ -5474,19 +9131,76 @@ export type OnCreateBoxSubscription = {
   size: string;
   orgID: string;
   shipmentID: string;
+  boxCategoryID: string;
+  additionalBoxCategories: Array<{
+    __typename: "BoxCategory";
+    id: string;
+    name: string;
+    active: boolean;
+    createdAt: string;
+    updatedAt: string;
+    boxes: {
+      __typename: "ModelBoxConnection";
+      nextToken: string | null;
+    } | null;
+  }> | null;
   isActive: boolean;
   barCode: string | null;
   qrCode: string | null;
   barCodePhoto: string | null;
   qrCodePhoto: string | null;
   tags: Array<string> | null;
+  image: {
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    userID: string;
+    createdAt: string;
+    updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  } | null;
   images: Array<{
     __typename: "Image";
     id: string;
     altTex: string | null;
     src: string;
+    userID: string;
     createdAt: string;
     updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
   }> | null;
   status: BoxStatus;
   statusHistory: Array<BoxStatus> | null;
@@ -5495,6 +9209,18 @@ export type OnCreateBoxSubscription = {
   notesHistory: Array<string> | null;
   createdAt: string;
   updatedAt: string;
+  boxCategory: {
+    __typename: "BoxCategory";
+    id: string;
+    name: string;
+    active: boolean;
+    createdAt: string;
+    updatedAt: string;
+    boxes: {
+      __typename: "ModelBoxConnection";
+      nextToken: string | null;
+    } | null;
+  } | null;
   org: {
     __typename: "Org";
     id: string;
@@ -5523,11 +9249,21 @@ export type OnCreateBoxSubscription = {
     primaryDomain: string | null;
     privacyPolicy: string | null;
     tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
     images: Array<{
       __typename: "Image";
       id: string;
       altTex: string | null;
       src: string;
+      userID: string;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -5577,11 +9313,21 @@ export type OnCreateBoxSubscription = {
     status: ShippingStatus | null;
     statusHistory: Array<string> | null;
     tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
     images: Array<{
       __typename: "Image";
       id: string;
       altTex: string | null;
       src: string;
+      userID: string;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -5638,6 +9384,7 @@ export type OnCreateBoxSubscription = {
       isFinal: boolean;
       tags: Array<string> | null;
       isActive: boolean;
+      trackingInfoID: string;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
@@ -5653,19 +9400,76 @@ export type OnUpdateBoxSubscription = {
   size: string;
   orgID: string;
   shipmentID: string;
+  boxCategoryID: string;
+  additionalBoxCategories: Array<{
+    __typename: "BoxCategory";
+    id: string;
+    name: string;
+    active: boolean;
+    createdAt: string;
+    updatedAt: string;
+    boxes: {
+      __typename: "ModelBoxConnection";
+      nextToken: string | null;
+    } | null;
+  }> | null;
   isActive: boolean;
   barCode: string | null;
   qrCode: string | null;
   barCodePhoto: string | null;
   qrCodePhoto: string | null;
   tags: Array<string> | null;
+  image: {
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    userID: string;
+    createdAt: string;
+    updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  } | null;
   images: Array<{
     __typename: "Image";
     id: string;
     altTex: string | null;
     src: string;
+    userID: string;
     createdAt: string;
     updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
   }> | null;
   status: BoxStatus;
   statusHistory: Array<BoxStatus> | null;
@@ -5674,6 +9478,18 @@ export type OnUpdateBoxSubscription = {
   notesHistory: Array<string> | null;
   createdAt: string;
   updatedAt: string;
+  boxCategory: {
+    __typename: "BoxCategory";
+    id: string;
+    name: string;
+    active: boolean;
+    createdAt: string;
+    updatedAt: string;
+    boxes: {
+      __typename: "ModelBoxConnection";
+      nextToken: string | null;
+    } | null;
+  } | null;
   org: {
     __typename: "Org";
     id: string;
@@ -5702,11 +9518,21 @@ export type OnUpdateBoxSubscription = {
     primaryDomain: string | null;
     privacyPolicy: string | null;
     tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
     images: Array<{
       __typename: "Image";
       id: string;
       altTex: string | null;
       src: string;
+      userID: string;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -5756,11 +9582,21 @@ export type OnUpdateBoxSubscription = {
     status: ShippingStatus | null;
     statusHistory: Array<string> | null;
     tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
     images: Array<{
       __typename: "Image";
       id: string;
       altTex: string | null;
       src: string;
+      userID: string;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -5817,6 +9653,7 @@ export type OnUpdateBoxSubscription = {
       isFinal: boolean;
       tags: Array<string> | null;
       isActive: boolean;
+      trackingInfoID: string;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
@@ -5832,19 +9669,76 @@ export type OnDeleteBoxSubscription = {
   size: string;
   orgID: string;
   shipmentID: string;
+  boxCategoryID: string;
+  additionalBoxCategories: Array<{
+    __typename: "BoxCategory";
+    id: string;
+    name: string;
+    active: boolean;
+    createdAt: string;
+    updatedAt: string;
+    boxes: {
+      __typename: "ModelBoxConnection";
+      nextToken: string | null;
+    } | null;
+  }> | null;
   isActive: boolean;
   barCode: string | null;
   qrCode: string | null;
   barCodePhoto: string | null;
   qrCodePhoto: string | null;
   tags: Array<string> | null;
+  image: {
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    userID: string;
+    createdAt: string;
+    updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  } | null;
   images: Array<{
     __typename: "Image";
     id: string;
     altTex: string | null;
     src: string;
+    userID: string;
     createdAt: string;
     updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
   }> | null;
   status: BoxStatus;
   statusHistory: Array<BoxStatus> | null;
@@ -5853,6 +9747,18 @@ export type OnDeleteBoxSubscription = {
   notesHistory: Array<string> | null;
   createdAt: string;
   updatedAt: string;
+  boxCategory: {
+    __typename: "BoxCategory";
+    id: string;
+    name: string;
+    active: boolean;
+    createdAt: string;
+    updatedAt: string;
+    boxes: {
+      __typename: "ModelBoxConnection";
+      nextToken: string | null;
+    } | null;
+  } | null;
   org: {
     __typename: "Org";
     id: string;
@@ -5881,11 +9787,21 @@ export type OnDeleteBoxSubscription = {
     primaryDomain: string | null;
     privacyPolicy: string | null;
     tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
     images: Array<{
       __typename: "Image";
       id: string;
       altTex: string | null;
       src: string;
+      userID: string;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -5935,11 +9851,21 @@ export type OnDeleteBoxSubscription = {
     status: ShippingStatus | null;
     statusHistory: Array<string> | null;
     tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
     images: Array<{
       __typename: "Image";
       id: string;
       altTex: string | null;
       src: string;
+      userID: string;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -5996,6 +9922,7 @@ export type OnDeleteBoxSubscription = {
       isFinal: boolean;
       tags: Array<string> | null;
       isActive: boolean;
+      trackingInfoID: string;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
@@ -6012,15 +9939,60 @@ export type OnCreateBoxLocationSubscription = {
   notes: string | null;
   isFinal: boolean;
   tags: Array<string> | null;
+  image: {
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    userID: string;
+    createdAt: string;
+    updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  };
   images: Array<{
     __typename: "Image";
     id: string;
     altTex: string | null;
     src: string;
+    userID: string;
     createdAt: string;
     updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
   }> | null;
   isActive: boolean;
+  trackingInfoID: string;
   createdAt: string;
   updatedAt: string;
   locationInfo: {
@@ -6071,17 +10043,36 @@ export type OnCreateBoxLocationSubscription = {
     size: string;
     orgID: string;
     shipmentID: string;
+    boxCategoryID: string;
+    additionalBoxCategories: Array<{
+      __typename: "BoxCategory";
+      id: string;
+      name: string;
+      active: boolean;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
     isActive: boolean;
     barCode: string | null;
     qrCode: string | null;
     barCodePhoto: string | null;
     qrCodePhoto: string | null;
     tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
     images: Array<{
       __typename: "Image";
       id: string;
       altTex: string | null;
       src: string;
+      userID: string;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -6092,6 +10083,14 @@ export type OnCreateBoxLocationSubscription = {
     notesHistory: Array<string> | null;
     createdAt: string;
     updatedAt: string;
+    boxCategory: {
+      __typename: "BoxCategory";
+      id: string;
+      name: string;
+      active: boolean;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
     org: {
       __typename: "Org";
       id: string;
@@ -6135,18 +10134,80 @@ export type OnCreateBoxLocationSubscription = {
       nextToken: string | null;
     } | null;
   };
-  user: {
-    __typename: "User";
+  trackingInfo: {
+    __typename: "TrackingInfo";
     id: string;
-    name: string;
-    orgID: string;
+    timeOfDelivery: string;
+    userID: string;
     isActive: boolean;
     tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    };
     images: Array<{
       __typename: "Image";
       id: string;
       altTex: string | null;
       src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    internalNotes: string | null;
+    notes: string | null;
+    createdAt: string;
+    updatedAt: string;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  };
+  user: {
+    __typename: "User";
+    id: string;
+    name: string;
+    orgID: string;
+    hashedSecret: string | null;
+    isActive: boolean;
+    tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -6189,15 +10250,60 @@ export type OnUpdateBoxLocationSubscription = {
   notes: string | null;
   isFinal: boolean;
   tags: Array<string> | null;
+  image: {
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    userID: string;
+    createdAt: string;
+    updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  };
   images: Array<{
     __typename: "Image";
     id: string;
     altTex: string | null;
     src: string;
+    userID: string;
     createdAt: string;
     updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
   }> | null;
   isActive: boolean;
+  trackingInfoID: string;
   createdAt: string;
   updatedAt: string;
   locationInfo: {
@@ -6248,17 +10354,36 @@ export type OnUpdateBoxLocationSubscription = {
     size: string;
     orgID: string;
     shipmentID: string;
+    boxCategoryID: string;
+    additionalBoxCategories: Array<{
+      __typename: "BoxCategory";
+      id: string;
+      name: string;
+      active: boolean;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
     isActive: boolean;
     barCode: string | null;
     qrCode: string | null;
     barCodePhoto: string | null;
     qrCodePhoto: string | null;
     tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
     images: Array<{
       __typename: "Image";
       id: string;
       altTex: string | null;
       src: string;
+      userID: string;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -6269,6 +10394,14 @@ export type OnUpdateBoxLocationSubscription = {
     notesHistory: Array<string> | null;
     createdAt: string;
     updatedAt: string;
+    boxCategory: {
+      __typename: "BoxCategory";
+      id: string;
+      name: string;
+      active: boolean;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
     org: {
       __typename: "Org";
       id: string;
@@ -6312,18 +10445,80 @@ export type OnUpdateBoxLocationSubscription = {
       nextToken: string | null;
     } | null;
   };
-  user: {
-    __typename: "User";
+  trackingInfo: {
+    __typename: "TrackingInfo";
     id: string;
-    name: string;
-    orgID: string;
+    timeOfDelivery: string;
+    userID: string;
     isActive: boolean;
     tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    };
     images: Array<{
       __typename: "Image";
       id: string;
       altTex: string | null;
       src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    internalNotes: string | null;
+    notes: string | null;
+    createdAt: string;
+    updatedAt: string;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  };
+  user: {
+    __typename: "User";
+    id: string;
+    name: string;
+    orgID: string;
+    hashedSecret: string | null;
+    isActive: boolean;
+    tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -6366,15 +10561,60 @@ export type OnDeleteBoxLocationSubscription = {
   notes: string | null;
   isFinal: boolean;
   tags: Array<string> | null;
+  image: {
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    userID: string;
+    createdAt: string;
+    updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  };
   images: Array<{
     __typename: "Image";
     id: string;
     altTex: string | null;
     src: string;
+    userID: string;
     createdAt: string;
     updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
   }> | null;
   isActive: boolean;
+  trackingInfoID: string;
   createdAt: string;
   updatedAt: string;
   locationInfo: {
@@ -6425,17 +10665,36 @@ export type OnDeleteBoxLocationSubscription = {
     size: string;
     orgID: string;
     shipmentID: string;
+    boxCategoryID: string;
+    additionalBoxCategories: Array<{
+      __typename: "BoxCategory";
+      id: string;
+      name: string;
+      active: boolean;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
     isActive: boolean;
     barCode: string | null;
     qrCode: string | null;
     barCodePhoto: string | null;
     qrCodePhoto: string | null;
     tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
     images: Array<{
       __typename: "Image";
       id: string;
       altTex: string | null;
       src: string;
+      userID: string;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -6446,6 +10705,14 @@ export type OnDeleteBoxLocationSubscription = {
     notesHistory: Array<string> | null;
     createdAt: string;
     updatedAt: string;
+    boxCategory: {
+      __typename: "BoxCategory";
+      id: string;
+      name: string;
+      active: boolean;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
     org: {
       __typename: "Org";
       id: string;
@@ -6489,18 +10756,491 @@ export type OnDeleteBoxLocationSubscription = {
       nextToken: string | null;
     } | null;
   };
-  user: {
-    __typename: "User";
+  trackingInfo: {
+    __typename: "TrackingInfo";
     id: string;
-    name: string;
-    orgID: string;
+    timeOfDelivery: string;
+    userID: string;
     isActive: boolean;
     tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    };
     images: Array<{
       __typename: "Image";
       id: string;
       altTex: string | null;
       src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    internalNotes: string | null;
+    notes: string | null;
+    createdAt: string;
+    updatedAt: string;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  };
+  user: {
+    __typename: "User";
+    id: string;
+    name: string;
+    orgID: string;
+    hashedSecret: string | null;
+    isActive: boolean;
+    tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    status: UserStatus;
+    statusHistory: Array<UserStatus> | null;
+    internalNotes: string | null;
+    notes: string | null;
+    rank: number | null;
+    notesHistory: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
+    org: {
+      __typename: "Org";
+      id: string;
+      name: string;
+      description: string | null;
+      addressID: string;
+      email: string | null;
+      primaryDomain: string | null;
+      privacyPolicy: string | null;
+      tags: Array<string> | null;
+      notes: string | null;
+      isActive: boolean;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
+  };
+};
+
+export type OnCreateTrackingInfoSubscription = {
+  __typename: "TrackingInfo";
+  id: string;
+  timeOfDelivery: string;
+  userID: string;
+  isActive: boolean;
+  tags: Array<string> | null;
+  image: {
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    userID: string;
+    createdAt: string;
+    updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  };
+  images: Array<{
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    userID: string;
+    createdAt: string;
+    updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  }> | null;
+  internalNotes: string | null;
+  notes: string | null;
+  createdAt: string;
+  updatedAt: string;
+  boxLocations: {
+    __typename: "ModelBoxLocationConnection";
+    items: Array<{
+      __typename: "BoxLocation";
+      id: string;
+      boxID: string;
+      locationInfoID: string;
+      userID: string;
+      notes: string | null;
+      isFinal: boolean;
+      tags: Array<string> | null;
+      isActive: boolean;
+      trackingInfoID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  user: {
+    __typename: "User";
+    id: string;
+    name: string;
+    orgID: string;
+    hashedSecret: string | null;
+    isActive: boolean;
+    tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    status: UserStatus;
+    statusHistory: Array<UserStatus> | null;
+    internalNotes: string | null;
+    notes: string | null;
+    rank: number | null;
+    notesHistory: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
+    org: {
+      __typename: "Org";
+      id: string;
+      name: string;
+      description: string | null;
+      addressID: string;
+      email: string | null;
+      primaryDomain: string | null;
+      privacyPolicy: string | null;
+      tags: Array<string> | null;
+      notes: string | null;
+      isActive: boolean;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
+  };
+};
+
+export type OnUpdateTrackingInfoSubscription = {
+  __typename: "TrackingInfo";
+  id: string;
+  timeOfDelivery: string;
+  userID: string;
+  isActive: boolean;
+  tags: Array<string> | null;
+  image: {
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    userID: string;
+    createdAt: string;
+    updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  };
+  images: Array<{
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    userID: string;
+    createdAt: string;
+    updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  }> | null;
+  internalNotes: string | null;
+  notes: string | null;
+  createdAt: string;
+  updatedAt: string;
+  boxLocations: {
+    __typename: "ModelBoxLocationConnection";
+    items: Array<{
+      __typename: "BoxLocation";
+      id: string;
+      boxID: string;
+      locationInfoID: string;
+      userID: string;
+      notes: string | null;
+      isFinal: boolean;
+      tags: Array<string> | null;
+      isActive: boolean;
+      trackingInfoID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  user: {
+    __typename: "User";
+    id: string;
+    name: string;
+    orgID: string;
+    hashedSecret: string | null;
+    isActive: boolean;
+    tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    status: UserStatus;
+    statusHistory: Array<UserStatus> | null;
+    internalNotes: string | null;
+    notes: string | null;
+    rank: number | null;
+    notesHistory: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
+    org: {
+      __typename: "Org";
+      id: string;
+      name: string;
+      description: string | null;
+      addressID: string;
+      email: string | null;
+      primaryDomain: string | null;
+      privacyPolicy: string | null;
+      tags: Array<string> | null;
+      notes: string | null;
+      isActive: boolean;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
+  };
+};
+
+export type OnDeleteTrackingInfoSubscription = {
+  __typename: "TrackingInfo";
+  id: string;
+  timeOfDelivery: string;
+  userID: string;
+  isActive: boolean;
+  tags: Array<string> | null;
+  image: {
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    userID: string;
+    createdAt: string;
+    updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  };
+  images: Array<{
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    userID: string;
+    createdAt: string;
+    updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  }> | null;
+  internalNotes: string | null;
+  notes: string | null;
+  createdAt: string;
+  updatedAt: string;
+  boxLocations: {
+    __typename: "ModelBoxLocationConnection";
+    items: Array<{
+      __typename: "BoxLocation";
+      id: string;
+      boxID: string;
+      locationInfoID: string;
+      userID: string;
+      notes: string | null;
+      isFinal: boolean;
+      tags: Array<string> | null;
+      isActive: boolean;
+      trackingInfoID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  user: {
+    __typename: "User";
+    id: string;
+    name: string;
+    orgID: string;
+    hashedSecret: string | null;
+    isActive: boolean;
+    tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -6539,15 +11279,60 @@ export type OnCreateUserSubscription = {
   id: string;
   name: string;
   orgID: string;
+  hashedSecret: string | null;
   isActive: boolean;
   tags: Array<string> | null;
+  image: {
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    userID: string;
+    createdAt: string;
+    updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  } | null;
   images: Array<{
     __typename: "Image";
     id: string;
     altTex: string | null;
     src: string;
+    userID: string;
     createdAt: string;
     updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
   }> | null;
   status: UserStatus;
   statusHistory: Array<UserStatus> | null;
@@ -6585,11 +11370,21 @@ export type OnCreateUserSubscription = {
     primaryDomain: string | null;
     privacyPolicy: string | null;
     tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
     images: Array<{
       __typename: "Image";
       id: string;
       altTex: string | null;
       src: string;
+      userID: string;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -6633,6 +11428,7 @@ export type OnCreateUserSubscription = {
       isFinal: boolean;
       tags: Array<string> | null;
       isActive: boolean;
+      trackingInfoID: string;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
@@ -6645,15 +11441,60 @@ export type OnUpdateUserSubscription = {
   id: string;
   name: string;
   orgID: string;
+  hashedSecret: string | null;
   isActive: boolean;
   tags: Array<string> | null;
+  image: {
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    userID: string;
+    createdAt: string;
+    updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  } | null;
   images: Array<{
     __typename: "Image";
     id: string;
     altTex: string | null;
     src: string;
+    userID: string;
     createdAt: string;
     updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
   }> | null;
   status: UserStatus;
   statusHistory: Array<UserStatus> | null;
@@ -6691,11 +11532,21 @@ export type OnUpdateUserSubscription = {
     primaryDomain: string | null;
     privacyPolicy: string | null;
     tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
     images: Array<{
       __typename: "Image";
       id: string;
       altTex: string | null;
       src: string;
+      userID: string;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -6739,6 +11590,7 @@ export type OnUpdateUserSubscription = {
       isFinal: boolean;
       tags: Array<string> | null;
       isActive: boolean;
+      trackingInfoID: string;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
@@ -6751,15 +11603,60 @@ export type OnDeleteUserSubscription = {
   id: string;
   name: string;
   orgID: string;
+  hashedSecret: string | null;
   isActive: boolean;
   tags: Array<string> | null;
+  image: {
+    __typename: "Image";
+    id: string;
+    altTex: string | null;
+    src: string;
+    userID: string;
+    createdAt: string;
+    updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  } | null;
   images: Array<{
     __typename: "Image";
     id: string;
     altTex: string | null;
     src: string;
+    userID: string;
     createdAt: string;
     updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
   }> | null;
   status: UserStatus;
   statusHistory: Array<UserStatus> | null;
@@ -6797,11 +11694,21 @@ export type OnDeleteUserSubscription = {
     primaryDomain: string | null;
     privacyPolicy: string | null;
     tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
     images: Array<{
       __typename: "Image";
       id: string;
       altTex: string | null;
       src: string;
+      userID: string;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -6845,6 +11752,7 @@ export type OnDeleteUserSubscription = {
       isFinal: boolean;
       tags: Array<string> | null;
       isActive: boolean;
+      trackingInfoID: string;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
@@ -6866,8 +11774,63 @@ export class APIService {
           id
           altTex
           src
+          userID
           createdAt
           updatedAt
+          user {
+            __typename
+            id
+            name
+            orgID
+            hashedSecret
+            isActive
+            tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            images {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            status
+            statusHistory
+            internalNotes
+            notes
+            rank
+            notesHistory
+            createdAt
+            updatedAt
+            org {
+              __typename
+              id
+              name
+              description
+              addressID
+              email
+              primaryDomain
+              privacyPolicy
+              tags
+              notes
+              isActive
+              createdAt
+              updatedAt
+            }
+            boxLocations {
+              __typename
+              nextToken
+            }
+          }
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -6891,8 +11854,63 @@ export class APIService {
           id
           altTex
           src
+          userID
           createdAt
           updatedAt
+          user {
+            __typename
+            id
+            name
+            orgID
+            hashedSecret
+            isActive
+            tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            images {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            status
+            statusHistory
+            internalNotes
+            notes
+            rank
+            notesHistory
+            createdAt
+            updatedAt
+            org {
+              __typename
+              id
+              name
+              description
+              addressID
+              email
+              primaryDomain
+              privacyPolicy
+              tags
+              notes
+              isActive
+              createdAt
+              updatedAt
+            }
+            boxLocations {
+              __typename
+              nextToken
+            }
+          }
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -6916,8 +11934,63 @@ export class APIService {
           id
           altTex
           src
+          userID
           createdAt
           updatedAt
+          user {
+            __typename
+            id
+            name
+            orgID
+            hashedSecret
+            isActive
+            tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            images {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            status
+            statusHistory
+            internalNotes
+            notes
+            rank
+            notesHistory
+            createdAt
+            updatedAt
+            org {
+              __typename
+              id
+              name
+              description
+              addressID
+              email
+              primaryDomain
+              privacyPolicy
+              tags
+              notes
+              isActive
+              createdAt
+              updatedAt
+            }
+            boxLocations {
+              __typename
+              nextToken
+            }
+          }
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -6930,6 +12003,162 @@ export class APIService {
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
     return <DeleteImageMutation>response.data.deleteImage;
+  }
+  async CreateBoxCategory(
+    input: CreateBoxCategoryInput,
+    condition?: ModelBoxCategoryConditionInput
+  ): Promise<CreateBoxCategoryMutation> {
+    const statement = `mutation CreateBoxCategory($input: CreateBoxCategoryInput!, $condition: ModelBoxCategoryConditionInput) {
+        createBoxCategory(input: $input, condition: $condition) {
+          __typename
+          id
+          name
+          active
+          createdAt
+          updatedAt
+          boxes {
+            __typename
+            items {
+              __typename
+              id
+              title
+              contents
+              size
+              orgID
+              shipmentID
+              boxCategoryID
+              isActive
+              barCode
+              qrCode
+              barCodePhoto
+              qrCodePhoto
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              notesHistory
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <CreateBoxCategoryMutation>response.data.createBoxCategory;
+  }
+  async UpdateBoxCategory(
+    input: UpdateBoxCategoryInput,
+    condition?: ModelBoxCategoryConditionInput
+  ): Promise<UpdateBoxCategoryMutation> {
+    const statement = `mutation UpdateBoxCategory($input: UpdateBoxCategoryInput!, $condition: ModelBoxCategoryConditionInput) {
+        updateBoxCategory(input: $input, condition: $condition) {
+          __typename
+          id
+          name
+          active
+          createdAt
+          updatedAt
+          boxes {
+            __typename
+            items {
+              __typename
+              id
+              title
+              contents
+              size
+              orgID
+              shipmentID
+              boxCategoryID
+              isActive
+              barCode
+              qrCode
+              barCodePhoto
+              qrCodePhoto
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              notesHistory
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <UpdateBoxCategoryMutation>response.data.updateBoxCategory;
+  }
+  async DeleteBoxCategory(
+    input: DeleteBoxCategoryInput,
+    condition?: ModelBoxCategoryConditionInput
+  ): Promise<DeleteBoxCategoryMutation> {
+    const statement = `mutation DeleteBoxCategory($input: DeleteBoxCategoryInput!, $condition: ModelBoxCategoryConditionInput) {
+        deleteBoxCategory(input: $input, condition: $condition) {
+          __typename
+          id
+          name
+          active
+          createdAt
+          updatedAt
+          boxes {
+            __typename
+            items {
+              __typename
+              id
+              title
+              contents
+              size
+              orgID
+              shipmentID
+              boxCategoryID
+              isActive
+              barCode
+              qrCode
+              barCodePhoto
+              qrCodePhoto
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              notesHistory
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <DeleteBoxCategoryMutation>response.data.deleteBoxCategory;
   }
   async CreateApihealthCheckInfo(
     input: CreateApihealthCheckInfoInput,
@@ -7228,13 +12457,57 @@ export class APIService {
           primaryDomain
           privacyPolicy
           tags
+          image {
+            __typename
+            id
+            altTex
+            src
+            userID
+            createdAt
+            updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
           images {
             __typename
             id
             altTex
             src
+            userID
             createdAt
             updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
           }
           notes
           isActive
@@ -7265,6 +12538,7 @@ export class APIService {
               size
               orgID
               shipmentID
+              boxCategoryID
               isActive
               barCode
               qrCode
@@ -7288,6 +12562,7 @@ export class APIService {
               id
               name
               orgID
+              hashedSecret
               isActive
               tags
               status
@@ -7347,13 +12622,57 @@ export class APIService {
           primaryDomain
           privacyPolicy
           tags
+          image {
+            __typename
+            id
+            altTex
+            src
+            userID
+            createdAt
+            updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
           images {
             __typename
             id
             altTex
             src
+            userID
             createdAt
             updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
           }
           notes
           isActive
@@ -7384,6 +12703,7 @@ export class APIService {
               size
               orgID
               shipmentID
+              boxCategoryID
               isActive
               barCode
               qrCode
@@ -7407,6 +12727,7 @@ export class APIService {
               id
               name
               orgID
+              hashedSecret
               isActive
               tags
               status
@@ -7466,13 +12787,57 @@ export class APIService {
           primaryDomain
           privacyPolicy
           tags
+          image {
+            __typename
+            id
+            altTex
+            src
+            userID
+            createdAt
+            updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
           images {
             __typename
             id
             altTex
             src
+            userID
             createdAt
             updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
           }
           notes
           isActive
@@ -7503,6 +12868,7 @@ export class APIService {
               size
               orgID
               shipmentID
+              boxCategoryID
               isActive
               barCode
               qrCode
@@ -7526,6 +12892,7 @@ export class APIService {
               id
               name
               orgID
+              hashedSecret
               isActive
               tags
               status
@@ -7746,13 +13113,57 @@ export class APIService {
           status
           statusHistory
           tags
+          image {
+            __typename
+            id
+            altTex
+            src
+            userID
+            createdAt
+            updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
           images {
             __typename
             id
             altTex
             src
+            userID
             createdAt
             updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
           }
           notes
           notesHistory
@@ -7848,6 +13259,7 @@ export class APIService {
               size
               orgID
               shipmentID
+              boxCategoryID
               isActive
               barCode
               qrCode
@@ -7900,13 +13312,57 @@ export class APIService {
           status
           statusHistory
           tags
+          image {
+            __typename
+            id
+            altTex
+            src
+            userID
+            createdAt
+            updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
           images {
             __typename
             id
             altTex
             src
+            userID
             createdAt
             updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
           }
           notes
           notesHistory
@@ -8002,6 +13458,7 @@ export class APIService {
               size
               orgID
               shipmentID
+              boxCategoryID
               isActive
               barCode
               qrCode
@@ -8054,13 +13511,57 @@ export class APIService {
           status
           statusHistory
           tags
+          image {
+            __typename
+            id
+            altTex
+            src
+            userID
+            createdAt
+            updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
           images {
             __typename
             id
             altTex
             src
+            userID
             createdAt
             updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
           }
           notes
           notesHistory
@@ -8156,6 +13657,7 @@ export class APIService {
               size
               orgID
               shipmentID
+              boxCategoryID
               isActive
               barCode
               qrCode
@@ -8198,19 +13700,76 @@ export class APIService {
           size
           orgID
           shipmentID
+          boxCategoryID
+          additionalBoxCategories {
+            __typename
+            id
+            name
+            active
+            createdAt
+            updatedAt
+            boxes {
+              __typename
+              nextToken
+            }
+          }
           isActive
           barCode
           qrCode
           barCodePhoto
           qrCodePhoto
           tags
+          image {
+            __typename
+            id
+            altTex
+            src
+            userID
+            createdAt
+            updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
           images {
             __typename
             id
             altTex
             src
+            userID
             createdAt
             updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
           }
           status
           statusHistory
@@ -8219,6 +13778,18 @@ export class APIService {
           notesHistory
           createdAt
           updatedAt
+          boxCategory {
+            __typename
+            id
+            name
+            active
+            createdAt
+            updatedAt
+            boxes {
+              __typename
+              nextToken
+            }
+          }
           org {
             __typename
             id
@@ -8247,11 +13818,21 @@ export class APIService {
             primaryDomain
             privacyPolicy
             tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
             images {
               __typename
               id
               altTex
               src
+              userID
               createdAt
               updatedAt
             }
@@ -8301,11 +13882,21 @@ export class APIService {
             status
             statusHistory
             tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
             images {
               __typename
               id
               altTex
               src
+              userID
               createdAt
               updatedAt
             }
@@ -8362,6 +13953,7 @@ export class APIService {
               isFinal
               tags
               isActive
+              trackingInfoID
               createdAt
               updatedAt
             }
@@ -8393,19 +13985,76 @@ export class APIService {
           size
           orgID
           shipmentID
+          boxCategoryID
+          additionalBoxCategories {
+            __typename
+            id
+            name
+            active
+            createdAt
+            updatedAt
+            boxes {
+              __typename
+              nextToken
+            }
+          }
           isActive
           barCode
           qrCode
           barCodePhoto
           qrCodePhoto
           tags
+          image {
+            __typename
+            id
+            altTex
+            src
+            userID
+            createdAt
+            updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
           images {
             __typename
             id
             altTex
             src
+            userID
             createdAt
             updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
           }
           status
           statusHistory
@@ -8414,6 +14063,18 @@ export class APIService {
           notesHistory
           createdAt
           updatedAt
+          boxCategory {
+            __typename
+            id
+            name
+            active
+            createdAt
+            updatedAt
+            boxes {
+              __typename
+              nextToken
+            }
+          }
           org {
             __typename
             id
@@ -8442,11 +14103,21 @@ export class APIService {
             primaryDomain
             privacyPolicy
             tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
             images {
               __typename
               id
               altTex
               src
+              userID
               createdAt
               updatedAt
             }
@@ -8496,11 +14167,21 @@ export class APIService {
             status
             statusHistory
             tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
             images {
               __typename
               id
               altTex
               src
+              userID
               createdAt
               updatedAt
             }
@@ -8557,6 +14238,7 @@ export class APIService {
               isFinal
               tags
               isActive
+              trackingInfoID
               createdAt
               updatedAt
             }
@@ -8588,19 +14270,76 @@ export class APIService {
           size
           orgID
           shipmentID
+          boxCategoryID
+          additionalBoxCategories {
+            __typename
+            id
+            name
+            active
+            createdAt
+            updatedAt
+            boxes {
+              __typename
+              nextToken
+            }
+          }
           isActive
           barCode
           qrCode
           barCodePhoto
           qrCodePhoto
           tags
+          image {
+            __typename
+            id
+            altTex
+            src
+            userID
+            createdAt
+            updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
           images {
             __typename
             id
             altTex
             src
+            userID
             createdAt
             updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
           }
           status
           statusHistory
@@ -8609,6 +14348,18 @@ export class APIService {
           notesHistory
           createdAt
           updatedAt
+          boxCategory {
+            __typename
+            id
+            name
+            active
+            createdAt
+            updatedAt
+            boxes {
+              __typename
+              nextToken
+            }
+          }
           org {
             __typename
             id
@@ -8637,11 +14388,21 @@ export class APIService {
             primaryDomain
             privacyPolicy
             tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
             images {
               __typename
               id
               altTex
               src
+              userID
               createdAt
               updatedAt
             }
@@ -8691,11 +14452,21 @@ export class APIService {
             status
             statusHistory
             tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
             images {
               __typename
               id
               altTex
               src
+              userID
               createdAt
               updatedAt
             }
@@ -8752,6 +14523,7 @@ export class APIService {
               isFinal
               tags
               isActive
+              trackingInfoID
               createdAt
               updatedAt
             }
@@ -8784,15 +14556,60 @@ export class APIService {
           notes
           isFinal
           tags
+          image {
+            __typename
+            id
+            altTex
+            src
+            userID
+            createdAt
+            updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
           images {
             __typename
             id
             altTex
             src
+            userID
             createdAt
             updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
           }
           isActive
+          trackingInfoID
           createdAt
           updatedAt
           locationInfo {
@@ -8843,17 +14660,36 @@ export class APIService {
             size
             orgID
             shipmentID
+            boxCategoryID
+            additionalBoxCategories {
+              __typename
+              id
+              name
+              active
+              createdAt
+              updatedAt
+            }
             isActive
             barCode
             qrCode
             barCodePhoto
             qrCodePhoto
             tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
             images {
               __typename
               id
               altTex
               src
+              userID
               createdAt
               updatedAt
             }
@@ -8864,6 +14700,14 @@ export class APIService {
             notesHistory
             createdAt
             updatedAt
+            boxCategory {
+              __typename
+              id
+              name
+              active
+              createdAt
+              updatedAt
+            }
             org {
               __typename
               id
@@ -8907,18 +14751,80 @@ export class APIService {
               nextToken
             }
           }
-          user {
+          trackingInfo {
             __typename
             id
-            name
-            orgID
+            timeOfDelivery
+            userID
             isActive
             tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
             images {
               __typename
               id
               altTex
               src
+              userID
+              createdAt
+              updatedAt
+            }
+            internalNotes
+            notes
+            createdAt
+            updatedAt
+            boxLocations {
+              __typename
+              nextToken
+            }
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
+          user {
+            __typename
+            id
+            name
+            orgID
+            hashedSecret
+            isActive
+            tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            images {
+              __typename
+              id
+              altTex
+              src
+              userID
               createdAt
               updatedAt
             }
@@ -8977,15 +14883,60 @@ export class APIService {
           notes
           isFinal
           tags
+          image {
+            __typename
+            id
+            altTex
+            src
+            userID
+            createdAt
+            updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
           images {
             __typename
             id
             altTex
             src
+            userID
             createdAt
             updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
           }
           isActive
+          trackingInfoID
           createdAt
           updatedAt
           locationInfo {
@@ -9036,17 +14987,36 @@ export class APIService {
             size
             orgID
             shipmentID
+            boxCategoryID
+            additionalBoxCategories {
+              __typename
+              id
+              name
+              active
+              createdAt
+              updatedAt
+            }
             isActive
             barCode
             qrCode
             barCodePhoto
             qrCodePhoto
             tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
             images {
               __typename
               id
               altTex
               src
+              userID
               createdAt
               updatedAt
             }
@@ -9057,6 +15027,14 @@ export class APIService {
             notesHistory
             createdAt
             updatedAt
+            boxCategory {
+              __typename
+              id
+              name
+              active
+              createdAt
+              updatedAt
+            }
             org {
               __typename
               id
@@ -9100,18 +15078,80 @@ export class APIService {
               nextToken
             }
           }
-          user {
+          trackingInfo {
             __typename
             id
-            name
-            orgID
+            timeOfDelivery
+            userID
             isActive
             tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
             images {
               __typename
               id
               altTex
               src
+              userID
+              createdAt
+              updatedAt
+            }
+            internalNotes
+            notes
+            createdAt
+            updatedAt
+            boxLocations {
+              __typename
+              nextToken
+            }
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
+          user {
+            __typename
+            id
+            name
+            orgID
+            hashedSecret
+            isActive
+            tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            images {
+              __typename
+              id
+              altTex
+              src
+              userID
               createdAt
               updatedAt
             }
@@ -9170,15 +15210,60 @@ export class APIService {
           notes
           isFinal
           tags
+          image {
+            __typename
+            id
+            altTex
+            src
+            userID
+            createdAt
+            updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
           images {
             __typename
             id
             altTex
             src
+            userID
             createdAt
             updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
           }
           isActive
+          trackingInfoID
           createdAt
           updatedAt
           locationInfo {
@@ -9229,17 +15314,36 @@ export class APIService {
             size
             orgID
             shipmentID
+            boxCategoryID
+            additionalBoxCategories {
+              __typename
+              id
+              name
+              active
+              createdAt
+              updatedAt
+            }
             isActive
             barCode
             qrCode
             barCodePhoto
             qrCodePhoto
             tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
             images {
               __typename
               id
               altTex
               src
+              userID
               createdAt
               updatedAt
             }
@@ -9250,6 +15354,14 @@ export class APIService {
             notesHistory
             createdAt
             updatedAt
+            boxCategory {
+              __typename
+              id
+              name
+              active
+              createdAt
+              updatedAt
+            }
             org {
               __typename
               id
@@ -9293,18 +15405,80 @@ export class APIService {
               nextToken
             }
           }
-          user {
+          trackingInfo {
             __typename
             id
-            name
-            orgID
+            timeOfDelivery
+            userID
             isActive
             tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
             images {
               __typename
               id
               altTex
               src
+              userID
+              createdAt
+              updatedAt
+            }
+            internalNotes
+            notes
+            createdAt
+            updatedAt
+            boxLocations {
+              __typename
+              nextToken
+            }
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
+          user {
+            __typename
+            id
+            name
+            orgID
+            hashedSecret
+            isActive
+            tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            images {
+              __typename
+              id
+              altTex
+              src
+              userID
               createdAt
               updatedAt
             }
@@ -9349,6 +15523,465 @@ export class APIService {
     )) as any;
     return <DeleteBoxLocationMutation>response.data.deleteBoxLocation;
   }
+  async CreateTrackingInfo(
+    input: CreateTrackingInfoInput,
+    condition?: ModelTrackingInfoConditionInput
+  ): Promise<CreateTrackingInfoMutation> {
+    const statement = `mutation CreateTrackingInfo($input: CreateTrackingInfoInput!, $condition: ModelTrackingInfoConditionInput) {
+        createTrackingInfo(input: $input, condition: $condition) {
+          __typename
+          id
+          timeOfDelivery
+          userID
+          isActive
+          tags
+          image {
+            __typename
+            id
+            altTex
+            src
+            userID
+            createdAt
+            updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
+          images {
+            __typename
+            id
+            altTex
+            src
+            userID
+            createdAt
+            updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
+          internalNotes
+          notes
+          createdAt
+          updatedAt
+          boxLocations {
+            __typename
+            items {
+              __typename
+              id
+              boxID
+              locationInfoID
+              userID
+              notes
+              isFinal
+              tags
+              isActive
+              trackingInfoID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          user {
+            __typename
+            id
+            name
+            orgID
+            hashedSecret
+            isActive
+            tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            images {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            status
+            statusHistory
+            internalNotes
+            notes
+            rank
+            notesHistory
+            createdAt
+            updatedAt
+            org {
+              __typename
+              id
+              name
+              description
+              addressID
+              email
+              primaryDomain
+              privacyPolicy
+              tags
+              notes
+              isActive
+              createdAt
+              updatedAt
+            }
+            boxLocations {
+              __typename
+              nextToken
+            }
+          }
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <CreateTrackingInfoMutation>response.data.createTrackingInfo;
+  }
+  async UpdateTrackingInfo(
+    input: UpdateTrackingInfoInput,
+    condition?: ModelTrackingInfoConditionInput
+  ): Promise<UpdateTrackingInfoMutation> {
+    const statement = `mutation UpdateTrackingInfo($input: UpdateTrackingInfoInput!, $condition: ModelTrackingInfoConditionInput) {
+        updateTrackingInfo(input: $input, condition: $condition) {
+          __typename
+          id
+          timeOfDelivery
+          userID
+          isActive
+          tags
+          image {
+            __typename
+            id
+            altTex
+            src
+            userID
+            createdAt
+            updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
+          images {
+            __typename
+            id
+            altTex
+            src
+            userID
+            createdAt
+            updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
+          internalNotes
+          notes
+          createdAt
+          updatedAt
+          boxLocations {
+            __typename
+            items {
+              __typename
+              id
+              boxID
+              locationInfoID
+              userID
+              notes
+              isFinal
+              tags
+              isActive
+              trackingInfoID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          user {
+            __typename
+            id
+            name
+            orgID
+            hashedSecret
+            isActive
+            tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            images {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            status
+            statusHistory
+            internalNotes
+            notes
+            rank
+            notesHistory
+            createdAt
+            updatedAt
+            org {
+              __typename
+              id
+              name
+              description
+              addressID
+              email
+              primaryDomain
+              privacyPolicy
+              tags
+              notes
+              isActive
+              createdAt
+              updatedAt
+            }
+            boxLocations {
+              __typename
+              nextToken
+            }
+          }
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <UpdateTrackingInfoMutation>response.data.updateTrackingInfo;
+  }
+  async DeleteTrackingInfo(
+    input: DeleteTrackingInfoInput,
+    condition?: ModelTrackingInfoConditionInput
+  ): Promise<DeleteTrackingInfoMutation> {
+    const statement = `mutation DeleteTrackingInfo($input: DeleteTrackingInfoInput!, $condition: ModelTrackingInfoConditionInput) {
+        deleteTrackingInfo(input: $input, condition: $condition) {
+          __typename
+          id
+          timeOfDelivery
+          userID
+          isActive
+          tags
+          image {
+            __typename
+            id
+            altTex
+            src
+            userID
+            createdAt
+            updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
+          images {
+            __typename
+            id
+            altTex
+            src
+            userID
+            createdAt
+            updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
+          internalNotes
+          notes
+          createdAt
+          updatedAt
+          boxLocations {
+            __typename
+            items {
+              __typename
+              id
+              boxID
+              locationInfoID
+              userID
+              notes
+              isFinal
+              tags
+              isActive
+              trackingInfoID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          user {
+            __typename
+            id
+            name
+            orgID
+            hashedSecret
+            isActive
+            tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            images {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            status
+            statusHistory
+            internalNotes
+            notes
+            rank
+            notesHistory
+            createdAt
+            updatedAt
+            org {
+              __typename
+              id
+              name
+              description
+              addressID
+              email
+              primaryDomain
+              privacyPolicy
+              tags
+              notes
+              isActive
+              createdAt
+              updatedAt
+            }
+            boxLocations {
+              __typename
+              nextToken
+            }
+          }
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <DeleteTrackingInfoMutation>response.data.deleteTrackingInfo;
+  }
   async CreateUser(
     input: CreateUserInput,
     condition?: ModelUserConditionInput
@@ -9359,15 +15992,60 @@ export class APIService {
           id
           name
           orgID
+          hashedSecret
           isActive
           tags
+          image {
+            __typename
+            id
+            altTex
+            src
+            userID
+            createdAt
+            updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
           images {
             __typename
             id
             altTex
             src
+            userID
             createdAt
             updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
           }
           status
           statusHistory
@@ -9405,11 +16083,21 @@ export class APIService {
             primaryDomain
             privacyPolicy
             tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
             images {
               __typename
               id
               altTex
               src
+              userID
               createdAt
               updatedAt
             }
@@ -9453,6 +16141,7 @@ export class APIService {
               isFinal
               tags
               isActive
+              trackingInfoID
               createdAt
               updatedAt
             }
@@ -9481,15 +16170,60 @@ export class APIService {
           id
           name
           orgID
+          hashedSecret
           isActive
           tags
+          image {
+            __typename
+            id
+            altTex
+            src
+            userID
+            createdAt
+            updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
           images {
             __typename
             id
             altTex
             src
+            userID
             createdAt
             updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
           }
           status
           statusHistory
@@ -9527,11 +16261,21 @@ export class APIService {
             primaryDomain
             privacyPolicy
             tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
             images {
               __typename
               id
               altTex
               src
+              userID
               createdAt
               updatedAt
             }
@@ -9575,6 +16319,7 @@ export class APIService {
               isFinal
               tags
               isActive
+              trackingInfoID
               createdAt
               updatedAt
             }
@@ -9603,15 +16348,60 @@ export class APIService {
           id
           name
           orgID
+          hashedSecret
           isActive
           tags
+          image {
+            __typename
+            id
+            altTex
+            src
+            userID
+            createdAt
+            updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
           images {
             __typename
             id
             altTex
             src
+            userID
             createdAt
             updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
           }
           status
           statusHistory
@@ -9649,11 +16439,21 @@ export class APIService {
             primaryDomain
             privacyPolicy
             tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
             images {
               __typename
               id
               altTex
               src
+              userID
               createdAt
               updatedAt
             }
@@ -9697,6 +16497,7 @@ export class APIService {
               isFinal
               tags
               isActive
+              trackingInfoID
               createdAt
               updatedAt
             }
@@ -9722,8 +16523,63 @@ export class APIService {
           id
           altTex
           src
+          userID
           createdAt
           updatedAt
+          user {
+            __typename
+            id
+            name
+            orgID
+            hashedSecret
+            isActive
+            tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            images {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            status
+            statusHistory
+            internalNotes
+            notes
+            rank
+            notesHistory
+            createdAt
+            updatedAt
+            org {
+              __typename
+              id
+              name
+              description
+              addressID
+              email
+              primaryDomain
+              privacyPolicy
+              tags
+              notes
+              isActive
+              createdAt
+              updatedAt
+            }
+            boxLocations {
+              __typename
+              nextToken
+            }
+          }
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -9747,8 +16603,26 @@ export class APIService {
             id
             altTex
             src
+            userID
             createdAt
             updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
           }
           nextToken
         }
@@ -9767,6 +16641,90 @@ export class APIService {
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
     return <ListImagesQuery>response.data.listImages;
+  }
+  async ListBoxCategorys(
+    filter?: ModelBoxCategoryFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<ListBoxCategorysQuery> {
+    const statement = `query ListBoxCategorys($filter: ModelBoxCategoryFilterInput, $limit: Int, $nextToken: String) {
+        listBoxCategorys(filter: $filter, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            name
+            active
+            createdAt
+            updatedAt
+            boxes {
+              __typename
+              nextToken
+            }
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <ListBoxCategorysQuery>response.data.listBoxCategorys;
+  }
+  async GetBoxCategory(id: string): Promise<GetBoxCategoryQuery> {
+    const statement = `query GetBoxCategory($id: ID!) {
+        getBoxCategory(id: $id) {
+          __typename
+          id
+          name
+          active
+          createdAt
+          updatedAt
+          boxes {
+            __typename
+            items {
+              __typename
+              id
+              title
+              contents
+              size
+              orgID
+              shipmentID
+              boxCategoryID
+              isActive
+              barCode
+              qrCode
+              barCodePhoto
+              qrCodePhoto
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              notesHistory
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      id
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <GetBoxCategoryQuery>response.data.getBoxCategory;
   }
   async GetApihealthCheckInfo(id: string): Promise<GetApihealthCheckInfoQuery> {
     const statement = `query GetApihealthCheckInfo($id: ID!) {
@@ -9985,11 +16943,21 @@ export class APIService {
             primaryDomain
             privacyPolicy
             tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
             images {
               __typename
               id
               altTex
               src
+              userID
               createdAt
               updatedAt
             }
@@ -10069,13 +17037,57 @@ export class APIService {
           primaryDomain
           privacyPolicy
           tags
+          image {
+            __typename
+            id
+            altTex
+            src
+            userID
+            createdAt
+            updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
           images {
             __typename
             id
             altTex
             src
+            userID
             createdAt
             updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
           }
           notes
           isActive
@@ -10106,6 +17118,7 @@ export class APIService {
               size
               orgID
               shipmentID
+              boxCategoryID
               isActive
               barCode
               qrCode
@@ -10129,6 +17142,7 @@ export class APIService {
               id
               name
               orgID
+              hashedSecret
               isActive
               tags
               status
@@ -10295,11 +17309,21 @@ export class APIService {
             status
             statusHistory
             tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
             images {
               __typename
               id
               altTex
               src
+              userID
               createdAt
               updatedAt
             }
@@ -10382,13 +17406,57 @@ export class APIService {
           status
           statusHistory
           tags
+          image {
+            __typename
+            id
+            altTex
+            src
+            userID
+            createdAt
+            updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
           images {
             __typename
             id
             altTex
             src
+            userID
             createdAt
             updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
           }
           notes
           notesHistory
@@ -10484,6 +17552,7 @@ export class APIService {
               size
               orgID
               shipmentID
+              boxCategoryID
               isActive
               barCode
               qrCode
@@ -10526,17 +17595,36 @@ export class APIService {
             size
             orgID
             shipmentID
+            boxCategoryID
+            additionalBoxCategories {
+              __typename
+              id
+              name
+              active
+              createdAt
+              updatedAt
+            }
             isActive
             barCode
             qrCode
             barCodePhoto
             qrCodePhoto
             tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
             images {
               __typename
               id
               altTex
               src
+              userID
               createdAt
               updatedAt
             }
@@ -10547,6 +17635,14 @@ export class APIService {
             notesHistory
             createdAt
             updatedAt
+            boxCategory {
+              __typename
+              id
+              name
+              active
+              createdAt
+              updatedAt
+            }
             org {
               __typename
               id
@@ -10618,19 +17714,76 @@ export class APIService {
           size
           orgID
           shipmentID
+          boxCategoryID
+          additionalBoxCategories {
+            __typename
+            id
+            name
+            active
+            createdAt
+            updatedAt
+            boxes {
+              __typename
+              nextToken
+            }
+          }
           isActive
           barCode
           qrCode
           barCodePhoto
           qrCodePhoto
           tags
+          image {
+            __typename
+            id
+            altTex
+            src
+            userID
+            createdAt
+            updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
           images {
             __typename
             id
             altTex
             src
+            userID
             createdAt
             updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
           }
           status
           statusHistory
@@ -10639,6 +17792,18 @@ export class APIService {
           notesHistory
           createdAt
           updatedAt
+          boxCategory {
+            __typename
+            id
+            name
+            active
+            createdAt
+            updatedAt
+            boxes {
+              __typename
+              nextToken
+            }
+          }
           org {
             __typename
             id
@@ -10667,11 +17832,21 @@ export class APIService {
             primaryDomain
             privacyPolicy
             tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
             images {
               __typename
               id
               altTex
               src
+              userID
               createdAt
               updatedAt
             }
@@ -10721,11 +17896,21 @@ export class APIService {
             status
             statusHistory
             tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
             images {
               __typename
               id
               altTex
               src
+              userID
               createdAt
               updatedAt
             }
@@ -10782,6 +17967,7 @@ export class APIService {
               isFinal
               tags
               isActive
+              trackingInfoID
               createdAt
               updatedAt
             }
@@ -10797,16 +17983,15 @@ export class APIService {
     )) as any;
     return <GetBoxQuery>response.data.getBox;
   }
-  async ShipmentsByBoxId(
-    shipmentID?: string,
-    id?: ModelIDKeyConditionInput,
+  async BoxByOrgId(
+    orgID?: string,
     sortDirection?: ModelSortDirection,
     filter?: ModelBoxFilterInput,
     limit?: number,
     nextToken?: string
-  ): Promise<ShipmentsByBoxIdQuery> {
-    const statement = `query ShipmentsByBoxId($shipmentID: ID, $id: ModelIDKeyConditionInput, $sortDirection: ModelSortDirection, $filter: ModelBoxFilterInput, $limit: Int, $nextToken: String) {
-        shipmentsByBoxId(shipmentID: $shipmentID, id: $id, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+  ): Promise<BoxByOrgIdQuery> {
+    const statement = `query BoxByOrgId($orgID: ID, $sortDirection: ModelSortDirection, $filter: ModelBoxFilterInput, $limit: Int, $nextToken: String) {
+        BoxByOrgID(orgID: $orgID, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
           __typename
           items {
             __typename
@@ -10816,17 +18001,36 @@ export class APIService {
             size
             orgID
             shipmentID
+            boxCategoryID
+            additionalBoxCategories {
+              __typename
+              id
+              name
+              active
+              createdAt
+              updatedAt
+            }
             isActive
             barCode
             qrCode
             barCodePhoto
             qrCodePhoto
             tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
             images {
               __typename
               id
               altTex
               src
+              userID
               createdAt
               updatedAt
             }
@@ -10837,6 +18041,148 @@ export class APIService {
             notesHistory
             createdAt
             updatedAt
+            boxCategory {
+              __typename
+              id
+              name
+              active
+              createdAt
+              updatedAt
+            }
+            org {
+              __typename
+              id
+              name
+              description
+              addressID
+              email
+              primaryDomain
+              privacyPolicy
+              tags
+              notes
+              isActive
+              createdAt
+              updatedAt
+            }
+            shipment {
+              __typename
+              id
+              name
+              description
+              isActive
+              startDate
+              deliveryDate
+              startLocationID
+              destinationLocationID
+              shipmentNotes
+              deliveryNotes
+              trackingId
+              weight
+              shipmentReceiver
+              status
+              statusHistory
+              tags
+              notes
+              notesHistory
+              createdAt
+              updatedAt
+            }
+            locations {
+              __typename
+              nextToken
+            }
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (orgID) {
+      gqlAPIServiceArguments.orgID = orgID;
+    }
+    if (sortDirection) {
+      gqlAPIServiceArguments.sortDirection = sortDirection;
+    }
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <BoxByOrgIdQuery>response.data.BoxByOrgID;
+  }
+  async BoxByShipmentId(
+    shipmentID?: string,
+    id?: ModelIDKeyConditionInput,
+    sortDirection?: ModelSortDirection,
+    filter?: ModelBoxFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<BoxByShipmentIdQuery> {
+    const statement = `query BoxByShipmentId($shipmentID: ID, $id: ModelIDKeyConditionInput, $sortDirection: ModelSortDirection, $filter: ModelBoxFilterInput, $limit: Int, $nextToken: String) {
+        BoxByShipmentID(shipmentID: $shipmentID, id: $id, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            title
+            contents
+            size
+            orgID
+            shipmentID
+            boxCategoryID
+            additionalBoxCategories {
+              __typename
+              id
+              name
+              active
+              createdAt
+              updatedAt
+            }
+            isActive
+            barCode
+            qrCode
+            barCodePhoto
+            qrCodePhoto
+            tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            images {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            status
+            statusHistory
+            internalNotes
+            notes
+            notesHistory
+            createdAt
+            updatedAt
+            boxCategory {
+              __typename
+              id
+              name
+              active
+              createdAt
+              updatedAt
+            }
             org {
               __typename
               id
@@ -10905,7 +18251,406 @@ export class APIService {
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
-    return <ShipmentsByBoxIdQuery>response.data.shipmentsByBoxId;
+    return <BoxByShipmentIdQuery>response.data.BoxByShipmentID;
+  }
+  async BoxByCategory(
+    boxCategoryID?: string,
+    sortDirection?: ModelSortDirection,
+    filter?: ModelBoxFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<BoxByCategoryQuery> {
+    const statement = `query BoxByCategory($boxCategoryID: ID, $sortDirection: ModelSortDirection, $filter: ModelBoxFilterInput, $limit: Int, $nextToken: String) {
+        BoxByCategory(boxCategoryID: $boxCategoryID, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            title
+            contents
+            size
+            orgID
+            shipmentID
+            boxCategoryID
+            additionalBoxCategories {
+              __typename
+              id
+              name
+              active
+              createdAt
+              updatedAt
+            }
+            isActive
+            barCode
+            qrCode
+            barCodePhoto
+            qrCodePhoto
+            tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            images {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            status
+            statusHistory
+            internalNotes
+            notes
+            notesHistory
+            createdAt
+            updatedAt
+            boxCategory {
+              __typename
+              id
+              name
+              active
+              createdAt
+              updatedAt
+            }
+            org {
+              __typename
+              id
+              name
+              description
+              addressID
+              email
+              primaryDomain
+              privacyPolicy
+              tags
+              notes
+              isActive
+              createdAt
+              updatedAt
+            }
+            shipment {
+              __typename
+              id
+              name
+              description
+              isActive
+              startDate
+              deliveryDate
+              startLocationID
+              destinationLocationID
+              shipmentNotes
+              deliveryNotes
+              trackingId
+              weight
+              shipmentReceiver
+              status
+              statusHistory
+              tags
+              notes
+              notesHistory
+              createdAt
+              updatedAt
+            }
+            locations {
+              __typename
+              nextToken
+            }
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (boxCategoryID) {
+      gqlAPIServiceArguments.boxCategoryID = boxCategoryID;
+    }
+    if (sortDirection) {
+      gqlAPIServiceArguments.sortDirection = sortDirection;
+    }
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <BoxByCategoryQuery>response.data.BoxByCategory;
+  }
+  async BoxByTitle(
+    title?: string,
+    sortDirection?: ModelSortDirection,
+    filter?: ModelBoxFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<BoxByTitleQuery> {
+    const statement = `query BoxByTitle($title: String, $sortDirection: ModelSortDirection, $filter: ModelBoxFilterInput, $limit: Int, $nextToken: String) {
+        BoxByTitle(title: $title, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            title
+            contents
+            size
+            orgID
+            shipmentID
+            boxCategoryID
+            additionalBoxCategories {
+              __typename
+              id
+              name
+              active
+              createdAt
+              updatedAt
+            }
+            isActive
+            barCode
+            qrCode
+            barCodePhoto
+            qrCodePhoto
+            tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            images {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            status
+            statusHistory
+            internalNotes
+            notes
+            notesHistory
+            createdAt
+            updatedAt
+            boxCategory {
+              __typename
+              id
+              name
+              active
+              createdAt
+              updatedAt
+            }
+            org {
+              __typename
+              id
+              name
+              description
+              addressID
+              email
+              primaryDomain
+              privacyPolicy
+              tags
+              notes
+              isActive
+              createdAt
+              updatedAt
+            }
+            shipment {
+              __typename
+              id
+              name
+              description
+              isActive
+              startDate
+              deliveryDate
+              startLocationID
+              destinationLocationID
+              shipmentNotes
+              deliveryNotes
+              trackingId
+              weight
+              shipmentReceiver
+              status
+              statusHistory
+              tags
+              notes
+              notesHistory
+              createdAt
+              updatedAt
+            }
+            locations {
+              __typename
+              nextToken
+            }
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (title) {
+      gqlAPIServiceArguments.title = title;
+    }
+    if (sortDirection) {
+      gqlAPIServiceArguments.sortDirection = sortDirection;
+    }
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <BoxByTitleQuery>response.data.BoxByTitle;
+  }
+  async BoxByQrCode(
+    qrCode?: string,
+    sortDirection?: ModelSortDirection,
+    filter?: ModelBoxFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<BoxByQrCodeQuery> {
+    const statement = `query BoxByQrCode($qrCode: String, $sortDirection: ModelSortDirection, $filter: ModelBoxFilterInput, $limit: Int, $nextToken: String) {
+        BoxByQRCode(qrCode: $qrCode, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            title
+            contents
+            size
+            orgID
+            shipmentID
+            boxCategoryID
+            additionalBoxCategories {
+              __typename
+              id
+              name
+              active
+              createdAt
+              updatedAt
+            }
+            isActive
+            barCode
+            qrCode
+            barCodePhoto
+            qrCodePhoto
+            tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            images {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            status
+            statusHistory
+            internalNotes
+            notes
+            notesHistory
+            createdAt
+            updatedAt
+            boxCategory {
+              __typename
+              id
+              name
+              active
+              createdAt
+              updatedAt
+            }
+            org {
+              __typename
+              id
+              name
+              description
+              addressID
+              email
+              primaryDomain
+              privacyPolicy
+              tags
+              notes
+              isActive
+              createdAt
+              updatedAt
+            }
+            shipment {
+              __typename
+              id
+              name
+              description
+              isActive
+              startDate
+              deliveryDate
+              startLocationID
+              destinationLocationID
+              shipmentNotes
+              deliveryNotes
+              trackingId
+              weight
+              shipmentReceiver
+              status
+              statusHistory
+              tags
+              notes
+              notesHistory
+              createdAt
+              updatedAt
+            }
+            locations {
+              __typename
+              nextToken
+            }
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (qrCode) {
+      gqlAPIServiceArguments.qrCode = qrCode;
+    }
+    if (sortDirection) {
+      gqlAPIServiceArguments.sortDirection = sortDirection;
+    }
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <BoxByQrCodeQuery>response.data.BoxByQRCode;
   }
   async GetBoxLocation(id: string): Promise<GetBoxLocationQuery> {
     const statement = `query GetBoxLocation($id: ID!) {
@@ -10918,15 +18663,60 @@ export class APIService {
           notes
           isFinal
           tags
+          image {
+            __typename
+            id
+            altTex
+            src
+            userID
+            createdAt
+            updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
           images {
             __typename
             id
             altTex
             src
+            userID
             createdAt
             updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
           }
           isActive
+          trackingInfoID
           createdAt
           updatedAt
           locationInfo {
@@ -10977,17 +18767,36 @@ export class APIService {
             size
             orgID
             shipmentID
+            boxCategoryID
+            additionalBoxCategories {
+              __typename
+              id
+              name
+              active
+              createdAt
+              updatedAt
+            }
             isActive
             barCode
             qrCode
             barCodePhoto
             qrCodePhoto
             tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
             images {
               __typename
               id
               altTex
               src
+              userID
               createdAt
               updatedAt
             }
@@ -10998,6 +18807,14 @@ export class APIService {
             notesHistory
             createdAt
             updatedAt
+            boxCategory {
+              __typename
+              id
+              name
+              active
+              createdAt
+              updatedAt
+            }
             org {
               __typename
               id
@@ -11041,18 +18858,80 @@ export class APIService {
               nextToken
             }
           }
-          user {
+          trackingInfo {
             __typename
             id
-            name
-            orgID
+            timeOfDelivery
+            userID
             isActive
             tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
             images {
               __typename
               id
               altTex
               src
+              userID
+              createdAt
+              updatedAt
+            }
+            internalNotes
+            notes
+            createdAt
+            updatedAt
+            boxLocations {
+              __typename
+              nextToken
+            }
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
+          user {
+            __typename
+            id
+            name
+            orgID
+            hashedSecret
+            isActive
+            tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            images {
+              __typename
+              id
+              altTex
+              src
+              userID
               createdAt
               updatedAt
             }
@@ -11111,15 +18990,26 @@ export class APIService {
             notes
             isFinal
             tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
             images {
               __typename
               id
               altTex
               src
+              userID
               createdAt
               updatedAt
             }
             isActive
+            trackingInfoID
             createdAt
             updatedAt
             locationInfo {
@@ -11146,6 +19036,7 @@ export class APIService {
               size
               orgID
               shipmentID
+              boxCategoryID
               isActive
               barCode
               qrCode
@@ -11160,11 +19051,24 @@ export class APIService {
               createdAt
               updatedAt
             }
+            trackingInfo {
+              __typename
+              id
+              timeOfDelivery
+              userID
+              isActive
+              tags
+              internalNotes
+              notes
+              createdAt
+              updatedAt
+            }
             user {
               __typename
               id
               name
               orgID
+              hashedSecret
               isActive
               tags
               status
@@ -11195,6 +19099,230 @@ export class APIService {
     )) as any;
     return <ListBoxLocationsQuery>response.data.listBoxLocations;
   }
+  async ListTrackingInfos(
+    filter?: ModelTrackingInfoFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<ListTrackingInfosQuery> {
+    const statement = `query ListTrackingInfos($filter: ModelTrackingInfoFilterInput, $limit: Int, $nextToken: String) {
+        listTrackingInfos(filter: $filter, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            timeOfDelivery
+            userID
+            isActive
+            tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            images {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            internalNotes
+            notes
+            createdAt
+            updatedAt
+            boxLocations {
+              __typename
+              nextToken
+            }
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <ListTrackingInfosQuery>response.data.listTrackingInfos;
+  }
+  async GetTrackingInfo(id: string): Promise<GetTrackingInfoQuery> {
+    const statement = `query GetTrackingInfo($id: ID!) {
+        getTrackingInfo(id: $id) {
+          __typename
+          id
+          timeOfDelivery
+          userID
+          isActive
+          tags
+          image {
+            __typename
+            id
+            altTex
+            src
+            userID
+            createdAt
+            updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
+          images {
+            __typename
+            id
+            altTex
+            src
+            userID
+            createdAt
+            updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
+          internalNotes
+          notes
+          createdAt
+          updatedAt
+          boxLocations {
+            __typename
+            items {
+              __typename
+              id
+              boxID
+              locationInfoID
+              userID
+              notes
+              isFinal
+              tags
+              isActive
+              trackingInfoID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          user {
+            __typename
+            id
+            name
+            orgID
+            hashedSecret
+            isActive
+            tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            images {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            status
+            statusHistory
+            internalNotes
+            notes
+            rank
+            notesHistory
+            createdAt
+            updatedAt
+            org {
+              __typename
+              id
+              name
+              description
+              addressID
+              email
+              primaryDomain
+              privacyPolicy
+              tags
+              notes
+              isActive
+              createdAt
+              updatedAt
+            }
+            boxLocations {
+              __typename
+              nextToken
+            }
+          }
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      id
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <GetTrackingInfoQuery>response.data.getTrackingInfo;
+  }
   async ListUsers(
     filter?: ModelUserFilterInput,
     limit?: number,
@@ -11208,13 +19336,24 @@ export class APIService {
             id
             name
             orgID
+            hashedSecret
             isActive
             tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
             images {
               __typename
               id
               altTex
               src
+              userID
               createdAt
               updatedAt
             }
@@ -11271,15 +19410,60 @@ export class APIService {
           id
           name
           orgID
+          hashedSecret
           isActive
           tags
+          image {
+            __typename
+            id
+            altTex
+            src
+            userID
+            createdAt
+            updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
           images {
             __typename
             id
             altTex
             src
+            userID
             createdAt
             updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
           }
           status
           statusHistory
@@ -11317,11 +19501,21 @@ export class APIService {
             primaryDomain
             privacyPolicy
             tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
             images {
               __typename
               id
               altTex
               src
+              userID
               createdAt
               updatedAt
             }
@@ -11365,6 +19559,7 @@ export class APIService {
               isFinal
               tags
               isActive
+              trackingInfoID
               createdAt
               updatedAt
             }
@@ -11388,8 +19583,63 @@ export class APIService {
           id
           altTex
           src
+          userID
           createdAt
           updatedAt
+          user {
+            __typename
+            id
+            name
+            orgID
+            hashedSecret
+            isActive
+            tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            images {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            status
+            statusHistory
+            internalNotes
+            notes
+            rank
+            notesHistory
+            createdAt
+            updatedAt
+            org {
+              __typename
+              id
+              name
+              description
+              addressID
+              email
+              primaryDomain
+              privacyPolicy
+              tags
+              notes
+              isActive
+              createdAt
+              updatedAt
+            }
+            boxLocations {
+              __typename
+              nextToken
+            }
+          }
         }
       }`
     )
@@ -11403,8 +19653,63 @@ export class APIService {
           id
           altTex
           src
+          userID
           createdAt
           updatedAt
+          user {
+            __typename
+            id
+            name
+            orgID
+            hashedSecret
+            isActive
+            tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            images {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            status
+            statusHistory
+            internalNotes
+            notes
+            rank
+            notesHistory
+            createdAt
+            updatedAt
+            org {
+              __typename
+              id
+              name
+              description
+              addressID
+              email
+              primaryDomain
+              privacyPolicy
+              tags
+              notes
+              isActive
+              createdAt
+              updatedAt
+            }
+            boxLocations {
+              __typename
+              nextToken
+            }
+          }
         }
       }`
     )
@@ -11418,12 +19723,199 @@ export class APIService {
           id
           altTex
           src
+          userID
           createdAt
           updatedAt
+          user {
+            __typename
+            id
+            name
+            orgID
+            hashedSecret
+            isActive
+            tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            images {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            status
+            statusHistory
+            internalNotes
+            notes
+            rank
+            notesHistory
+            createdAt
+            updatedAt
+            org {
+              __typename
+              id
+              name
+              description
+              addressID
+              email
+              primaryDomain
+              privacyPolicy
+              tags
+              notes
+              isActive
+              createdAt
+              updatedAt
+            }
+            boxLocations {
+              __typename
+              nextToken
+            }
+          }
         }
       }`
     )
   ) as Observable<OnDeleteImageSubscription>;
+
+  OnCreateBoxCategoryListener: Observable<
+    OnCreateBoxCategorySubscription
+  > = API.graphql(
+    graphqlOperation(
+      `subscription OnCreateBoxCategory {
+        onCreateBoxCategory {
+          __typename
+          id
+          name
+          active
+          createdAt
+          updatedAt
+          boxes {
+            __typename
+            items {
+              __typename
+              id
+              title
+              contents
+              size
+              orgID
+              shipmentID
+              boxCategoryID
+              isActive
+              barCode
+              qrCode
+              barCodePhoto
+              qrCodePhoto
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              notesHistory
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+        }
+      }`
+    )
+  ) as Observable<OnCreateBoxCategorySubscription>;
+
+  OnUpdateBoxCategoryListener: Observable<
+    OnUpdateBoxCategorySubscription
+  > = API.graphql(
+    graphqlOperation(
+      `subscription OnUpdateBoxCategory {
+        onUpdateBoxCategory {
+          __typename
+          id
+          name
+          active
+          createdAt
+          updatedAt
+          boxes {
+            __typename
+            items {
+              __typename
+              id
+              title
+              contents
+              size
+              orgID
+              shipmentID
+              boxCategoryID
+              isActive
+              barCode
+              qrCode
+              barCodePhoto
+              qrCodePhoto
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              notesHistory
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+        }
+      }`
+    )
+  ) as Observable<OnUpdateBoxCategorySubscription>;
+
+  OnDeleteBoxCategoryListener: Observable<
+    OnDeleteBoxCategorySubscription
+  > = API.graphql(
+    graphqlOperation(
+      `subscription OnDeleteBoxCategory {
+        onDeleteBoxCategory {
+          __typename
+          id
+          name
+          active
+          createdAt
+          updatedAt
+          boxes {
+            __typename
+            items {
+              __typename
+              id
+              title
+              contents
+              size
+              orgID
+              shipmentID
+              boxCategoryID
+              isActive
+              barCode
+              qrCode
+              barCodePhoto
+              qrCodePhoto
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              notesHistory
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+        }
+      }`
+    )
+  ) as Observable<OnDeleteBoxCategorySubscription>;
 
   OnCreateApihealthCheckInfoListener: Observable<
     OnCreateApihealthCheckInfoSubscription
@@ -11636,13 +20128,57 @@ export class APIService {
           primaryDomain
           privacyPolicy
           tags
+          image {
+            __typename
+            id
+            altTex
+            src
+            userID
+            createdAt
+            updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
           images {
             __typename
             id
             altTex
             src
+            userID
             createdAt
             updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
           }
           notes
           isActive
@@ -11673,6 +20209,7 @@ export class APIService {
               size
               orgID
               shipmentID
+              boxCategoryID
               isActive
               barCode
               qrCode
@@ -11696,6 +20233,7 @@ export class APIService {
               id
               name
               orgID
+              hashedSecret
               isActive
               tags
               status
@@ -11745,13 +20283,57 @@ export class APIService {
           primaryDomain
           privacyPolicy
           tags
+          image {
+            __typename
+            id
+            altTex
+            src
+            userID
+            createdAt
+            updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
           images {
             __typename
             id
             altTex
             src
+            userID
             createdAt
             updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
           }
           notes
           isActive
@@ -11782,6 +20364,7 @@ export class APIService {
               size
               orgID
               shipmentID
+              boxCategoryID
               isActive
               barCode
               qrCode
@@ -11805,6 +20388,7 @@ export class APIService {
               id
               name
               orgID
+              hashedSecret
               isActive
               tags
               status
@@ -11854,13 +20438,57 @@ export class APIService {
           primaryDomain
           privacyPolicy
           tags
+          image {
+            __typename
+            id
+            altTex
+            src
+            userID
+            createdAt
+            updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
           images {
             __typename
             id
             altTex
             src
+            userID
             createdAt
             updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
           }
           notes
           isActive
@@ -11891,6 +20519,7 @@ export class APIService {
               size
               orgID
               shipmentID
+              boxCategoryID
               isActive
               barCode
               qrCode
@@ -11914,6 +20543,7 @@ export class APIService {
               id
               name
               orgID
+              hashedSecret
               isActive
               tags
               status
@@ -12102,13 +20732,57 @@ export class APIService {
           status
           statusHistory
           tags
+          image {
+            __typename
+            id
+            altTex
+            src
+            userID
+            createdAt
+            updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
           images {
             __typename
             id
             altTex
             src
+            userID
             createdAt
             updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
           }
           notes
           notesHistory
@@ -12204,6 +20878,7 @@ export class APIService {
               size
               orgID
               shipmentID
+              boxCategoryID
               isActive
               barCode
               qrCode
@@ -12248,13 +20923,57 @@ export class APIService {
           status
           statusHistory
           tags
+          image {
+            __typename
+            id
+            altTex
+            src
+            userID
+            createdAt
+            updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
           images {
             __typename
             id
             altTex
             src
+            userID
             createdAt
             updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
           }
           notes
           notesHistory
@@ -12350,6 +21069,7 @@ export class APIService {
               size
               orgID
               shipmentID
+              boxCategoryID
               isActive
               barCode
               qrCode
@@ -12394,13 +21114,57 @@ export class APIService {
           status
           statusHistory
           tags
+          image {
+            __typename
+            id
+            altTex
+            src
+            userID
+            createdAt
+            updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
           images {
             __typename
             id
             altTex
             src
+            userID
             createdAt
             updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
           }
           notes
           notesHistory
@@ -12496,6 +21260,7 @@ export class APIService {
               size
               orgID
               shipmentID
+              boxCategoryID
               isActive
               barCode
               qrCode
@@ -12528,19 +21293,76 @@ export class APIService {
           size
           orgID
           shipmentID
+          boxCategoryID
+          additionalBoxCategories {
+            __typename
+            id
+            name
+            active
+            createdAt
+            updatedAt
+            boxes {
+              __typename
+              nextToken
+            }
+          }
           isActive
           barCode
           qrCode
           barCodePhoto
           qrCodePhoto
           tags
+          image {
+            __typename
+            id
+            altTex
+            src
+            userID
+            createdAt
+            updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
           images {
             __typename
             id
             altTex
             src
+            userID
             createdAt
             updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
           }
           status
           statusHistory
@@ -12549,6 +21371,18 @@ export class APIService {
           notesHistory
           createdAt
           updatedAt
+          boxCategory {
+            __typename
+            id
+            name
+            active
+            createdAt
+            updatedAt
+            boxes {
+              __typename
+              nextToken
+            }
+          }
           org {
             __typename
             id
@@ -12577,11 +21411,21 @@ export class APIService {
             primaryDomain
             privacyPolicy
             tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
             images {
               __typename
               id
               altTex
               src
+              userID
               createdAt
               updatedAt
             }
@@ -12631,11 +21475,21 @@ export class APIService {
             status
             statusHistory
             tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
             images {
               __typename
               id
               altTex
               src
+              userID
               createdAt
               updatedAt
             }
@@ -12692,6 +21546,7 @@ export class APIService {
               isFinal
               tags
               isActive
+              trackingInfoID
               createdAt
               updatedAt
             }
@@ -12713,19 +21568,76 @@ export class APIService {
           size
           orgID
           shipmentID
+          boxCategoryID
+          additionalBoxCategories {
+            __typename
+            id
+            name
+            active
+            createdAt
+            updatedAt
+            boxes {
+              __typename
+              nextToken
+            }
+          }
           isActive
           barCode
           qrCode
           barCodePhoto
           qrCodePhoto
           tags
+          image {
+            __typename
+            id
+            altTex
+            src
+            userID
+            createdAt
+            updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
           images {
             __typename
             id
             altTex
             src
+            userID
             createdAt
             updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
           }
           status
           statusHistory
@@ -12734,6 +21646,18 @@ export class APIService {
           notesHistory
           createdAt
           updatedAt
+          boxCategory {
+            __typename
+            id
+            name
+            active
+            createdAt
+            updatedAt
+            boxes {
+              __typename
+              nextToken
+            }
+          }
           org {
             __typename
             id
@@ -12762,11 +21686,21 @@ export class APIService {
             primaryDomain
             privacyPolicy
             tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
             images {
               __typename
               id
               altTex
               src
+              userID
               createdAt
               updatedAt
             }
@@ -12816,11 +21750,21 @@ export class APIService {
             status
             statusHistory
             tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
             images {
               __typename
               id
               altTex
               src
+              userID
               createdAt
               updatedAt
             }
@@ -12877,6 +21821,7 @@ export class APIService {
               isFinal
               tags
               isActive
+              trackingInfoID
               createdAt
               updatedAt
             }
@@ -12898,19 +21843,76 @@ export class APIService {
           size
           orgID
           shipmentID
+          boxCategoryID
+          additionalBoxCategories {
+            __typename
+            id
+            name
+            active
+            createdAt
+            updatedAt
+            boxes {
+              __typename
+              nextToken
+            }
+          }
           isActive
           barCode
           qrCode
           barCodePhoto
           qrCodePhoto
           tags
+          image {
+            __typename
+            id
+            altTex
+            src
+            userID
+            createdAt
+            updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
           images {
             __typename
             id
             altTex
             src
+            userID
             createdAt
             updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
           }
           status
           statusHistory
@@ -12919,6 +21921,18 @@ export class APIService {
           notesHistory
           createdAt
           updatedAt
+          boxCategory {
+            __typename
+            id
+            name
+            active
+            createdAt
+            updatedAt
+            boxes {
+              __typename
+              nextToken
+            }
+          }
           org {
             __typename
             id
@@ -12947,11 +21961,21 @@ export class APIService {
             primaryDomain
             privacyPolicy
             tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
             images {
               __typename
               id
               altTex
               src
+              userID
               createdAt
               updatedAt
             }
@@ -13001,11 +22025,21 @@ export class APIService {
             status
             statusHistory
             tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
             images {
               __typename
               id
               altTex
               src
+              userID
               createdAt
               updatedAt
             }
@@ -13062,6 +22096,7 @@ export class APIService {
               isFinal
               tags
               isActive
+              trackingInfoID
               createdAt
               updatedAt
             }
@@ -13086,15 +22121,60 @@ export class APIService {
           notes
           isFinal
           tags
+          image {
+            __typename
+            id
+            altTex
+            src
+            userID
+            createdAt
+            updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
           images {
             __typename
             id
             altTex
             src
+            userID
             createdAt
             updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
           }
           isActive
+          trackingInfoID
           createdAt
           updatedAt
           locationInfo {
@@ -13145,17 +22225,36 @@ export class APIService {
             size
             orgID
             shipmentID
+            boxCategoryID
+            additionalBoxCategories {
+              __typename
+              id
+              name
+              active
+              createdAt
+              updatedAt
+            }
             isActive
             barCode
             qrCode
             barCodePhoto
             qrCodePhoto
             tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
             images {
               __typename
               id
               altTex
               src
+              userID
               createdAt
               updatedAt
             }
@@ -13166,6 +22265,14 @@ export class APIService {
             notesHistory
             createdAt
             updatedAt
+            boxCategory {
+              __typename
+              id
+              name
+              active
+              createdAt
+              updatedAt
+            }
             org {
               __typename
               id
@@ -13209,18 +22316,80 @@ export class APIService {
               nextToken
             }
           }
-          user {
+          trackingInfo {
             __typename
             id
-            name
-            orgID
+            timeOfDelivery
+            userID
             isActive
             tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
             images {
               __typename
               id
               altTex
               src
+              userID
+              createdAt
+              updatedAt
+            }
+            internalNotes
+            notes
+            createdAt
+            updatedAt
+            boxLocations {
+              __typename
+              nextToken
+            }
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
+          user {
+            __typename
+            id
+            name
+            orgID
+            hashedSecret
+            isActive
+            tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            images {
+              __typename
+              id
+              altTex
+              src
+              userID
               createdAt
               updatedAt
             }
@@ -13271,15 +22440,60 @@ export class APIService {
           notes
           isFinal
           tags
+          image {
+            __typename
+            id
+            altTex
+            src
+            userID
+            createdAt
+            updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
           images {
             __typename
             id
             altTex
             src
+            userID
             createdAt
             updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
           }
           isActive
+          trackingInfoID
           createdAt
           updatedAt
           locationInfo {
@@ -13330,17 +22544,36 @@ export class APIService {
             size
             orgID
             shipmentID
+            boxCategoryID
+            additionalBoxCategories {
+              __typename
+              id
+              name
+              active
+              createdAt
+              updatedAt
+            }
             isActive
             barCode
             qrCode
             barCodePhoto
             qrCodePhoto
             tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
             images {
               __typename
               id
               altTex
               src
+              userID
               createdAt
               updatedAt
             }
@@ -13351,6 +22584,14 @@ export class APIService {
             notesHistory
             createdAt
             updatedAt
+            boxCategory {
+              __typename
+              id
+              name
+              active
+              createdAt
+              updatedAt
+            }
             org {
               __typename
               id
@@ -13394,18 +22635,80 @@ export class APIService {
               nextToken
             }
           }
-          user {
+          trackingInfo {
             __typename
             id
-            name
-            orgID
+            timeOfDelivery
+            userID
             isActive
             tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
             images {
               __typename
               id
               altTex
               src
+              userID
+              createdAt
+              updatedAt
+            }
+            internalNotes
+            notes
+            createdAt
+            updatedAt
+            boxLocations {
+              __typename
+              nextToken
+            }
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
+          user {
+            __typename
+            id
+            name
+            orgID
+            hashedSecret
+            isActive
+            tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            images {
+              __typename
+              id
+              altTex
+              src
+              userID
               createdAt
               updatedAt
             }
@@ -13456,15 +22759,60 @@ export class APIService {
           notes
           isFinal
           tags
+          image {
+            __typename
+            id
+            altTex
+            src
+            userID
+            createdAt
+            updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
           images {
             __typename
             id
             altTex
             src
+            userID
             createdAt
             updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
           }
           isActive
+          trackingInfoID
           createdAt
           updatedAt
           locationInfo {
@@ -13515,17 +22863,36 @@ export class APIService {
             size
             orgID
             shipmentID
+            boxCategoryID
+            additionalBoxCategories {
+              __typename
+              id
+              name
+              active
+              createdAt
+              updatedAt
+            }
             isActive
             barCode
             qrCode
             barCodePhoto
             qrCodePhoto
             tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
             images {
               __typename
               id
               altTex
               src
+              userID
               createdAt
               updatedAt
             }
@@ -13536,6 +22903,14 @@ export class APIService {
             notesHistory
             createdAt
             updatedAt
+            boxCategory {
+              __typename
+              id
+              name
+              active
+              createdAt
+              updatedAt
+            }
             org {
               __typename
               id
@@ -13579,18 +22954,80 @@ export class APIService {
               nextToken
             }
           }
-          user {
+          trackingInfo {
             __typename
             id
-            name
-            orgID
+            timeOfDelivery
+            userID
             isActive
             tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
             images {
               __typename
               id
               altTex
               src
+              userID
+              createdAt
+              updatedAt
+            }
+            internalNotes
+            notes
+            createdAt
+            updatedAt
+            boxLocations {
+              __typename
+              nextToken
+            }
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
+          user {
+            __typename
+            id
+            name
+            orgID
+            hashedSecret
+            isActive
+            tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            images {
+              __typename
+              id
+              altTex
+              src
+              userID
               createdAt
               updatedAt
             }
@@ -13627,6 +23064,441 @@ export class APIService {
     )
   ) as Observable<OnDeleteBoxLocationSubscription>;
 
+  OnCreateTrackingInfoListener: Observable<
+    OnCreateTrackingInfoSubscription
+  > = API.graphql(
+    graphqlOperation(
+      `subscription OnCreateTrackingInfo {
+        onCreateTrackingInfo {
+          __typename
+          id
+          timeOfDelivery
+          userID
+          isActive
+          tags
+          image {
+            __typename
+            id
+            altTex
+            src
+            userID
+            createdAt
+            updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
+          images {
+            __typename
+            id
+            altTex
+            src
+            userID
+            createdAt
+            updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
+          internalNotes
+          notes
+          createdAt
+          updatedAt
+          boxLocations {
+            __typename
+            items {
+              __typename
+              id
+              boxID
+              locationInfoID
+              userID
+              notes
+              isFinal
+              tags
+              isActive
+              trackingInfoID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          user {
+            __typename
+            id
+            name
+            orgID
+            hashedSecret
+            isActive
+            tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            images {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            status
+            statusHistory
+            internalNotes
+            notes
+            rank
+            notesHistory
+            createdAt
+            updatedAt
+            org {
+              __typename
+              id
+              name
+              description
+              addressID
+              email
+              primaryDomain
+              privacyPolicy
+              tags
+              notes
+              isActive
+              createdAt
+              updatedAt
+            }
+            boxLocations {
+              __typename
+              nextToken
+            }
+          }
+        }
+      }`
+    )
+  ) as Observable<OnCreateTrackingInfoSubscription>;
+
+  OnUpdateTrackingInfoListener: Observable<
+    OnUpdateTrackingInfoSubscription
+  > = API.graphql(
+    graphqlOperation(
+      `subscription OnUpdateTrackingInfo {
+        onUpdateTrackingInfo {
+          __typename
+          id
+          timeOfDelivery
+          userID
+          isActive
+          tags
+          image {
+            __typename
+            id
+            altTex
+            src
+            userID
+            createdAt
+            updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
+          images {
+            __typename
+            id
+            altTex
+            src
+            userID
+            createdAt
+            updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
+          internalNotes
+          notes
+          createdAt
+          updatedAt
+          boxLocations {
+            __typename
+            items {
+              __typename
+              id
+              boxID
+              locationInfoID
+              userID
+              notes
+              isFinal
+              tags
+              isActive
+              trackingInfoID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          user {
+            __typename
+            id
+            name
+            orgID
+            hashedSecret
+            isActive
+            tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            images {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            status
+            statusHistory
+            internalNotes
+            notes
+            rank
+            notesHistory
+            createdAt
+            updatedAt
+            org {
+              __typename
+              id
+              name
+              description
+              addressID
+              email
+              primaryDomain
+              privacyPolicy
+              tags
+              notes
+              isActive
+              createdAt
+              updatedAt
+            }
+            boxLocations {
+              __typename
+              nextToken
+            }
+          }
+        }
+      }`
+    )
+  ) as Observable<OnUpdateTrackingInfoSubscription>;
+
+  OnDeleteTrackingInfoListener: Observable<
+    OnDeleteTrackingInfoSubscription
+  > = API.graphql(
+    graphqlOperation(
+      `subscription OnDeleteTrackingInfo {
+        onDeleteTrackingInfo {
+          __typename
+          id
+          timeOfDelivery
+          userID
+          isActive
+          tags
+          image {
+            __typename
+            id
+            altTex
+            src
+            userID
+            createdAt
+            updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
+          images {
+            __typename
+            id
+            altTex
+            src
+            userID
+            createdAt
+            updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
+          internalNotes
+          notes
+          createdAt
+          updatedAt
+          boxLocations {
+            __typename
+            items {
+              __typename
+              id
+              boxID
+              locationInfoID
+              userID
+              notes
+              isFinal
+              tags
+              isActive
+              trackingInfoID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          user {
+            __typename
+            id
+            name
+            orgID
+            hashedSecret
+            isActive
+            tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            images {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            status
+            statusHistory
+            internalNotes
+            notes
+            rank
+            notesHistory
+            createdAt
+            updatedAt
+            org {
+              __typename
+              id
+              name
+              description
+              addressID
+              email
+              primaryDomain
+              privacyPolicy
+              tags
+              notes
+              isActive
+              createdAt
+              updatedAt
+            }
+            boxLocations {
+              __typename
+              nextToken
+            }
+          }
+        }
+      }`
+    )
+  ) as Observable<OnDeleteTrackingInfoSubscription>;
+
   OnCreateUserListener: Observable<OnCreateUserSubscription> = API.graphql(
     graphqlOperation(
       `subscription OnCreateUser {
@@ -13635,15 +23507,60 @@ export class APIService {
           id
           name
           orgID
+          hashedSecret
           isActive
           tags
+          image {
+            __typename
+            id
+            altTex
+            src
+            userID
+            createdAt
+            updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
           images {
             __typename
             id
             altTex
             src
+            userID
             createdAt
             updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
           }
           status
           statusHistory
@@ -13681,11 +23598,21 @@ export class APIService {
             primaryDomain
             privacyPolicy
             tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
             images {
               __typename
               id
               altTex
               src
+              userID
               createdAt
               updatedAt
             }
@@ -13729,6 +23656,7 @@ export class APIService {
               isFinal
               tags
               isActive
+              trackingInfoID
               createdAt
               updatedAt
             }
@@ -13747,15 +23675,60 @@ export class APIService {
           id
           name
           orgID
+          hashedSecret
           isActive
           tags
+          image {
+            __typename
+            id
+            altTex
+            src
+            userID
+            createdAt
+            updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
           images {
             __typename
             id
             altTex
             src
+            userID
             createdAt
             updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
           }
           status
           statusHistory
@@ -13793,11 +23766,21 @@ export class APIService {
             primaryDomain
             privacyPolicy
             tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
             images {
               __typename
               id
               altTex
               src
+              userID
               createdAt
               updatedAt
             }
@@ -13841,6 +23824,7 @@ export class APIService {
               isFinal
               tags
               isActive
+              trackingInfoID
               createdAt
               updatedAt
             }
@@ -13859,15 +23843,60 @@ export class APIService {
           id
           name
           orgID
+          hashedSecret
           isActive
           tags
+          image {
+            __typename
+            id
+            altTex
+            src
+            userID
+            createdAt
+            updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
           images {
             __typename
             id
             altTex
             src
+            userID
             createdAt
             updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
           }
           status
           statusHistory
@@ -13905,11 +23934,21 @@ export class APIService {
             primaryDomain
             privacyPolicy
             tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
             images {
               __typename
               id
               altTex
               src
+              userID
               createdAt
               updatedAt
             }
@@ -13953,6 +23992,7 @@ export class APIService {
               isFinal
               tags
               isActive
+              trackingInfoID
               createdAt
               updatedAt
             }
