@@ -1,0 +1,52 @@
+mutation APisDown {
+  createApihealthCheckInfo(input: {id: "1", isActive: true, lastUpdated: "2020-09-17T00:00Z", proceed: false, status: DOWN, message: "API is down for maintenance."}) {
+    id
+    isActive
+    lastUpdated
+    message
+    proceed
+    status
+    updatedAt
+  }
+}
+
+mutation APIisUP {
+  updateApihealthCheckInfo(input: {id: "1", isActive: false}, condition: {isActive: {eq: true}}) {
+    id
+    createdAt
+    updatedAt
+    message
+    proceed
+  }
+  createApihealthCheckInfo(input: {id: "2", isActive: true, lastUpdated: "2020-09-17T00:00Z", proceed: true, status: UP, message: "API is operational."}) {
+    id
+    isActive
+    lastUpdated
+    message
+    proceed
+    status
+    updatedAt
+  }
+}
+
+query GetHealthGenStatus {
+  listApihealthCheckInfos(filter: {isActive: {eq: true}}) {
+    items {
+      id
+      isActive
+      lastUpdated
+      proceed
+      message
+      status
+      updatedAt
+    }
+  }
+}
+
+
+  updateBox(input: {id: "Box-0011", isActive: false}, condition: {orgId: {eq: "KBF"}}) {
+    id
+    createdAt
+    updatedAt
+    orgId
+  }
