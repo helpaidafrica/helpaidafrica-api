@@ -4,15 +4,17 @@
 Use our GraphQL API to track donation boxes using a simple QR Code or unique box number.
 
 # GraphQL Schema
+[GraphQL Schema](https://github.com/helpaidafrica/helpaidafrica-api/blob/master/haa-api/amplify/backend/api/haaapi/schema.graphql)
 
-[GraphQL Schema](https://github.com/helpaidafrica/helpaidafrica-api/blob/master/haa-api/amplify/backend/api/haaApi/schema.graphql)
+# wiki link
+[wiki link](https://github.com/helpaidafrica/helpaidafrica-api/wiki)
 
 # Example Graphql Query
 
 ## Get Active Boxes
 ```graphql
 query GetActiveBoxes {
-  listBoxs(filter: {isActive: {eq: true}}) {
+  listBoxs(filter: {isActive: {eq: true}}, limit: 5) {
     items {
       id
       isActive
@@ -23,6 +25,7 @@ query GetActiveBoxes {
     }
   }
 }
+
 ```
 
 ## Response
@@ -32,36 +35,44 @@ query GetActiveBoxes {
     "listBoxs": {
       "items": [
         {
-          "id": "Box-003",
+          "id": "2020-08-B-Box-S77",
           "isActive": true,
-          "contents": "Donation Package with Girls Clothes",
-          "orgID": "1",
-          "shipmentID": "2020-08-A",
-          "title": "Box-003"
-        },
-        {
-          "id": "Box-004",
-          "isActive": true,
-          "contents": "Donation Package with Shoes",
-          "orgID": "1",
+          "contents": "Toys",
+          "orgID": "KBF",
           "shipmentID": "2020-08-B",
-          "title": "Box-004"
+          "title": "S77"
         },
         {
-          "id": "Box-001",
+          "id": "2020-08-A-Box-74_2",
           "isActive": true,
-          "contents": "Donation Package with Men's Clothes",
-          "orgID": "1",
+          "contents": "Toys [71]",
+          "orgID": "0",
           "shipmentID": "2020-08-A",
-          "title": "Box-001"
+          "title": "74_2"
         },
         {
-          "id": "Box-002",
+          "id": "2020-08-A-Box-178",
           "isActive": true,
-          "contents": "Donation Package with Men's Clothes",
-          "orgID": "1",
+          "contents": "Womens Clothes-Western [91]",
+          "orgID": "0",
           "shipmentID": "2020-08-A",
-          "title": "Box-002"
+          "title": "178"
+        },
+        {
+          "id": "2020-08-A-Box-204",
+          "isActive": true,
+          "contents": "Kids/ Babies [254]",
+          "orgID": "0",
+          "shipmentID": "2020-08-A",
+          "title": "204"
+        },
+        {
+          "id": "2020-08-A-Box-11",
+          "isActive": true,
+          "contents": "Girls Clothes-Western [116]",
+          "orgID": "0",
+          "shipmentID": "2020-08-A",
+          "title": "11"
         }
       ]
     }
@@ -72,12 +83,7 @@ query GetActiveBoxes {
 
 ```graphql
 query GetNewBoxes {
-  listBoxs(filter: 
-    {
-      status: {eq: NEW}, 
-      isActive: {eq: true}}
-  )
-  {
+  listBoxs(filter: {status: {eq: NEW}, isActive: {eq: true}}, limit: 2) {
     items {
       id
       barCode
@@ -108,150 +114,86 @@ query GetNewBoxes {
         name
         id
       }
-      qrCode
     }
   }
 }
+
 ```
 ## Response
 
 ```json
+
 {
   "data": {
     "listBoxs": {
       "items": [
         {
-          "id": "Box-003",
-          "barCode": "Box-003 Bar Code",
-          "contents": "Donation Package with Girls Clothes",
+          "id": "2020-08-B-Box-S77",
+          "barCode": "2020-08-B-Box-S77",
+          "contents": "Toys",
           "status": "NEW",
           "size": "20x20",
-          "title": "Box-003",
-          "isActive": true,
-          "shipment": {
-            "id": "2020-08-A",
-            "startDate": "2020-08-18T00:00Z",
-            "status": "NEW",
-            "destinationLocation": {
-              "locationLabel": "Saba Islamic Center",
-              "longitude": "-121.9605887",
-              "latitude": "37.4213761"
-            },
-            "description": "",
-            "deliveryDate": null,
-            "startLocation": {
-              "locationLabel": "Golden Gate Park (Landmark)",
-              "longitude": "-122.4884025",
-              "latitude": "37.7694208"
-            },
-            "weight": null
-          },
-          "org": {
-            "name": "Help Aid Africa Global Org",
-            "id": "1"
-          },
-          "qrCode": "Box-003 QR Code"
-        },
-        {
-          "id": "Box-004",
-          "barCode": "Box-004 Bar Code",
-          "contents": "Donation Package with Shoes",
-          "status": "NEW",
-          "size": "20x20",
-          "title": "Box-004",
+          "title": "S77",
           "isActive": true,
           "shipment": {
             "id": "2020-08-B",
             "startDate": "2020-08-18T00:00Z",
-            "status": "NEW",
+            "status": "IN_PROGRESS",
             "destinationLocation": {
+              "locationLabel": "Unknown Location",
+              "longitude": "38.1201",
+              "latitude": "86.9142"
+            },
+            "description": "Container Shipment B from Aug 18th 2020",
+            "deliveryDate": null,
+            "startLocation": {
               "locationLabel": "Saba Islamic Center",
               "longitude": "-121.9605887",
               "latitude": "37.4213761"
             },
-            "description": "",
-            "deliveryDate": null,
-            "startLocation": {
-              "locationLabel": "Golden Gate Park (Landmark)",
-              "longitude": "-122.4884025",
-              "latitude": "37.7694208"
-            },
             "weight": null
           },
           "org": {
-            "name": "Help Aid Africa Global Org",
-            "id": "1"
-          },
-          "qrCode": "Box-004 QR Code"
+            "name": "KBF",
+            "id": "KBF"
+          }
         },
         {
-          "id": "Box-001",
-          "barCode": "Box-001 Bar Code",
-          "contents": "Donation Package with Men's Clothes",
+          "id": "2020-08-A-Box-74_2",
+          "barCode": "2020-08-A-Box-74_2",
+          "contents": "Toys [71]",
           "status": "NEW",
           "size": "20x20",
-          "title": "Box-001",
+          "title": "74_2",
           "isActive": true,
           "shipment": {
             "id": "2020-08-A",
             "startDate": "2020-08-18T00:00Z",
-            "status": "NEW",
+            "status": "IN_PROGRESS",
             "destinationLocation": {
+              "locationLabel": "Unknown Location",
+              "longitude": "38.1201",
+              "latitude": "86.9142"
+            },
+            "description": "Container Shipment A from Aug 18th 2020",
+            "deliveryDate": null,
+            "startLocation": {
               "locationLabel": "Saba Islamic Center",
               "longitude": "-121.9605887",
               "latitude": "37.4213761"
             },
-            "description": "",
-            "deliveryDate": null,
-            "startLocation": {
-              "locationLabel": "Golden Gate Park (Landmark)",
-              "longitude": "-122.4884025",
-              "latitude": "37.7694208"
-            },
             "weight": null
           },
           "org": {
-            "name": "Help Aid Africa Global Org",
-            "id": "1"
-          },
-          "qrCode": "Box-001 QR Code"
-        },
-        {
-          "id": "Box-002",
-          "barCode": "Box-001 Bar Code",
-          "contents": "Donation Package with Men's Clothes",
-          "status": "NEW",
-          "size": "20x20",
-          "title": "Box-002",
-          "isActive": true,
-          "shipment": {
-            "id": "2020-08-A",
-            "startDate": "2020-08-18T00:00Z",
-            "status": "NEW",
-            "destinationLocation": {
-              "locationLabel": "Saba Islamic Center",
-              "longitude": "-121.9605887",
-              "latitude": "37.4213761"
-            },
-            "description": "",
-            "deliveryDate": null,
-            "startLocation": {
-              "locationLabel": "Golden Gate Park (Landmark)",
-              "longitude": "-122.4884025",
-              "latitude": "37.7694208"
-            },
-            "weight": null
-          },
-          "org": {
-            "name": "Help Aid Africa Global Org",
-            "id": "1"
-          },
-          "qrCode": "Box-001 QR Code"
+            "name": "Unknown Org",
+            "id": "0"
+          }
         }
       ]
     }
   }
 }
+
 ```
 
 ---
@@ -268,4 +210,3 @@ query GetNewBoxes {
 ![alt text](https://github.com/helpaidafrica/helpaidafrica-api/blob/master/public/assets/img/HAA-DataModel-3.png?raw=true "HAA-DataModel-4")
 
 ---
-
