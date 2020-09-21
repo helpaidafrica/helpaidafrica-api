@@ -1740,6 +1740,119 @@ query BoxByQrCode(
     nextToken
   }
 }
+query BoxByStatus(
+  $status: BoxStatus
+  $id: ModelIDKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelBoxFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  BoxByStatus(
+    status: $status
+    id: $id
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      title
+      contents
+      size
+      orgID
+      shipmentID
+      boxCategoryID
+      additionalBoxCategories {
+        id
+        name
+        active
+        createdAt
+        updatedAt
+      }
+      isActive
+      barCode
+      qrCode
+      barCodePhoto
+      qrCodePhoto
+      tags
+      imageID
+      images {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
+      status
+      statusHistory
+      internalNotes
+      notes
+      notesHistory
+      createdAt
+      updatedAt
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
+      boxCategory {
+        id
+        name
+        active
+        createdAt
+        updatedAt
+      }
+      org {
+        id
+        name
+        description
+        addressID
+        email
+        primaryDomain
+        privacyPolicy
+        tags
+        imageID
+        notes
+        isActive
+        createdAt
+        updatedAt
+      }
+      shipment {
+        id
+        name
+        description
+        isActive
+        startDate
+        deliveryDate
+        startLocationID
+        destinationLocationID
+        shipmentNotes
+        deliveryNotes
+        trackingId
+        weight
+        shipmentReceiver
+        status
+        statusHistory
+        tags
+        imageID
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+      }
+      locations {
+        nextToken
+      }
+    }
+    nextToken
+  }
+}
 query GetBoxLocation($id: ID!) {
   getBoxLocation(id: $id) {
     id

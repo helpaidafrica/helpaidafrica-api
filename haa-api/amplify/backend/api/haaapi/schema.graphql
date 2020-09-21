@@ -239,6 +239,7 @@ type Box
 @key(name: "byBoxCategory", fields: ["boxCategoryID"], queryField: "BoxByBoxCategoryId")
 @key(name: "byTitle", fields: ["title"], queryField: "BoxByTitle")
 @key(name: "byQRCode", fields: ["qrCode"], queryField: "BoxByQRCode")
+@key(name: "byStatus", fields: ["status", "id"], queryField: "BoxByStatus")
 @auth(
   rules: [
    { allow: owner },

@@ -7095,6 +7095,113 @@ export type BoxByQrCodeQuery = {
   nextToken: string | null;
 };
 
+export type BoxByStatusQuery = {
+  __typename: "ModelBoxConnection";
+  items: Array<{
+    __typename: "Box";
+    id: string;
+    title: string;
+    contents: string;
+    size: string;
+    orgID: string;
+    shipmentID: string;
+    boxCategoryID: string;
+    additionalBoxCategories: Array<{
+      __typename: "BoxCategory";
+      id: string;
+      name: string;
+      active: boolean;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    isActive: boolean;
+    barCode: string | null;
+    qrCode: string | null;
+    barCodePhoto: string | null;
+    qrCodePhoto: string | null;
+    tags: Array<string> | null;
+    imageID: string;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    status: BoxStatus;
+    statusHistory: Array<BoxStatus> | null;
+    internalNotes: string | null;
+    notes: string | null;
+    notesHistory: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    boxCategory: {
+      __typename: "BoxCategory";
+      id: string;
+      name: string;
+      active: boolean;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    org: {
+      __typename: "Org";
+      id: string;
+      name: string;
+      description: string | null;
+      addressID: string;
+      email: string | null;
+      primaryDomain: string | null;
+      privacyPolicy: string | null;
+      tags: Array<string> | null;
+      imageID: string;
+      notes: string | null;
+      isActive: boolean;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    shipment: {
+      __typename: "Shipment";
+      id: string;
+      name: string;
+      description: string | null;
+      isActive: boolean;
+      startDate: string | null;
+      deliveryDate: string | null;
+      startLocationID: string;
+      destinationLocationID: string;
+      shipmentNotes: string | null;
+      deliveryNotes: string | null;
+      trackingId: string | null;
+      weight: string | null;
+      shipmentReceiver: string | null;
+      status: ShippingStatus | null;
+      statusHistory: Array<string> | null;
+      tags: Array<string> | null;
+      imageID: string;
+      notes: string | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    locations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
+  } | null> | null;
+  nextToken: string | null;
+};
+
 export type GetBoxLocationQuery = {
   __typename: "BoxLocation";
   id: string;
@@ -20046,6 +20153,146 @@ export class APIService {
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
     return <BoxByQrCodeQuery>response.data.BoxByQRCode;
+  }
+  async BoxByStatus(
+    status?: BoxStatus,
+    id?: ModelIDKeyConditionInput,
+    sortDirection?: ModelSortDirection,
+    filter?: ModelBoxFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<BoxByStatusQuery> {
+    const statement = `query BoxByStatus($status: BoxStatus, $id: ModelIDKeyConditionInput, $sortDirection: ModelSortDirection, $filter: ModelBoxFilterInput, $limit: Int, $nextToken: String) {
+        BoxByStatus(status: $status, id: $id, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            title
+            contents
+            size
+            orgID
+            shipmentID
+            boxCategoryID
+            additionalBoxCategories {
+              __typename
+              id
+              name
+              active
+              createdAt
+              updatedAt
+            }
+            isActive
+            barCode
+            qrCode
+            barCodePhoto
+            qrCodePhoto
+            tags
+            imageID
+            images {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            status
+            statusHistory
+            internalNotes
+            notes
+            notesHistory
+            createdAt
+            updatedAt
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            boxCategory {
+              __typename
+              id
+              name
+              active
+              createdAt
+              updatedAt
+            }
+            org {
+              __typename
+              id
+              name
+              description
+              addressID
+              email
+              primaryDomain
+              privacyPolicy
+              tags
+              imageID
+              notes
+              isActive
+              createdAt
+              updatedAt
+            }
+            shipment {
+              __typename
+              id
+              name
+              description
+              isActive
+              startDate
+              deliveryDate
+              startLocationID
+              destinationLocationID
+              shipmentNotes
+              deliveryNotes
+              trackingId
+              weight
+              shipmentReceiver
+              status
+              statusHistory
+              tags
+              imageID
+              notes
+              notesHistory
+              createdAt
+              updatedAt
+            }
+            locations {
+              __typename
+              nextToken
+            }
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (status) {
+      gqlAPIServiceArguments.status = status;
+    }
+    if (id) {
+      gqlAPIServiceArguments.id = id;
+    }
+    if (sortDirection) {
+      gqlAPIServiceArguments.sortDirection = sortDirection;
+    }
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <BoxByStatusQuery>response.data.BoxByStatus;
   }
   async GetBoxLocation(id: string): Promise<GetBoxLocationQuery> {
     const statement = `query GetBoxLocation($id: ID!) {
