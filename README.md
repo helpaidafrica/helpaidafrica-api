@@ -3,20 +3,39 @@
 ## About our API
 Use our GraphQL API to track donation boxes using a simple QR Code or unique box number.
 
-## Visit our Wiki
-[wiki link](https://github.com/helpaidafrica/helpaidafrica-api/wiki)
+## Technology stack
+Our API is based on GraphQL. We use the following AWS services
+- AWS Appsync
+- AWS DynamoDb
+- AWS S3
+- AWS Cloud Formation
+- AWS Amplify Cli
 
-## Launch AWS CloudFromation stack
 You can launch an AWS CloudFormation stack with our template, and AWS CloudFormation automatically provisions the specified resources and bootstraps the software running on them.
 
 [![Launch Stack](https://cdn.rawgit.com/buildkite/cloudformation-launch-stack-button-svg/master/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=us-west-1#/stacks/new?stackName=HelpAidAfricaBoxAPIStack&templateURL=https://s3-us-west-1.amazonaws.com/track.helpaidafrica.org/aws/template/helpaidafrica-api-stack.template)
 
 ---
 ## GraphQL
-[GraphQL Schema](https://github.com/helpaidafrica/helpaidafrica-api/blob/master/haa-api/amplify/backend/api/haaapi/schema.graphql)
+Our major GraphQL types are structured like this:
+- [Org] contains one or more [Box]
+- [Shipment] contains one or more [Box]
+- [BoxCategory] contains one or more [Box]
+- [TrackingInfo] contains one or more [BoxLocation], , [Image]  
+- [BoxLocation] contains one or more [LocationInfo] for a [Box]
+- [Location Info] contains a [Phone], [Address], [Image] and Lat/Long
+
+Other types 
+- [ApihealthCheckInfo] 
+
+Our GraphQL schema is located [here](https://github.com/helpaidafrica/helpaidafrica-api/blob/master/haa-api/amplify/backend/api/haaapi/schema.graphql).
+
 
 ---
 ## Queries
+
+Below are some sample queries. For more detailed examples and use-cases, please visit our [wiki](https://github.com/helpaidafrica/helpaidafrica-api/wiki).
+
 
 ### Get Delivered Boxes
 ```graphql
