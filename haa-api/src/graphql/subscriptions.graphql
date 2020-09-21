@@ -843,6 +843,22 @@ subscription OnCreateLocationInfo {
       createdAt
       updatedAt
     }
+    boxLocations {
+      items {
+        id
+        boxID
+        locationInfoID
+        userID
+        notes
+        isFinal
+        tags
+        isActive
+        trackingInfoID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
   }
 }
 subscription OnUpdateLocationInfo {
@@ -882,6 +898,22 @@ subscription OnUpdateLocationInfo {
       createdAt
       updatedAt
     }
+    boxLocations {
+      items {
+        id
+        boxID
+        locationInfoID
+        userID
+        notes
+        isFinal
+        tags
+        isActive
+        trackingInfoID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
   }
 }
 subscription OnDeleteLocationInfo {
@@ -920,6 +952,22 @@ subscription OnDeleteLocationInfo {
       country
       createdAt
       updatedAt
+    }
+    boxLocations {
+      items {
+        id
+        boxID
+        locationInfoID
+        userID
+        notes
+        isFinal
+        tags
+        isActive
+        trackingInfoID
+        createdAt
+        updatedAt
+      }
+      nextToken
     }
   }
 }
@@ -1029,6 +1077,9 @@ subscription OnCreateShipment {
         createdAt
         updatedAt
       }
+      boxLocations {
+        nextToken
+      }
     }
     destinationLocation {
       id
@@ -1065,6 +1116,9 @@ subscription OnCreateShipment {
         country
         createdAt
         updatedAt
+      }
+      boxLocations {
+        nextToken
       }
     }
     boxes {
@@ -1200,6 +1254,9 @@ subscription OnUpdateShipment {
         createdAt
         updatedAt
       }
+      boxLocations {
+        nextToken
+      }
     }
     destinationLocation {
       id
@@ -1236,6 +1293,9 @@ subscription OnUpdateShipment {
         country
         createdAt
         updatedAt
+      }
+      boxLocations {
+        nextToken
       }
     }
     boxes {
@@ -1371,6 +1431,9 @@ subscription OnDeleteShipment {
         createdAt
         updatedAt
       }
+      boxLocations {
+        nextToken
+      }
     }
     destinationLocation {
       id
@@ -1407,6 +1470,9 @@ subscription OnDeleteShipment {
         country
         createdAt
         updatedAt
+      }
+      boxLocations {
+        nextToken
       }
     }
     boxes {
@@ -2268,6 +2334,9 @@ subscription OnCreateBoxLocation {
         createdAt
         updatedAt
       }
+      boxLocations {
+        nextToken
+      }
     }
     box {
       id
@@ -2554,6 +2623,9 @@ subscription OnUpdateBoxLocation {
         createdAt
         updatedAt
       }
+      boxLocations {
+        nextToken
+      }
     }
     box {
       id
@@ -2839,6 +2911,9 @@ subscription OnDeleteBoxLocation {
         country
         createdAt
         updatedAt
+      }
+      boxLocations {
+        nextToken
       }
     }
     box {

@@ -1782,6 +1782,24 @@ export type CreateLocationInfoMutation = {
     createdAt: string;
     updatedAt: string;
   } | null;
+  boxLocations: {
+    __typename: "ModelBoxLocationConnection";
+    items: Array<{
+      __typename: "BoxLocation";
+      id: string;
+      boxID: string;
+      locationInfoID: string;
+      userID: string;
+      notes: string | null;
+      isFinal: boolean;
+      tags: Array<string> | null;
+      isActive: boolean;
+      trackingInfoID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
 };
 
 export type UpdateLocationInfoMutation = {
@@ -1823,6 +1841,24 @@ export type UpdateLocationInfoMutation = {
     createdAt: string;
     updatedAt: string;
   } | null;
+  boxLocations: {
+    __typename: "ModelBoxLocationConnection";
+    items: Array<{
+      __typename: "BoxLocation";
+      id: string;
+      boxID: string;
+      locationInfoID: string;
+      userID: string;
+      notes: string | null;
+      isFinal: boolean;
+      tags: Array<string> | null;
+      isActive: boolean;
+      trackingInfoID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
 };
 
 export type DeleteLocationInfoMutation = {
@@ -1863,6 +1899,24 @@ export type DeleteLocationInfoMutation = {
     country: string;
     createdAt: string;
     updatedAt: string;
+  } | null;
+  boxLocations: {
+    __typename: "ModelBoxLocationConnection";
+    items: Array<{
+      __typename: "BoxLocation";
+      id: string;
+      boxID: string;
+      locationInfoID: string;
+      userID: string;
+      notes: string | null;
+      isFinal: boolean;
+      tags: Array<string> | null;
+      isActive: boolean;
+      trackingInfoID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
   } | null;
 };
 
@@ -1979,6 +2033,10 @@ export type CreateShipmentMutation = {
       createdAt: string;
       updatedAt: string;
     } | null;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
   } | null;
   destinationLocation: {
     __typename: "LocationInfo";
@@ -2018,6 +2076,10 @@ export type CreateShipmentMutation = {
       country: string;
       createdAt: string;
       updatedAt: string;
+    } | null;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
     } | null;
   } | null;
   boxes: {
@@ -2162,6 +2224,10 @@ export type UpdateShipmentMutation = {
       createdAt: string;
       updatedAt: string;
     } | null;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
   } | null;
   destinationLocation: {
     __typename: "LocationInfo";
@@ -2201,6 +2267,10 @@ export type UpdateShipmentMutation = {
       country: string;
       createdAt: string;
       updatedAt: string;
+    } | null;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
     } | null;
   } | null;
   boxes: {
@@ -2345,6 +2415,10 @@ export type DeleteShipmentMutation = {
       createdAt: string;
       updatedAt: string;
     } | null;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
   } | null;
   destinationLocation: {
     __typename: "LocationInfo";
@@ -2384,6 +2458,10 @@ export type DeleteShipmentMutation = {
       country: string;
       createdAt: string;
       updatedAt: string;
+    } | null;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
     } | null;
   } | null;
   boxes: {
@@ -3326,6 +3404,10 @@ export type CreateBoxLocationMutation = {
       createdAt: string;
       updatedAt: string;
     } | null;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
   };
   box: {
     __typename: "Box";
@@ -3637,6 +3719,10 @@ export type UpdateBoxLocationMutation = {
       createdAt: string;
       updatedAt: string;
     } | null;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
   };
   box: {
     __typename: "Box";
@@ -3947,6 +4033,10 @@ export type DeleteBoxLocationMutation = {
       country: string;
       createdAt: string;
       updatedAt: string;
+    } | null;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
     } | null;
   };
   box: {
@@ -5557,6 +5647,10 @@ export type ListLocationInfosQuery = {
       createdAt: string;
       updatedAt: string;
     } | null;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
   } | null> | null;
   nextToken: string | null;
 };
@@ -5599,6 +5693,24 @@ export type GetLocationInfoQuery = {
     country: string;
     createdAt: string;
     updatedAt: string;
+  } | null;
+  boxLocations: {
+    __typename: "ModelBoxLocationConnection";
+    items: Array<{
+      __typename: "BoxLocation";
+      id: string;
+      boxID: string;
+      locationInfoID: string;
+      userID: string;
+      notes: string | null;
+      isFinal: boolean;
+      tags: Array<string> | null;
+      isActive: boolean;
+      trackingInfoID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
   } | null;
 };
 
@@ -5797,6 +5909,10 @@ export type GetShipmentQuery = {
       createdAt: string;
       updatedAt: string;
     } | null;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
   } | null;
   destinationLocation: {
     __typename: "LocationInfo";
@@ -5836,6 +5952,10 @@ export type GetShipmentQuery = {
       country: string;
       createdAt: string;
       updatedAt: string;
+    } | null;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
     } | null;
   } | null;
   boxes: {
@@ -6448,7 +6568,7 @@ export type BoxByShipmentIdQuery = {
   nextToken: string | null;
 };
 
-export type BoxByCategoryQuery = {
+export type BoxByBoxCategoryIdQuery = {
   __typename: "ModelBoxConnection";
   items: Array<{
     __typename: "Box";
@@ -6864,6 +6984,10 @@ export type GetBoxLocationQuery = {
       createdAt: string;
       updatedAt: string;
     } | null;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
   };
   box: {
     __typename: "Box";
@@ -7072,6 +7196,426 @@ export type GetBoxLocationQuery = {
 };
 
 export type ListBoxLocationsQuery = {
+  __typename: "ModelBoxLocationConnection";
+  items: Array<{
+    __typename: "BoxLocation";
+    id: string;
+    boxID: string;
+    locationInfoID: string;
+    userID: string;
+    notes: string | null;
+    isFinal: boolean;
+    tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    isActive: boolean;
+    trackingInfoID: string;
+    createdAt: string;
+    updatedAt: string;
+    locationInfo: {
+      __typename: "LocationInfo";
+      id: string;
+      locationLabel: string;
+      latitude: string;
+      longitude: string;
+      isActive: boolean;
+      addressID: string;
+      plusCode: string | null;
+      website: Array<string> | null;
+      notes: string | null;
+      notesHistory: Array<string> | null;
+      tags: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+    box: {
+      __typename: "Box";
+      id: string;
+      title: string;
+      contents: string;
+      size: string;
+      orgID: string;
+      shipmentID: string;
+      boxCategoryID: string;
+      isActive: boolean;
+      barCode: string | null;
+      qrCode: string | null;
+      barCodePhoto: string | null;
+      qrCodePhoto: string | null;
+      tags: Array<string> | null;
+      status: BoxStatus;
+      statusHistory: Array<BoxStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+    trackingInfo: {
+      __typename: "TrackingInfo";
+      id: string;
+      timeOfDelivery: string;
+      userID: string;
+      isActive: boolean;
+      tags: Array<string> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  } | null> | null;
+  nextToken: string | null;
+};
+
+export type BoxLocationsByBoxIdQuery = {
+  __typename: "ModelBoxLocationConnection";
+  items: Array<{
+    __typename: "BoxLocation";
+    id: string;
+    boxID: string;
+    locationInfoID: string;
+    userID: string;
+    notes: string | null;
+    isFinal: boolean;
+    tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    isActive: boolean;
+    trackingInfoID: string;
+    createdAt: string;
+    updatedAt: string;
+    locationInfo: {
+      __typename: "LocationInfo";
+      id: string;
+      locationLabel: string;
+      latitude: string;
+      longitude: string;
+      isActive: boolean;
+      addressID: string;
+      plusCode: string | null;
+      website: Array<string> | null;
+      notes: string | null;
+      notesHistory: Array<string> | null;
+      tags: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+    box: {
+      __typename: "Box";
+      id: string;
+      title: string;
+      contents: string;
+      size: string;
+      orgID: string;
+      shipmentID: string;
+      boxCategoryID: string;
+      isActive: boolean;
+      barCode: string | null;
+      qrCode: string | null;
+      barCodePhoto: string | null;
+      qrCodePhoto: string | null;
+      tags: Array<string> | null;
+      status: BoxStatus;
+      statusHistory: Array<BoxStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+    trackingInfo: {
+      __typename: "TrackingInfo";
+      id: string;
+      timeOfDelivery: string;
+      userID: string;
+      isActive: boolean;
+      tags: Array<string> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  } | null> | null;
+  nextToken: string | null;
+};
+
+export type BoxUsersByUserIdQuery = {
+  __typename: "ModelBoxLocationConnection";
+  items: Array<{
+    __typename: "BoxLocation";
+    id: string;
+    boxID: string;
+    locationInfoID: string;
+    userID: string;
+    notes: string | null;
+    isFinal: boolean;
+    tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    isActive: boolean;
+    trackingInfoID: string;
+    createdAt: string;
+    updatedAt: string;
+    locationInfo: {
+      __typename: "LocationInfo";
+      id: string;
+      locationLabel: string;
+      latitude: string;
+      longitude: string;
+      isActive: boolean;
+      addressID: string;
+      plusCode: string | null;
+      website: Array<string> | null;
+      notes: string | null;
+      notesHistory: Array<string> | null;
+      tags: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+    box: {
+      __typename: "Box";
+      id: string;
+      title: string;
+      contents: string;
+      size: string;
+      orgID: string;
+      shipmentID: string;
+      boxCategoryID: string;
+      isActive: boolean;
+      barCode: string | null;
+      qrCode: string | null;
+      barCodePhoto: string | null;
+      qrCodePhoto: string | null;
+      tags: Array<string> | null;
+      status: BoxStatus;
+      statusHistory: Array<BoxStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+    trackingInfo: {
+      __typename: "TrackingInfo";
+      id: string;
+      timeOfDelivery: string;
+      userID: string;
+      isActive: boolean;
+      tags: Array<string> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  } | null> | null;
+  nextToken: string | null;
+};
+
+export type BoxTrackingInfoByTrackingInfoIdQuery = {
+  __typename: "ModelBoxLocationConnection";
+  items: Array<{
+    __typename: "BoxLocation";
+    id: string;
+    boxID: string;
+    locationInfoID: string;
+    userID: string;
+    notes: string | null;
+    isFinal: boolean;
+    tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    isActive: boolean;
+    trackingInfoID: string;
+    createdAt: string;
+    updatedAt: string;
+    locationInfo: {
+      __typename: "LocationInfo";
+      id: string;
+      locationLabel: string;
+      latitude: string;
+      longitude: string;
+      isActive: boolean;
+      addressID: string;
+      plusCode: string | null;
+      website: Array<string> | null;
+      notes: string | null;
+      notesHistory: Array<string> | null;
+      tags: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+    box: {
+      __typename: "Box";
+      id: string;
+      title: string;
+      contents: string;
+      size: string;
+      orgID: string;
+      shipmentID: string;
+      boxCategoryID: string;
+      isActive: boolean;
+      barCode: string | null;
+      qrCode: string | null;
+      barCodePhoto: string | null;
+      qrCodePhoto: string | null;
+      tags: Array<string> | null;
+      status: BoxStatus;
+      statusHistory: Array<BoxStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+    trackingInfo: {
+      __typename: "TrackingInfo";
+      id: string;
+      timeOfDelivery: string;
+      userID: string;
+      isActive: boolean;
+      tags: Array<string> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  } | null> | null;
+  nextToken: string | null;
+};
+
+export type BoxLocationInfoByLocationInfoIdQuery = {
   __typename: "ModelBoxLocationConnection";
   items: Array<{
     __typename: "BoxLocation";
@@ -7588,6 +8132,65 @@ export type GetUserQuery = {
     } | null> | null;
     nextToken: string | null;
   } | null;
+};
+
+export type UserByOrgIdQuery = {
+  __typename: "ModelUserConnection";
+  items: Array<{
+    __typename: "User";
+    id: string;
+    name: string;
+    orgID: string;
+    hashedSecret: string | null;
+    isActive: boolean;
+    tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    status: UserStatus;
+    statusHistory: Array<UserStatus> | null;
+    internalNotes: string | null;
+    notes: string | null;
+    rank: number | null;
+    notesHistory: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
+    org: {
+      __typename: "Org";
+      id: string;
+      name: string;
+      description: string | null;
+      addressID: string;
+      email: string | null;
+      primaryDomain: string | null;
+      privacyPolicy: string | null;
+      tags: Array<string> | null;
+      notes: string | null;
+      isActive: boolean;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
+  } | null> | null;
+  nextToken: string | null;
 };
 
 export type OnCreateImageSubscription = {
@@ -8490,6 +9093,24 @@ export type OnCreateLocationInfoSubscription = {
     createdAt: string;
     updatedAt: string;
   } | null;
+  boxLocations: {
+    __typename: "ModelBoxLocationConnection";
+    items: Array<{
+      __typename: "BoxLocation";
+      id: string;
+      boxID: string;
+      locationInfoID: string;
+      userID: string;
+      notes: string | null;
+      isFinal: boolean;
+      tags: Array<string> | null;
+      isActive: boolean;
+      trackingInfoID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
 };
 
 export type OnUpdateLocationInfoSubscription = {
@@ -8531,6 +9152,24 @@ export type OnUpdateLocationInfoSubscription = {
     createdAt: string;
     updatedAt: string;
   } | null;
+  boxLocations: {
+    __typename: "ModelBoxLocationConnection";
+    items: Array<{
+      __typename: "BoxLocation";
+      id: string;
+      boxID: string;
+      locationInfoID: string;
+      userID: string;
+      notes: string | null;
+      isFinal: boolean;
+      tags: Array<string> | null;
+      isActive: boolean;
+      trackingInfoID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
 };
 
 export type OnDeleteLocationInfoSubscription = {
@@ -8571,6 +9210,24 @@ export type OnDeleteLocationInfoSubscription = {
     country: string;
     createdAt: string;
     updatedAt: string;
+  } | null;
+  boxLocations: {
+    __typename: "ModelBoxLocationConnection";
+    items: Array<{
+      __typename: "BoxLocation";
+      id: string;
+      boxID: string;
+      locationInfoID: string;
+      userID: string;
+      notes: string | null;
+      isFinal: boolean;
+      tags: Array<string> | null;
+      isActive: boolean;
+      trackingInfoID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
   } | null;
 };
 
@@ -8687,6 +9344,10 @@ export type OnCreateShipmentSubscription = {
       createdAt: string;
       updatedAt: string;
     } | null;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
   } | null;
   destinationLocation: {
     __typename: "LocationInfo";
@@ -8726,6 +9387,10 @@ export type OnCreateShipmentSubscription = {
       country: string;
       createdAt: string;
       updatedAt: string;
+    } | null;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
     } | null;
   } | null;
   boxes: {
@@ -8870,6 +9535,10 @@ export type OnUpdateShipmentSubscription = {
       createdAt: string;
       updatedAt: string;
     } | null;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
   } | null;
   destinationLocation: {
     __typename: "LocationInfo";
@@ -8909,6 +9578,10 @@ export type OnUpdateShipmentSubscription = {
       country: string;
       createdAt: string;
       updatedAt: string;
+    } | null;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
     } | null;
   } | null;
   boxes: {
@@ -9053,6 +9726,10 @@ export type OnDeleteShipmentSubscription = {
       createdAt: string;
       updatedAt: string;
     } | null;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
   } | null;
   destinationLocation: {
     __typename: "LocationInfo";
@@ -9092,6 +9769,10 @@ export type OnDeleteShipmentSubscription = {
       country: string;
       createdAt: string;
       updatedAt: string;
+    } | null;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
     } | null;
   } | null;
   boxes: {
@@ -10034,6 +10715,10 @@ export type OnCreateBoxLocationSubscription = {
       createdAt: string;
       updatedAt: string;
     } | null;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
   };
   box: {
     __typename: "Box";
@@ -10345,6 +11030,10 @@ export type OnUpdateBoxLocationSubscription = {
       createdAt: string;
       updatedAt: string;
     } | null;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
   };
   box: {
     __typename: "Box";
@@ -10655,6 +11344,10 @@ export type OnDeleteBoxLocationSubscription = {
       country: string;
       createdAt: string;
       updatedAt: string;
+    } | null;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
     } | null;
   };
   box: {
@@ -12963,6 +13656,24 @@ export class APIService {
             createdAt
             updatedAt
           }
+          boxLocations {
+            __typename
+            items {
+              __typename
+              id
+              boxID
+              locationInfoID
+              userID
+              notes
+              isFinal
+              tags
+              isActive
+              trackingInfoID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -13020,6 +13731,24 @@ export class APIService {
             createdAt
             updatedAt
           }
+          boxLocations {
+            __typename
+            items {
+              __typename
+              id
+              boxID
+              locationInfoID
+              userID
+              notes
+              isFinal
+              tags
+              isActive
+              trackingInfoID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -13076,6 +13805,24 @@ export class APIService {
             country
             createdAt
             updatedAt
+          }
+          boxLocations {
+            __typename
+            items {
+              __typename
+              id
+              boxID
+              locationInfoID
+              userID
+              notes
+              isFinal
+              tags
+              isActive
+              trackingInfoID
+              createdAt
+              updatedAt
+            }
+            nextToken
           }
         }
       }`;
@@ -13208,6 +13955,10 @@ export class APIService {
               createdAt
               updatedAt
             }
+            boxLocations {
+              __typename
+              nextToken
+            }
           }
           destinationLocation {
             __typename
@@ -13247,6 +13998,10 @@ export class APIService {
               country
               createdAt
               updatedAt
+            }
+            boxLocations {
+              __typename
+              nextToken
             }
           }
           boxes {
@@ -13407,6 +14162,10 @@ export class APIService {
               createdAt
               updatedAt
             }
+            boxLocations {
+              __typename
+              nextToken
+            }
           }
           destinationLocation {
             __typename
@@ -13446,6 +14205,10 @@ export class APIService {
               country
               createdAt
               updatedAt
+            }
+            boxLocations {
+              __typename
+              nextToken
             }
           }
           boxes {
@@ -13606,6 +14369,10 @@ export class APIService {
               createdAt
               updatedAt
             }
+            boxLocations {
+              __typename
+              nextToken
+            }
           }
           destinationLocation {
             __typename
@@ -13645,6 +14412,10 @@ export class APIService {
               country
               createdAt
               updatedAt
+            }
+            boxLocations {
+              __typename
+              nextToken
             }
           }
           boxes {
@@ -14651,6 +15422,10 @@ export class APIService {
               createdAt
               updatedAt
             }
+            boxLocations {
+              __typename
+              nextToken
+            }
           }
           box {
             __typename
@@ -14978,6 +15753,10 @@ export class APIService {
               createdAt
               updatedAt
             }
+            boxLocations {
+              __typename
+              nextToken
+            }
           }
           box {
             __typename
@@ -15304,6 +16083,10 @@ export class APIService {
               country
               createdAt
               updatedAt
+            }
+            boxLocations {
+              __typename
+              nextToken
             }
           }
           box {
@@ -17213,6 +17996,10 @@ export class APIService {
               createdAt
               updatedAt
             }
+            boxLocations {
+              __typename
+              nextToken
+            }
           }
           nextToken
         }
@@ -17272,6 +18059,24 @@ export class APIService {
             country
             createdAt
             updatedAt
+          }
+          boxLocations {
+            __typename
+            items {
+              __typename
+              id
+              boxID
+              locationInfoID
+              userID
+              notes
+              isFinal
+              tags
+              isActive
+              trackingInfoID
+              createdAt
+              updatedAt
+            }
+            nextToken
           }
         }
       }`;
@@ -17501,6 +18306,10 @@ export class APIService {
               createdAt
               updatedAt
             }
+            boxLocations {
+              __typename
+              nextToken
+            }
           }
           destinationLocation {
             __typename
@@ -17540,6 +18349,10 @@ export class APIService {
               country
               createdAt
               updatedAt
+            }
+            boxLocations {
+              __typename
+              nextToken
             }
           }
           boxes {
@@ -18253,15 +19066,15 @@ export class APIService {
     )) as any;
     return <BoxByShipmentIdQuery>response.data.BoxByShipmentID;
   }
-  async BoxByCategory(
+  async BoxByBoxCategoryId(
     boxCategoryID?: string,
     sortDirection?: ModelSortDirection,
     filter?: ModelBoxFilterInput,
     limit?: number,
     nextToken?: string
-  ): Promise<BoxByCategoryQuery> {
-    const statement = `query BoxByCategory($boxCategoryID: ID, $sortDirection: ModelSortDirection, $filter: ModelBoxFilterInput, $limit: Int, $nextToken: String) {
-        BoxByCategory(boxCategoryID: $boxCategoryID, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+  ): Promise<BoxByBoxCategoryIdQuery> {
+    const statement = `query BoxByBoxCategoryId($boxCategoryID: ID, $sortDirection: ModelSortDirection, $filter: ModelBoxFilterInput, $limit: Int, $nextToken: String) {
+        BoxByBoxCategoryId(boxCategoryID: $boxCategoryID, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
           __typename
           items {
             __typename
@@ -18384,7 +19197,7 @@ export class APIService {
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
-    return <BoxByCategoryQuery>response.data.BoxByCategory;
+    return <BoxByBoxCategoryIdQuery>response.data.BoxByBoxCategoryId;
   }
   async BoxByTitle(
     title?: string,
@@ -18758,6 +19571,10 @@ export class APIService {
               createdAt
               updatedAt
             }
+            boxLocations {
+              __typename
+              nextToken
+            }
           }
           box {
             __typename
@@ -19098,6 +19915,562 @@ export class APIService {
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
     return <ListBoxLocationsQuery>response.data.listBoxLocations;
+  }
+  async BoxLocationsByBoxId(
+    boxID?: string,
+    locationInfoID?: ModelIDKeyConditionInput,
+    sortDirection?: ModelSortDirection,
+    filter?: ModelBoxLocationFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<BoxLocationsByBoxIdQuery> {
+    const statement = `query BoxLocationsByBoxId($boxID: ID, $locationInfoID: ModelIDKeyConditionInput, $sortDirection: ModelSortDirection, $filter: ModelBoxLocationFilterInput, $limit: Int, $nextToken: String) {
+        BoxLocationsByBoxId(boxID: $boxID, locationInfoID: $locationInfoID, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            boxID
+            locationInfoID
+            userID
+            notes
+            isFinal
+            tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            images {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            isActive
+            trackingInfoID
+            createdAt
+            updatedAt
+            locationInfo {
+              __typename
+              id
+              locationLabel
+              latitude
+              longitude
+              isActive
+              addressID
+              plusCode
+              website
+              notes
+              notesHistory
+              tags
+              createdAt
+              updatedAt
+            }
+            box {
+              __typename
+              id
+              title
+              contents
+              size
+              orgID
+              shipmentID
+              boxCategoryID
+              isActive
+              barCode
+              qrCode
+              barCodePhoto
+              qrCodePhoto
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              notesHistory
+              createdAt
+              updatedAt
+            }
+            trackingInfo {
+              __typename
+              id
+              timeOfDelivery
+              userID
+              isActive
+              tags
+              internalNotes
+              notes
+              createdAt
+              updatedAt
+            }
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (boxID) {
+      gqlAPIServiceArguments.boxID = boxID;
+    }
+    if (locationInfoID) {
+      gqlAPIServiceArguments.locationInfoID = locationInfoID;
+    }
+    if (sortDirection) {
+      gqlAPIServiceArguments.sortDirection = sortDirection;
+    }
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <BoxLocationsByBoxIdQuery>response.data.BoxLocationsByBoxId;
+  }
+  async BoxUsersByUserId(
+    userID?: string,
+    boxID?: ModelIDKeyConditionInput,
+    sortDirection?: ModelSortDirection,
+    filter?: ModelBoxLocationFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<BoxUsersByUserIdQuery> {
+    const statement = `query BoxUsersByUserId($userID: ID, $boxID: ModelIDKeyConditionInput, $sortDirection: ModelSortDirection, $filter: ModelBoxLocationFilterInput, $limit: Int, $nextToken: String) {
+        BoxUsersByUserId(userID: $userID, boxID: $boxID, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            boxID
+            locationInfoID
+            userID
+            notes
+            isFinal
+            tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            images {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            isActive
+            trackingInfoID
+            createdAt
+            updatedAt
+            locationInfo {
+              __typename
+              id
+              locationLabel
+              latitude
+              longitude
+              isActive
+              addressID
+              plusCode
+              website
+              notes
+              notesHistory
+              tags
+              createdAt
+              updatedAt
+            }
+            box {
+              __typename
+              id
+              title
+              contents
+              size
+              orgID
+              shipmentID
+              boxCategoryID
+              isActive
+              barCode
+              qrCode
+              barCodePhoto
+              qrCodePhoto
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              notesHistory
+              createdAt
+              updatedAt
+            }
+            trackingInfo {
+              __typename
+              id
+              timeOfDelivery
+              userID
+              isActive
+              tags
+              internalNotes
+              notes
+              createdAt
+              updatedAt
+            }
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (userID) {
+      gqlAPIServiceArguments.userID = userID;
+    }
+    if (boxID) {
+      gqlAPIServiceArguments.boxID = boxID;
+    }
+    if (sortDirection) {
+      gqlAPIServiceArguments.sortDirection = sortDirection;
+    }
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <BoxUsersByUserIdQuery>response.data.BoxUsersByUserId;
+  }
+  async BoxTrackingInfoByTrackingInfoId(
+    trackingInfoID?: string,
+    userID?: ModelIDKeyConditionInput,
+    sortDirection?: ModelSortDirection,
+    filter?: ModelBoxLocationFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<BoxTrackingInfoByTrackingInfoIdQuery> {
+    const statement = `query BoxTrackingInfoByTrackingInfoId($trackingInfoID: ID, $userID: ModelIDKeyConditionInput, $sortDirection: ModelSortDirection, $filter: ModelBoxLocationFilterInput, $limit: Int, $nextToken: String) {
+        BoxTrackingInfoByTrackingInfoId(trackingInfoID: $trackingInfoID, userID: $userID, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            boxID
+            locationInfoID
+            userID
+            notes
+            isFinal
+            tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            images {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            isActive
+            trackingInfoID
+            createdAt
+            updatedAt
+            locationInfo {
+              __typename
+              id
+              locationLabel
+              latitude
+              longitude
+              isActive
+              addressID
+              plusCode
+              website
+              notes
+              notesHistory
+              tags
+              createdAt
+              updatedAt
+            }
+            box {
+              __typename
+              id
+              title
+              contents
+              size
+              orgID
+              shipmentID
+              boxCategoryID
+              isActive
+              barCode
+              qrCode
+              barCodePhoto
+              qrCodePhoto
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              notesHistory
+              createdAt
+              updatedAt
+            }
+            trackingInfo {
+              __typename
+              id
+              timeOfDelivery
+              userID
+              isActive
+              tags
+              internalNotes
+              notes
+              createdAt
+              updatedAt
+            }
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (trackingInfoID) {
+      gqlAPIServiceArguments.trackingInfoID = trackingInfoID;
+    }
+    if (userID) {
+      gqlAPIServiceArguments.userID = userID;
+    }
+    if (sortDirection) {
+      gqlAPIServiceArguments.sortDirection = sortDirection;
+    }
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <BoxTrackingInfoByTrackingInfoIdQuery>(
+      response.data.BoxTrackingInfoByTrackingInfoId
+    );
+  }
+  async BoxLocationInfoByLocationInfoId(
+    locationInfoID?: string,
+    boxID?: ModelIDKeyConditionInput,
+    sortDirection?: ModelSortDirection,
+    filter?: ModelBoxLocationFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<BoxLocationInfoByLocationInfoIdQuery> {
+    const statement = `query BoxLocationInfoByLocationInfoId($locationInfoID: ID, $boxID: ModelIDKeyConditionInput, $sortDirection: ModelSortDirection, $filter: ModelBoxLocationFilterInput, $limit: Int, $nextToken: String) {
+        BoxLocationInfoByLocationInfoId(locationInfoID: $locationInfoID, boxID: $boxID, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            boxID
+            locationInfoID
+            userID
+            notes
+            isFinal
+            tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            images {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            isActive
+            trackingInfoID
+            createdAt
+            updatedAt
+            locationInfo {
+              __typename
+              id
+              locationLabel
+              latitude
+              longitude
+              isActive
+              addressID
+              plusCode
+              website
+              notes
+              notesHistory
+              tags
+              createdAt
+              updatedAt
+            }
+            box {
+              __typename
+              id
+              title
+              contents
+              size
+              orgID
+              shipmentID
+              boxCategoryID
+              isActive
+              barCode
+              qrCode
+              barCodePhoto
+              qrCodePhoto
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              notesHistory
+              createdAt
+              updatedAt
+            }
+            trackingInfo {
+              __typename
+              id
+              timeOfDelivery
+              userID
+              isActive
+              tags
+              internalNotes
+              notes
+              createdAt
+              updatedAt
+            }
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (locationInfoID) {
+      gqlAPIServiceArguments.locationInfoID = locationInfoID;
+    }
+    if (boxID) {
+      gqlAPIServiceArguments.boxID = boxID;
+    }
+    if (sortDirection) {
+      gqlAPIServiceArguments.sortDirection = sortDirection;
+    }
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <BoxLocationInfoByLocationInfoIdQuery>(
+      response.data.BoxLocationInfoByLocationInfoId
+    );
   }
   async ListTrackingInfos(
     filter?: ModelTrackingInfoFilterInput,
@@ -19574,6 +20947,94 @@ export class APIService {
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
     return <GetUserQuery>response.data.getUser;
+  }
+  async UserByOrgId(
+    orgID?: string,
+    sortDirection?: ModelSortDirection,
+    filter?: ModelUserFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<UserByOrgIdQuery> {
+    const statement = `query UserByOrgId($orgID: ID, $sortDirection: ModelSortDirection, $filter: ModelUserFilterInput, $limit: Int, $nextToken: String) {
+        UserByOrgID(orgID: $orgID, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            name
+            orgID
+            hashedSecret
+            isActive
+            tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            images {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            status
+            statusHistory
+            internalNotes
+            notes
+            rank
+            notesHistory
+            createdAt
+            updatedAt
+            org {
+              __typename
+              id
+              name
+              description
+              addressID
+              email
+              primaryDomain
+              privacyPolicy
+              tags
+              notes
+              isActive
+              createdAt
+              updatedAt
+            }
+            boxLocations {
+              __typename
+              nextToken
+            }
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (orgID) {
+      gqlAPIServiceArguments.orgID = orgID;
+    }
+    if (sortDirection) {
+      gqlAPIServiceArguments.sortDirection = sortDirection;
+    }
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <UserByOrgIdQuery>response.data.UserByOrgID;
   }
   OnCreateImageListener: Observable<OnCreateImageSubscription> = API.graphql(
     graphqlOperation(
@@ -20606,6 +22067,24 @@ export class APIService {
             createdAt
             updatedAt
           }
+          boxLocations {
+            __typename
+            items {
+              __typename
+              id
+              boxID
+              locationInfoID
+              userID
+              notes
+              isFinal
+              tags
+              isActive
+              trackingInfoID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
         }
       }`
     )
@@ -20655,6 +22134,24 @@ export class APIService {
             createdAt
             updatedAt
           }
+          boxLocations {
+            __typename
+            items {
+              __typename
+              id
+              boxID
+              locationInfoID
+              userID
+              notes
+              isFinal
+              tags
+              isActive
+              trackingInfoID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
         }
       }`
     )
@@ -20703,6 +22200,24 @@ export class APIService {
             country
             createdAt
             updatedAt
+          }
+          boxLocations {
+            __typename
+            items {
+              __typename
+              id
+              boxID
+              locationInfoID
+              userID
+              notes
+              isFinal
+              tags
+              isActive
+              trackingInfoID
+              createdAt
+              updatedAt
+            }
+            nextToken
           }
         }
       }`
@@ -20827,6 +22342,10 @@ export class APIService {
               createdAt
               updatedAt
             }
+            boxLocations {
+              __typename
+              nextToken
+            }
           }
           destinationLocation {
             __typename
@@ -20866,6 +22385,10 @@ export class APIService {
               country
               createdAt
               updatedAt
+            }
+            boxLocations {
+              __typename
+              nextToken
             }
           }
           boxes {
@@ -21018,6 +22541,10 @@ export class APIService {
               createdAt
               updatedAt
             }
+            boxLocations {
+              __typename
+              nextToken
+            }
           }
           destinationLocation {
             __typename
@@ -21057,6 +22584,10 @@ export class APIService {
               country
               createdAt
               updatedAt
+            }
+            boxLocations {
+              __typename
+              nextToken
             }
           }
           boxes {
@@ -21209,6 +22740,10 @@ export class APIService {
               createdAt
               updatedAt
             }
+            boxLocations {
+              __typename
+              nextToken
+            }
           }
           destinationLocation {
             __typename
@@ -21248,6 +22783,10 @@ export class APIService {
               country
               createdAt
               updatedAt
+            }
+            boxLocations {
+              __typename
+              nextToken
             }
           }
           boxes {
@@ -22216,6 +23755,10 @@ export class APIService {
               createdAt
               updatedAt
             }
+            boxLocations {
+              __typename
+              nextToken
+            }
           }
           box {
             __typename
@@ -22535,6 +24078,10 @@ export class APIService {
               createdAt
               updatedAt
             }
+            boxLocations {
+              __typename
+              nextToken
+            }
           }
           box {
             __typename
@@ -22853,6 +24400,10 @@ export class APIService {
               country
               createdAt
               updatedAt
+            }
+            boxLocations {
+              __typename
+              nextToken
             }
           }
           box {

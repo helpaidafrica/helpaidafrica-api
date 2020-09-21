@@ -191,6 +191,8 @@ type LocationInfo
   notes: String
   notesHistory: [String!]
   tags: [String!]
+  boxLocations: [BoxLocation] @connection(keyName: "byBoxLocationInfo", fields: ["id"])
+ 
 }
 
 type Shipment
@@ -232,7 +234,7 @@ type Box
 @model
 @key(name: "byOrg", fields: ["orgID"], queryField: "BoxByOrgID")
 @key(name: "byBoxShipment", fields: ["shipmentID", "id"], queryField: "BoxByShipmentID")
-@key(name: "byBoxCategory", fields: ["boxCategoryID"], queryField: "BoxByCategory")
+@key(name: "byBoxCategory", fields: ["boxCategoryID"], queryField: "BoxByBoxCategoryId")
 @key(name: "byTitle", fields: ["title"], queryField: "BoxByTitle")
 @key(name: "byQRCode", fields: ["qrCode"], queryField: "BoxByQRCode")
 @auth(
@@ -272,9 +274,10 @@ type Box
 
 type BoxLocation
 @model
-@key(name: "locationForBox", fields: ["boxID", "locationInfoID"])
-@key(name: "userForBox", fields: ["userID", "boxID"])
-@key(name: "trackingInfoForBox", fields: ["trackingInfoID", "userID"])
+@key(name: "locationForBox", fields: ["boxID", "locationInfoID"], queryField: "BoxLocationsByBoxId")
+@key(name: "userForBox", fields: ["userID", "boxID"], queryField: "BoxUsersByUserId")
+@key(name: "trackingInfoForBox", fields: ["trackingInfoID", "userID"], queryField: "BoxTrackingInfoByTrackingInfoId")
+@key(name: "byBoxLocationInfo", fields: ["locationInfoID", "boxID"], queryField: "BoxLocationInfoByLocationInfoId")
 @auth(
   rules: [
    { allow: owner },
@@ -330,7 +333,7 @@ type TrackingInfo
 
 type User
 @model
-@key(name: "byOrg", fields: ["orgID"])
+@key(name: "byOrg", fields: ["orgID"], queryField: "UserByOrgID")
 @auth(
   rules: [
    { allow: owner },

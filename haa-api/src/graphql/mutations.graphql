@@ -900,6 +900,22 @@ mutation CreateLocationInfo(
       createdAt
       updatedAt
     }
+    boxLocations {
+      items {
+        id
+        boxID
+        locationInfoID
+        userID
+        notes
+        isFinal
+        tags
+        isActive
+        trackingInfoID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
   }
 }
 mutation UpdateLocationInfo(
@@ -942,6 +958,22 @@ mutation UpdateLocationInfo(
       createdAt
       updatedAt
     }
+    boxLocations {
+      items {
+        id
+        boxID
+        locationInfoID
+        userID
+        notes
+        isFinal
+        tags
+        isActive
+        trackingInfoID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
   }
 }
 mutation DeleteLocationInfo(
@@ -983,6 +1015,22 @@ mutation DeleteLocationInfo(
       country
       createdAt
       updatedAt
+    }
+    boxLocations {
+      items {
+        id
+        boxID
+        locationInfoID
+        userID
+        notes
+        isFinal
+        tags
+        isActive
+        trackingInfoID
+        createdAt
+        updatedAt
+      }
+      nextToken
     }
   }
 }
@@ -1095,6 +1143,9 @@ mutation CreateShipment(
         createdAt
         updatedAt
       }
+      boxLocations {
+        nextToken
+      }
     }
     destinationLocation {
       id
@@ -1131,6 +1182,9 @@ mutation CreateShipment(
         country
         createdAt
         updatedAt
+      }
+      boxLocations {
+        nextToken
       }
     }
     boxes {
@@ -1269,6 +1323,9 @@ mutation UpdateShipment(
         createdAt
         updatedAt
       }
+      boxLocations {
+        nextToken
+      }
     }
     destinationLocation {
       id
@@ -1305,6 +1362,9 @@ mutation UpdateShipment(
         country
         createdAt
         updatedAt
+      }
+      boxLocations {
+        nextToken
       }
     }
     boxes {
@@ -1443,6 +1503,9 @@ mutation DeleteShipment(
         createdAt
         updatedAt
       }
+      boxLocations {
+        nextToken
+      }
     }
     destinationLocation {
       id
@@ -1479,6 +1542,9 @@ mutation DeleteShipment(
         country
         createdAt
         updatedAt
+      }
+      boxLocations {
+        nextToken
       }
     }
     boxes {
@@ -2352,6 +2418,9 @@ mutation CreateBoxLocation(
         createdAt
         updatedAt
       }
+      boxLocations {
+        nextToken
+      }
     }
     box {
       id
@@ -2641,6 +2710,9 @@ mutation UpdateBoxLocation(
         createdAt
         updatedAt
       }
+      boxLocations {
+        nextToken
+      }
     }
     box {
       id
@@ -2929,6 +3001,9 @@ mutation DeleteBoxLocation(
         country
         createdAt
         updatedAt
+      }
+      boxLocations {
+        nextToken
       }
     }
     box {

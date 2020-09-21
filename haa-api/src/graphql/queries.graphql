@@ -496,6 +496,9 @@ query ListLocationInfos(
         createdAt
         updatedAt
       }
+      boxLocations {
+        nextToken
+      }
     }
     nextToken
   }
@@ -536,6 +539,22 @@ query GetLocationInfo($id: ID!) {
       country
       createdAt
       updatedAt
+    }
+    boxLocations {
+      items {
+        id
+        boxID
+        locationInfoID
+        userID
+        notes
+        isFinal
+        tags
+        isActive
+        trackingInfoID
+        createdAt
+        updatedAt
+      }
+      nextToken
     }
   }
 }
@@ -725,6 +744,9 @@ query GetShipment($id: ID!) {
         createdAt
         updatedAt
       }
+      boxLocations {
+        nextToken
+      }
     }
     destinationLocation {
       id
@@ -761,6 +783,9 @@ query GetShipment($id: ID!) {
         country
         createdAt
         updatedAt
+      }
+      boxLocations {
+        nextToken
       }
     }
     boxes {
@@ -1349,14 +1374,14 @@ query BoxByShipmentId(
     nextToken
   }
 }
-query BoxByCategory(
+query BoxByBoxCategoryId(
   $boxCategoryID: ID
   $sortDirection: ModelSortDirection
   $filter: ModelBoxFilterInput
   $limit: Int
   $nextToken: String
 ) {
-  BoxByCategory(
+  BoxByBoxCategoryId(
     boxCategoryID: $boxCategoryID
     sortDirection: $sortDirection
     filter: $filter
@@ -1770,6 +1795,9 @@ query GetBoxLocation($id: ID!) {
         createdAt
         updatedAt
       }
+      boxLocations {
+        nextToken
+      }
     }
     box {
       id
@@ -1965,6 +1993,454 @@ query ListBoxLocations(
   $nextToken: String
 ) {
   listBoxLocations(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      boxID
+      locationInfoID
+      userID
+      notes
+      isFinal
+      tags
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
+      images {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
+      isActive
+      trackingInfoID
+      createdAt
+      updatedAt
+      locationInfo {
+        id
+        locationLabel
+        latitude
+        longitude
+        isActive
+        addressID
+        plusCode
+        website
+        notes
+        notesHistory
+        tags
+        createdAt
+        updatedAt
+      }
+      box {
+        id
+        title
+        contents
+        size
+        orgID
+        shipmentID
+        boxCategoryID
+        isActive
+        barCode
+        qrCode
+        barCodePhoto
+        qrCodePhoto
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+      }
+      trackingInfo {
+        id
+        timeOfDelivery
+        userID
+        isActive
+        tags
+        internalNotes
+        notes
+        createdAt
+        updatedAt
+      }
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
+    nextToken
+  }
+}
+query BoxLocationsByBoxId(
+  $boxID: ID
+  $locationInfoID: ModelIDKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelBoxLocationFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  BoxLocationsByBoxId(
+    boxID: $boxID
+    locationInfoID: $locationInfoID
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      boxID
+      locationInfoID
+      userID
+      notes
+      isFinal
+      tags
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
+      images {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
+      isActive
+      trackingInfoID
+      createdAt
+      updatedAt
+      locationInfo {
+        id
+        locationLabel
+        latitude
+        longitude
+        isActive
+        addressID
+        plusCode
+        website
+        notes
+        notesHistory
+        tags
+        createdAt
+        updatedAt
+      }
+      box {
+        id
+        title
+        contents
+        size
+        orgID
+        shipmentID
+        boxCategoryID
+        isActive
+        barCode
+        qrCode
+        barCodePhoto
+        qrCodePhoto
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+      }
+      trackingInfo {
+        id
+        timeOfDelivery
+        userID
+        isActive
+        tags
+        internalNotes
+        notes
+        createdAt
+        updatedAt
+      }
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
+    nextToken
+  }
+}
+query BoxUsersByUserId(
+  $userID: ID
+  $boxID: ModelIDKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelBoxLocationFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  BoxUsersByUserId(
+    userID: $userID
+    boxID: $boxID
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      boxID
+      locationInfoID
+      userID
+      notes
+      isFinal
+      tags
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
+      images {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
+      isActive
+      trackingInfoID
+      createdAt
+      updatedAt
+      locationInfo {
+        id
+        locationLabel
+        latitude
+        longitude
+        isActive
+        addressID
+        plusCode
+        website
+        notes
+        notesHistory
+        tags
+        createdAt
+        updatedAt
+      }
+      box {
+        id
+        title
+        contents
+        size
+        orgID
+        shipmentID
+        boxCategoryID
+        isActive
+        barCode
+        qrCode
+        barCodePhoto
+        qrCodePhoto
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+      }
+      trackingInfo {
+        id
+        timeOfDelivery
+        userID
+        isActive
+        tags
+        internalNotes
+        notes
+        createdAt
+        updatedAt
+      }
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
+    nextToken
+  }
+}
+query BoxTrackingInfoByTrackingInfoId(
+  $trackingInfoID: ID
+  $userID: ModelIDKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelBoxLocationFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  BoxTrackingInfoByTrackingInfoId(
+    trackingInfoID: $trackingInfoID
+    userID: $userID
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      boxID
+      locationInfoID
+      userID
+      notes
+      isFinal
+      tags
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
+      images {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
+      isActive
+      trackingInfoID
+      createdAt
+      updatedAt
+      locationInfo {
+        id
+        locationLabel
+        latitude
+        longitude
+        isActive
+        addressID
+        plusCode
+        website
+        notes
+        notesHistory
+        tags
+        createdAt
+        updatedAt
+      }
+      box {
+        id
+        title
+        contents
+        size
+        orgID
+        shipmentID
+        boxCategoryID
+        isActive
+        barCode
+        qrCode
+        barCodePhoto
+        qrCodePhoto
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+      }
+      trackingInfo {
+        id
+        timeOfDelivery
+        userID
+        isActive
+        tags
+        internalNotes
+        notes
+        createdAt
+        updatedAt
+      }
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
+    nextToken
+  }
+}
+query BoxLocationInfoByLocationInfoId(
+  $locationInfoID: ID
+  $boxID: ModelIDKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelBoxLocationFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  BoxLocationInfoByLocationInfoId(
+    locationInfoID: $locationInfoID
+    boxID: $boxID
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
     items {
       id
       boxID
@@ -2446,5 +2922,71 @@ query GetUser($id: ID!) {
       }
       nextToken
     }
+  }
+}
+query UserByOrgId(
+  $orgID: ID
+  $sortDirection: ModelSortDirection
+  $filter: ModelUserFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  UserByOrgID(
+    orgID: $orgID
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      name
+      orgID
+      hashedSecret
+      isActive
+      tags
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
+      images {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
+      status
+      statusHistory
+      internalNotes
+      notes
+      rank
+      notesHistory
+      createdAt
+      updatedAt
+      org {
+        id
+        name
+        description
+        addressID
+        email
+        primaryDomain
+        privacyPolicy
+        tags
+        notes
+        isActive
+        createdAt
+        updatedAt
+      }
+      boxLocations {
+        nextToken
+      }
+    }
+    nextToken
   }
 }
