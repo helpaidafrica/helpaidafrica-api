@@ -1,0 +1,29 @@
+# showing latest scanned item first
+query BoxByUserId {
+  BoxLocationByScannedUserId(scannedByUserID: "1", filter: {isActive: {eq: true}}, sortDirection: DESC) {
+    items {
+      boxID
+      scanDateTime
+      box {
+        isActive
+        status
+        title
+        notes
+        boxCategoryID
+      }
+      locationInfo {
+        locationLabel
+        isActive
+        latitude
+        longitude
+        id
+        address {
+          id
+        }
+        addressID
+      }
+      isFinal
+      isActive
+    }
+  }
+}
