@@ -11,108 +11,113 @@ Use our GraphQL API to track donation boxes using a simple QR Code or unique box
 
 # Example Graphql Query
 
-## Get Active Boxes
+## Get Delivered Boxes
 ```graphql
-query GetActiveBoxes {
-  listBoxs(filter: {isActive: {eq: true}}, limit: 5) {
-    items {
-      id
-      isActive
-      contents
-      orgID
-      shipmentID
-      title
-    }
-  }
-}
 
-```
-
-## Response
-```json
-{
-  "data": {
-    "listBoxs": {
-      "items": [
-        {
-          "id": "2020-08-B-Box-S77",
-          "isActive": true,
-          "contents": "Toys",
-          "orgID": "KBF",
-          "shipmentID": "2020-08-B",
-          "title": "S77"
-        },
-        {
-          "id": "2020-08-A-Box-74_2",
-          "isActive": true,
-          "contents": "Toys [71]",
-          "orgID": "0",
-          "shipmentID": "2020-08-A",
-          "title": "74_2"
-        },
-        {
-          "id": "2020-08-A-Box-178",
-          "isActive": true,
-          "contents": "Womens Clothes-Western [91]",
-          "orgID": "0",
-          "shipmentID": "2020-08-A",
-          "title": "178"
-        },
-        {
-          "id": "2020-08-A-Box-204",
-          "isActive": true,
-          "contents": "Kids/ Babies [254]",
-          "orgID": "0",
-          "shipmentID": "2020-08-A",
-          "title": "204"
-        },
-        {
-          "id": "2020-08-A-Box-11",
-          "isActive": true,
-          "contents": "Girls Clothes-Western [116]",
-          "orgID": "0",
-          "shipmentID": "2020-08-A",
-          "title": "11"
-        }
-      ]
-    }
-  }
-}
-```
-## Get New Boxes (detailed)
-
-```graphql
-query GetNewBoxes {
-  listBoxs(filter: {status: {eq: NEW}, isActive: {eq: true}}, limit: 2) {
-    items {
+query GetDeliveredBoxes {
+ BoxByStatus(status: DELIVERED, filter: {isActive: {eq: true}}) {
+ items {
       id
       barCode
       contents
       status
-      size
       title
       isActive
-      shipment {
-        id
-        startDate
-        status
-        destinationLocation {
-          locationLabel
-          longitude
-          latitude
-        }
-        description
-        deliveryDate
-        startLocation {
-          locationLabel
-          longitude
-          latitude
-        }
-        weight
       }
-      org {
-        name
+  }
+}
+
+```
+
+## Response
+```json
+{
+  "data": {
+    "BoxByStatus": {
+      "items": [
+        {
+          "id": "2020-08-A-Box-1",
+          "barCode": "2020-08-A-Box-1",
+          "contents": "Womens Clothes-Western [43]",
+          "status": "DELIVERED",
+          "title": "1",
+          "isActive": true
+        },
+        {
+          "id": "2020-08-A-Box-2",
+          "barCode": "2020-08-A-Box-2",
+          "contents": "Womens Clothes-Western [123]",
+          "status": "DELIVERED",
+          "title": "2",
+          "isActive": true
+        }
+      ]
+    }
+  }
+}
+
+```
+## Get Box Info (detailed)
+
+```graphql
+
+query BoxInfo {
+  getBox(id: "2020-08-A-Box-1") {
+    id
+    barCode
+    contents
+    status
+    size
+    title
+    isActive
+    boxCategory {
+      id
+      name
+    }
+    locations {
+      items {
+        isFinal
+        notes
+        scannedByUser {
+          id
+          name
+          rank
+        }
+        scanDateTime
+        locationInfo {
+          id
+          isActive
+          latitude
+          locationLabel
+          longitude
+        }
+      }
+    }
+    org {
+      name
+      id
+    }
+    shipment {
+      id
+      startDate
+      status
+      destinationLocation {
+        locationLabel
+        longitude
+        latitude
+        notes
+      }
+      description
+      deliveryDate
+      startLocation {
+        locationLabel
+        longitude
+        latitude
+      }
+      weight
+      image {
         id
+        src
       }
     }
   }
@@ -122,74 +127,65 @@ query GetNewBoxes {
 ## Response
 
 ```json
-
 {
   "data": {
-    "listBoxs": {
-      "items": [
-        {
-          "id": "2020-08-B-Box-S77",
-          "barCode": "2020-08-B-Box-S77",
-          "contents": "Toys",
-          "status": "NEW",
-          "size": "20x20",
-          "title": "S77",
-          "isActive": true,
-          "shipment": {
-            "id": "2020-08-B",
-            "startDate": "2020-08-18T00:00Z",
-            "status": "IN_PROGRESS",
-            "destinationLocation": {
-              "locationLabel": "Unknown Location",
-              "longitude": "38.1201",
-              "latitude": "86.9142"
+    "getBox": {
+      "id": "2020-08-A-Box-1",
+      "barCode": "2020-08-A-Box-1",
+      "contents": "Womens Clothes-Western [43]",
+      "status": "DELIVERED",
+      "size": "20x20",
+      "title": "1",
+      "isActive": true,
+      "boxCategory": {
+        "id": "Womens Clothes-Western",
+        "name": "Womens Clothes-Western"
+      },
+      "locations": {
+        "items": [
+          {
+            "isFinal": true,
+            "notes": null,
+            "scannedByUser": {
+              "id": "1",
+              "name": "user 1",
+              "rank": 0
             },
-            "description": "Container Shipment B from Aug 18th 2020",
-            "deliveryDate": null,
-            "startLocation": {
+            "scanDateTime": "2020-09-19T10:00:00Z",
+            "locationInfo": {
+              "id": "2",
+              "isActive": true,
+              "latitude": "37.4213761",
               "locationLabel": "Saba Islamic Center",
-              "longitude": "-121.9605887",
-              "latitude": "37.4213761"
-            },
-            "weight": null
-          },
-          "org": {
-            "name": "KBF",
-            "id": "KBF"
+              "longitude": "-121.9605887"
+            }
           }
+        ]
+      },
+      "org": {
+        "name": "Unknown Org",
+        "id": "0"
+      },
+      "shipment": {
+        "id": "2020-08-A",
+        "startDate": "2020-08-18T00:00Z",
+        "status": "IN_PROGRESS",
+        "destinationLocation": {
+          "locationLabel": "Unknown Location",
+          "longitude": "38.1201",
+          "latitude": "86.9142",
+          "notes": "Placeholder for an unknown location"
         },
-        {
-          "id": "2020-08-A-Box-74_2",
-          "barCode": "2020-08-A-Box-74_2",
-          "contents": "Toys [71]",
-          "status": "NEW",
-          "size": "20x20",
-          "title": "74_2",
-          "isActive": true,
-          "shipment": {
-            "id": "2020-08-A",
-            "startDate": "2020-08-18T00:00Z",
-            "status": "IN_PROGRESS",
-            "destinationLocation": {
-              "locationLabel": "Unknown Location",
-              "longitude": "38.1201",
-              "latitude": "86.9142"
-            },
-            "description": "Container Shipment A from Aug 18th 2020",
-            "deliveryDate": null,
-            "startLocation": {
-              "locationLabel": "Saba Islamic Center",
-              "longitude": "-121.9605887",
-              "latitude": "37.4213761"
-            },
-            "weight": null
-          },
-          "org": {
-            "name": "Unknown Org",
-            "id": "0"
-          }
-        }
-      ]
+        "description": "Container Shipment A from Aug 18th 2020",
+        "deliveryDate": null,
+        "startLocation": {
+          "locationLabel": "Saba Islamic Center",
+          "longitude": "-121.9605887",
+          "latitude": "37.4213761"
+        },
+        "weight": null,
+        "image": null
+      }
     }
   }
 }
