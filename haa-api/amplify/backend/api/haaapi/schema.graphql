@@ -158,7 +158,8 @@ type Org
   primaryDomain: String
   privacyPolicy: String
   tags: [String!]
-  image: Image
+  imageID: ID!
+  image: Image @connection(fields: ["imageID"])
   images: [Image!]
   notes: String
   isActive: Boolean!
@@ -223,7 +224,8 @@ type Shipment
   status: ShippingStatus
   statusHistory: [String!]
   tags: [String!]
-  image: Image
+  imageID: ID!
+  image: Image @connection(fields: ["imageID"])
   images: [Image!]
   notes: String
   notesHistory: [String!]
@@ -262,7 +264,8 @@ type Box
   barCodePhoto: AWSURL
   qrCodePhoto: AWSURL
   tags: [String!]
-  image: Image
+  imageID: ID!
+  image: Image @connection(fields: ["imageID"])
   images: [Image!]
   status: BoxStatus!
   statusHistory: [BoxStatus!]
@@ -300,7 +303,8 @@ type BoxLocation
   notes: String
   isFinal: Boolean!
   tags: [String!]
-  image: Image!
+  imageID: ID!
+  image: Image @connection(fields: ["imageID"])
   images: [Image!]
   isActive: Boolean!
 
@@ -326,7 +330,8 @@ type TrackingInfo
   user: User! @connection(fields: ["userID"])
   isActive: Boolean!
   tags: [String!]
-  image: Image!
+  imageID: ID!
+  image: Image @connection(fields: ["imageID"])
   images: [Image!]
   internalNotes: String
   notes: String
@@ -350,7 +355,8 @@ type User
   hashedSecret: String
   isActive: Boolean!
   tags: [String!]
-  image: Image
+  imageID: ID!
+  image: Image @connection(fields: ["imageID"])
   images: [Image!]
   status: UserStatus!
   statusHistory: [UserStatus!]

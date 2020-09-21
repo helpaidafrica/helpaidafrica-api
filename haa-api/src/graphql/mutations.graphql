@@ -17,14 +17,7 @@ mutation CreateImage(
       hashedSecret
       isActive
       tags
-      image {
-        id
-        altTex
-        src
-        userID
-        createdAt
-        updatedAt
-      }
+      imageID
       images {
         id
         altTex
@@ -41,6 +34,14 @@ mutation CreateImage(
       notesHistory
       createdAt
       updatedAt
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       org {
         id
         name
@@ -50,6 +51,7 @@ mutation CreateImage(
         primaryDomain
         privacyPolicy
         tags
+        imageID
         notes
         isActive
         createdAt
@@ -79,14 +81,7 @@ mutation UpdateImage(
       hashedSecret
       isActive
       tags
-      image {
-        id
-        altTex
-        src
-        userID
-        createdAt
-        updatedAt
-      }
+      imageID
       images {
         id
         altTex
@@ -103,6 +98,14 @@ mutation UpdateImage(
       notesHistory
       createdAt
       updatedAt
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       org {
         id
         name
@@ -112,6 +115,7 @@ mutation UpdateImage(
         primaryDomain
         privacyPolicy
         tags
+        imageID
         notes
         isActive
         createdAt
@@ -141,14 +145,7 @@ mutation DeleteImage(
       hashedSecret
       isActive
       tags
-      image {
-        id
-        altTex
-        src
-        userID
-        createdAt
-        updatedAt
-      }
+      imageID
       images {
         id
         altTex
@@ -165,6 +162,14 @@ mutation DeleteImage(
       notesHistory
       createdAt
       updatedAt
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       org {
         id
         name
@@ -174,6 +179,7 @@ mutation DeleteImage(
         primaryDomain
         privacyPolicy
         tags
+        imageID
         notes
         isActive
         createdAt
@@ -210,6 +216,7 @@ mutation CreateBoxCategory(
         barCodePhoto
         qrCodePhoto
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -247,6 +254,7 @@ mutation UpdateBoxCategory(
         barCodePhoto
         qrCodePhoto
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -284,6 +292,7 @@ mutation DeleteBoxCategory(
         barCodePhoto
         qrCodePhoto
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -466,30 +475,7 @@ mutation CreateOrg(
     primaryDomain
     privacyPolicy
     tags
-    image {
-      id
-      altTex
-      src
-      userID
-      createdAt
-      updatedAt
-      user {
-        id
-        name
-        orgID
-        hashedSecret
-        isActive
-        tags
-        status
-        statusHistory
-        internalNotes
-        notes
-        rank
-        notesHistory
-        createdAt
-        updatedAt
-      }
-    }
+    imageID
     images {
       id
       altTex
@@ -504,6 +490,7 @@ mutation CreateOrg(
         hashedSecret
         isActive
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -518,6 +505,31 @@ mutation CreateOrg(
     isActive
     createdAt
     updatedAt
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        imageID
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     address {
       id
       label
@@ -547,6 +559,7 @@ mutation CreateOrg(
         barCodePhoto
         qrCodePhoto
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -565,6 +578,7 @@ mutation CreateOrg(
         hashedSecret
         isActive
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -607,30 +621,7 @@ mutation UpdateOrg(
     primaryDomain
     privacyPolicy
     tags
-    image {
-      id
-      altTex
-      src
-      userID
-      createdAt
-      updatedAt
-      user {
-        id
-        name
-        orgID
-        hashedSecret
-        isActive
-        tags
-        status
-        statusHistory
-        internalNotes
-        notes
-        rank
-        notesHistory
-        createdAt
-        updatedAt
-      }
-    }
+    imageID
     images {
       id
       altTex
@@ -645,6 +636,7 @@ mutation UpdateOrg(
         hashedSecret
         isActive
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -659,6 +651,31 @@ mutation UpdateOrg(
     isActive
     createdAt
     updatedAt
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        imageID
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     address {
       id
       label
@@ -688,6 +705,7 @@ mutation UpdateOrg(
         barCodePhoto
         qrCodePhoto
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -706,6 +724,7 @@ mutation UpdateOrg(
         hashedSecret
         isActive
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -748,30 +767,7 @@ mutation DeleteOrg(
     primaryDomain
     privacyPolicy
     tags
-    image {
-      id
-      altTex
-      src
-      userID
-      createdAt
-      updatedAt
-      user {
-        id
-        name
-        orgID
-        hashedSecret
-        isActive
-        tags
-        status
-        statusHistory
-        internalNotes
-        notes
-        rank
-        notesHistory
-        createdAt
-        updatedAt
-      }
-    }
+    imageID
     images {
       id
       altTex
@@ -786,6 +782,7 @@ mutation DeleteOrg(
         hashedSecret
         isActive
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -800,6 +797,31 @@ mutation DeleteOrg(
     isActive
     createdAt
     updatedAt
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        imageID
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     address {
       id
       label
@@ -829,6 +851,7 @@ mutation DeleteOrg(
         barCodePhoto
         qrCodePhoto
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -847,6 +870,7 @@ mutation DeleteOrg(
         hashedSecret
         isActive
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -910,6 +934,7 @@ mutation CreateLocationInfo(
         notes
         isFinal
         tags
+        imageID
         isActive
         trackingInfoID
         createdAt
@@ -969,6 +994,7 @@ mutation UpdateLocationInfo(
         notes
         isFinal
         tags
+        imageID
         isActive
         trackingInfoID
         createdAt
@@ -1028,6 +1054,7 @@ mutation DeleteLocationInfo(
         notes
         isFinal
         tags
+        imageID
         isActive
         trackingInfoID
         createdAt
@@ -1058,30 +1085,7 @@ mutation CreateShipment(
     status
     statusHistory
     tags
-    image {
-      id
-      altTex
-      src
-      userID
-      createdAt
-      updatedAt
-      user {
-        id
-        name
-        orgID
-        hashedSecret
-        isActive
-        tags
-        status
-        statusHistory
-        internalNotes
-        notes
-        rank
-        notesHistory
-        createdAt
-        updatedAt
-      }
-    }
+    imageID
     images {
       id
       altTex
@@ -1096,6 +1100,7 @@ mutation CreateShipment(
         hashedSecret
         isActive
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -1110,6 +1115,31 @@ mutation CreateShipment(
     notesHistory
     createdAt
     updatedAt
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        imageID
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     startLocation {
       id
       locationLabel
@@ -1205,6 +1235,7 @@ mutation CreateShipment(
         barCodePhoto
         qrCodePhoto
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -1238,30 +1269,7 @@ mutation UpdateShipment(
     status
     statusHistory
     tags
-    image {
-      id
-      altTex
-      src
-      userID
-      createdAt
-      updatedAt
-      user {
-        id
-        name
-        orgID
-        hashedSecret
-        isActive
-        tags
-        status
-        statusHistory
-        internalNotes
-        notes
-        rank
-        notesHistory
-        createdAt
-        updatedAt
-      }
-    }
+    imageID
     images {
       id
       altTex
@@ -1276,6 +1284,7 @@ mutation UpdateShipment(
         hashedSecret
         isActive
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -1290,6 +1299,31 @@ mutation UpdateShipment(
     notesHistory
     createdAt
     updatedAt
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        imageID
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     startLocation {
       id
       locationLabel
@@ -1385,6 +1419,7 @@ mutation UpdateShipment(
         barCodePhoto
         qrCodePhoto
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -1418,30 +1453,7 @@ mutation DeleteShipment(
     status
     statusHistory
     tags
-    image {
-      id
-      altTex
-      src
-      userID
-      createdAt
-      updatedAt
-      user {
-        id
-        name
-        orgID
-        hashedSecret
-        isActive
-        tags
-        status
-        statusHistory
-        internalNotes
-        notes
-        rank
-        notesHistory
-        createdAt
-        updatedAt
-      }
-    }
+    imageID
     images {
       id
       altTex
@@ -1456,6 +1468,7 @@ mutation DeleteShipment(
         hashedSecret
         isActive
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -1470,6 +1483,31 @@ mutation DeleteShipment(
     notesHistory
     createdAt
     updatedAt
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        imageID
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     startLocation {
       id
       locationLabel
@@ -1565,6 +1603,7 @@ mutation DeleteShipment(
         barCodePhoto
         qrCodePhoto
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -1605,30 +1644,7 @@ mutation CreateBox(
     barCodePhoto
     qrCodePhoto
     tags
-    image {
-      id
-      altTex
-      src
-      userID
-      createdAt
-      updatedAt
-      user {
-        id
-        name
-        orgID
-        hashedSecret
-        isActive
-        tags
-        status
-        statusHistory
-        internalNotes
-        notes
-        rank
-        notesHistory
-        createdAt
-        updatedAt
-      }
-    }
+    imageID
     images {
       id
       altTex
@@ -1643,6 +1659,7 @@ mutation CreateBox(
         hashedSecret
         isActive
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -1660,6 +1677,31 @@ mutation CreateBox(
     notesHistory
     createdAt
     updatedAt
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        imageID
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     boxCategory {
       id
       name
@@ -1695,14 +1737,7 @@ mutation CreateBox(
       primaryDomain
       privacyPolicy
       tags
-      image {
-        id
-        altTex
-        src
-        userID
-        createdAt
-        updatedAt
-      }
+      imageID
       images {
         id
         altTex
@@ -1715,6 +1750,14 @@ mutation CreateBox(
       isActive
       createdAt
       updatedAt
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       address {
         id
         label
@@ -1753,14 +1796,7 @@ mutation CreateBox(
       status
       statusHistory
       tags
-      image {
-        id
-        altTex
-        src
-        userID
-        createdAt
-        updatedAt
-      }
+      imageID
       images {
         id
         altTex
@@ -1773,6 +1809,14 @@ mutation CreateBox(
       notesHistory
       createdAt
       updatedAt
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       startLocation {
         id
         locationLabel
@@ -1817,6 +1861,7 @@ mutation CreateBox(
         notes
         isFinal
         tags
+        imageID
         isActive
         trackingInfoID
         createdAt
@@ -1854,30 +1899,7 @@ mutation UpdateBox(
     barCodePhoto
     qrCodePhoto
     tags
-    image {
-      id
-      altTex
-      src
-      userID
-      createdAt
-      updatedAt
-      user {
-        id
-        name
-        orgID
-        hashedSecret
-        isActive
-        tags
-        status
-        statusHistory
-        internalNotes
-        notes
-        rank
-        notesHistory
-        createdAt
-        updatedAt
-      }
-    }
+    imageID
     images {
       id
       altTex
@@ -1892,6 +1914,7 @@ mutation UpdateBox(
         hashedSecret
         isActive
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -1909,6 +1932,31 @@ mutation UpdateBox(
     notesHistory
     createdAt
     updatedAt
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        imageID
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     boxCategory {
       id
       name
@@ -1944,14 +1992,7 @@ mutation UpdateBox(
       primaryDomain
       privacyPolicy
       tags
-      image {
-        id
-        altTex
-        src
-        userID
-        createdAt
-        updatedAt
-      }
+      imageID
       images {
         id
         altTex
@@ -1964,6 +2005,14 @@ mutation UpdateBox(
       isActive
       createdAt
       updatedAt
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       address {
         id
         label
@@ -2002,14 +2051,7 @@ mutation UpdateBox(
       status
       statusHistory
       tags
-      image {
-        id
-        altTex
-        src
-        userID
-        createdAt
-        updatedAt
-      }
+      imageID
       images {
         id
         altTex
@@ -2022,6 +2064,14 @@ mutation UpdateBox(
       notesHistory
       createdAt
       updatedAt
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       startLocation {
         id
         locationLabel
@@ -2066,6 +2116,7 @@ mutation UpdateBox(
         notes
         isFinal
         tags
+        imageID
         isActive
         trackingInfoID
         createdAt
@@ -2103,30 +2154,7 @@ mutation DeleteBox(
     barCodePhoto
     qrCodePhoto
     tags
-    image {
-      id
-      altTex
-      src
-      userID
-      createdAt
-      updatedAt
-      user {
-        id
-        name
-        orgID
-        hashedSecret
-        isActive
-        tags
-        status
-        statusHistory
-        internalNotes
-        notes
-        rank
-        notesHistory
-        createdAt
-        updatedAt
-      }
-    }
+    imageID
     images {
       id
       altTex
@@ -2141,6 +2169,7 @@ mutation DeleteBox(
         hashedSecret
         isActive
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -2158,6 +2187,31 @@ mutation DeleteBox(
     notesHistory
     createdAt
     updatedAt
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        imageID
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     boxCategory {
       id
       name
@@ -2193,14 +2247,7 @@ mutation DeleteBox(
       primaryDomain
       privacyPolicy
       tags
-      image {
-        id
-        altTex
-        src
-        userID
-        createdAt
-        updatedAt
-      }
+      imageID
       images {
         id
         altTex
@@ -2213,6 +2260,14 @@ mutation DeleteBox(
       isActive
       createdAt
       updatedAt
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       address {
         id
         label
@@ -2251,14 +2306,7 @@ mutation DeleteBox(
       status
       statusHistory
       tags
-      image {
-        id
-        altTex
-        src
-        userID
-        createdAt
-        updatedAt
-      }
+      imageID
       images {
         id
         altTex
@@ -2271,6 +2319,14 @@ mutation DeleteBox(
       notesHistory
       createdAt
       updatedAt
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       startLocation {
         id
         locationLabel
@@ -2315,6 +2371,7 @@ mutation DeleteBox(
         notes
         isFinal
         tags
+        imageID
         isActive
         trackingInfoID
         createdAt
@@ -2337,30 +2394,7 @@ mutation CreateBoxLocation(
     notes
     isFinal
     tags
-    image {
-      id
-      altTex
-      src
-      userID
-      createdAt
-      updatedAt
-      user {
-        id
-        name
-        orgID
-        hashedSecret
-        isActive
-        tags
-        status
-        statusHistory
-        internalNotes
-        notes
-        rank
-        notesHistory
-        createdAt
-        updatedAt
-      }
-    }
+    imageID
     images {
       id
       altTex
@@ -2375,6 +2409,7 @@ mutation CreateBoxLocation(
         hashedSecret
         isActive
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -2389,6 +2424,31 @@ mutation CreateBoxLocation(
     trackingInfoID
     createdAt
     updatedAt
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        imageID
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     locationInfo {
       id
       locationLabel
@@ -2450,14 +2510,7 @@ mutation CreateBoxLocation(
       barCodePhoto
       qrCodePhoto
       tags
-      image {
-        id
-        altTex
-        src
-        userID
-        createdAt
-        updatedAt
-      }
+      imageID
       images {
         id
         altTex
@@ -2473,6 +2526,14 @@ mutation CreateBoxLocation(
       notesHistory
       createdAt
       updatedAt
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       boxCategory {
         id
         name
@@ -2489,6 +2550,7 @@ mutation CreateBoxLocation(
         primaryDomain
         privacyPolicy
         tags
+        imageID
         notes
         isActive
         createdAt
@@ -2511,6 +2573,7 @@ mutation CreateBoxLocation(
         status
         statusHistory
         tags
+        imageID
         notes
         notesHistory
         createdAt
@@ -2526,14 +2589,7 @@ mutation CreateBoxLocation(
       userID
       isActive
       tags
-      image {
-        id
-        altTex
-        src
-        userID
-        createdAt
-        updatedAt
-      }
+      imageID
       images {
         id
         altTex
@@ -2546,6 +2602,14 @@ mutation CreateBoxLocation(
       notes
       createdAt
       updatedAt
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       boxLocations {
         nextToken
       }
@@ -2556,6 +2620,7 @@ mutation CreateBoxLocation(
         hashedSecret
         isActive
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -2573,14 +2638,7 @@ mutation CreateBoxLocation(
       hashedSecret
       isActive
       tags
-      image {
-        id
-        altTex
-        src
-        userID
-        createdAt
-        updatedAt
-      }
+      imageID
       images {
         id
         altTex
@@ -2597,6 +2655,14 @@ mutation CreateBoxLocation(
       notesHistory
       createdAt
       updatedAt
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       org {
         id
         name
@@ -2606,6 +2672,7 @@ mutation CreateBoxLocation(
         primaryDomain
         privacyPolicy
         tags
+        imageID
         notes
         isActive
         createdAt
@@ -2630,30 +2697,7 @@ mutation UpdateBoxLocation(
     notes
     isFinal
     tags
-    image {
-      id
-      altTex
-      src
-      userID
-      createdAt
-      updatedAt
-      user {
-        id
-        name
-        orgID
-        hashedSecret
-        isActive
-        tags
-        status
-        statusHistory
-        internalNotes
-        notes
-        rank
-        notesHistory
-        createdAt
-        updatedAt
-      }
-    }
+    imageID
     images {
       id
       altTex
@@ -2668,6 +2712,7 @@ mutation UpdateBoxLocation(
         hashedSecret
         isActive
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -2682,6 +2727,31 @@ mutation UpdateBoxLocation(
     trackingInfoID
     createdAt
     updatedAt
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        imageID
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     locationInfo {
       id
       locationLabel
@@ -2743,14 +2813,7 @@ mutation UpdateBoxLocation(
       barCodePhoto
       qrCodePhoto
       tags
-      image {
-        id
-        altTex
-        src
-        userID
-        createdAt
-        updatedAt
-      }
+      imageID
       images {
         id
         altTex
@@ -2766,6 +2829,14 @@ mutation UpdateBoxLocation(
       notesHistory
       createdAt
       updatedAt
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       boxCategory {
         id
         name
@@ -2782,6 +2853,7 @@ mutation UpdateBoxLocation(
         primaryDomain
         privacyPolicy
         tags
+        imageID
         notes
         isActive
         createdAt
@@ -2804,6 +2876,7 @@ mutation UpdateBoxLocation(
         status
         statusHistory
         tags
+        imageID
         notes
         notesHistory
         createdAt
@@ -2819,14 +2892,7 @@ mutation UpdateBoxLocation(
       userID
       isActive
       tags
-      image {
-        id
-        altTex
-        src
-        userID
-        createdAt
-        updatedAt
-      }
+      imageID
       images {
         id
         altTex
@@ -2839,6 +2905,14 @@ mutation UpdateBoxLocation(
       notes
       createdAt
       updatedAt
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       boxLocations {
         nextToken
       }
@@ -2849,6 +2923,7 @@ mutation UpdateBoxLocation(
         hashedSecret
         isActive
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -2866,14 +2941,7 @@ mutation UpdateBoxLocation(
       hashedSecret
       isActive
       tags
-      image {
-        id
-        altTex
-        src
-        userID
-        createdAt
-        updatedAt
-      }
+      imageID
       images {
         id
         altTex
@@ -2890,6 +2958,14 @@ mutation UpdateBoxLocation(
       notesHistory
       createdAt
       updatedAt
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       org {
         id
         name
@@ -2899,6 +2975,7 @@ mutation UpdateBoxLocation(
         primaryDomain
         privacyPolicy
         tags
+        imageID
         notes
         isActive
         createdAt
@@ -2923,30 +3000,7 @@ mutation DeleteBoxLocation(
     notes
     isFinal
     tags
-    image {
-      id
-      altTex
-      src
-      userID
-      createdAt
-      updatedAt
-      user {
-        id
-        name
-        orgID
-        hashedSecret
-        isActive
-        tags
-        status
-        statusHistory
-        internalNotes
-        notes
-        rank
-        notesHistory
-        createdAt
-        updatedAt
-      }
-    }
+    imageID
     images {
       id
       altTex
@@ -2961,6 +3015,7 @@ mutation DeleteBoxLocation(
         hashedSecret
         isActive
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -2975,6 +3030,31 @@ mutation DeleteBoxLocation(
     trackingInfoID
     createdAt
     updatedAt
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        imageID
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     locationInfo {
       id
       locationLabel
@@ -3036,14 +3116,7 @@ mutation DeleteBoxLocation(
       barCodePhoto
       qrCodePhoto
       tags
-      image {
-        id
-        altTex
-        src
-        userID
-        createdAt
-        updatedAt
-      }
+      imageID
       images {
         id
         altTex
@@ -3059,6 +3132,14 @@ mutation DeleteBoxLocation(
       notesHistory
       createdAt
       updatedAt
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       boxCategory {
         id
         name
@@ -3075,6 +3156,7 @@ mutation DeleteBoxLocation(
         primaryDomain
         privacyPolicy
         tags
+        imageID
         notes
         isActive
         createdAt
@@ -3097,6 +3179,7 @@ mutation DeleteBoxLocation(
         status
         statusHistory
         tags
+        imageID
         notes
         notesHistory
         createdAt
@@ -3112,14 +3195,7 @@ mutation DeleteBoxLocation(
       userID
       isActive
       tags
-      image {
-        id
-        altTex
-        src
-        userID
-        createdAt
-        updatedAt
-      }
+      imageID
       images {
         id
         altTex
@@ -3132,6 +3208,14 @@ mutation DeleteBoxLocation(
       notes
       createdAt
       updatedAt
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       boxLocations {
         nextToken
       }
@@ -3142,6 +3226,7 @@ mutation DeleteBoxLocation(
         hashedSecret
         isActive
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -3159,14 +3244,7 @@ mutation DeleteBoxLocation(
       hashedSecret
       isActive
       tags
-      image {
-        id
-        altTex
-        src
-        userID
-        createdAt
-        updatedAt
-      }
+      imageID
       images {
         id
         altTex
@@ -3183,6 +3261,14 @@ mutation DeleteBoxLocation(
       notesHistory
       createdAt
       updatedAt
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       org {
         id
         name
@@ -3192,6 +3278,7 @@ mutation DeleteBoxLocation(
         primaryDomain
         privacyPolicy
         tags
+        imageID
         notes
         isActive
         createdAt
@@ -3213,30 +3300,7 @@ mutation CreateTrackingInfo(
     userID
     isActive
     tags
-    image {
-      id
-      altTex
-      src
-      userID
-      createdAt
-      updatedAt
-      user {
-        id
-        name
-        orgID
-        hashedSecret
-        isActive
-        tags
-        status
-        statusHistory
-        internalNotes
-        notes
-        rank
-        notesHistory
-        createdAt
-        updatedAt
-      }
-    }
+    imageID
     images {
       id
       altTex
@@ -3251,6 +3315,7 @@ mutation CreateTrackingInfo(
         hashedSecret
         isActive
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -3265,6 +3330,31 @@ mutation CreateTrackingInfo(
     notes
     createdAt
     updatedAt
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        imageID
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     boxLocations {
       items {
         id
@@ -3275,6 +3365,7 @@ mutation CreateTrackingInfo(
         notes
         isFinal
         tags
+        imageID
         isActive
         trackingInfoID
         createdAt
@@ -3289,14 +3380,7 @@ mutation CreateTrackingInfo(
       hashedSecret
       isActive
       tags
-      image {
-        id
-        altTex
-        src
-        userID
-        createdAt
-        updatedAt
-      }
+      imageID
       images {
         id
         altTex
@@ -3313,6 +3397,14 @@ mutation CreateTrackingInfo(
       notesHistory
       createdAt
       updatedAt
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       org {
         id
         name
@@ -3322,6 +3414,7 @@ mutation CreateTrackingInfo(
         primaryDomain
         privacyPolicy
         tags
+        imageID
         notes
         isActive
         createdAt
@@ -3343,30 +3436,7 @@ mutation UpdateTrackingInfo(
     userID
     isActive
     tags
-    image {
-      id
-      altTex
-      src
-      userID
-      createdAt
-      updatedAt
-      user {
-        id
-        name
-        orgID
-        hashedSecret
-        isActive
-        tags
-        status
-        statusHistory
-        internalNotes
-        notes
-        rank
-        notesHistory
-        createdAt
-        updatedAt
-      }
-    }
+    imageID
     images {
       id
       altTex
@@ -3381,6 +3451,7 @@ mutation UpdateTrackingInfo(
         hashedSecret
         isActive
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -3395,6 +3466,31 @@ mutation UpdateTrackingInfo(
     notes
     createdAt
     updatedAt
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        imageID
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     boxLocations {
       items {
         id
@@ -3405,6 +3501,7 @@ mutation UpdateTrackingInfo(
         notes
         isFinal
         tags
+        imageID
         isActive
         trackingInfoID
         createdAt
@@ -3419,14 +3516,7 @@ mutation UpdateTrackingInfo(
       hashedSecret
       isActive
       tags
-      image {
-        id
-        altTex
-        src
-        userID
-        createdAt
-        updatedAt
-      }
+      imageID
       images {
         id
         altTex
@@ -3443,6 +3533,14 @@ mutation UpdateTrackingInfo(
       notesHistory
       createdAt
       updatedAt
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       org {
         id
         name
@@ -3452,6 +3550,7 @@ mutation UpdateTrackingInfo(
         primaryDomain
         privacyPolicy
         tags
+        imageID
         notes
         isActive
         createdAt
@@ -3473,30 +3572,7 @@ mutation DeleteTrackingInfo(
     userID
     isActive
     tags
-    image {
-      id
-      altTex
-      src
-      userID
-      createdAt
-      updatedAt
-      user {
-        id
-        name
-        orgID
-        hashedSecret
-        isActive
-        tags
-        status
-        statusHistory
-        internalNotes
-        notes
-        rank
-        notesHistory
-        createdAt
-        updatedAt
-      }
-    }
+    imageID
     images {
       id
       altTex
@@ -3511,6 +3587,7 @@ mutation DeleteTrackingInfo(
         hashedSecret
         isActive
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -3525,6 +3602,31 @@ mutation DeleteTrackingInfo(
     notes
     createdAt
     updatedAt
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        imageID
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     boxLocations {
       items {
         id
@@ -3535,6 +3637,7 @@ mutation DeleteTrackingInfo(
         notes
         isFinal
         tags
+        imageID
         isActive
         trackingInfoID
         createdAt
@@ -3549,14 +3652,7 @@ mutation DeleteTrackingInfo(
       hashedSecret
       isActive
       tags
-      image {
-        id
-        altTex
-        src
-        userID
-        createdAt
-        updatedAt
-      }
+      imageID
       images {
         id
         altTex
@@ -3573,6 +3669,14 @@ mutation DeleteTrackingInfo(
       notesHistory
       createdAt
       updatedAt
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       org {
         id
         name
@@ -3582,6 +3686,7 @@ mutation DeleteTrackingInfo(
         primaryDomain
         privacyPolicy
         tags
+        imageID
         notes
         isActive
         createdAt
@@ -3604,30 +3709,7 @@ mutation CreateUser(
     hashedSecret
     isActive
     tags
-    image {
-      id
-      altTex
-      src
-      userID
-      createdAt
-      updatedAt
-      user {
-        id
-        name
-        orgID
-        hashedSecret
-        isActive
-        tags
-        status
-        statusHistory
-        internalNotes
-        notes
-        rank
-        notesHistory
-        createdAt
-        updatedAt
-      }
-    }
+    imageID
     images {
       id
       altTex
@@ -3642,6 +3724,7 @@ mutation CreateUser(
         hashedSecret
         isActive
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -3660,6 +3743,31 @@ mutation CreateUser(
     notesHistory
     createdAt
     updatedAt
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        imageID
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     org {
       id
       name
@@ -3685,14 +3793,7 @@ mutation CreateUser(
       primaryDomain
       privacyPolicy
       tags
-      image {
-        id
-        altTex
-        src
-        userID
-        createdAt
-        updatedAt
-      }
+      imageID
       images {
         id
         altTex
@@ -3705,6 +3806,14 @@ mutation CreateUser(
       isActive
       createdAt
       updatedAt
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       address {
         id
         label
@@ -3736,6 +3845,7 @@ mutation CreateUser(
         notes
         isFinal
         tags
+        imageID
         isActive
         trackingInfoID
         createdAt
@@ -3756,30 +3866,7 @@ mutation UpdateUser(
     hashedSecret
     isActive
     tags
-    image {
-      id
-      altTex
-      src
-      userID
-      createdAt
-      updatedAt
-      user {
-        id
-        name
-        orgID
-        hashedSecret
-        isActive
-        tags
-        status
-        statusHistory
-        internalNotes
-        notes
-        rank
-        notesHistory
-        createdAt
-        updatedAt
-      }
-    }
+    imageID
     images {
       id
       altTex
@@ -3794,6 +3881,7 @@ mutation UpdateUser(
         hashedSecret
         isActive
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -3812,6 +3900,31 @@ mutation UpdateUser(
     notesHistory
     createdAt
     updatedAt
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        imageID
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     org {
       id
       name
@@ -3837,14 +3950,7 @@ mutation UpdateUser(
       primaryDomain
       privacyPolicy
       tags
-      image {
-        id
-        altTex
-        src
-        userID
-        createdAt
-        updatedAt
-      }
+      imageID
       images {
         id
         altTex
@@ -3857,6 +3963,14 @@ mutation UpdateUser(
       isActive
       createdAt
       updatedAt
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       address {
         id
         label
@@ -3888,6 +4002,7 @@ mutation UpdateUser(
         notes
         isFinal
         tags
+        imageID
         isActive
         trackingInfoID
         createdAt
@@ -3908,30 +4023,7 @@ mutation DeleteUser(
     hashedSecret
     isActive
     tags
-    image {
-      id
-      altTex
-      src
-      userID
-      createdAt
-      updatedAt
-      user {
-        id
-        name
-        orgID
-        hashedSecret
-        isActive
-        tags
-        status
-        statusHistory
-        internalNotes
-        notes
-        rank
-        notesHistory
-        createdAt
-        updatedAt
-      }
-    }
+    imageID
     images {
       id
       altTex
@@ -3946,6 +4038,7 @@ mutation DeleteUser(
         hashedSecret
         isActive
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -3964,6 +4057,31 @@ mutation DeleteUser(
     notesHistory
     createdAt
     updatedAt
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        imageID
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     org {
       id
       name
@@ -3989,14 +4107,7 @@ mutation DeleteUser(
       primaryDomain
       privacyPolicy
       tags
-      image {
-        id
-        altTex
-        src
-        userID
-        createdAt
-        updatedAt
-      }
+      imageID
       images {
         id
         altTex
@@ -4009,6 +4120,14 @@ mutation DeleteUser(
       isActive
       createdAt
       updatedAt
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       address {
         id
         label
@@ -4040,6 +4159,7 @@ mutation DeleteUser(
         notes
         isFinal
         tags
+        imageID
         isActive
         trackingInfoID
         createdAt

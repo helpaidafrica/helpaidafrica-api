@@ -14,14 +14,7 @@ subscription OnCreateImage {
       hashedSecret
       isActive
       tags
-      image {
-        id
-        altTex
-        src
-        userID
-        createdAt
-        updatedAt
-      }
+      imageID
       images {
         id
         altTex
@@ -38,6 +31,14 @@ subscription OnCreateImage {
       notesHistory
       createdAt
       updatedAt
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       org {
         id
         name
@@ -47,6 +48,7 @@ subscription OnCreateImage {
         primaryDomain
         privacyPolicy
         tags
+        imageID
         notes
         isActive
         createdAt
@@ -73,14 +75,7 @@ subscription OnUpdateImage {
       hashedSecret
       isActive
       tags
-      image {
-        id
-        altTex
-        src
-        userID
-        createdAt
-        updatedAt
-      }
+      imageID
       images {
         id
         altTex
@@ -97,6 +92,14 @@ subscription OnUpdateImage {
       notesHistory
       createdAt
       updatedAt
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       org {
         id
         name
@@ -106,6 +109,7 @@ subscription OnUpdateImage {
         primaryDomain
         privacyPolicy
         tags
+        imageID
         notes
         isActive
         createdAt
@@ -132,14 +136,7 @@ subscription OnDeleteImage {
       hashedSecret
       isActive
       tags
-      image {
-        id
-        altTex
-        src
-        userID
-        createdAt
-        updatedAt
-      }
+      imageID
       images {
         id
         altTex
@@ -156,6 +153,14 @@ subscription OnDeleteImage {
       notesHistory
       createdAt
       updatedAt
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       org {
         id
         name
@@ -165,6 +170,7 @@ subscription OnDeleteImage {
         primaryDomain
         privacyPolicy
         tags
+        imageID
         notes
         isActive
         createdAt
@@ -198,6 +204,7 @@ subscription OnCreateBoxCategory {
         barCodePhoto
         qrCodePhoto
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -232,6 +239,7 @@ subscription OnUpdateBoxCategory {
         barCodePhoto
         qrCodePhoto
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -266,6 +274,7 @@ subscription OnDeleteBoxCategory {
         barCodePhoto
         qrCodePhoto
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -418,30 +427,7 @@ subscription OnCreateOrg {
     primaryDomain
     privacyPolicy
     tags
-    image {
-      id
-      altTex
-      src
-      userID
-      createdAt
-      updatedAt
-      user {
-        id
-        name
-        orgID
-        hashedSecret
-        isActive
-        tags
-        status
-        statusHistory
-        internalNotes
-        notes
-        rank
-        notesHistory
-        createdAt
-        updatedAt
-      }
-    }
+    imageID
     images {
       id
       altTex
@@ -456,6 +442,7 @@ subscription OnCreateOrg {
         hashedSecret
         isActive
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -470,6 +457,31 @@ subscription OnCreateOrg {
     isActive
     createdAt
     updatedAt
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        imageID
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     address {
       id
       label
@@ -499,6 +511,7 @@ subscription OnCreateOrg {
         barCodePhoto
         qrCodePhoto
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -517,6 +530,7 @@ subscription OnCreateOrg {
         hashedSecret
         isActive
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -556,30 +570,7 @@ subscription OnUpdateOrg {
     primaryDomain
     privacyPolicy
     tags
-    image {
-      id
-      altTex
-      src
-      userID
-      createdAt
-      updatedAt
-      user {
-        id
-        name
-        orgID
-        hashedSecret
-        isActive
-        tags
-        status
-        statusHistory
-        internalNotes
-        notes
-        rank
-        notesHistory
-        createdAt
-        updatedAt
-      }
-    }
+    imageID
     images {
       id
       altTex
@@ -594,6 +585,7 @@ subscription OnUpdateOrg {
         hashedSecret
         isActive
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -608,6 +600,31 @@ subscription OnUpdateOrg {
     isActive
     createdAt
     updatedAt
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        imageID
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     address {
       id
       label
@@ -637,6 +654,7 @@ subscription OnUpdateOrg {
         barCodePhoto
         qrCodePhoto
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -655,6 +673,7 @@ subscription OnUpdateOrg {
         hashedSecret
         isActive
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -694,30 +713,7 @@ subscription OnDeleteOrg {
     primaryDomain
     privacyPolicy
     tags
-    image {
-      id
-      altTex
-      src
-      userID
-      createdAt
-      updatedAt
-      user {
-        id
-        name
-        orgID
-        hashedSecret
-        isActive
-        tags
-        status
-        statusHistory
-        internalNotes
-        notes
-        rank
-        notesHistory
-        createdAt
-        updatedAt
-      }
-    }
+    imageID
     images {
       id
       altTex
@@ -732,6 +728,7 @@ subscription OnDeleteOrg {
         hashedSecret
         isActive
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -746,6 +743,31 @@ subscription OnDeleteOrg {
     isActive
     createdAt
     updatedAt
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        imageID
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     address {
       id
       label
@@ -775,6 +797,7 @@ subscription OnDeleteOrg {
         barCodePhoto
         qrCodePhoto
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -793,6 +816,7 @@ subscription OnDeleteOrg {
         hashedSecret
         isActive
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -853,6 +877,7 @@ subscription OnCreateLocationInfo {
         notes
         isFinal
         tags
+        imageID
         isActive
         trackingInfoID
         createdAt
@@ -909,6 +934,7 @@ subscription OnUpdateLocationInfo {
         notes
         isFinal
         tags
+        imageID
         isActive
         trackingInfoID
         createdAt
@@ -965,6 +991,7 @@ subscription OnDeleteLocationInfo {
         notes
         isFinal
         tags
+        imageID
         isActive
         trackingInfoID
         createdAt
@@ -992,30 +1019,7 @@ subscription OnCreateShipment {
     status
     statusHistory
     tags
-    image {
-      id
-      altTex
-      src
-      userID
-      createdAt
-      updatedAt
-      user {
-        id
-        name
-        orgID
-        hashedSecret
-        isActive
-        tags
-        status
-        statusHistory
-        internalNotes
-        notes
-        rank
-        notesHistory
-        createdAt
-        updatedAt
-      }
-    }
+    imageID
     images {
       id
       altTex
@@ -1030,6 +1034,7 @@ subscription OnCreateShipment {
         hashedSecret
         isActive
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -1044,6 +1049,31 @@ subscription OnCreateShipment {
     notesHistory
     createdAt
     updatedAt
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        imageID
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     startLocation {
       id
       locationLabel
@@ -1139,6 +1169,7 @@ subscription OnCreateShipment {
         barCodePhoto
         qrCodePhoto
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -1169,30 +1200,7 @@ subscription OnUpdateShipment {
     status
     statusHistory
     tags
-    image {
-      id
-      altTex
-      src
-      userID
-      createdAt
-      updatedAt
-      user {
-        id
-        name
-        orgID
-        hashedSecret
-        isActive
-        tags
-        status
-        statusHistory
-        internalNotes
-        notes
-        rank
-        notesHistory
-        createdAt
-        updatedAt
-      }
-    }
+    imageID
     images {
       id
       altTex
@@ -1207,6 +1215,7 @@ subscription OnUpdateShipment {
         hashedSecret
         isActive
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -1221,6 +1230,31 @@ subscription OnUpdateShipment {
     notesHistory
     createdAt
     updatedAt
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        imageID
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     startLocation {
       id
       locationLabel
@@ -1316,6 +1350,7 @@ subscription OnUpdateShipment {
         barCodePhoto
         qrCodePhoto
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -1346,30 +1381,7 @@ subscription OnDeleteShipment {
     status
     statusHistory
     tags
-    image {
-      id
-      altTex
-      src
-      userID
-      createdAt
-      updatedAt
-      user {
-        id
-        name
-        orgID
-        hashedSecret
-        isActive
-        tags
-        status
-        statusHistory
-        internalNotes
-        notes
-        rank
-        notesHistory
-        createdAt
-        updatedAt
-      }
-    }
+    imageID
     images {
       id
       altTex
@@ -1384,6 +1396,7 @@ subscription OnDeleteShipment {
         hashedSecret
         isActive
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -1398,6 +1411,31 @@ subscription OnDeleteShipment {
     notesHistory
     createdAt
     updatedAt
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        imageID
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     startLocation {
       id
       locationLabel
@@ -1493,6 +1531,7 @@ subscription OnDeleteShipment {
         barCodePhoto
         qrCodePhoto
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -1530,30 +1569,7 @@ subscription OnCreateBox {
     barCodePhoto
     qrCodePhoto
     tags
-    image {
-      id
-      altTex
-      src
-      userID
-      createdAt
-      updatedAt
-      user {
-        id
-        name
-        orgID
-        hashedSecret
-        isActive
-        tags
-        status
-        statusHistory
-        internalNotes
-        notes
-        rank
-        notesHistory
-        createdAt
-        updatedAt
-      }
-    }
+    imageID
     images {
       id
       altTex
@@ -1568,6 +1584,7 @@ subscription OnCreateBox {
         hashedSecret
         isActive
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -1585,6 +1602,31 @@ subscription OnCreateBox {
     notesHistory
     createdAt
     updatedAt
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        imageID
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     boxCategory {
       id
       name
@@ -1620,14 +1662,7 @@ subscription OnCreateBox {
       primaryDomain
       privacyPolicy
       tags
-      image {
-        id
-        altTex
-        src
-        userID
-        createdAt
-        updatedAt
-      }
+      imageID
       images {
         id
         altTex
@@ -1640,6 +1675,14 @@ subscription OnCreateBox {
       isActive
       createdAt
       updatedAt
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       address {
         id
         label
@@ -1678,14 +1721,7 @@ subscription OnCreateBox {
       status
       statusHistory
       tags
-      image {
-        id
-        altTex
-        src
-        userID
-        createdAt
-        updatedAt
-      }
+      imageID
       images {
         id
         altTex
@@ -1698,6 +1734,14 @@ subscription OnCreateBox {
       notesHistory
       createdAt
       updatedAt
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       startLocation {
         id
         locationLabel
@@ -1742,6 +1786,7 @@ subscription OnCreateBox {
         notes
         isFinal
         tags
+        imageID
         isActive
         trackingInfoID
         createdAt
@@ -1776,30 +1821,7 @@ subscription OnUpdateBox {
     barCodePhoto
     qrCodePhoto
     tags
-    image {
-      id
-      altTex
-      src
-      userID
-      createdAt
-      updatedAt
-      user {
-        id
-        name
-        orgID
-        hashedSecret
-        isActive
-        tags
-        status
-        statusHistory
-        internalNotes
-        notes
-        rank
-        notesHistory
-        createdAt
-        updatedAt
-      }
-    }
+    imageID
     images {
       id
       altTex
@@ -1814,6 +1836,7 @@ subscription OnUpdateBox {
         hashedSecret
         isActive
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -1831,6 +1854,31 @@ subscription OnUpdateBox {
     notesHistory
     createdAt
     updatedAt
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        imageID
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     boxCategory {
       id
       name
@@ -1866,14 +1914,7 @@ subscription OnUpdateBox {
       primaryDomain
       privacyPolicy
       tags
-      image {
-        id
-        altTex
-        src
-        userID
-        createdAt
-        updatedAt
-      }
+      imageID
       images {
         id
         altTex
@@ -1886,6 +1927,14 @@ subscription OnUpdateBox {
       isActive
       createdAt
       updatedAt
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       address {
         id
         label
@@ -1924,14 +1973,7 @@ subscription OnUpdateBox {
       status
       statusHistory
       tags
-      image {
-        id
-        altTex
-        src
-        userID
-        createdAt
-        updatedAt
-      }
+      imageID
       images {
         id
         altTex
@@ -1944,6 +1986,14 @@ subscription OnUpdateBox {
       notesHistory
       createdAt
       updatedAt
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       startLocation {
         id
         locationLabel
@@ -1988,6 +2038,7 @@ subscription OnUpdateBox {
         notes
         isFinal
         tags
+        imageID
         isActive
         trackingInfoID
         createdAt
@@ -2022,30 +2073,7 @@ subscription OnDeleteBox {
     barCodePhoto
     qrCodePhoto
     tags
-    image {
-      id
-      altTex
-      src
-      userID
-      createdAt
-      updatedAt
-      user {
-        id
-        name
-        orgID
-        hashedSecret
-        isActive
-        tags
-        status
-        statusHistory
-        internalNotes
-        notes
-        rank
-        notesHistory
-        createdAt
-        updatedAt
-      }
-    }
+    imageID
     images {
       id
       altTex
@@ -2060,6 +2088,7 @@ subscription OnDeleteBox {
         hashedSecret
         isActive
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -2077,6 +2106,31 @@ subscription OnDeleteBox {
     notesHistory
     createdAt
     updatedAt
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        imageID
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     boxCategory {
       id
       name
@@ -2112,14 +2166,7 @@ subscription OnDeleteBox {
       primaryDomain
       privacyPolicy
       tags
-      image {
-        id
-        altTex
-        src
-        userID
-        createdAt
-        updatedAt
-      }
+      imageID
       images {
         id
         altTex
@@ -2132,6 +2179,14 @@ subscription OnDeleteBox {
       isActive
       createdAt
       updatedAt
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       address {
         id
         label
@@ -2170,14 +2225,7 @@ subscription OnDeleteBox {
       status
       statusHistory
       tags
-      image {
-        id
-        altTex
-        src
-        userID
-        createdAt
-        updatedAt
-      }
+      imageID
       images {
         id
         altTex
@@ -2190,6 +2238,14 @@ subscription OnDeleteBox {
       notesHistory
       createdAt
       updatedAt
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       startLocation {
         id
         locationLabel
@@ -2234,6 +2290,7 @@ subscription OnDeleteBox {
         notes
         isFinal
         tags
+        imageID
         isActive
         trackingInfoID
         createdAt
@@ -2253,30 +2310,7 @@ subscription OnCreateBoxLocation {
     notes
     isFinal
     tags
-    image {
-      id
-      altTex
-      src
-      userID
-      createdAt
-      updatedAt
-      user {
-        id
-        name
-        orgID
-        hashedSecret
-        isActive
-        tags
-        status
-        statusHistory
-        internalNotes
-        notes
-        rank
-        notesHistory
-        createdAt
-        updatedAt
-      }
-    }
+    imageID
     images {
       id
       altTex
@@ -2291,6 +2325,7 @@ subscription OnCreateBoxLocation {
         hashedSecret
         isActive
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -2305,6 +2340,31 @@ subscription OnCreateBoxLocation {
     trackingInfoID
     createdAt
     updatedAt
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        imageID
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     locationInfo {
       id
       locationLabel
@@ -2366,14 +2426,7 @@ subscription OnCreateBoxLocation {
       barCodePhoto
       qrCodePhoto
       tags
-      image {
-        id
-        altTex
-        src
-        userID
-        createdAt
-        updatedAt
-      }
+      imageID
       images {
         id
         altTex
@@ -2389,6 +2442,14 @@ subscription OnCreateBoxLocation {
       notesHistory
       createdAt
       updatedAt
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       boxCategory {
         id
         name
@@ -2405,6 +2466,7 @@ subscription OnCreateBoxLocation {
         primaryDomain
         privacyPolicy
         tags
+        imageID
         notes
         isActive
         createdAt
@@ -2427,6 +2489,7 @@ subscription OnCreateBoxLocation {
         status
         statusHistory
         tags
+        imageID
         notes
         notesHistory
         createdAt
@@ -2442,14 +2505,7 @@ subscription OnCreateBoxLocation {
       userID
       isActive
       tags
-      image {
-        id
-        altTex
-        src
-        userID
-        createdAt
-        updatedAt
-      }
+      imageID
       images {
         id
         altTex
@@ -2462,6 +2518,14 @@ subscription OnCreateBoxLocation {
       notes
       createdAt
       updatedAt
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       boxLocations {
         nextToken
       }
@@ -2472,6 +2536,7 @@ subscription OnCreateBoxLocation {
         hashedSecret
         isActive
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -2489,14 +2554,7 @@ subscription OnCreateBoxLocation {
       hashedSecret
       isActive
       tags
-      image {
-        id
-        altTex
-        src
-        userID
-        createdAt
-        updatedAt
-      }
+      imageID
       images {
         id
         altTex
@@ -2513,6 +2571,14 @@ subscription OnCreateBoxLocation {
       notesHistory
       createdAt
       updatedAt
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       org {
         id
         name
@@ -2522,6 +2588,7 @@ subscription OnCreateBoxLocation {
         primaryDomain
         privacyPolicy
         tags
+        imageID
         notes
         isActive
         createdAt
@@ -2543,30 +2610,7 @@ subscription OnUpdateBoxLocation {
     notes
     isFinal
     tags
-    image {
-      id
-      altTex
-      src
-      userID
-      createdAt
-      updatedAt
-      user {
-        id
-        name
-        orgID
-        hashedSecret
-        isActive
-        tags
-        status
-        statusHistory
-        internalNotes
-        notes
-        rank
-        notesHistory
-        createdAt
-        updatedAt
-      }
-    }
+    imageID
     images {
       id
       altTex
@@ -2581,6 +2625,7 @@ subscription OnUpdateBoxLocation {
         hashedSecret
         isActive
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -2595,6 +2640,31 @@ subscription OnUpdateBoxLocation {
     trackingInfoID
     createdAt
     updatedAt
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        imageID
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     locationInfo {
       id
       locationLabel
@@ -2656,14 +2726,7 @@ subscription OnUpdateBoxLocation {
       barCodePhoto
       qrCodePhoto
       tags
-      image {
-        id
-        altTex
-        src
-        userID
-        createdAt
-        updatedAt
-      }
+      imageID
       images {
         id
         altTex
@@ -2679,6 +2742,14 @@ subscription OnUpdateBoxLocation {
       notesHistory
       createdAt
       updatedAt
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       boxCategory {
         id
         name
@@ -2695,6 +2766,7 @@ subscription OnUpdateBoxLocation {
         primaryDomain
         privacyPolicy
         tags
+        imageID
         notes
         isActive
         createdAt
@@ -2717,6 +2789,7 @@ subscription OnUpdateBoxLocation {
         status
         statusHistory
         tags
+        imageID
         notes
         notesHistory
         createdAt
@@ -2732,14 +2805,7 @@ subscription OnUpdateBoxLocation {
       userID
       isActive
       tags
-      image {
-        id
-        altTex
-        src
-        userID
-        createdAt
-        updatedAt
-      }
+      imageID
       images {
         id
         altTex
@@ -2752,6 +2818,14 @@ subscription OnUpdateBoxLocation {
       notes
       createdAt
       updatedAt
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       boxLocations {
         nextToken
       }
@@ -2762,6 +2836,7 @@ subscription OnUpdateBoxLocation {
         hashedSecret
         isActive
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -2779,14 +2854,7 @@ subscription OnUpdateBoxLocation {
       hashedSecret
       isActive
       tags
-      image {
-        id
-        altTex
-        src
-        userID
-        createdAt
-        updatedAt
-      }
+      imageID
       images {
         id
         altTex
@@ -2803,6 +2871,14 @@ subscription OnUpdateBoxLocation {
       notesHistory
       createdAt
       updatedAt
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       org {
         id
         name
@@ -2812,6 +2888,7 @@ subscription OnUpdateBoxLocation {
         primaryDomain
         privacyPolicy
         tags
+        imageID
         notes
         isActive
         createdAt
@@ -2833,30 +2910,7 @@ subscription OnDeleteBoxLocation {
     notes
     isFinal
     tags
-    image {
-      id
-      altTex
-      src
-      userID
-      createdAt
-      updatedAt
-      user {
-        id
-        name
-        orgID
-        hashedSecret
-        isActive
-        tags
-        status
-        statusHistory
-        internalNotes
-        notes
-        rank
-        notesHistory
-        createdAt
-        updatedAt
-      }
-    }
+    imageID
     images {
       id
       altTex
@@ -2871,6 +2925,7 @@ subscription OnDeleteBoxLocation {
         hashedSecret
         isActive
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -2885,6 +2940,31 @@ subscription OnDeleteBoxLocation {
     trackingInfoID
     createdAt
     updatedAt
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        imageID
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     locationInfo {
       id
       locationLabel
@@ -2946,14 +3026,7 @@ subscription OnDeleteBoxLocation {
       barCodePhoto
       qrCodePhoto
       tags
-      image {
-        id
-        altTex
-        src
-        userID
-        createdAt
-        updatedAt
-      }
+      imageID
       images {
         id
         altTex
@@ -2969,6 +3042,14 @@ subscription OnDeleteBoxLocation {
       notesHistory
       createdAt
       updatedAt
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       boxCategory {
         id
         name
@@ -2985,6 +3066,7 @@ subscription OnDeleteBoxLocation {
         primaryDomain
         privacyPolicy
         tags
+        imageID
         notes
         isActive
         createdAt
@@ -3007,6 +3089,7 @@ subscription OnDeleteBoxLocation {
         status
         statusHistory
         tags
+        imageID
         notes
         notesHistory
         createdAt
@@ -3022,14 +3105,7 @@ subscription OnDeleteBoxLocation {
       userID
       isActive
       tags
-      image {
-        id
-        altTex
-        src
-        userID
-        createdAt
-        updatedAt
-      }
+      imageID
       images {
         id
         altTex
@@ -3042,6 +3118,14 @@ subscription OnDeleteBoxLocation {
       notes
       createdAt
       updatedAt
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       boxLocations {
         nextToken
       }
@@ -3052,6 +3136,7 @@ subscription OnDeleteBoxLocation {
         hashedSecret
         isActive
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -3069,14 +3154,7 @@ subscription OnDeleteBoxLocation {
       hashedSecret
       isActive
       tags
-      image {
-        id
-        altTex
-        src
-        userID
-        createdAt
-        updatedAt
-      }
+      imageID
       images {
         id
         altTex
@@ -3093,6 +3171,14 @@ subscription OnDeleteBoxLocation {
       notesHistory
       createdAt
       updatedAt
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       org {
         id
         name
@@ -3102,6 +3188,7 @@ subscription OnDeleteBoxLocation {
         primaryDomain
         privacyPolicy
         tags
+        imageID
         notes
         isActive
         createdAt
@@ -3120,30 +3207,7 @@ subscription OnCreateTrackingInfo {
     userID
     isActive
     tags
-    image {
-      id
-      altTex
-      src
-      userID
-      createdAt
-      updatedAt
-      user {
-        id
-        name
-        orgID
-        hashedSecret
-        isActive
-        tags
-        status
-        statusHistory
-        internalNotes
-        notes
-        rank
-        notesHistory
-        createdAt
-        updatedAt
-      }
-    }
+    imageID
     images {
       id
       altTex
@@ -3158,6 +3222,7 @@ subscription OnCreateTrackingInfo {
         hashedSecret
         isActive
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -3172,6 +3237,31 @@ subscription OnCreateTrackingInfo {
     notes
     createdAt
     updatedAt
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        imageID
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     boxLocations {
       items {
         id
@@ -3182,6 +3272,7 @@ subscription OnCreateTrackingInfo {
         notes
         isFinal
         tags
+        imageID
         isActive
         trackingInfoID
         createdAt
@@ -3196,14 +3287,7 @@ subscription OnCreateTrackingInfo {
       hashedSecret
       isActive
       tags
-      image {
-        id
-        altTex
-        src
-        userID
-        createdAt
-        updatedAt
-      }
+      imageID
       images {
         id
         altTex
@@ -3220,6 +3304,14 @@ subscription OnCreateTrackingInfo {
       notesHistory
       createdAt
       updatedAt
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       org {
         id
         name
@@ -3229,6 +3321,7 @@ subscription OnCreateTrackingInfo {
         primaryDomain
         privacyPolicy
         tags
+        imageID
         notes
         isActive
         createdAt
@@ -3247,30 +3340,7 @@ subscription OnUpdateTrackingInfo {
     userID
     isActive
     tags
-    image {
-      id
-      altTex
-      src
-      userID
-      createdAt
-      updatedAt
-      user {
-        id
-        name
-        orgID
-        hashedSecret
-        isActive
-        tags
-        status
-        statusHistory
-        internalNotes
-        notes
-        rank
-        notesHistory
-        createdAt
-        updatedAt
-      }
-    }
+    imageID
     images {
       id
       altTex
@@ -3285,6 +3355,7 @@ subscription OnUpdateTrackingInfo {
         hashedSecret
         isActive
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -3299,6 +3370,31 @@ subscription OnUpdateTrackingInfo {
     notes
     createdAt
     updatedAt
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        imageID
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     boxLocations {
       items {
         id
@@ -3309,6 +3405,7 @@ subscription OnUpdateTrackingInfo {
         notes
         isFinal
         tags
+        imageID
         isActive
         trackingInfoID
         createdAt
@@ -3323,14 +3420,7 @@ subscription OnUpdateTrackingInfo {
       hashedSecret
       isActive
       tags
-      image {
-        id
-        altTex
-        src
-        userID
-        createdAt
-        updatedAt
-      }
+      imageID
       images {
         id
         altTex
@@ -3347,6 +3437,14 @@ subscription OnUpdateTrackingInfo {
       notesHistory
       createdAt
       updatedAt
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       org {
         id
         name
@@ -3356,6 +3454,7 @@ subscription OnUpdateTrackingInfo {
         primaryDomain
         privacyPolicy
         tags
+        imageID
         notes
         isActive
         createdAt
@@ -3374,30 +3473,7 @@ subscription OnDeleteTrackingInfo {
     userID
     isActive
     tags
-    image {
-      id
-      altTex
-      src
-      userID
-      createdAt
-      updatedAt
-      user {
-        id
-        name
-        orgID
-        hashedSecret
-        isActive
-        tags
-        status
-        statusHistory
-        internalNotes
-        notes
-        rank
-        notesHistory
-        createdAt
-        updatedAt
-      }
-    }
+    imageID
     images {
       id
       altTex
@@ -3412,6 +3488,7 @@ subscription OnDeleteTrackingInfo {
         hashedSecret
         isActive
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -3426,6 +3503,31 @@ subscription OnDeleteTrackingInfo {
     notes
     createdAt
     updatedAt
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        imageID
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     boxLocations {
       items {
         id
@@ -3436,6 +3538,7 @@ subscription OnDeleteTrackingInfo {
         notes
         isFinal
         tags
+        imageID
         isActive
         trackingInfoID
         createdAt
@@ -3450,14 +3553,7 @@ subscription OnDeleteTrackingInfo {
       hashedSecret
       isActive
       tags
-      image {
-        id
-        altTex
-        src
-        userID
-        createdAt
-        updatedAt
-      }
+      imageID
       images {
         id
         altTex
@@ -3474,6 +3570,14 @@ subscription OnDeleteTrackingInfo {
       notesHistory
       createdAt
       updatedAt
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       org {
         id
         name
@@ -3483,6 +3587,7 @@ subscription OnDeleteTrackingInfo {
         primaryDomain
         privacyPolicy
         tags
+        imageID
         notes
         isActive
         createdAt
@@ -3502,30 +3607,7 @@ subscription OnCreateUser {
     hashedSecret
     isActive
     tags
-    image {
-      id
-      altTex
-      src
-      userID
-      createdAt
-      updatedAt
-      user {
-        id
-        name
-        orgID
-        hashedSecret
-        isActive
-        tags
-        status
-        statusHistory
-        internalNotes
-        notes
-        rank
-        notesHistory
-        createdAt
-        updatedAt
-      }
-    }
+    imageID
     images {
       id
       altTex
@@ -3540,6 +3622,7 @@ subscription OnCreateUser {
         hashedSecret
         isActive
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -3558,6 +3641,31 @@ subscription OnCreateUser {
     notesHistory
     createdAt
     updatedAt
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        imageID
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     org {
       id
       name
@@ -3583,14 +3691,7 @@ subscription OnCreateUser {
       primaryDomain
       privacyPolicy
       tags
-      image {
-        id
-        altTex
-        src
-        userID
-        createdAt
-        updatedAt
-      }
+      imageID
       images {
         id
         altTex
@@ -3603,6 +3704,14 @@ subscription OnCreateUser {
       isActive
       createdAt
       updatedAt
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       address {
         id
         label
@@ -3634,6 +3743,7 @@ subscription OnCreateUser {
         notes
         isFinal
         tags
+        imageID
         isActive
         trackingInfoID
         createdAt
@@ -3651,30 +3761,7 @@ subscription OnUpdateUser {
     hashedSecret
     isActive
     tags
-    image {
-      id
-      altTex
-      src
-      userID
-      createdAt
-      updatedAt
-      user {
-        id
-        name
-        orgID
-        hashedSecret
-        isActive
-        tags
-        status
-        statusHistory
-        internalNotes
-        notes
-        rank
-        notesHistory
-        createdAt
-        updatedAt
-      }
-    }
+    imageID
     images {
       id
       altTex
@@ -3689,6 +3776,7 @@ subscription OnUpdateUser {
         hashedSecret
         isActive
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -3707,6 +3795,31 @@ subscription OnUpdateUser {
     notesHistory
     createdAt
     updatedAt
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        imageID
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     org {
       id
       name
@@ -3732,14 +3845,7 @@ subscription OnUpdateUser {
       primaryDomain
       privacyPolicy
       tags
-      image {
-        id
-        altTex
-        src
-        userID
-        createdAt
-        updatedAt
-      }
+      imageID
       images {
         id
         altTex
@@ -3752,6 +3858,14 @@ subscription OnUpdateUser {
       isActive
       createdAt
       updatedAt
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       address {
         id
         label
@@ -3783,6 +3897,7 @@ subscription OnUpdateUser {
         notes
         isFinal
         tags
+        imageID
         isActive
         trackingInfoID
         createdAt
@@ -3800,30 +3915,7 @@ subscription OnDeleteUser {
     hashedSecret
     isActive
     tags
-    image {
-      id
-      altTex
-      src
-      userID
-      createdAt
-      updatedAt
-      user {
-        id
-        name
-        orgID
-        hashedSecret
-        isActive
-        tags
-        status
-        statusHistory
-        internalNotes
-        notes
-        rank
-        notesHistory
-        createdAt
-        updatedAt
-      }
-    }
+    imageID
     images {
       id
       altTex
@@ -3838,6 +3930,7 @@ subscription OnDeleteUser {
         hashedSecret
         isActive
         tags
+        imageID
         status
         statusHistory
         internalNotes
@@ -3856,6 +3949,31 @@ subscription OnDeleteUser {
     notesHistory
     createdAt
     updatedAt
+    image {
+      id
+      altTex
+      src
+      userID
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        imageID
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
     org {
       id
       name
@@ -3881,14 +3999,7 @@ subscription OnDeleteUser {
       primaryDomain
       privacyPolicy
       tags
-      image {
-        id
-        altTex
-        src
-        userID
-        createdAt
-        updatedAt
-      }
+      imageID
       images {
         id
         altTex
@@ -3901,6 +4012,14 @@ subscription OnDeleteUser {
       isActive
       createdAt
       updatedAt
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
       address {
         id
         label
@@ -3932,6 +4051,7 @@ subscription OnDeleteUser {
         notes
         isFinal
         tags
+        imageID
         isActive
         trackingInfoID
         createdAt
