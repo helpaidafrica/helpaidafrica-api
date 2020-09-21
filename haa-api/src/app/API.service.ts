@@ -534,7 +534,8 @@ export type CreateBoxLocationInput = {
   id?: string | null;
   boxID: string;
   locationInfoID: string;
-  userID: string;
+  scanDateTime: string;
+  scannedByUserID: string;
   notes?: string | null;
   isFinal: boolean;
   tags?: Array<string> | null;
@@ -545,7 +546,8 @@ export type CreateBoxLocationInput = {
 export type ModelBoxLocationConditionInput = {
   boxID?: ModelIDInput | null;
   locationInfoID?: ModelIDInput | null;
-  userID?: ModelIDInput | null;
+  scanDateTime?: ModelStringInput | null;
+  scannedByUserID?: ModelIDInput | null;
   notes?: ModelStringInput | null;
   isFinal?: ModelBooleanInput | null;
   tags?: ModelStringInput | null;
@@ -560,7 +562,8 @@ export type UpdateBoxLocationInput = {
   id: string;
   boxID?: string | null;
   locationInfoID?: string | null;
-  userID?: string | null;
+  scanDateTime?: string | null;
+  scannedByUserID?: string | null;
   notes?: string | null;
   isFinal?: boolean | null;
   tags?: Array<string> | null;
@@ -840,7 +843,8 @@ export type ModelBoxLocationFilterInput = {
   id?: ModelIDInput | null;
   boxID?: ModelIDInput | null;
   locationInfoID?: ModelIDInput | null;
-  userID?: ModelIDInput | null;
+  scanDateTime?: ModelStringInput | null;
+  scannedByUserID?: ModelIDInput | null;
   notes?: ModelStringInput | null;
   isFinal?: ModelBooleanInput | null;
   tags?: ModelStringInput | null;
@@ -849,6 +853,16 @@ export type ModelBoxLocationFilterInput = {
   and?: Array<ModelBoxLocationFilterInput | null> | null;
   or?: Array<ModelBoxLocationFilterInput | null> | null;
   not?: ModelBoxLocationFilterInput | null;
+};
+
+export type ModelStringKeyConditionInput = {
+  eq?: string | null;
+  le?: string | null;
+  lt?: string | null;
+  ge?: string | null;
+  gt?: string | null;
+  between?: Array<string | null> | null;
+  beginsWith?: string | null;
 };
 
 export type ModelTrackingInfoFilterInput = {
@@ -1789,7 +1803,8 @@ export type CreateLocationInfoMutation = {
       id: string;
       boxID: string;
       locationInfoID: string;
-      userID: string;
+      scanDateTime: string;
+      scannedByUserID: string;
       notes: string | null;
       isFinal: boolean;
       tags: Array<string> | null;
@@ -1848,7 +1863,8 @@ export type UpdateLocationInfoMutation = {
       id: string;
       boxID: string;
       locationInfoID: string;
-      userID: string;
+      scanDateTime: string;
+      scannedByUserID: string;
       notes: string | null;
       isFinal: boolean;
       tags: Array<string> | null;
@@ -1907,7 +1923,8 @@ export type DeleteLocationInfoMutation = {
       id: string;
       boxID: string;
       locationInfoID: string;
-      userID: string;
+      scanDateTime: string;
+      scannedByUserID: string;
       notes: string | null;
       isFinal: boolean;
       tags: Array<string> | null;
@@ -2749,7 +2766,8 @@ export type CreateBoxMutation = {
       id: string;
       boxID: string;
       locationInfoID: string;
-      userID: string;
+      scanDateTime: string;
+      scannedByUserID: string;
       notes: string | null;
       isFinal: boolean;
       tags: Array<string> | null;
@@ -3018,7 +3036,8 @@ export type UpdateBoxMutation = {
       id: string;
       boxID: string;
       locationInfoID: string;
-      userID: string;
+      scanDateTime: string;
+      scannedByUserID: string;
       notes: string | null;
       isFinal: boolean;
       tags: Array<string> | null;
@@ -3287,7 +3306,8 @@ export type DeleteBoxMutation = {
       id: string;
       boxID: string;
       locationInfoID: string;
-      userID: string;
+      scanDateTime: string;
+      scannedByUserID: string;
       notes: string | null;
       isFinal: boolean;
       tags: Array<string> | null;
@@ -3305,7 +3325,8 @@ export type CreateBoxLocationMutation = {
   id: string;
   boxID: string;
   locationInfoID: string;
-  userID: string;
+  scanDateTime: string;
+  scannedByUserID: string;
   notes: string | null;
   isFinal: boolean;
   tags: Array<string> | null;
@@ -3559,7 +3580,7 @@ export type CreateBoxLocationMutation = {
       updatedAt: string;
     };
   };
-  user: {
+  scannedByUser: {
     __typename: "User";
     id: string;
     name: string;
@@ -3620,7 +3641,8 @@ export type UpdateBoxLocationMutation = {
   id: string;
   boxID: string;
   locationInfoID: string;
-  userID: string;
+  scanDateTime: string;
+  scannedByUserID: string;
   notes: string | null;
   isFinal: boolean;
   tags: Array<string> | null;
@@ -3874,7 +3896,7 @@ export type UpdateBoxLocationMutation = {
       updatedAt: string;
     };
   };
-  user: {
+  scannedByUser: {
     __typename: "User";
     id: string;
     name: string;
@@ -3935,7 +3957,8 @@ export type DeleteBoxLocationMutation = {
   id: string;
   boxID: string;
   locationInfoID: string;
-  userID: string;
+  scanDateTime: string;
+  scannedByUserID: string;
   notes: string | null;
   isFinal: boolean;
   tags: Array<string> | null;
@@ -4189,7 +4212,7 @@ export type DeleteBoxLocationMutation = {
       updatedAt: string;
     };
   };
-  user: {
+  scannedByUser: {
     __typename: "User";
     id: string;
     name: string;
@@ -4315,7 +4338,8 @@ export type CreateTrackingInfoMutation = {
       id: string;
       boxID: string;
       locationInfoID: string;
-      userID: string;
+      scanDateTime: string;
+      scannedByUserID: string;
       notes: string | null;
       isFinal: boolean;
       tags: Array<string> | null;
@@ -4452,7 +4476,8 @@ export type UpdateTrackingInfoMutation = {
       id: string;
       boxID: string;
       locationInfoID: string;
-      userID: string;
+      scanDateTime: string;
+      scannedByUserID: string;
       notes: string | null;
       isFinal: boolean;
       tags: Array<string> | null;
@@ -4589,7 +4614,8 @@ export type DeleteTrackingInfoMutation = {
       id: string;
       boxID: string;
       locationInfoID: string;
-      userID: string;
+      scanDateTime: string;
+      scannedByUserID: string;
       notes: string | null;
       isFinal: boolean;
       tags: Array<string> | null;
@@ -4805,7 +4831,8 @@ export type CreateUserMutation = {
       id: string;
       boxID: string;
       locationInfoID: string;
-      userID: string;
+      scanDateTime: string;
+      scannedByUserID: string;
       notes: string | null;
       isFinal: boolean;
       tags: Array<string> | null;
@@ -4967,7 +4994,8 @@ export type UpdateUserMutation = {
       id: string;
       boxID: string;
       locationInfoID: string;
-      userID: string;
+      scanDateTime: string;
+      scannedByUserID: string;
       notes: string | null;
       isFinal: boolean;
       tags: Array<string> | null;
@@ -5129,7 +5157,8 @@ export type DeleteUserMutation = {
       id: string;
       boxID: string;
       locationInfoID: string;
-      userID: string;
+      scanDateTime: string;
+      scannedByUserID: string;
       notes: string | null;
       isFinal: boolean;
       tags: Array<string> | null;
@@ -5701,7 +5730,8 @@ export type GetLocationInfoQuery = {
       id: string;
       boxID: string;
       locationInfoID: string;
-      userID: string;
+      scanDateTime: string;
+      scannedByUserID: string;
       notes: string | null;
       isFinal: boolean;
       tags: Array<string> | null;
@@ -6347,7 +6377,8 @@ export type GetBoxQuery = {
       id: string;
       boxID: string;
       locationInfoID: string;
-      userID: string;
+      scanDateTime: string;
+      scannedByUserID: string;
       notes: string | null;
       isFinal: boolean;
       tags: Array<string> | null;
@@ -6885,7 +6916,8 @@ export type GetBoxLocationQuery = {
   id: string;
   boxID: string;
   locationInfoID: string;
-  userID: string;
+  scanDateTime: string;
+  scannedByUserID: string;
   notes: string | null;
   isFinal: boolean;
   tags: Array<string> | null;
@@ -7139,7 +7171,7 @@ export type GetBoxLocationQuery = {
       updatedAt: string;
     };
   };
-  user: {
+  scannedByUser: {
     __typename: "User";
     id: string;
     name: string;
@@ -7202,7 +7234,8 @@ export type ListBoxLocationsQuery = {
     id: string;
     boxID: string;
     locationInfoID: string;
-    userID: string;
+    scanDateTime: string;
+    scannedByUserID: string;
     notes: string | null;
     isFinal: boolean;
     tags: Array<string> | null;
@@ -7279,7 +7312,7 @@ export type ListBoxLocationsQuery = {
       createdAt: string;
       updatedAt: string;
     };
-    user: {
+    scannedByUser: {
       __typename: "User";
       id: string;
       name: string;
@@ -7307,7 +7340,8 @@ export type BoxLocationsByBoxIdQuery = {
     id: string;
     boxID: string;
     locationInfoID: string;
-    userID: string;
+    scanDateTime: string;
+    scannedByUserID: string;
     notes: string | null;
     isFinal: boolean;
     tags: Array<string> | null;
@@ -7384,217 +7418,7 @@ export type BoxLocationsByBoxIdQuery = {
       createdAt: string;
       updatedAt: string;
     };
-    user: {
-      __typename: "User";
-      id: string;
-      name: string;
-      orgID: string;
-      hashedSecret: string | null;
-      isActive: boolean;
-      tags: Array<string> | null;
-      status: UserStatus;
-      statusHistory: Array<UserStatus> | null;
-      internalNotes: string | null;
-      notes: string | null;
-      rank: number | null;
-      notesHistory: Array<string> | null;
-      createdAt: string;
-      updatedAt: string;
-    };
-  } | null> | null;
-  nextToken: string | null;
-};
-
-export type BoxUsersByUserIdQuery = {
-  __typename: "ModelBoxLocationConnection";
-  items: Array<{
-    __typename: "BoxLocation";
-    id: string;
-    boxID: string;
-    locationInfoID: string;
-    userID: string;
-    notes: string | null;
-    isFinal: boolean;
-    tags: Array<string> | null;
-    image: {
-      __typename: "Image";
-      id: string;
-      altTex: string | null;
-      src: string;
-      userID: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    images: Array<{
-      __typename: "Image";
-      id: string;
-      altTex: string | null;
-      src: string;
-      userID: string;
-      createdAt: string;
-      updatedAt: string;
-    }> | null;
-    isActive: boolean;
-    trackingInfoID: string;
-    createdAt: string;
-    updatedAt: string;
-    locationInfo: {
-      __typename: "LocationInfo";
-      id: string;
-      locationLabel: string;
-      latitude: string;
-      longitude: string;
-      isActive: boolean;
-      addressID: string;
-      plusCode: string | null;
-      website: Array<string> | null;
-      notes: string | null;
-      notesHistory: Array<string> | null;
-      tags: Array<string> | null;
-      createdAt: string;
-      updatedAt: string;
-    };
-    box: {
-      __typename: "Box";
-      id: string;
-      title: string;
-      contents: string;
-      size: string;
-      orgID: string;
-      shipmentID: string;
-      boxCategoryID: string;
-      isActive: boolean;
-      barCode: string | null;
-      qrCode: string | null;
-      barCodePhoto: string | null;
-      qrCodePhoto: string | null;
-      tags: Array<string> | null;
-      status: BoxStatus;
-      statusHistory: Array<BoxStatus> | null;
-      internalNotes: string | null;
-      notes: string | null;
-      notesHistory: Array<string> | null;
-      createdAt: string;
-      updatedAt: string;
-    };
-    trackingInfo: {
-      __typename: "TrackingInfo";
-      id: string;
-      timeOfDelivery: string;
-      userID: string;
-      isActive: boolean;
-      tags: Array<string> | null;
-      internalNotes: string | null;
-      notes: string | null;
-      createdAt: string;
-      updatedAt: string;
-    };
-    user: {
-      __typename: "User";
-      id: string;
-      name: string;
-      orgID: string;
-      hashedSecret: string | null;
-      isActive: boolean;
-      tags: Array<string> | null;
-      status: UserStatus;
-      statusHistory: Array<UserStatus> | null;
-      internalNotes: string | null;
-      notes: string | null;
-      rank: number | null;
-      notesHistory: Array<string> | null;
-      createdAt: string;
-      updatedAt: string;
-    };
-  } | null> | null;
-  nextToken: string | null;
-};
-
-export type BoxTrackingInfoByTrackingInfoIdQuery = {
-  __typename: "ModelBoxLocationConnection";
-  items: Array<{
-    __typename: "BoxLocation";
-    id: string;
-    boxID: string;
-    locationInfoID: string;
-    userID: string;
-    notes: string | null;
-    isFinal: boolean;
-    tags: Array<string> | null;
-    image: {
-      __typename: "Image";
-      id: string;
-      altTex: string | null;
-      src: string;
-      userID: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    images: Array<{
-      __typename: "Image";
-      id: string;
-      altTex: string | null;
-      src: string;
-      userID: string;
-      createdAt: string;
-      updatedAt: string;
-    }> | null;
-    isActive: boolean;
-    trackingInfoID: string;
-    createdAt: string;
-    updatedAt: string;
-    locationInfo: {
-      __typename: "LocationInfo";
-      id: string;
-      locationLabel: string;
-      latitude: string;
-      longitude: string;
-      isActive: boolean;
-      addressID: string;
-      plusCode: string | null;
-      website: Array<string> | null;
-      notes: string | null;
-      notesHistory: Array<string> | null;
-      tags: Array<string> | null;
-      createdAt: string;
-      updatedAt: string;
-    };
-    box: {
-      __typename: "Box";
-      id: string;
-      title: string;
-      contents: string;
-      size: string;
-      orgID: string;
-      shipmentID: string;
-      boxCategoryID: string;
-      isActive: boolean;
-      barCode: string | null;
-      qrCode: string | null;
-      barCodePhoto: string | null;
-      qrCodePhoto: string | null;
-      tags: Array<string> | null;
-      status: BoxStatus;
-      statusHistory: Array<BoxStatus> | null;
-      internalNotes: string | null;
-      notes: string | null;
-      notesHistory: Array<string> | null;
-      createdAt: string;
-      updatedAt: string;
-    };
-    trackingInfo: {
-      __typename: "TrackingInfo";
-      id: string;
-      timeOfDelivery: string;
-      userID: string;
-      isActive: boolean;
-      tags: Array<string> | null;
-      internalNotes: string | null;
-      notes: string | null;
-      createdAt: string;
-      updatedAt: string;
-    };
-    user: {
+    scannedByUser: {
       __typename: "User";
       id: string;
       name: string;
@@ -7622,7 +7446,8 @@ export type BoxLocationInfoByLocationInfoIdQuery = {
     id: string;
     boxID: string;
     locationInfoID: string;
-    userID: string;
+    scanDateTime: string;
+    scannedByUserID: string;
     notes: string | null;
     isFinal: boolean;
     tags: Array<string> | null;
@@ -7699,7 +7524,219 @@ export type BoxLocationInfoByLocationInfoIdQuery = {
       createdAt: string;
       updatedAt: string;
     };
-    user: {
+    scannedByUser: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  } | null> | null;
+  nextToken: string | null;
+};
+
+export type BoxLocationByScannedUserIdQuery = {
+  __typename: "ModelBoxLocationConnection";
+  items: Array<{
+    __typename: "BoxLocation";
+    id: string;
+    boxID: string;
+    locationInfoID: string;
+    scanDateTime: string;
+    scannedByUserID: string;
+    notes: string | null;
+    isFinal: boolean;
+    tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    isActive: boolean;
+    trackingInfoID: string;
+    createdAt: string;
+    updatedAt: string;
+    locationInfo: {
+      __typename: "LocationInfo";
+      id: string;
+      locationLabel: string;
+      latitude: string;
+      longitude: string;
+      isActive: boolean;
+      addressID: string;
+      plusCode: string | null;
+      website: Array<string> | null;
+      notes: string | null;
+      notesHistory: Array<string> | null;
+      tags: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+    box: {
+      __typename: "Box";
+      id: string;
+      title: string;
+      contents: string;
+      size: string;
+      orgID: string;
+      shipmentID: string;
+      boxCategoryID: string;
+      isActive: boolean;
+      barCode: string | null;
+      qrCode: string | null;
+      barCodePhoto: string | null;
+      qrCodePhoto: string | null;
+      tags: Array<string> | null;
+      status: BoxStatus;
+      statusHistory: Array<BoxStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+    trackingInfo: {
+      __typename: "TrackingInfo";
+      id: string;
+      timeOfDelivery: string;
+      userID: string;
+      isActive: boolean;
+      tags: Array<string> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+    scannedByUser: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  } | null> | null;
+  nextToken: string | null;
+};
+
+export type BoxLocationByTrackingInfoIdQuery = {
+  __typename: "ModelBoxLocationConnection";
+  items: Array<{
+    __typename: "BoxLocation";
+    id: string;
+    boxID: string;
+    locationInfoID: string;
+    scanDateTime: string;
+    scannedByUserID: string;
+    notes: string | null;
+    isFinal: boolean;
+    tags: Array<string> | null;
+    image: {
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    images: Array<{
+      __typename: "Image";
+      id: string;
+      altTex: string | null;
+      src: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    }> | null;
+    isActive: boolean;
+    trackingInfoID: string;
+    createdAt: string;
+    updatedAt: string;
+    locationInfo: {
+      __typename: "LocationInfo";
+      id: string;
+      locationLabel: string;
+      latitude: string;
+      longitude: string;
+      isActive: boolean;
+      addressID: string;
+      plusCode: string | null;
+      website: Array<string> | null;
+      notes: string | null;
+      notesHistory: Array<string> | null;
+      tags: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+    box: {
+      __typename: "Box";
+      id: string;
+      title: string;
+      contents: string;
+      size: string;
+      orgID: string;
+      shipmentID: string;
+      boxCategoryID: string;
+      isActive: boolean;
+      barCode: string | null;
+      qrCode: string | null;
+      barCodePhoto: string | null;
+      qrCodePhoto: string | null;
+      tags: Array<string> | null;
+      status: BoxStatus;
+      statusHistory: Array<BoxStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+    trackingInfo: {
+      __typename: "TrackingInfo";
+      id: string;
+      timeOfDelivery: string;
+      userID: string;
+      isActive: boolean;
+      tags: Array<string> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+    scannedByUser: {
       __typename: "User";
       id: string;
       name: string;
@@ -7846,7 +7883,8 @@ export type GetTrackingInfoQuery = {
       id: string;
       boxID: string;
       locationInfoID: string;
-      userID: string;
+      scanDateTime: string;
+      scannedByUserID: string;
       notes: string | null;
       isFinal: boolean;
       tags: Array<string> | null;
@@ -8121,7 +8159,8 @@ export type GetUserQuery = {
       id: string;
       boxID: string;
       locationInfoID: string;
-      userID: string;
+      scanDateTime: string;
+      scannedByUserID: string;
       notes: string | null;
       isFinal: boolean;
       tags: Array<string> | null;
@@ -9100,7 +9139,8 @@ export type OnCreateLocationInfoSubscription = {
       id: string;
       boxID: string;
       locationInfoID: string;
-      userID: string;
+      scanDateTime: string;
+      scannedByUserID: string;
       notes: string | null;
       isFinal: boolean;
       tags: Array<string> | null;
@@ -9159,7 +9199,8 @@ export type OnUpdateLocationInfoSubscription = {
       id: string;
       boxID: string;
       locationInfoID: string;
-      userID: string;
+      scanDateTime: string;
+      scannedByUserID: string;
       notes: string | null;
       isFinal: boolean;
       tags: Array<string> | null;
@@ -9218,7 +9259,8 @@ export type OnDeleteLocationInfoSubscription = {
       id: string;
       boxID: string;
       locationInfoID: string;
-      userID: string;
+      scanDateTime: string;
+      scannedByUserID: string;
       notes: string | null;
       isFinal: boolean;
       tags: Array<string> | null;
@@ -10060,7 +10102,8 @@ export type OnCreateBoxSubscription = {
       id: string;
       boxID: string;
       locationInfoID: string;
-      userID: string;
+      scanDateTime: string;
+      scannedByUserID: string;
       notes: string | null;
       isFinal: boolean;
       tags: Array<string> | null;
@@ -10329,7 +10372,8 @@ export type OnUpdateBoxSubscription = {
       id: string;
       boxID: string;
       locationInfoID: string;
-      userID: string;
+      scanDateTime: string;
+      scannedByUserID: string;
       notes: string | null;
       isFinal: boolean;
       tags: Array<string> | null;
@@ -10598,7 +10642,8 @@ export type OnDeleteBoxSubscription = {
       id: string;
       boxID: string;
       locationInfoID: string;
-      userID: string;
+      scanDateTime: string;
+      scannedByUserID: string;
       notes: string | null;
       isFinal: boolean;
       tags: Array<string> | null;
@@ -10616,7 +10661,8 @@ export type OnCreateBoxLocationSubscription = {
   id: string;
   boxID: string;
   locationInfoID: string;
-  userID: string;
+  scanDateTime: string;
+  scannedByUserID: string;
   notes: string | null;
   isFinal: boolean;
   tags: Array<string> | null;
@@ -10870,7 +10916,7 @@ export type OnCreateBoxLocationSubscription = {
       updatedAt: string;
     };
   };
-  user: {
+  scannedByUser: {
     __typename: "User";
     id: string;
     name: string;
@@ -10931,7 +10977,8 @@ export type OnUpdateBoxLocationSubscription = {
   id: string;
   boxID: string;
   locationInfoID: string;
-  userID: string;
+  scanDateTime: string;
+  scannedByUserID: string;
   notes: string | null;
   isFinal: boolean;
   tags: Array<string> | null;
@@ -11185,7 +11232,7 @@ export type OnUpdateBoxLocationSubscription = {
       updatedAt: string;
     };
   };
-  user: {
+  scannedByUser: {
     __typename: "User";
     id: string;
     name: string;
@@ -11246,7 +11293,8 @@ export type OnDeleteBoxLocationSubscription = {
   id: string;
   boxID: string;
   locationInfoID: string;
-  userID: string;
+  scanDateTime: string;
+  scannedByUserID: string;
   notes: string | null;
   isFinal: boolean;
   tags: Array<string> | null;
@@ -11500,7 +11548,7 @@ export type OnDeleteBoxLocationSubscription = {
       updatedAt: string;
     };
   };
-  user: {
+  scannedByUser: {
     __typename: "User";
     id: string;
     name: string;
@@ -11626,7 +11674,8 @@ export type OnCreateTrackingInfoSubscription = {
       id: string;
       boxID: string;
       locationInfoID: string;
-      userID: string;
+      scanDateTime: string;
+      scannedByUserID: string;
       notes: string | null;
       isFinal: boolean;
       tags: Array<string> | null;
@@ -11763,7 +11812,8 @@ export type OnUpdateTrackingInfoSubscription = {
       id: string;
       boxID: string;
       locationInfoID: string;
-      userID: string;
+      scanDateTime: string;
+      scannedByUserID: string;
       notes: string | null;
       isFinal: boolean;
       tags: Array<string> | null;
@@ -11900,7 +11950,8 @@ export type OnDeleteTrackingInfoSubscription = {
       id: string;
       boxID: string;
       locationInfoID: string;
-      userID: string;
+      scanDateTime: string;
+      scannedByUserID: string;
       notes: string | null;
       isFinal: boolean;
       tags: Array<string> | null;
@@ -12116,7 +12167,8 @@ export type OnCreateUserSubscription = {
       id: string;
       boxID: string;
       locationInfoID: string;
-      userID: string;
+      scanDateTime: string;
+      scannedByUserID: string;
       notes: string | null;
       isFinal: boolean;
       tags: Array<string> | null;
@@ -12278,7 +12330,8 @@ export type OnUpdateUserSubscription = {
       id: string;
       boxID: string;
       locationInfoID: string;
-      userID: string;
+      scanDateTime: string;
+      scannedByUserID: string;
       notes: string | null;
       isFinal: boolean;
       tags: Array<string> | null;
@@ -12440,7 +12493,8 @@ export type OnDeleteUserSubscription = {
       id: string;
       boxID: string;
       locationInfoID: string;
-      userID: string;
+      scanDateTime: string;
+      scannedByUserID: string;
       notes: string | null;
       isFinal: boolean;
       tags: Array<string> | null;
@@ -13663,7 +13717,8 @@ export class APIService {
               id
               boxID
               locationInfoID
-              userID
+              scanDateTime
+              scannedByUserID
               notes
               isFinal
               tags
@@ -13738,7 +13793,8 @@ export class APIService {
               id
               boxID
               locationInfoID
-              userID
+              scanDateTime
+              scannedByUserID
               notes
               isFinal
               tags
@@ -13813,7 +13869,8 @@ export class APIService {
               id
               boxID
               locationInfoID
-              userID
+              scanDateTime
+              scannedByUserID
               notes
               isFinal
               tags
@@ -14719,7 +14776,8 @@ export class APIService {
               id
               boxID
               locationInfoID
-              userID
+              scanDateTime
+              scannedByUserID
               notes
               isFinal
               tags
@@ -15004,7 +15062,8 @@ export class APIService {
               id
               boxID
               locationInfoID
-              userID
+              scanDateTime
+              scannedByUserID
               notes
               isFinal
               tags
@@ -15289,7 +15348,8 @@ export class APIService {
               id
               boxID
               locationInfoID
-              userID
+              scanDateTime
+              scannedByUserID
               notes
               isFinal
               tags
@@ -15323,7 +15383,8 @@ export class APIService {
           id
           boxID
           locationInfoID
-          userID
+          scanDateTime
+          scannedByUserID
           notes
           isFinal
           tags
@@ -15577,7 +15638,7 @@ export class APIService {
               updatedAt
             }
           }
-          user {
+          scannedByUser {
             __typename
             id
             name
@@ -15654,7 +15715,8 @@ export class APIService {
           id
           boxID
           locationInfoID
-          userID
+          scanDateTime
+          scannedByUserID
           notes
           isFinal
           tags
@@ -15908,7 +15970,7 @@ export class APIService {
               updatedAt
             }
           }
-          user {
+          scannedByUser {
             __typename
             id
             name
@@ -15985,7 +16047,8 @@ export class APIService {
           id
           boxID
           locationInfoID
-          userID
+          scanDateTime
+          scannedByUserID
           notes
           isFinal
           tags
@@ -16239,7 +16302,7 @@ export class APIService {
               updatedAt
             }
           }
-          user {
+          scannedByUser {
             __typename
             id
             name
@@ -16381,7 +16444,8 @@ export class APIService {
               id
               boxID
               locationInfoID
-              userID
+              scanDateTime
+              scannedByUserID
               notes
               isFinal
               tags
@@ -16534,7 +16598,8 @@ export class APIService {
               id
               boxID
               locationInfoID
-              userID
+              scanDateTime
+              scannedByUserID
               notes
               isFinal
               tags
@@ -16687,7 +16752,8 @@ export class APIService {
               id
               boxID
               locationInfoID
-              userID
+              scanDateTime
+              scannedByUserID
               notes
               isFinal
               tags
@@ -16919,7 +16985,8 @@ export class APIService {
               id
               boxID
               locationInfoID
-              userID
+              scanDateTime
+              scannedByUserID
               notes
               isFinal
               tags
@@ -17097,7 +17164,8 @@ export class APIService {
               id
               boxID
               locationInfoID
-              userID
+              scanDateTime
+              scannedByUserID
               notes
               isFinal
               tags
@@ -17275,7 +17343,8 @@ export class APIService {
               id
               boxID
               locationInfoID
-              userID
+              scanDateTime
+              scannedByUserID
               notes
               isFinal
               tags
@@ -18067,7 +18136,8 @@ export class APIService {
               id
               boxID
               locationInfoID
-              userID
+              scanDateTime
+              scannedByUserID
               notes
               isFinal
               tags
@@ -18775,7 +18845,8 @@ export class APIService {
               id
               boxID
               locationInfoID
-              userID
+              scanDateTime
+              scannedByUserID
               notes
               isFinal
               tags
@@ -19472,7 +19543,8 @@ export class APIService {
           id
           boxID
           locationInfoID
-          userID
+          scanDateTime
+          scannedByUserID
           notes
           isFinal
           tags
@@ -19726,7 +19798,7 @@ export class APIService {
               updatedAt
             }
           }
-          user {
+          scannedByUser {
             __typename
             id
             name
@@ -19803,7 +19875,8 @@ export class APIService {
             id
             boxID
             locationInfoID
-            userID
+            scanDateTime
+            scannedByUserID
             notes
             isFinal
             tags
@@ -19880,7 +19953,7 @@ export class APIService {
               createdAt
               updatedAt
             }
-            user {
+            scannedByUser {
               __typename
               id
               name
@@ -19932,7 +20005,8 @@ export class APIService {
             id
             boxID
             locationInfoID
-            userID
+            scanDateTime
+            scannedByUserID
             notes
             isFinal
             tags
@@ -20009,7 +20083,7 @@ export class APIService {
               createdAt
               updatedAt
             }
-            user {
+            scannedByUser {
               __typename
               id
               name
@@ -20054,284 +20128,6 @@ export class APIService {
     )) as any;
     return <BoxLocationsByBoxIdQuery>response.data.BoxLocationsByBoxId;
   }
-  async BoxUsersByUserId(
-    userID?: string,
-    boxID?: ModelIDKeyConditionInput,
-    sortDirection?: ModelSortDirection,
-    filter?: ModelBoxLocationFilterInput,
-    limit?: number,
-    nextToken?: string
-  ): Promise<BoxUsersByUserIdQuery> {
-    const statement = `query BoxUsersByUserId($userID: ID, $boxID: ModelIDKeyConditionInput, $sortDirection: ModelSortDirection, $filter: ModelBoxLocationFilterInput, $limit: Int, $nextToken: String) {
-        BoxUsersByUserId(userID: $userID, boxID: $boxID, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
-          __typename
-          items {
-            __typename
-            id
-            boxID
-            locationInfoID
-            userID
-            notes
-            isFinal
-            tags
-            image {
-              __typename
-              id
-              altTex
-              src
-              userID
-              createdAt
-              updatedAt
-            }
-            images {
-              __typename
-              id
-              altTex
-              src
-              userID
-              createdAt
-              updatedAt
-            }
-            isActive
-            trackingInfoID
-            createdAt
-            updatedAt
-            locationInfo {
-              __typename
-              id
-              locationLabel
-              latitude
-              longitude
-              isActive
-              addressID
-              plusCode
-              website
-              notes
-              notesHistory
-              tags
-              createdAt
-              updatedAt
-            }
-            box {
-              __typename
-              id
-              title
-              contents
-              size
-              orgID
-              shipmentID
-              boxCategoryID
-              isActive
-              barCode
-              qrCode
-              barCodePhoto
-              qrCodePhoto
-              tags
-              status
-              statusHistory
-              internalNotes
-              notes
-              notesHistory
-              createdAt
-              updatedAt
-            }
-            trackingInfo {
-              __typename
-              id
-              timeOfDelivery
-              userID
-              isActive
-              tags
-              internalNotes
-              notes
-              createdAt
-              updatedAt
-            }
-            user {
-              __typename
-              id
-              name
-              orgID
-              hashedSecret
-              isActive
-              tags
-              status
-              statusHistory
-              internalNotes
-              notes
-              rank
-              notesHistory
-              createdAt
-              updatedAt
-            }
-          }
-          nextToken
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {};
-    if (userID) {
-      gqlAPIServiceArguments.userID = userID;
-    }
-    if (boxID) {
-      gqlAPIServiceArguments.boxID = boxID;
-    }
-    if (sortDirection) {
-      gqlAPIServiceArguments.sortDirection = sortDirection;
-    }
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    if (limit) {
-      gqlAPIServiceArguments.limit = limit;
-    }
-    if (nextToken) {
-      gqlAPIServiceArguments.nextToken = nextToken;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <BoxUsersByUserIdQuery>response.data.BoxUsersByUserId;
-  }
-  async BoxTrackingInfoByTrackingInfoId(
-    trackingInfoID?: string,
-    userID?: ModelIDKeyConditionInput,
-    sortDirection?: ModelSortDirection,
-    filter?: ModelBoxLocationFilterInput,
-    limit?: number,
-    nextToken?: string
-  ): Promise<BoxTrackingInfoByTrackingInfoIdQuery> {
-    const statement = `query BoxTrackingInfoByTrackingInfoId($trackingInfoID: ID, $userID: ModelIDKeyConditionInput, $sortDirection: ModelSortDirection, $filter: ModelBoxLocationFilterInput, $limit: Int, $nextToken: String) {
-        BoxTrackingInfoByTrackingInfoId(trackingInfoID: $trackingInfoID, userID: $userID, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
-          __typename
-          items {
-            __typename
-            id
-            boxID
-            locationInfoID
-            userID
-            notes
-            isFinal
-            tags
-            image {
-              __typename
-              id
-              altTex
-              src
-              userID
-              createdAt
-              updatedAt
-            }
-            images {
-              __typename
-              id
-              altTex
-              src
-              userID
-              createdAt
-              updatedAt
-            }
-            isActive
-            trackingInfoID
-            createdAt
-            updatedAt
-            locationInfo {
-              __typename
-              id
-              locationLabel
-              latitude
-              longitude
-              isActive
-              addressID
-              plusCode
-              website
-              notes
-              notesHistory
-              tags
-              createdAt
-              updatedAt
-            }
-            box {
-              __typename
-              id
-              title
-              contents
-              size
-              orgID
-              shipmentID
-              boxCategoryID
-              isActive
-              barCode
-              qrCode
-              barCodePhoto
-              qrCodePhoto
-              tags
-              status
-              statusHistory
-              internalNotes
-              notes
-              notesHistory
-              createdAt
-              updatedAt
-            }
-            trackingInfo {
-              __typename
-              id
-              timeOfDelivery
-              userID
-              isActive
-              tags
-              internalNotes
-              notes
-              createdAt
-              updatedAt
-            }
-            user {
-              __typename
-              id
-              name
-              orgID
-              hashedSecret
-              isActive
-              tags
-              status
-              statusHistory
-              internalNotes
-              notes
-              rank
-              notesHistory
-              createdAt
-              updatedAt
-            }
-          }
-          nextToken
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {};
-    if (trackingInfoID) {
-      gqlAPIServiceArguments.trackingInfoID = trackingInfoID;
-    }
-    if (userID) {
-      gqlAPIServiceArguments.userID = userID;
-    }
-    if (sortDirection) {
-      gqlAPIServiceArguments.sortDirection = sortDirection;
-    }
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    if (limit) {
-      gqlAPIServiceArguments.limit = limit;
-    }
-    if (nextToken) {
-      gqlAPIServiceArguments.nextToken = nextToken;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <BoxTrackingInfoByTrackingInfoIdQuery>(
-      response.data.BoxTrackingInfoByTrackingInfoId
-    );
-  }
   async BoxLocationInfoByLocationInfoId(
     locationInfoID?: string,
     boxID?: ModelIDKeyConditionInput,
@@ -20348,7 +20144,8 @@ export class APIService {
             id
             boxID
             locationInfoID
-            userID
+            scanDateTime
+            scannedByUserID
             notes
             isFinal
             tags
@@ -20425,7 +20222,7 @@ export class APIService {
               createdAt
               updatedAt
             }
-            user {
+            scannedByUser {
               __typename
               id
               name
@@ -20470,6 +20267,288 @@ export class APIService {
     )) as any;
     return <BoxLocationInfoByLocationInfoIdQuery>(
       response.data.BoxLocationInfoByLocationInfoId
+    );
+  }
+  async BoxLocationByScannedUserId(
+    scannedByUserID?: string,
+    scanDateTime?: ModelStringKeyConditionInput,
+    sortDirection?: ModelSortDirection,
+    filter?: ModelBoxLocationFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<BoxLocationByScannedUserIdQuery> {
+    const statement = `query BoxLocationByScannedUserId($scannedByUserID: ID, $scanDateTime: ModelStringKeyConditionInput, $sortDirection: ModelSortDirection, $filter: ModelBoxLocationFilterInput, $limit: Int, $nextToken: String) {
+        BoxLocationByScannedUserId(scannedByUserID: $scannedByUserID, scanDateTime: $scanDateTime, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            boxID
+            locationInfoID
+            scanDateTime
+            scannedByUserID
+            notes
+            isFinal
+            tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            images {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            isActive
+            trackingInfoID
+            createdAt
+            updatedAt
+            locationInfo {
+              __typename
+              id
+              locationLabel
+              latitude
+              longitude
+              isActive
+              addressID
+              plusCode
+              website
+              notes
+              notesHistory
+              tags
+              createdAt
+              updatedAt
+            }
+            box {
+              __typename
+              id
+              title
+              contents
+              size
+              orgID
+              shipmentID
+              boxCategoryID
+              isActive
+              barCode
+              qrCode
+              barCodePhoto
+              qrCodePhoto
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              notesHistory
+              createdAt
+              updatedAt
+            }
+            trackingInfo {
+              __typename
+              id
+              timeOfDelivery
+              userID
+              isActive
+              tags
+              internalNotes
+              notes
+              createdAt
+              updatedAt
+            }
+            scannedByUser {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (scannedByUserID) {
+      gqlAPIServiceArguments.scannedByUserID = scannedByUserID;
+    }
+    if (scanDateTime) {
+      gqlAPIServiceArguments.scanDateTime = scanDateTime;
+    }
+    if (sortDirection) {
+      gqlAPIServiceArguments.sortDirection = sortDirection;
+    }
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <BoxLocationByScannedUserIdQuery>(
+      response.data.BoxLocationByScannedUserId
+    );
+  }
+  async BoxLocationByTrackingInfoId(
+    trackingInfoID?: string,
+    scanDateTime?: ModelStringKeyConditionInput,
+    sortDirection?: ModelSortDirection,
+    filter?: ModelBoxLocationFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<BoxLocationByTrackingInfoIdQuery> {
+    const statement = `query BoxLocationByTrackingInfoId($trackingInfoID: ID, $scanDateTime: ModelStringKeyConditionInput, $sortDirection: ModelSortDirection, $filter: ModelBoxLocationFilterInput, $limit: Int, $nextToken: String) {
+        BoxLocationByTrackingInfoId(trackingInfoID: $trackingInfoID, scanDateTime: $scanDateTime, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            boxID
+            locationInfoID
+            scanDateTime
+            scannedByUserID
+            notes
+            isFinal
+            tags
+            image {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            images {
+              __typename
+              id
+              altTex
+              src
+              userID
+              createdAt
+              updatedAt
+            }
+            isActive
+            trackingInfoID
+            createdAt
+            updatedAt
+            locationInfo {
+              __typename
+              id
+              locationLabel
+              latitude
+              longitude
+              isActive
+              addressID
+              plusCode
+              website
+              notes
+              notesHistory
+              tags
+              createdAt
+              updatedAt
+            }
+            box {
+              __typename
+              id
+              title
+              contents
+              size
+              orgID
+              shipmentID
+              boxCategoryID
+              isActive
+              barCode
+              qrCode
+              barCodePhoto
+              qrCodePhoto
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              notesHistory
+              createdAt
+              updatedAt
+            }
+            trackingInfo {
+              __typename
+              id
+              timeOfDelivery
+              userID
+              isActive
+              tags
+              internalNotes
+              notes
+              createdAt
+              updatedAt
+            }
+            scannedByUser {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (trackingInfoID) {
+      gqlAPIServiceArguments.trackingInfoID = trackingInfoID;
+    }
+    if (scanDateTime) {
+      gqlAPIServiceArguments.scanDateTime = scanDateTime;
+    }
+    if (sortDirection) {
+      gqlAPIServiceArguments.sortDirection = sortDirection;
+    }
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <BoxLocationByTrackingInfoIdQuery>(
+      response.data.BoxLocationByTrackingInfoId
     );
   }
   async ListTrackingInfos(
@@ -20621,7 +20700,8 @@ export class APIService {
               id
               boxID
               locationInfoID
-              userID
+              scanDateTime
+              scannedByUserID
               notes
               isFinal
               tags
@@ -20927,7 +21007,8 @@ export class APIService {
               id
               boxID
               locationInfoID
-              userID
+              scanDateTime
+              scannedByUserID
               notes
               isFinal
               tags
@@ -22074,7 +22155,8 @@ export class APIService {
               id
               boxID
               locationInfoID
-              userID
+              scanDateTime
+              scannedByUserID
               notes
               isFinal
               tags
@@ -22141,7 +22223,8 @@ export class APIService {
               id
               boxID
               locationInfoID
-              userID
+              scanDateTime
+              scannedByUserID
               notes
               isFinal
               tags
@@ -22208,7 +22291,8 @@ export class APIService {
               id
               boxID
               locationInfoID
-              userID
+              scanDateTime
+              scannedByUserID
               notes
               isFinal
               tags
@@ -23080,7 +23164,8 @@ export class APIService {
               id
               boxID
               locationInfoID
-              userID
+              scanDateTime
+              scannedByUserID
               notes
               isFinal
               tags
@@ -23355,7 +23440,8 @@ export class APIService {
               id
               boxID
               locationInfoID
-              userID
+              scanDateTime
+              scannedByUserID
               notes
               isFinal
               tags
@@ -23630,7 +23716,8 @@ export class APIService {
               id
               boxID
               locationInfoID
-              userID
+              scanDateTime
+              scannedByUserID
               notes
               isFinal
               tags
@@ -23656,7 +23743,8 @@ export class APIService {
           id
           boxID
           locationInfoID
-          userID
+          scanDateTime
+          scannedByUserID
           notes
           isFinal
           tags
@@ -23910,7 +23998,7 @@ export class APIService {
               updatedAt
             }
           }
-          user {
+          scannedByUser {
             __typename
             id
             name
@@ -23979,7 +24067,8 @@ export class APIService {
           id
           boxID
           locationInfoID
-          userID
+          scanDateTime
+          scannedByUserID
           notes
           isFinal
           tags
@@ -24233,7 +24322,7 @@ export class APIService {
               updatedAt
             }
           }
-          user {
+          scannedByUser {
             __typename
             id
             name
@@ -24302,7 +24391,8 @@ export class APIService {
           id
           boxID
           locationInfoID
-          userID
+          scanDateTime
+          scannedByUserID
           notes
           isFinal
           tags
@@ -24556,7 +24646,7 @@ export class APIService {
               updatedAt
             }
           }
-          user {
+          scannedByUser {
             __typename
             id
             name
@@ -24690,7 +24780,8 @@ export class APIService {
               id
               boxID
               locationInfoID
-              userID
+              scanDateTime
+              scannedByUserID
               notes
               isFinal
               tags
@@ -24835,7 +24926,8 @@ export class APIService {
               id
               boxID
               locationInfoID
-              userID
+              scanDateTime
+              scannedByUserID
               notes
               isFinal
               tags
@@ -24980,7 +25072,8 @@ export class APIService {
               id
               boxID
               locationInfoID
-              userID
+              scanDateTime
+              scannedByUserID
               notes
               isFinal
               tags
@@ -25202,7 +25295,8 @@ export class APIService {
               id
               boxID
               locationInfoID
-              userID
+              scanDateTime
+              scannedByUserID
               notes
               isFinal
               tags
@@ -25370,7 +25464,8 @@ export class APIService {
               id
               boxID
               locationInfoID
-              userID
+              scanDateTime
+              scannedByUserID
               notes
               isFinal
               tags
@@ -25538,7 +25633,8 @@ export class APIService {
               id
               boxID
               locationInfoID
-              userID
+              scanDateTime
+              scannedByUserID
               notes
               isFinal
               tags

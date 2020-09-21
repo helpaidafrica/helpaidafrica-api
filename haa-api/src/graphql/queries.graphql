@@ -545,7 +545,8 @@ query GetLocationInfo($id: ID!) {
         id
         boxID
         locationInfoID
-        userID
+        scanDateTime
+        scannedByUserID
         notes
         isFinal
         tags
@@ -1143,7 +1144,8 @@ query GetBox($id: ID!) {
         id
         boxID
         locationInfoID
-        userID
+        scanDateTime
+        scannedByUserID
         notes
         isFinal
         tags
@@ -1703,7 +1705,8 @@ query GetBoxLocation($id: ID!) {
     id
     boxID
     locationInfoID
-    userID
+    scanDateTime
+    scannedByUserID
     notes
     isFinal
     tags
@@ -1936,7 +1939,7 @@ query GetBoxLocation($id: ID!) {
         updatedAt
       }
     }
-    user {
+    scannedByUser {
       id
       name
       orgID
@@ -1997,7 +2000,8 @@ query ListBoxLocations(
       id
       boxID
       locationInfoID
-      userID
+      scanDateTime
+      scannedByUserID
       notes
       isFinal
       tags
@@ -2069,7 +2073,7 @@ query ListBoxLocations(
         createdAt
         updatedAt
       }
-      user {
+      scannedByUser {
         id
         name
         orgID
@@ -2109,7 +2113,8 @@ query BoxLocationsByBoxId(
       id
       boxID
       locationInfoID
-      userID
+      scanDateTime
+      scannedByUserID
       notes
       isFinal
       tags
@@ -2181,231 +2186,7 @@ query BoxLocationsByBoxId(
         createdAt
         updatedAt
       }
-      user {
-        id
-        name
-        orgID
-        hashedSecret
-        isActive
-        tags
-        status
-        statusHistory
-        internalNotes
-        notes
-        rank
-        notesHistory
-        createdAt
-        updatedAt
-      }
-    }
-    nextToken
-  }
-}
-query BoxUsersByUserId(
-  $userID: ID
-  $boxID: ModelIDKeyConditionInput
-  $sortDirection: ModelSortDirection
-  $filter: ModelBoxLocationFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  BoxUsersByUserId(
-    userID: $userID
-    boxID: $boxID
-    sortDirection: $sortDirection
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-  ) {
-    items {
-      id
-      boxID
-      locationInfoID
-      userID
-      notes
-      isFinal
-      tags
-      image {
-        id
-        altTex
-        src
-        userID
-        createdAt
-        updatedAt
-      }
-      images {
-        id
-        altTex
-        src
-        userID
-        createdAt
-        updatedAt
-      }
-      isActive
-      trackingInfoID
-      createdAt
-      updatedAt
-      locationInfo {
-        id
-        locationLabel
-        latitude
-        longitude
-        isActive
-        addressID
-        plusCode
-        website
-        notes
-        notesHistory
-        tags
-        createdAt
-        updatedAt
-      }
-      box {
-        id
-        title
-        contents
-        size
-        orgID
-        shipmentID
-        boxCategoryID
-        isActive
-        barCode
-        qrCode
-        barCodePhoto
-        qrCodePhoto
-        tags
-        status
-        statusHistory
-        internalNotes
-        notes
-        notesHistory
-        createdAt
-        updatedAt
-      }
-      trackingInfo {
-        id
-        timeOfDelivery
-        userID
-        isActive
-        tags
-        internalNotes
-        notes
-        createdAt
-        updatedAt
-      }
-      user {
-        id
-        name
-        orgID
-        hashedSecret
-        isActive
-        tags
-        status
-        statusHistory
-        internalNotes
-        notes
-        rank
-        notesHistory
-        createdAt
-        updatedAt
-      }
-    }
-    nextToken
-  }
-}
-query BoxTrackingInfoByTrackingInfoId(
-  $trackingInfoID: ID
-  $userID: ModelIDKeyConditionInput
-  $sortDirection: ModelSortDirection
-  $filter: ModelBoxLocationFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  BoxTrackingInfoByTrackingInfoId(
-    trackingInfoID: $trackingInfoID
-    userID: $userID
-    sortDirection: $sortDirection
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-  ) {
-    items {
-      id
-      boxID
-      locationInfoID
-      userID
-      notes
-      isFinal
-      tags
-      image {
-        id
-        altTex
-        src
-        userID
-        createdAt
-        updatedAt
-      }
-      images {
-        id
-        altTex
-        src
-        userID
-        createdAt
-        updatedAt
-      }
-      isActive
-      trackingInfoID
-      createdAt
-      updatedAt
-      locationInfo {
-        id
-        locationLabel
-        latitude
-        longitude
-        isActive
-        addressID
-        plusCode
-        website
-        notes
-        notesHistory
-        tags
-        createdAt
-        updatedAt
-      }
-      box {
-        id
-        title
-        contents
-        size
-        orgID
-        shipmentID
-        boxCategoryID
-        isActive
-        barCode
-        qrCode
-        barCodePhoto
-        qrCodePhoto
-        tags
-        status
-        statusHistory
-        internalNotes
-        notes
-        notesHistory
-        createdAt
-        updatedAt
-      }
-      trackingInfo {
-        id
-        timeOfDelivery
-        userID
-        isActive
-        tags
-        internalNotes
-        notes
-        createdAt
-        updatedAt
-      }
-      user {
+      scannedByUser {
         id
         name
         orgID
@@ -2445,7 +2226,8 @@ query BoxLocationInfoByLocationInfoId(
       id
       boxID
       locationInfoID
-      userID
+      scanDateTime
+      scannedByUserID
       notes
       isFinal
       tags
@@ -2517,7 +2299,233 @@ query BoxLocationInfoByLocationInfoId(
         createdAt
         updatedAt
       }
-      user {
+      scannedByUser {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
+    nextToken
+  }
+}
+query BoxLocationByScannedUserId(
+  $scannedByUserID: ID
+  $scanDateTime: ModelStringKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelBoxLocationFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  BoxLocationByScannedUserId(
+    scannedByUserID: $scannedByUserID
+    scanDateTime: $scanDateTime
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      boxID
+      locationInfoID
+      scanDateTime
+      scannedByUserID
+      notes
+      isFinal
+      tags
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
+      images {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
+      isActive
+      trackingInfoID
+      createdAt
+      updatedAt
+      locationInfo {
+        id
+        locationLabel
+        latitude
+        longitude
+        isActive
+        addressID
+        plusCode
+        website
+        notes
+        notesHistory
+        tags
+        createdAt
+        updatedAt
+      }
+      box {
+        id
+        title
+        contents
+        size
+        orgID
+        shipmentID
+        boxCategoryID
+        isActive
+        barCode
+        qrCode
+        barCodePhoto
+        qrCodePhoto
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+      }
+      trackingInfo {
+        id
+        timeOfDelivery
+        userID
+        isActive
+        tags
+        internalNotes
+        notes
+        createdAt
+        updatedAt
+      }
+      scannedByUser {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
+    nextToken
+  }
+}
+query BoxLocationByTrackingInfoId(
+  $trackingInfoID: ID
+  $scanDateTime: ModelStringKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelBoxLocationFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  BoxLocationByTrackingInfoId(
+    trackingInfoID: $trackingInfoID
+    scanDateTime: $scanDateTime
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      boxID
+      locationInfoID
+      scanDateTime
+      scannedByUserID
+      notes
+      isFinal
+      tags
+      image {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
+      images {
+        id
+        altTex
+        src
+        userID
+        createdAt
+        updatedAt
+      }
+      isActive
+      trackingInfoID
+      createdAt
+      updatedAt
+      locationInfo {
+        id
+        locationLabel
+        latitude
+        longitude
+        isActive
+        addressID
+        plusCode
+        website
+        notes
+        notesHistory
+        tags
+        createdAt
+        updatedAt
+      }
+      box {
+        id
+        title
+        contents
+        size
+        orgID
+        shipmentID
+        boxCategoryID
+        isActive
+        barCode
+        qrCode
+        barCodePhoto
+        qrCodePhoto
+        tags
+        status
+        statusHistory
+        internalNotes
+        notes
+        notesHistory
+        createdAt
+        updatedAt
+      }
+      trackingInfo {
+        id
+        timeOfDelivery
+        userID
+        isActive
+        tags
+        internalNotes
+        notes
+        createdAt
+        updatedAt
+      }
+      scannedByUser {
         id
         name
         orgID
@@ -2656,7 +2664,8 @@ query GetTrackingInfo($id: ID!) {
         id
         boxID
         locationInfoID
-        userID
+        scanDateTime
+        scannedByUserID
         notes
         isFinal
         tags
@@ -2911,7 +2920,8 @@ query GetUser($id: ID!) {
         id
         boxID
         locationInfoID
-        userID
+        scanDateTime
+        scannedByUserID
         notes
         isFinal
         tags

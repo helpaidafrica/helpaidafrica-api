@@ -275,9 +275,10 @@ type Box
 type BoxLocation
 @model
 @key(name: "locationForBox", fields: ["boxID", "locationInfoID"], queryField: "BoxLocationsByBoxId")
-@key(name: "userForBox", fields: ["userID", "boxID"], queryField: "BoxUsersByUserId")
-@key(name: "trackingInfoForBox", fields: ["trackingInfoID", "userID"], queryField: "BoxTrackingInfoByTrackingInfoId")
 @key(name: "byBoxLocationInfo", fields: ["locationInfoID", "boxID"], queryField: "BoxLocationInfoByLocationInfoId")
+@key(name: "scannedUserForBoxLocation", fields: ["scannedByUserID", "scanDateTime"], queryField: "BoxLocationByScannedUserId")
+@key(name: "trackingInfoForBox", fields: ["trackingInfoID", "scanDateTime"], queryField: "BoxLocationByTrackingInfoId")
+
 @auth(
   rules: [
    { allow: owner },
@@ -292,9 +293,9 @@ type BoxLocation
 
   locationInfoID: ID!
   locationInfo: LocationInfo! @connection(fields: ["locationInfoID"])
-
-  userID: ID!
-  user: User! @connection(fields: ["userID"])
+  scanDateTime: AWSDateTime!
+  scannedByUserID: ID!
+  scannedByUser: User! @connection(fields: ["scannedByUserID"])
 
   notes: String
   isFinal: Boolean!
@@ -357,5 +358,5 @@ type User
   notes: String
   rank: Float
   notesHistory: [String!]
-  boxLocations: [BoxLocation]  @connection(keyName: "userForBox", fields: ["id"])
+  boxLocations: [BoxLocation] @connection(keyName: "scannedUserForBoxLocation", fields: ["id"])
 }

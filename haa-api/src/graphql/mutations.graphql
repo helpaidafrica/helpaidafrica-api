@@ -905,7 +905,8 @@ mutation CreateLocationInfo(
         id
         boxID
         locationInfoID
-        userID
+        scanDateTime
+        scannedByUserID
         notes
         isFinal
         tags
@@ -963,7 +964,8 @@ mutation UpdateLocationInfo(
         id
         boxID
         locationInfoID
-        userID
+        scanDateTime
+        scannedByUserID
         notes
         isFinal
         tags
@@ -1021,7 +1023,8 @@ mutation DeleteLocationInfo(
         id
         boxID
         locationInfoID
-        userID
+        scanDateTime
+        scannedByUserID
         notes
         isFinal
         tags
@@ -1809,7 +1812,8 @@ mutation CreateBox(
         id
         boxID
         locationInfoID
-        userID
+        scanDateTime
+        scannedByUserID
         notes
         isFinal
         tags
@@ -2057,7 +2061,8 @@ mutation UpdateBox(
         id
         boxID
         locationInfoID
-        userID
+        scanDateTime
+        scannedByUserID
         notes
         isFinal
         tags
@@ -2305,7 +2310,8 @@ mutation DeleteBox(
         id
         boxID
         locationInfoID
-        userID
+        scanDateTime
+        scannedByUserID
         notes
         isFinal
         tags
@@ -2326,7 +2332,8 @@ mutation CreateBoxLocation(
     id
     boxID
     locationInfoID
-    userID
+    scanDateTime
+    scannedByUserID
     notes
     isFinal
     tags
@@ -2559,7 +2566,7 @@ mutation CreateBoxLocation(
         updatedAt
       }
     }
-    user {
+    scannedByUser {
       id
       name
       orgID
@@ -2618,7 +2625,8 @@ mutation UpdateBoxLocation(
     id
     boxID
     locationInfoID
-    userID
+    scanDateTime
+    scannedByUserID
     notes
     isFinal
     tags
@@ -2851,7 +2859,7 @@ mutation UpdateBoxLocation(
         updatedAt
       }
     }
-    user {
+    scannedByUser {
       id
       name
       orgID
@@ -2910,7 +2918,8 @@ mutation DeleteBoxLocation(
     id
     boxID
     locationInfoID
-    userID
+    scanDateTime
+    scannedByUserID
     notes
     isFinal
     tags
@@ -3143,7 +3152,7 @@ mutation DeleteBoxLocation(
         updatedAt
       }
     }
-    user {
+    scannedByUser {
       id
       name
       orgID
@@ -3261,7 +3270,8 @@ mutation CreateTrackingInfo(
         id
         boxID
         locationInfoID
-        userID
+        scanDateTime
+        scannedByUserID
         notes
         isFinal
         tags
@@ -3390,7 +3400,8 @@ mutation UpdateTrackingInfo(
         id
         boxID
         locationInfoID
-        userID
+        scanDateTime
+        scannedByUserID
         notes
         isFinal
         tags
@@ -3519,7 +3530,8 @@ mutation DeleteTrackingInfo(
         id
         boxID
         locationInfoID
-        userID
+        scanDateTime
+        scannedByUserID
         notes
         isFinal
         tags
@@ -3719,7 +3731,8 @@ mutation CreateUser(
         id
         boxID
         locationInfoID
-        userID
+        scanDateTime
+        scannedByUserID
         notes
         isFinal
         tags
@@ -3870,7 +3883,8 @@ mutation UpdateUser(
         id
         boxID
         locationInfoID
-        userID
+        scanDateTime
+        scannedByUserID
         notes
         isFinal
         tags
@@ -4021,7 +4035,8 @@ mutation DeleteUser(
         id
         boxID
         locationInfoID
-        userID
+        scanDateTime
+        scannedByUserID
         notes
         isFinal
         tags
