@@ -3,17 +3,23 @@
 ## About our API
 Use our GraphQL API to track donation boxes using a simple QR Code or unique box number.
 
-# GraphQL Schema
-[GraphQL Schema](https://github.com/helpaidafrica/helpaidafrica-api/blob/master/haa-api/amplify/backend/api/haaapi/schema.graphql)
-
-# wiki link
+## Visit our Wiki
 [wiki link](https://github.com/helpaidafrica/helpaidafrica-api/wiki)
 
-# Example Graphql Query
+## Launch AWS CloudFromation stack
+You can launch an AWS CloudFormation stack with our template, and AWS CloudFormation automatically provisions the specified resources and bootstraps the software running on them.
 
-## Get Delivered Boxes
+[![Launch Stack](https://cdn.rawgit.com/buildkite/cloudformation-launch-stack-button-svg/master/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=us-west-1#/stacks/new?stackName=HelpAidAfricaBoxAPIStack&templateURL=https://s3-us-west-1.amazonaws.com/track.helpaidafrica.org/aws/template/helpaidafrica-api-stack.template)
+
+---
+## GraphQL
+[GraphQL Schema](https://github.com/helpaidafrica/helpaidafrica-api/blob/master/haa-api/amplify/backend/api/haaapi/schema.graphql)
+
+---
+## Queries
+
+### Get Delivered Boxes
 ```graphql
-
 query GetDeliveredBoxes {
  BoxByStatus(status: DELIVERED, filter: {isActive: {eq: true}}) {
  items {
@@ -26,10 +32,9 @@ query GetDeliveredBoxes {
       }
   }
 }
-
 ```
 
-## Response
+#### Response
 ```json
 {
   "data": {
@@ -55,12 +60,10 @@ query GetDeliveredBoxes {
     }
   }
 }
-
 ```
-## Get Box Info (detailed)
+### Get Box Info (detailed)
 
 ```graphql
-
 query BoxInfo {
   getBox(id: "2020-08-A-Box-1") {
     id
@@ -122,9 +125,8 @@ query BoxInfo {
     }
   }
 }
-
 ```
-## Response
+### Response
 
 ```json
 {
@@ -193,6 +195,7 @@ query BoxInfo {
 ```
 
 ---
+# Use-case and Requirement Slides
 
 ![alt text](https://github.com/helpaidafrica/helpaidafrica-api/blob/master/public/assets/img/5%20Reasons%20for%20HAA%20box%20Api-small.png?raw=true "5 Reasons for help aid Africa Box API")
 
