@@ -47,7 +47,7 @@ mutation Track_Box_1 (
   $boxID: ID = "2020-08-A-Box-1",
   $boxTrackingImageId: ID = "box_1_tracking_image_id",
   $status: BoxStatus = DELIVERED,
-  $scan_date: AWSDateTime = "2020-09-19T00:00:00Z"
+  $scan_date: AWSDateTime = "2020-09-19T10:00:00Z"
   ) {
 
     # add tracking location for box 1 
@@ -82,7 +82,7 @@ mutation Track_Box_2 (
   $isActive: Boolean = true,
   $boxID: ID = "2020-08-A-Box-2",
   $status: BoxStatus = DELIVERED ,
-  $scan_date: AWSDateTime = "2020-09-19T00:00:00Z"  
+  $scan_date: AWSDateTime = "2020-09-19T14:00:00Z"  
   ) {
 
     # add tracking location for box 2
