@@ -24,12 +24,15 @@ mutation createTrackingInfo(
     timeOfDelivery: "2020-09-21T00:00:00Z", 
     userID: $userID, notes: $Notes, 
     id: "1", 
-    image: $imageID
+    imageID: $imageID
     }) {
-    id
-    isActive
-    timeOfDelivery
-    userID
+      id
+      isActive
+      timeOfDelivery
+      userID
+      image { id src user { id name}}
+      notes
+      createdAt
   }
 }
 
@@ -43,7 +46,8 @@ mutation Track_Box_1 (
   $isActive: Boolean = true,
   $boxID: ID = "2020-08-A-Box-1",
   $boxTrackingImageId: ID = "box_1_tracking_image_id",
-  $status: BoxStatus = DELIVERED   
+  $status: BoxStatus = DELIVERED,
+  $scan_date: AWSDateTime = "2020-09-19T00:00:00Z"
   ) {
 
     # add tracking location for box 1 
@@ -54,9 +58,11 @@ mutation Track_Box_1 (
       isFinal: $isFinal, 
       locationInfoID: $locationInfoID, 
       trackingInfoID: $trackingInfoID, 
-      userID: $userID, 
-      image: $boxTrackingImageId })
-    { boxID    isActive    trackingInfoID }
+      scannedByUserID: $userID, 
+      imageID: $boxTrackingImageId,
+      scanDateTime:$scan_date
+    })
+    { boxID    isActive    trackingInfoID scanDateTime scannedByUserID}
 
     # update box 1 status 
     update_boxstatus: updateBox(input: { 
@@ -67,6 +73,7 @@ mutation Track_Box_1 (
 }
 
 
+
 mutation Track_Box_2 (
   $trackingInfoID: ID = "1",
   $userID: ID = "1", 
@@ -74,20 +81,23 @@ mutation Track_Box_2 (
   $isFinal: Boolean = true, 
   $isActive: Boolean = true,
   $boxID: ID = "2020-08-A-Box-2",
-  $status: BoxStatus = DELIVERED   
+  $status: BoxStatus = DELIVERED ,
+  $scan_date: AWSDateTime = "2020-09-19T00:00:00Z"  
   ) {
 
     # add tracking location for box 2
-    track_box_1 : createBoxLocation
+    track_box_2 : createBoxLocation
     (input: {
       boxID: $boxID, 
       isActive: $isActive, 
       isFinal: $isFinal, 
       locationInfoID: $locationInfoID, 
       trackingInfoID: $trackingInfoID, 
-      userID: $userID
+      scannedByUserID: $userID,
+      scanDateTime:$scan_date
+      imageID: "0" # unknown image
     })
-    { boxID    isActive    trackingInfoID }
+    { boxID    isActive    trackingInfoID  scanDateTime scannedByUserID}
 
     # update box 2 status 
     update_boxstatus: updateBox(input: { 
