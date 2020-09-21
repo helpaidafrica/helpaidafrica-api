@@ -1,0 +1,41 @@
+query GetHealthGenStatus {
+  listApihealthCheckInfos(filter: {isActive: {eq: true}}) {
+    items {
+      id
+      isActive
+      lastUpdated
+      proceed
+      message
+      status
+      updatedAt
+    }
+  }
+}
+
+# API is down for maintenance
+mutation APisDown {
+  # expire older status
+  updateApihealthCheckInfo(input: {id: "3", isActive: false}, condition: {isActive: {eq: true}}) {
+    id
+    createdAt
+    updatedAt
+    message
+    proceed
+  }
+  createApihealthCheckInfo(input: 
+    {
+      isActive: true, 
+      lastUpdated: "2020-09-17T00:00Z", 
+      proceed: false, 
+      status: DOWN, 
+      message: "API is down for maintenance."
+    }) {
+    id
+    isActive
+    lastUpdated
+    message
+    proceed
+    status
+    updatedAt
+  }
+}
