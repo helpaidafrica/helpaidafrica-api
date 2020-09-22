@@ -13,7 +13,8 @@
     },
     "categories": {
       "auth": {
-        "haaapi0a8b57ab": {}
+        "haaapi0a8b57ab": {},
+        "userPoolGroups": {}
       },
       "function": {
         "haaapi0a8b57abPostConfirmation": {

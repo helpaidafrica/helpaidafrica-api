@@ -4,31 +4,32 @@
 Use our GraphQL API to track donation boxes using a simple QR Code or unique box number.
 
 ## Technology stack
-Our API is based on GraphQL. We use the following AWS services
+Our GarphQL API is hosted on AWS. We use the following AWS services
 - AWS Appsync
 - AWS DynamoDb
+- AWS Lambda Functions
 - AWS S3
 - AWS Cloud Formation
 - AWS Amplify Cli
 
-You can launch an AWS CloudFormation stack with our template, and AWS CloudFormation automatically provisions the specified resources and bootstraps the software running on them.
+Click below to launch an AWS CloudFormation stack with our template, and AWS CloudFormation automatically provisions the specified resources and bootstraps the software running on them.
 
 [![Launch Stack](https://cdn.rawgit.com/buildkite/cloudformation-launch-stack-button-svg/master/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=us-west-1#/stacks/new?stackName=HelpAidAfricaBoxAPIStack&templateURL=https://s3-us-west-1.amazonaws.com/track.helpaidafrica.org/aws/template/helpaidafrica-api-stack.template)
 
 ---
 ## GraphQL
-Our major GraphQL types are structured like this:
+GraphQL types are composed like this:
 - [Org] type contains one or more [Box] types
 - [Shipment] type contains one or more [Box] types
 - [BoxCategory] type contains one or more [Box] types
 - [TrackingInfo] type contains one or more [BoxLocation] and [Image] types. 
-- [BoxLocation] type contains one or more [LocationInfo] type for a [Box]
-- [LocationInfo] type contains a [Phone], [Address], [Image] with Lat/Long
+- [BoxLocation] type contains one or more [LocationInfo] types for a [Box]
+- [LocationInfo] type contains [Phone], [Address], and [Image] types with Lat/Long
 
 Other types 
 - [ApihealthCheckInfo] 
 
-Our GraphQL schema is located [here](https://github.com/helpaidafrica/helpaidafrica-api/blob/master/haa-api/amplify/backend/api/haaapi/schema.graphql).
+GraphQL schema is located [here](https://github.com/helpaidafrica/helpaidafrica-api/blob/master/haa-api/amplify/backend/api/haaapi/schema.graphql).
 
 
 ---
