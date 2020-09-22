@@ -18,12 +18,12 @@ You can launch an AWS CloudFormation stack with our template, and AWS CloudForma
 ---
 ## GraphQL
 Our major GraphQL types are structured like this:
-- [Org] contains one or more [Box]
-- [Shipment] contains one or more [Box]
-- [BoxCategory] contains one or more [Box]
-- [TrackingInfo] contains one or more [BoxLocation], , [Image]  
-- [BoxLocation] contains one or more [LocationInfo] for a [Box]
-- [Location Info] contains a [Phone], [Address], [Image] and Lat/Long
+- [Org] type contains one or more [Box] types
+- [Shipment] type contains one or more [Box] types
+- [BoxCategory] type contains one or more [Box] types
+- [TrackingInfo] type contains one or more [BoxLocation] and [Image] types. 
+- [BoxLocation] type contains one or more [LocationInfo] type for a [Box]
+- [LocationInfo] type contains a [Phone], [Address], [Image] with Lat/Long
 
 Other types 
 - [ApihealthCheckInfo] 
