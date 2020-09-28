@@ -2,21 +2,26 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 import { Injectable } from "@angular/core";
-import API, { graphqlOperation } from "@aws-amplify/api";
-import { GraphQLResult } from "@aws-amplify/api/lib/types";
+import API, { graphqlOperation, GraphQLResult } from "@aws-amplify/api-graphql";
 import { Observable } from "zen-observable-ts";
 
 export type CreateImageInput = {
   id?: string | null;
-  altTex?: string | null;
+  label?: string | null;
+  altText?: string | null;
   src: string;
   userID: string;
+  dateAdded: string;
+  isActive: boolean;
 };
 
 export type ModelImageConditionInput = {
-  altTex?: ModelStringInput | null;
+  label?: ModelStringInput | null;
+  altText?: ModelStringInput | null;
   src?: ModelStringInput | null;
   userID?: ModelIDInput | null;
+  dateAdded?: ModelStringInput | null;
+  isActive?: ModelBooleanInput | null;
   and?: Array<ModelImageConditionInput | null> | null;
   or?: Array<ModelImageConditionInput | null> | null;
   not?: ModelImageConditionInput | null;
@@ -77,6 +82,13 @@ export type ModelIDInput = {
   size?: ModelSizeInput | null;
 };
 
+export type ModelBooleanInput = {
+  ne?: boolean | null;
+  eq?: boolean | null;
+  attributeExists?: boolean | null;
+  attributeType?: ModelAttributeTypes | null;
+};
+
 export enum UserStatus {
   PENDING_VERIFICATION = "PENDING_VERIFICATION",
   ACTIVE = "ACTIVE",
@@ -86,9 +98,12 @@ export enum UserStatus {
 
 export type UpdateImageInput = {
   id: string;
-  altTex?: string | null;
+  label?: string | null;
+  altText?: string | null;
   src?: string | null;
   userID?: string | null;
+  dateAdded?: string | null;
+  isActive?: boolean | null;
 };
 
 export type DeleteImageInput = {
@@ -98,22 +113,15 @@ export type DeleteImageInput = {
 export type CreateBoxCategoryInput = {
   id?: string | null;
   name: string;
-  active: boolean;
+  isActive: boolean;
 };
 
 export type ModelBoxCategoryConditionInput = {
   name?: ModelStringInput | null;
-  active?: ModelBooleanInput | null;
+  isActive?: ModelBooleanInput | null;
   and?: Array<ModelBoxCategoryConditionInput | null> | null;
   or?: Array<ModelBoxCategoryConditionInput | null> | null;
   not?: ModelBoxCategoryConditionInput | null;
-};
-
-export type ModelBooleanInput = {
-  ne?: boolean | null;
-  eq?: boolean | null;
-  attributeExists?: boolean | null;
-  attributeType?: ModelAttributeTypes | null;
 };
 
 export enum BoxStatus {
@@ -138,7 +146,7 @@ export enum BoxStatus {
 export type UpdateBoxCategoryInput = {
   id: string;
   name?: string | null;
-  active?: boolean | null;
+  isActive?: boolean | null;
 };
 
 export type DeleteBoxCategoryInput = {
@@ -323,8 +331,8 @@ export type DeleteOrgInput = {
 export type CreateLocationInfoInput = {
   id?: string | null;
   locationLabel: string;
-  latitude: string;
-  longitude: string;
+  latitude: number;
+  longitude: number;
   isActive: boolean;
   addressID: string;
   plusCode?: string | null;
@@ -336,8 +344,8 @@ export type CreateLocationInfoInput = {
 
 export type ModelLocationInfoConditionInput = {
   locationLabel?: ModelStringInput | null;
-  latitude?: ModelStringInput | null;
-  longitude?: ModelStringInput | null;
+  latitude?: ModelFloatInput | null;
+  longitude?: ModelFloatInput | null;
   isActive?: ModelBooleanInput | null;
   addressID?: ModelIDInput | null;
   plusCode?: ModelStringInput | null;
@@ -350,11 +358,23 @@ export type ModelLocationInfoConditionInput = {
   not?: ModelLocationInfoConditionInput | null;
 };
 
+export type ModelFloatInput = {
+  ne?: number | null;
+  eq?: number | null;
+  le?: number | null;
+  lt?: number | null;
+  ge?: number | null;
+  gt?: number | null;
+  between?: Array<number | null> | null;
+  attributeExists?: boolean | null;
+  attributeType?: ModelAttributeTypes | null;
+};
+
 export type UpdateLocationInfoInput = {
   id: string;
   locationLabel?: string | null;
-  latitude?: string | null;
-  longitude?: string | null;
+  latitude?: number | null;
+  longitude?: number | null;
   isActive?: boolean | null;
   addressID?: string | null;
   plusCode?: string | null;
@@ -546,11 +566,15 @@ export type CreateBoxLocationInput = {
   scanDateTime: string;
   scannedByUserID: string;
   notes?: string | null;
-  isFinal: boolean;
+  isFinal?: boolean | null;
   tags?: Array<string> | null;
   imageID: string;
   isActive: boolean;
   trackingInfoID: string;
+  isFlagged?: boolean | null;
+  FlagNotes?: string | null;
+  boxStatus: BoxStatus;
+  destinationLocationInfoID: string;
 };
 
 export type ModelBoxLocationConditionInput = {
@@ -564,6 +588,10 @@ export type ModelBoxLocationConditionInput = {
   imageID?: ModelIDInput | null;
   isActive?: ModelBooleanInput | null;
   trackingInfoID?: ModelIDInput | null;
+  isFlagged?: ModelBooleanInput | null;
+  FlagNotes?: ModelStringInput | null;
+  boxStatus?: ModelBoxStatusInput | null;
+  destinationLocationInfoID?: ModelIDInput | null;
   and?: Array<ModelBoxLocationConditionInput | null> | null;
   or?: Array<ModelBoxLocationConditionInput | null> | null;
   not?: ModelBoxLocationConditionInput | null;
@@ -581,6 +609,10 @@ export type UpdateBoxLocationInput = {
   imageID?: string | null;
   isActive?: boolean | null;
   trackingInfoID?: string | null;
+  isFlagged?: boolean | null;
+  FlagNotes?: string | null;
+  boxStatus?: BoxStatus | null;
+  destinationLocationInfoID?: string | null;
 };
 
 export type DeleteBoxLocationInput = {
@@ -672,18 +704,6 @@ export type ModelUserStatusListInput = {
   notContains?: UserStatus | null;
 };
 
-export type ModelFloatInput = {
-  ne?: number | null;
-  eq?: number | null;
-  le?: number | null;
-  lt?: number | null;
-  ge?: number | null;
-  gt?: number | null;
-  between?: Array<number | null> | null;
-  attributeExists?: boolean | null;
-  attributeType?: ModelAttributeTypes | null;
-};
-
 export type UpdateUserInput = {
   id: string;
   name?: string | null;
@@ -706,18 +726,36 @@ export type DeleteUserInput = {
 
 export type ModelImageFilterInput = {
   id?: ModelIDInput | null;
-  altTex?: ModelStringInput | null;
+  label?: ModelStringInput | null;
+  altText?: ModelStringInput | null;
   src?: ModelStringInput | null;
   userID?: ModelIDInput | null;
+  dateAdded?: ModelStringInput | null;
+  isActive?: ModelBooleanInput | null;
   and?: Array<ModelImageFilterInput | null> | null;
   or?: Array<ModelImageFilterInput | null> | null;
   not?: ModelImageFilterInput | null;
 };
 
+export type ModelStringKeyConditionInput = {
+  eq?: string | null;
+  le?: string | null;
+  lt?: string | null;
+  ge?: string | null;
+  gt?: string | null;
+  between?: Array<string | null> | null;
+  beginsWith?: string | null;
+};
+
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC"
+}
+
 export type ModelBoxCategoryFilterInput = {
   id?: ModelIDInput | null;
   name?: ModelStringInput | null;
-  active?: ModelBooleanInput | null;
+  isActive?: ModelBooleanInput | null;
   and?: Array<ModelBoxCategoryFilterInput | null> | null;
   or?: Array<ModelBoxCategoryFilterInput | null> | null;
   not?: ModelBoxCategoryFilterInput | null;
@@ -781,8 +819,8 @@ export type ModelOrgFilterInput = {
 export type ModelLocationInfoFilterInput = {
   id?: ModelIDInput | null;
   locationLabel?: ModelStringInput | null;
-  latitude?: ModelStringInput | null;
-  longitude?: ModelStringInput | null;
+  latitude?: ModelFloatInput | null;
+  longitude?: ModelFloatInput | null;
   isActive?: ModelBooleanInput | null;
   addressID?: ModelIDInput | null;
   plusCode?: ModelStringInput | null;
@@ -845,11 +883,6 @@ export type ModelBoxFilterInput = {
   not?: ModelBoxFilterInput | null;
 };
 
-export enum ModelSortDirection {
-  ASC = "ASC",
-  DESC = "DESC"
-}
-
 export type ModelIDKeyConditionInput = {
   eq?: string | null;
   le?: string | null;
@@ -872,19 +905,13 @@ export type ModelBoxLocationFilterInput = {
   imageID?: ModelIDInput | null;
   isActive?: ModelBooleanInput | null;
   trackingInfoID?: ModelIDInput | null;
+  isFlagged?: ModelBooleanInput | null;
+  FlagNotes?: ModelStringInput | null;
+  boxStatus?: ModelBoxStatusInput | null;
+  destinationLocationInfoID?: ModelIDInput | null;
   and?: Array<ModelBoxLocationFilterInput | null> | null;
   or?: Array<ModelBoxLocationFilterInput | null> | null;
   not?: ModelBoxLocationFilterInput | null;
-};
-
-export type ModelStringKeyConditionInput = {
-  eq?: string | null;
-  le?: string | null;
-  lt?: string | null;
-  ge?: string | null;
-  gt?: string | null;
-  between?: Array<string | null> | null;
-  beginsWith?: string | null;
 };
 
 export type ModelTrackingInfoFilterInput = {
@@ -923,9 +950,12 @@ export type ModelUserFilterInput = {
 export type CreateImageMutation = {
   __typename: "Image";
   id: string;
-  altTex: string | null;
+  label: string | null;
+  altText: string | null;
   src: string;
   userID: string;
+  dateAdded: string;
+  isActive: boolean;
   createdAt: string;
   updatedAt: string;
   user: {
@@ -940,9 +970,12 @@ export type CreateImageMutation = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -957,9 +990,12 @@ export type CreateImageMutation = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -989,9 +1025,12 @@ export type CreateImageMutation = {
 export type UpdateImageMutation = {
   __typename: "Image";
   id: string;
-  altTex: string | null;
+  label: string | null;
+  altText: string | null;
   src: string;
   userID: string;
+  dateAdded: string;
+  isActive: boolean;
   createdAt: string;
   updatedAt: string;
   user: {
@@ -1006,9 +1045,12 @@ export type UpdateImageMutation = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -1023,9 +1065,12 @@ export type UpdateImageMutation = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -1055,9 +1100,12 @@ export type UpdateImageMutation = {
 export type DeleteImageMutation = {
   __typename: "Image";
   id: string;
-  altTex: string | null;
+  label: string | null;
+  altText: string | null;
   src: string;
   userID: string;
+  dateAdded: string;
+  isActive: boolean;
   createdAt: string;
   updatedAt: string;
   user: {
@@ -1072,9 +1120,12 @@ export type DeleteImageMutation = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -1089,9 +1140,12 @@ export type DeleteImageMutation = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -1122,7 +1176,7 @@ export type CreateBoxCategoryMutation = {
   __typename: "BoxCategory";
   id: string;
   name: string;
-  active: boolean;
+  isActive: boolean;
   createdAt: string;
   updatedAt: string;
   boxes: {
@@ -1159,7 +1213,7 @@ export type UpdateBoxCategoryMutation = {
   __typename: "BoxCategory";
   id: string;
   name: string;
-  active: boolean;
+  isActive: boolean;
   createdAt: string;
   updatedAt: string;
   boxes: {
@@ -1196,7 +1250,7 @@ export type DeleteBoxCategoryMutation = {
   __typename: "BoxCategory";
   id: string;
   name: string;
-  active: boolean;
+  isActive: boolean;
   createdAt: string;
   updatedAt: string;
   boxes: {
@@ -1375,9 +1429,12 @@ export type CreateOrgMutation = {
   images: Array<{
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -1406,9 +1463,12 @@ export type CreateOrgMutation = {
   image: {
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -1529,9 +1589,12 @@ export type UpdateOrgMutation = {
   images: Array<{
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -1560,9 +1623,12 @@ export type UpdateOrgMutation = {
   image: {
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -1683,9 +1749,12 @@ export type DeleteOrgMutation = {
   images: Array<{
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -1714,9 +1783,12 @@ export type DeleteOrgMutation = {
   image: {
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -1809,8 +1881,8 @@ export type CreateLocationInfoMutation = {
   __typename: "LocationInfo";
   id: string;
   locationLabel: string;
-  latitude: string;
-  longitude: string;
+  latitude: number;
+  longitude: number;
   isActive: boolean;
   addressID: string;
   phones: Array<{
@@ -1854,11 +1926,15 @@ export type CreateLocationInfoMutation = {
       scanDateTime: string;
       scannedByUserID: string;
       notes: string | null;
-      isFinal: boolean;
+      isFinal: boolean | null;
       tags: Array<string> | null;
       imageID: string;
       isActive: boolean;
       trackingInfoID: string;
+      isFlagged: boolean | null;
+      FlagNotes: string | null;
+      boxStatus: BoxStatus;
+      destinationLocationInfoID: string;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
@@ -1870,8 +1946,8 @@ export type UpdateLocationInfoMutation = {
   __typename: "LocationInfo";
   id: string;
   locationLabel: string;
-  latitude: string;
-  longitude: string;
+  latitude: number;
+  longitude: number;
   isActive: boolean;
   addressID: string;
   phones: Array<{
@@ -1915,11 +1991,15 @@ export type UpdateLocationInfoMutation = {
       scanDateTime: string;
       scannedByUserID: string;
       notes: string | null;
-      isFinal: boolean;
+      isFinal: boolean | null;
       tags: Array<string> | null;
       imageID: string;
       isActive: boolean;
       trackingInfoID: string;
+      isFlagged: boolean | null;
+      FlagNotes: string | null;
+      boxStatus: BoxStatus;
+      destinationLocationInfoID: string;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
@@ -1931,8 +2011,8 @@ export type DeleteLocationInfoMutation = {
   __typename: "LocationInfo";
   id: string;
   locationLabel: string;
-  latitude: string;
-  longitude: string;
+  latitude: number;
+  longitude: number;
   isActive: boolean;
   addressID: string;
   phones: Array<{
@@ -1976,11 +2056,15 @@ export type DeleteLocationInfoMutation = {
       scanDateTime: string;
       scannedByUserID: string;
       notes: string | null;
-      isFinal: boolean;
+      isFinal: boolean | null;
       tags: Array<string> | null;
       imageID: string;
       isActive: boolean;
       trackingInfoID: string;
+      isFlagged: boolean | null;
+      FlagNotes: string | null;
+      boxStatus: BoxStatus;
+      destinationLocationInfoID: string;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
@@ -2010,9 +2094,12 @@ export type CreateShipmentMutation = {
   images: Array<{
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -2041,9 +2128,12 @@ export type CreateShipmentMutation = {
   image: {
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -2069,8 +2159,8 @@ export type CreateShipmentMutation = {
     __typename: "LocationInfo";
     id: string;
     locationLabel: string;
-    latitude: string;
-    longitude: string;
+    latitude: number;
+    longitude: number;
     isActive: boolean;
     addressID: string;
     phones: Array<{
@@ -2113,8 +2203,8 @@ export type CreateShipmentMutation = {
     __typename: "LocationInfo";
     id: string;
     locationLabel: string;
-    latitude: string;
-    longitude: string;
+    latitude: number;
+    longitude: number;
     isActive: boolean;
     addressID: string;
     phones: Array<{
@@ -2205,9 +2295,12 @@ export type UpdateShipmentMutation = {
   images: Array<{
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -2236,9 +2329,12 @@ export type UpdateShipmentMutation = {
   image: {
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -2264,8 +2360,8 @@ export type UpdateShipmentMutation = {
     __typename: "LocationInfo";
     id: string;
     locationLabel: string;
-    latitude: string;
-    longitude: string;
+    latitude: number;
+    longitude: number;
     isActive: boolean;
     addressID: string;
     phones: Array<{
@@ -2308,8 +2404,8 @@ export type UpdateShipmentMutation = {
     __typename: "LocationInfo";
     id: string;
     locationLabel: string;
-    latitude: string;
-    longitude: string;
+    latitude: number;
+    longitude: number;
     isActive: boolean;
     addressID: string;
     phones: Array<{
@@ -2400,9 +2496,12 @@ export type DeleteShipmentMutation = {
   images: Array<{
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -2431,9 +2530,12 @@ export type DeleteShipmentMutation = {
   image: {
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -2459,8 +2561,8 @@ export type DeleteShipmentMutation = {
     __typename: "LocationInfo";
     id: string;
     locationLabel: string;
-    latitude: string;
-    longitude: string;
+    latitude: number;
+    longitude: number;
     isActive: boolean;
     addressID: string;
     phones: Array<{
@@ -2503,8 +2605,8 @@ export type DeleteShipmentMutation = {
     __typename: "LocationInfo";
     id: string;
     locationLabel: string;
-    latitude: string;
-    longitude: string;
+    latitude: number;
+    longitude: number;
     isActive: boolean;
     addressID: string;
     phones: Array<{
@@ -2586,7 +2688,7 @@ export type CreateBoxMutation = {
     __typename: "BoxCategory";
     id: string;
     name: string;
-    active: boolean;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     boxes: {
@@ -2604,9 +2706,12 @@ export type CreateBoxMutation = {
   images: Array<{
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -2638,9 +2743,12 @@ export type CreateBoxMutation = {
   image: {
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -2666,7 +2774,7 @@ export type CreateBoxMutation = {
     __typename: "BoxCategory";
     id: string;
     name: string;
-    active: boolean;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     boxes: {
@@ -2706,9 +2814,12 @@ export type CreateBoxMutation = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -2719,9 +2830,12 @@ export type CreateBoxMutation = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -2771,9 +2885,12 @@ export type CreateBoxMutation = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -2784,9 +2901,12 @@ export type CreateBoxMutation = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -2794,8 +2914,8 @@ export type CreateBoxMutation = {
       __typename: "LocationInfo";
       id: string;
       locationLabel: string;
-      latitude: string;
-      longitude: string;
+      latitude: number;
+      longitude: number;
       isActive: boolean;
       addressID: string;
       plusCode: string | null;
@@ -2810,8 +2930,8 @@ export type CreateBoxMutation = {
       __typename: "LocationInfo";
       id: string;
       locationLabel: string;
-      latitude: string;
-      longitude: string;
+      latitude: number;
+      longitude: number;
       isActive: boolean;
       addressID: string;
       plusCode: string | null;
@@ -2837,11 +2957,15 @@ export type CreateBoxMutation = {
       scanDateTime: string;
       scannedByUserID: string;
       notes: string | null;
-      isFinal: boolean;
+      isFinal: boolean | null;
       tags: Array<string> | null;
       imageID: string;
       isActive: boolean;
       trackingInfoID: string;
+      isFlagged: boolean | null;
+      FlagNotes: string | null;
+      boxStatus: BoxStatus;
+      destinationLocationInfoID: string;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
@@ -2862,7 +2986,7 @@ export type UpdateBoxMutation = {
     __typename: "BoxCategory";
     id: string;
     name: string;
-    active: boolean;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     boxes: {
@@ -2880,9 +3004,12 @@ export type UpdateBoxMutation = {
   images: Array<{
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -2914,9 +3041,12 @@ export type UpdateBoxMutation = {
   image: {
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -2942,7 +3072,7 @@ export type UpdateBoxMutation = {
     __typename: "BoxCategory";
     id: string;
     name: string;
-    active: boolean;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     boxes: {
@@ -2982,9 +3112,12 @@ export type UpdateBoxMutation = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -2995,9 +3128,12 @@ export type UpdateBoxMutation = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -3047,9 +3183,12 @@ export type UpdateBoxMutation = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -3060,9 +3199,12 @@ export type UpdateBoxMutation = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -3070,8 +3212,8 @@ export type UpdateBoxMutation = {
       __typename: "LocationInfo";
       id: string;
       locationLabel: string;
-      latitude: string;
-      longitude: string;
+      latitude: number;
+      longitude: number;
       isActive: boolean;
       addressID: string;
       plusCode: string | null;
@@ -3086,8 +3228,8 @@ export type UpdateBoxMutation = {
       __typename: "LocationInfo";
       id: string;
       locationLabel: string;
-      latitude: string;
-      longitude: string;
+      latitude: number;
+      longitude: number;
       isActive: boolean;
       addressID: string;
       plusCode: string | null;
@@ -3113,11 +3255,15 @@ export type UpdateBoxMutation = {
       scanDateTime: string;
       scannedByUserID: string;
       notes: string | null;
-      isFinal: boolean;
+      isFinal: boolean | null;
       tags: Array<string> | null;
       imageID: string;
       isActive: boolean;
       trackingInfoID: string;
+      isFlagged: boolean | null;
+      FlagNotes: string | null;
+      boxStatus: BoxStatus;
+      destinationLocationInfoID: string;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
@@ -3138,7 +3284,7 @@ export type DeleteBoxMutation = {
     __typename: "BoxCategory";
     id: string;
     name: string;
-    active: boolean;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     boxes: {
@@ -3156,9 +3302,12 @@ export type DeleteBoxMutation = {
   images: Array<{
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -3190,9 +3339,12 @@ export type DeleteBoxMutation = {
   image: {
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -3218,7 +3370,7 @@ export type DeleteBoxMutation = {
     __typename: "BoxCategory";
     id: string;
     name: string;
-    active: boolean;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     boxes: {
@@ -3258,9 +3410,12 @@ export type DeleteBoxMutation = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -3271,9 +3426,12 @@ export type DeleteBoxMutation = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -3323,9 +3481,12 @@ export type DeleteBoxMutation = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -3336,9 +3497,12 @@ export type DeleteBoxMutation = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -3346,8 +3510,8 @@ export type DeleteBoxMutation = {
       __typename: "LocationInfo";
       id: string;
       locationLabel: string;
-      latitude: string;
-      longitude: string;
+      latitude: number;
+      longitude: number;
       isActive: boolean;
       addressID: string;
       plusCode: string | null;
@@ -3362,8 +3526,8 @@ export type DeleteBoxMutation = {
       __typename: "LocationInfo";
       id: string;
       locationLabel: string;
-      latitude: string;
-      longitude: string;
+      latitude: number;
+      longitude: number;
       isActive: boolean;
       addressID: string;
       plusCode: string | null;
@@ -3389,11 +3553,15 @@ export type DeleteBoxMutation = {
       scanDateTime: string;
       scannedByUserID: string;
       notes: string | null;
-      isFinal: boolean;
+      isFinal: boolean | null;
       tags: Array<string> | null;
       imageID: string;
       isActive: boolean;
       trackingInfoID: string;
+      isFlagged: boolean | null;
+      FlagNotes: string | null;
+      boxStatus: BoxStatus;
+      destinationLocationInfoID: string;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
@@ -3409,15 +3577,18 @@ export type CreateBoxLocationMutation = {
   scanDateTime: string;
   scannedByUserID: string;
   notes: string | null;
-  isFinal: boolean;
+  isFinal: boolean | null;
   tags: Array<string> | null;
   imageID: string;
   images: Array<{
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -3441,14 +3612,21 @@ export type CreateBoxLocationMutation = {
   }> | null;
   isActive: boolean;
   trackingInfoID: string;
+  isFlagged: boolean | null;
+  FlagNotes: string | null;
+  boxStatus: BoxStatus;
+  destinationLocationInfoID: string;
   createdAt: string;
   updatedAt: string;
   image: {
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -3474,8 +3652,52 @@ export type CreateBoxLocationMutation = {
     __typename: "LocationInfo";
     id: string;
     locationLabel: string;
-    latitude: string;
-    longitude: string;
+    latitude: number;
+    longitude: number;
+    isActive: boolean;
+    addressID: string;
+    phones: Array<{
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    plusCode: string | null;
+    website: Array<string> | null;
+    notes: string | null;
+    notesHistory: Array<string> | null;
+    tags: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
+    address: {
+      __typename: "Address";
+      id: string;
+      label: string;
+      addressLine1: string;
+      addressLine2: string | null;
+      city: string;
+      state: string | null;
+      province: string | null;
+      zipCode: string | null;
+      postalCode: string | null;
+      country: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
+  };
+  destinationLocationInfo: {
+    __typename: "LocationInfo";
+    id: string;
+    locationLabel: string;
+    latitude: number;
+    longitude: number;
     isActive: boolean;
     addressID: string;
     phones: Array<{
@@ -3527,7 +3749,7 @@ export type CreateBoxLocationMutation = {
       __typename: "BoxCategory";
       id: string;
       name: string;
-      active: boolean;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -3541,9 +3763,12 @@ export type CreateBoxLocationMutation = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -3557,9 +3782,12 @@ export type CreateBoxLocationMutation = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -3567,7 +3795,7 @@ export type CreateBoxLocationMutation = {
       __typename: "BoxCategory";
       id: string;
       name: string;
-      active: boolean;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -3627,9 +3855,12 @@ export type CreateBoxLocationMutation = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -3640,9 +3871,12 @@ export type CreateBoxLocationMutation = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -3681,9 +3915,12 @@ export type CreateBoxLocationMutation = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -3698,9 +3935,12 @@ export type CreateBoxLocationMutation = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -3735,15 +3975,18 @@ export type UpdateBoxLocationMutation = {
   scanDateTime: string;
   scannedByUserID: string;
   notes: string | null;
-  isFinal: boolean;
+  isFinal: boolean | null;
   tags: Array<string> | null;
   imageID: string;
   images: Array<{
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -3767,14 +4010,21 @@ export type UpdateBoxLocationMutation = {
   }> | null;
   isActive: boolean;
   trackingInfoID: string;
+  isFlagged: boolean | null;
+  FlagNotes: string | null;
+  boxStatus: BoxStatus;
+  destinationLocationInfoID: string;
   createdAt: string;
   updatedAt: string;
   image: {
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -3800,8 +4050,52 @@ export type UpdateBoxLocationMutation = {
     __typename: "LocationInfo";
     id: string;
     locationLabel: string;
-    latitude: string;
-    longitude: string;
+    latitude: number;
+    longitude: number;
+    isActive: boolean;
+    addressID: string;
+    phones: Array<{
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    plusCode: string | null;
+    website: Array<string> | null;
+    notes: string | null;
+    notesHistory: Array<string> | null;
+    tags: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
+    address: {
+      __typename: "Address";
+      id: string;
+      label: string;
+      addressLine1: string;
+      addressLine2: string | null;
+      city: string;
+      state: string | null;
+      province: string | null;
+      zipCode: string | null;
+      postalCode: string | null;
+      country: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
+  };
+  destinationLocationInfo: {
+    __typename: "LocationInfo";
+    id: string;
+    locationLabel: string;
+    latitude: number;
+    longitude: number;
     isActive: boolean;
     addressID: string;
     phones: Array<{
@@ -3853,7 +4147,7 @@ export type UpdateBoxLocationMutation = {
       __typename: "BoxCategory";
       id: string;
       name: string;
-      active: boolean;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -3867,9 +4161,12 @@ export type UpdateBoxLocationMutation = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -3883,9 +4180,12 @@ export type UpdateBoxLocationMutation = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -3893,7 +4193,7 @@ export type UpdateBoxLocationMutation = {
       __typename: "BoxCategory";
       id: string;
       name: string;
-      active: boolean;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -3953,9 +4253,12 @@ export type UpdateBoxLocationMutation = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -3966,9 +4269,12 @@ export type UpdateBoxLocationMutation = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -4007,9 +4313,12 @@ export type UpdateBoxLocationMutation = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -4024,9 +4333,12 @@ export type UpdateBoxLocationMutation = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -4061,15 +4373,18 @@ export type DeleteBoxLocationMutation = {
   scanDateTime: string;
   scannedByUserID: string;
   notes: string | null;
-  isFinal: boolean;
+  isFinal: boolean | null;
   tags: Array<string> | null;
   imageID: string;
   images: Array<{
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -4093,14 +4408,21 @@ export type DeleteBoxLocationMutation = {
   }> | null;
   isActive: boolean;
   trackingInfoID: string;
+  isFlagged: boolean | null;
+  FlagNotes: string | null;
+  boxStatus: BoxStatus;
+  destinationLocationInfoID: string;
   createdAt: string;
   updatedAt: string;
   image: {
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -4126,8 +4448,52 @@ export type DeleteBoxLocationMutation = {
     __typename: "LocationInfo";
     id: string;
     locationLabel: string;
-    latitude: string;
-    longitude: string;
+    latitude: number;
+    longitude: number;
+    isActive: boolean;
+    addressID: string;
+    phones: Array<{
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    plusCode: string | null;
+    website: Array<string> | null;
+    notes: string | null;
+    notesHistory: Array<string> | null;
+    tags: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
+    address: {
+      __typename: "Address";
+      id: string;
+      label: string;
+      addressLine1: string;
+      addressLine2: string | null;
+      city: string;
+      state: string | null;
+      province: string | null;
+      zipCode: string | null;
+      postalCode: string | null;
+      country: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
+  };
+  destinationLocationInfo: {
+    __typename: "LocationInfo";
+    id: string;
+    locationLabel: string;
+    latitude: number;
+    longitude: number;
     isActive: boolean;
     addressID: string;
     phones: Array<{
@@ -4179,7 +4545,7 @@ export type DeleteBoxLocationMutation = {
       __typename: "BoxCategory";
       id: string;
       name: string;
-      active: boolean;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -4193,9 +4559,12 @@ export type DeleteBoxLocationMutation = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -4209,9 +4578,12 @@ export type DeleteBoxLocationMutation = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -4219,7 +4591,7 @@ export type DeleteBoxLocationMutation = {
       __typename: "BoxCategory";
       id: string;
       name: string;
-      active: boolean;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -4279,9 +4651,12 @@ export type DeleteBoxLocationMutation = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -4292,9 +4667,12 @@ export type DeleteBoxLocationMutation = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -4333,9 +4711,12 @@ export type DeleteBoxLocationMutation = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -4350,9 +4731,12 @@ export type DeleteBoxLocationMutation = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -4390,9 +4774,12 @@ export type CreateTrackingInfoMutation = {
   images: Array<{
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -4421,9 +4808,12 @@ export type CreateTrackingInfoMutation = {
   image: {
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -4455,11 +4845,15 @@ export type CreateTrackingInfoMutation = {
       scanDateTime: string;
       scannedByUserID: string;
       notes: string | null;
-      isFinal: boolean;
+      isFinal: boolean | null;
       tags: Array<string> | null;
       imageID: string;
       isActive: boolean;
       trackingInfoID: string;
+      isFlagged: boolean | null;
+      FlagNotes: string | null;
+      boxStatus: BoxStatus;
+      destinationLocationInfoID: string;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
@@ -4477,9 +4871,12 @@ export type CreateTrackingInfoMutation = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -4494,9 +4891,12 @@ export type CreateTrackingInfoMutation = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -4534,9 +4934,12 @@ export type UpdateTrackingInfoMutation = {
   images: Array<{
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -4565,9 +4968,12 @@ export type UpdateTrackingInfoMutation = {
   image: {
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -4599,11 +5005,15 @@ export type UpdateTrackingInfoMutation = {
       scanDateTime: string;
       scannedByUserID: string;
       notes: string | null;
-      isFinal: boolean;
+      isFinal: boolean | null;
       tags: Array<string> | null;
       imageID: string;
       isActive: boolean;
       trackingInfoID: string;
+      isFlagged: boolean | null;
+      FlagNotes: string | null;
+      boxStatus: BoxStatus;
+      destinationLocationInfoID: string;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
@@ -4621,9 +5031,12 @@ export type UpdateTrackingInfoMutation = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -4638,9 +5051,12 @@ export type UpdateTrackingInfoMutation = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -4678,9 +5094,12 @@ export type DeleteTrackingInfoMutation = {
   images: Array<{
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -4709,9 +5128,12 @@ export type DeleteTrackingInfoMutation = {
   image: {
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -4743,11 +5165,15 @@ export type DeleteTrackingInfoMutation = {
       scanDateTime: string;
       scannedByUserID: string;
       notes: string | null;
-      isFinal: boolean;
+      isFinal: boolean | null;
       tags: Array<string> | null;
       imageID: string;
       isActive: boolean;
       trackingInfoID: string;
+      isFlagged: boolean | null;
+      FlagNotes: string | null;
+      boxStatus: BoxStatus;
+      destinationLocationInfoID: string;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
@@ -4765,9 +5191,12 @@ export type DeleteTrackingInfoMutation = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -4782,9 +5211,12 @@ export type DeleteTrackingInfoMutation = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -4823,9 +5255,12 @@ export type CreateUserMutation = {
   images: Array<{
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -4858,9 +5293,12 @@ export type CreateUserMutation = {
   image: {
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -4914,9 +5352,12 @@ export type CreateUserMutation = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -4927,9 +5368,12 @@ export type CreateUserMutation = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -4967,11 +5411,15 @@ export type CreateUserMutation = {
       scanDateTime: string;
       scannedByUserID: string;
       notes: string | null;
-      isFinal: boolean;
+      isFinal: boolean | null;
       tags: Array<string> | null;
       imageID: string;
       isActive: boolean;
       trackingInfoID: string;
+      isFlagged: boolean | null;
+      FlagNotes: string | null;
+      boxStatus: BoxStatus;
+      destinationLocationInfoID: string;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
@@ -4991,9 +5439,12 @@ export type UpdateUserMutation = {
   images: Array<{
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -5026,9 +5477,12 @@ export type UpdateUserMutation = {
   image: {
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -5082,9 +5536,12 @@ export type UpdateUserMutation = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -5095,9 +5552,12 @@ export type UpdateUserMutation = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -5135,11 +5595,15 @@ export type UpdateUserMutation = {
       scanDateTime: string;
       scannedByUserID: string;
       notes: string | null;
-      isFinal: boolean;
+      isFinal: boolean | null;
       tags: Array<string> | null;
       imageID: string;
       isActive: boolean;
       trackingInfoID: string;
+      isFlagged: boolean | null;
+      FlagNotes: string | null;
+      boxStatus: BoxStatus;
+      destinationLocationInfoID: string;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
@@ -5159,9 +5623,12 @@ export type DeleteUserMutation = {
   images: Array<{
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -5194,9 +5661,12 @@ export type DeleteUserMutation = {
   image: {
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -5250,9 +5720,12 @@ export type DeleteUserMutation = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -5263,9 +5736,12 @@ export type DeleteUserMutation = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -5303,11 +5779,15 @@ export type DeleteUserMutation = {
       scanDateTime: string;
       scannedByUserID: string;
       notes: string | null;
-      isFinal: boolean;
+      isFinal: boolean | null;
       tags: Array<string> | null;
       imageID: string;
       isActive: boolean;
       trackingInfoID: string;
+      isFlagged: boolean | null;
+      FlagNotes: string | null;
+      boxStatus: BoxStatus;
+      destinationLocationInfoID: string;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
@@ -5320,9 +5800,12 @@ export type ListImagesQuery = {
   items: Array<{
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -5350,9 +5833,12 @@ export type ListImagesQuery = {
 export type GetImageQuery = {
   __typename: "Image";
   id: string;
-  altTex: string | null;
+  label: string | null;
+  altText: string | null;
   src: string;
   userID: string;
+  dateAdded: string;
+  isActive: boolean;
   createdAt: string;
   updatedAt: string;
   user: {
@@ -5367,9 +5853,12 @@ export type GetImageQuery = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -5384,9 +5873,12 @@ export type GetImageQuery = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -5413,13 +5905,48 @@ export type GetImageQuery = {
   };
 };
 
+export type ImagesByUserQuery = {
+  __typename: "ModelImageConnection";
+  items: Array<{
+    __typename: "Image";
+    id: string;
+    label: string | null;
+    altText: string | null;
+    src: string;
+    userID: string;
+    dateAdded: string;
+    isActive: boolean;
+    createdAt: string;
+    updatedAt: string;
+    user: {
+      __typename: "User";
+      id: string;
+      name: string;
+      orgID: string;
+      hashedSecret: string | null;
+      isActive: boolean;
+      tags: Array<string> | null;
+      imageID: string;
+      status: UserStatus;
+      statusHistory: Array<UserStatus> | null;
+      internalNotes: string | null;
+      notes: string | null;
+      rank: number | null;
+      notesHistory: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+  } | null> | null;
+  nextToken: string | null;
+};
+
 export type ListBoxCategorysQuery = {
   __typename: "ModelBoxCategoryConnection";
   items: Array<{
     __typename: "BoxCategory";
     id: string;
     name: string;
-    active: boolean;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     boxes: {
@@ -5434,7 +5961,7 @@ export type GetBoxCategoryQuery = {
   __typename: "BoxCategory";
   id: string;
   name: string;
-  active: boolean;
+  isActive: boolean;
   createdAt: string;
   updatedAt: string;
   boxes: {
@@ -5589,9 +6116,12 @@ export type ListOrgsQuery = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -5602,9 +6132,12 @@ export type ListOrgsQuery = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -5667,9 +6200,12 @@ export type GetOrgQuery = {
   images: Array<{
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -5698,9 +6234,12 @@ export type GetOrgQuery = {
   image: {
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -5795,8 +6334,8 @@ export type ListLocationInfosQuery = {
     __typename: "LocationInfo";
     id: string;
     locationLabel: string;
-    latitude: string;
-    longitude: string;
+    latitude: number;
+    longitude: number;
     isActive: boolean;
     addressID: string;
     phones: Array<{
@@ -5842,8 +6381,8 @@ export type GetLocationInfoQuery = {
   __typename: "LocationInfo";
   id: string;
   locationLabel: string;
-  latitude: string;
-  longitude: string;
+  latitude: number;
+  longitude: number;
   isActive: boolean;
   addressID: string;
   phones: Array<{
@@ -5887,11 +6426,15 @@ export type GetLocationInfoQuery = {
       scanDateTime: string;
       scannedByUserID: string;
       notes: string | null;
-      isFinal: boolean;
+      isFinal: boolean | null;
       tags: Array<string> | null;
       imageID: string;
       isActive: boolean;
       trackingInfoID: string;
+      isFlagged: boolean | null;
+      FlagNotes: string | null;
+      boxStatus: BoxStatus;
+      destinationLocationInfoID: string;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
@@ -5923,9 +6466,12 @@ export type ListShipmentsQuery = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -5936,9 +6482,12 @@ export type ListShipmentsQuery = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -5946,8 +6495,8 @@ export type ListShipmentsQuery = {
       __typename: "LocationInfo";
       id: string;
       locationLabel: string;
-      latitude: string;
-      longitude: string;
+      latitude: number;
+      longitude: number;
       isActive: boolean;
       addressID: string;
       plusCode: string | null;
@@ -5962,8 +6511,8 @@ export type ListShipmentsQuery = {
       __typename: "LocationInfo";
       id: string;
       locationLabel: string;
-      latitude: string;
-      longitude: string;
+      latitude: number;
+      longitude: number;
       isActive: boolean;
       addressID: string;
       plusCode: string | null;
@@ -6004,9 +6553,12 @@ export type GetShipmentQuery = {
   images: Array<{
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -6035,9 +6587,12 @@ export type GetShipmentQuery = {
   image: {
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -6063,8 +6618,8 @@ export type GetShipmentQuery = {
     __typename: "LocationInfo";
     id: string;
     locationLabel: string;
-    latitude: string;
-    longitude: string;
+    latitude: number;
+    longitude: number;
     isActive: boolean;
     addressID: string;
     phones: Array<{
@@ -6107,8 +6662,8 @@ export type GetShipmentQuery = {
     __typename: "LocationInfo";
     id: string;
     locationLabel: string;
-    latitude: string;
-    longitude: string;
+    latitude: number;
+    longitude: number;
     isActive: boolean;
     addressID: string;
     phones: Array<{
@@ -6192,7 +6747,7 @@ export type ListBoxsQuery = {
       __typename: "BoxCategory";
       id: string;
       name: string;
-      active: boolean;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -6206,9 +6761,12 @@ export type ListBoxsQuery = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -6222,9 +6780,12 @@ export type ListBoxsQuery = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -6232,7 +6793,7 @@ export type ListBoxsQuery = {
       __typename: "BoxCategory";
       id: string;
       name: string;
-      active: boolean;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -6297,7 +6858,7 @@ export type GetBoxQuery = {
     __typename: "BoxCategory";
     id: string;
     name: string;
-    active: boolean;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     boxes: {
@@ -6315,9 +6876,12 @@ export type GetBoxQuery = {
   images: Array<{
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -6349,9 +6913,12 @@ export type GetBoxQuery = {
   image: {
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -6377,7 +6944,7 @@ export type GetBoxQuery = {
     __typename: "BoxCategory";
     id: string;
     name: string;
-    active: boolean;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     boxes: {
@@ -6417,9 +6984,12 @@ export type GetBoxQuery = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -6430,9 +7000,12 @@ export type GetBoxQuery = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -6482,9 +7055,12 @@ export type GetBoxQuery = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -6495,9 +7071,12 @@ export type GetBoxQuery = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -6505,8 +7084,8 @@ export type GetBoxQuery = {
       __typename: "LocationInfo";
       id: string;
       locationLabel: string;
-      latitude: string;
-      longitude: string;
+      latitude: number;
+      longitude: number;
       isActive: boolean;
       addressID: string;
       plusCode: string | null;
@@ -6521,8 +7100,8 @@ export type GetBoxQuery = {
       __typename: "LocationInfo";
       id: string;
       locationLabel: string;
-      latitude: string;
-      longitude: string;
+      latitude: number;
+      longitude: number;
       isActive: boolean;
       addressID: string;
       plusCode: string | null;
@@ -6548,11 +7127,15 @@ export type GetBoxQuery = {
       scanDateTime: string;
       scannedByUserID: string;
       notes: string | null;
-      isFinal: boolean;
+      isFinal: boolean | null;
       tags: Array<string> | null;
       imageID: string;
       isActive: boolean;
       trackingInfoID: string;
+      isFlagged: boolean | null;
+      FlagNotes: string | null;
+      boxStatus: BoxStatus;
+      destinationLocationInfoID: string;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
@@ -6575,7 +7158,7 @@ export type BoxByOrgIdQuery = {
       __typename: "BoxCategory";
       id: string;
       name: string;
-      active: boolean;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -6589,9 +7172,12 @@ export type BoxByOrgIdQuery = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -6605,9 +7191,12 @@ export type BoxByOrgIdQuery = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -6615,7 +7204,7 @@ export type BoxByOrgIdQuery = {
       __typename: "BoxCategory";
       id: string;
       name: string;
-      active: boolean;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -6682,7 +7271,7 @@ export type BoxByShipmentIdQuery = {
       __typename: "BoxCategory";
       id: string;
       name: string;
-      active: boolean;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -6696,9 +7285,12 @@ export type BoxByShipmentIdQuery = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -6712,9 +7304,12 @@ export type BoxByShipmentIdQuery = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -6722,7 +7317,7 @@ export type BoxByShipmentIdQuery = {
       __typename: "BoxCategory";
       id: string;
       name: string;
-      active: boolean;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -6789,7 +7384,7 @@ export type BoxByBoxCategoryIdQuery = {
       __typename: "BoxCategory";
       id: string;
       name: string;
-      active: boolean;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -6803,9 +7398,12 @@ export type BoxByBoxCategoryIdQuery = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -6819,9 +7417,12 @@ export type BoxByBoxCategoryIdQuery = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -6829,7 +7430,7 @@ export type BoxByBoxCategoryIdQuery = {
       __typename: "BoxCategory";
       id: string;
       name: string;
-      active: boolean;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -6896,7 +7497,7 @@ export type BoxByTitleQuery = {
       __typename: "BoxCategory";
       id: string;
       name: string;
-      active: boolean;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -6910,9 +7511,12 @@ export type BoxByTitleQuery = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -6926,9 +7530,12 @@ export type BoxByTitleQuery = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -6936,7 +7543,7 @@ export type BoxByTitleQuery = {
       __typename: "BoxCategory";
       id: string;
       name: string;
-      active: boolean;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -7003,7 +7610,7 @@ export type BoxByQrCodeQuery = {
       __typename: "BoxCategory";
       id: string;
       name: string;
-      active: boolean;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -7017,9 +7624,12 @@ export type BoxByQrCodeQuery = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -7033,9 +7643,12 @@ export type BoxByQrCodeQuery = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -7043,7 +7656,7 @@ export type BoxByQrCodeQuery = {
       __typename: "BoxCategory";
       id: string;
       name: string;
-      active: boolean;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -7110,7 +7723,7 @@ export type BoxByStatusQuery = {
       __typename: "BoxCategory";
       id: string;
       name: string;
-      active: boolean;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -7124,9 +7737,12 @@ export type BoxByStatusQuery = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -7140,9 +7756,12 @@ export type BoxByStatusQuery = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -7150,7 +7769,7 @@ export type BoxByStatusQuery = {
       __typename: "BoxCategory";
       id: string;
       name: string;
-      active: boolean;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -7210,15 +7829,18 @@ export type GetBoxLocationQuery = {
   scanDateTime: string;
   scannedByUserID: string;
   notes: string | null;
-  isFinal: boolean;
+  isFinal: boolean | null;
   tags: Array<string> | null;
   imageID: string;
   images: Array<{
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -7242,14 +7864,21 @@ export type GetBoxLocationQuery = {
   }> | null;
   isActive: boolean;
   trackingInfoID: string;
+  isFlagged: boolean | null;
+  FlagNotes: string | null;
+  boxStatus: BoxStatus;
+  destinationLocationInfoID: string;
   createdAt: string;
   updatedAt: string;
   image: {
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -7275,8 +7904,52 @@ export type GetBoxLocationQuery = {
     __typename: "LocationInfo";
     id: string;
     locationLabel: string;
-    latitude: string;
-    longitude: string;
+    latitude: number;
+    longitude: number;
+    isActive: boolean;
+    addressID: string;
+    phones: Array<{
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    plusCode: string | null;
+    website: Array<string> | null;
+    notes: string | null;
+    notesHistory: Array<string> | null;
+    tags: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
+    address: {
+      __typename: "Address";
+      id: string;
+      label: string;
+      addressLine1: string;
+      addressLine2: string | null;
+      city: string;
+      state: string | null;
+      province: string | null;
+      zipCode: string | null;
+      postalCode: string | null;
+      country: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
+  };
+  destinationLocationInfo: {
+    __typename: "LocationInfo";
+    id: string;
+    locationLabel: string;
+    latitude: number;
+    longitude: number;
     isActive: boolean;
     addressID: string;
     phones: Array<{
@@ -7328,7 +8001,7 @@ export type GetBoxLocationQuery = {
       __typename: "BoxCategory";
       id: string;
       name: string;
-      active: boolean;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -7342,9 +8015,12 @@ export type GetBoxLocationQuery = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -7358,9 +8034,12 @@ export type GetBoxLocationQuery = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -7368,7 +8047,7 @@ export type GetBoxLocationQuery = {
       __typename: "BoxCategory";
       id: string;
       name: string;
-      active: boolean;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -7428,9 +8107,12 @@ export type GetBoxLocationQuery = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -7441,9 +8123,12 @@ export type GetBoxLocationQuery = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -7482,9 +8167,12 @@ export type GetBoxLocationQuery = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -7499,9 +8187,12 @@ export type GetBoxLocationQuery = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -7538,28 +8229,38 @@ export type ListBoxLocationsQuery = {
     scanDateTime: string;
     scannedByUserID: string;
     notes: string | null;
-    isFinal: boolean;
+    isFinal: boolean | null;
     tags: Array<string> | null;
     imageID: string;
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
     isActive: boolean;
     trackingInfoID: string;
+    isFlagged: boolean | null;
+    FlagNotes: string | null;
+    boxStatus: BoxStatus;
+    destinationLocationInfoID: string;
     createdAt: string;
     updatedAt: string;
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -7567,8 +8268,24 @@ export type ListBoxLocationsQuery = {
       __typename: "LocationInfo";
       id: string;
       locationLabel: string;
-      latitude: string;
-      longitude: string;
+      latitude: number;
+      longitude: number;
+      isActive: boolean;
+      addressID: string;
+      plusCode: string | null;
+      website: Array<string> | null;
+      notes: string | null;
+      notesHistory: Array<string> | null;
+      tags: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+    destinationLocationInfo: {
+      __typename: "LocationInfo";
+      id: string;
+      locationLabel: string;
+      latitude: number;
+      longitude: number;
       isActive: boolean;
       addressID: string;
       plusCode: string | null;
@@ -7648,28 +8365,38 @@ export type BoxLocationsByBoxIdQuery = {
     scanDateTime: string;
     scannedByUserID: string;
     notes: string | null;
-    isFinal: boolean;
+    isFinal: boolean | null;
     tags: Array<string> | null;
     imageID: string;
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
     isActive: boolean;
     trackingInfoID: string;
+    isFlagged: boolean | null;
+    FlagNotes: string | null;
+    boxStatus: BoxStatus;
+    destinationLocationInfoID: string;
     createdAt: string;
     updatedAt: string;
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -7677,8 +8404,24 @@ export type BoxLocationsByBoxIdQuery = {
       __typename: "LocationInfo";
       id: string;
       locationLabel: string;
-      latitude: string;
-      longitude: string;
+      latitude: number;
+      longitude: number;
+      isActive: boolean;
+      addressID: string;
+      plusCode: string | null;
+      website: Array<string> | null;
+      notes: string | null;
+      notesHistory: Array<string> | null;
+      tags: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+    destinationLocationInfo: {
+      __typename: "LocationInfo";
+      id: string;
+      locationLabel: string;
+      latitude: number;
+      longitude: number;
       isActive: boolean;
       addressID: string;
       plusCode: string | null;
@@ -7758,28 +8501,38 @@ export type BoxLocationInfoByLocationInfoIdQuery = {
     scanDateTime: string;
     scannedByUserID: string;
     notes: string | null;
-    isFinal: boolean;
+    isFinal: boolean | null;
     tags: Array<string> | null;
     imageID: string;
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
     isActive: boolean;
     trackingInfoID: string;
+    isFlagged: boolean | null;
+    FlagNotes: string | null;
+    boxStatus: BoxStatus;
+    destinationLocationInfoID: string;
     createdAt: string;
     updatedAt: string;
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -7787,8 +8540,24 @@ export type BoxLocationInfoByLocationInfoIdQuery = {
       __typename: "LocationInfo";
       id: string;
       locationLabel: string;
-      latitude: string;
-      longitude: string;
+      latitude: number;
+      longitude: number;
+      isActive: boolean;
+      addressID: string;
+      plusCode: string | null;
+      website: Array<string> | null;
+      notes: string | null;
+      notesHistory: Array<string> | null;
+      tags: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+    destinationLocationInfo: {
+      __typename: "LocationInfo";
+      id: string;
+      locationLabel: string;
+      latitude: number;
+      longitude: number;
       isActive: boolean;
       addressID: string;
       plusCode: string | null;
@@ -7868,28 +8637,38 @@ export type BoxLocationByScannedUserIdQuery = {
     scanDateTime: string;
     scannedByUserID: string;
     notes: string | null;
-    isFinal: boolean;
+    isFinal: boolean | null;
     tags: Array<string> | null;
     imageID: string;
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
     isActive: boolean;
     trackingInfoID: string;
+    isFlagged: boolean | null;
+    FlagNotes: string | null;
+    boxStatus: BoxStatus;
+    destinationLocationInfoID: string;
     createdAt: string;
     updatedAt: string;
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -7897,8 +8676,24 @@ export type BoxLocationByScannedUserIdQuery = {
       __typename: "LocationInfo";
       id: string;
       locationLabel: string;
-      latitude: string;
-      longitude: string;
+      latitude: number;
+      longitude: number;
+      isActive: boolean;
+      addressID: string;
+      plusCode: string | null;
+      website: Array<string> | null;
+      notes: string | null;
+      notesHistory: Array<string> | null;
+      tags: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+    destinationLocationInfo: {
+      __typename: "LocationInfo";
+      id: string;
+      locationLabel: string;
+      latitude: number;
+      longitude: number;
       isActive: boolean;
       addressID: string;
       plusCode: string | null;
@@ -7978,28 +8773,38 @@ export type BoxLocationByTrackingInfoIdQuery = {
     scanDateTime: string;
     scannedByUserID: string;
     notes: string | null;
-    isFinal: boolean;
+    isFinal: boolean | null;
     tags: Array<string> | null;
     imageID: string;
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
     isActive: boolean;
     trackingInfoID: string;
+    isFlagged: boolean | null;
+    FlagNotes: string | null;
+    boxStatus: BoxStatus;
+    destinationLocationInfoID: string;
     createdAt: string;
     updatedAt: string;
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -8007,8 +8812,24 @@ export type BoxLocationByTrackingInfoIdQuery = {
       __typename: "LocationInfo";
       id: string;
       locationLabel: string;
-      latitude: string;
-      longitude: string;
+      latitude: number;
+      longitude: number;
+      isActive: boolean;
+      addressID: string;
+      plusCode: string | null;
+      website: Array<string> | null;
+      notes: string | null;
+      notesHistory: Array<string> | null;
+      tags: Array<string> | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+    destinationLocationInfo: {
+      __typename: "LocationInfo";
+      id: string;
+      locationLabel: string;
+      latitude: number;
+      longitude: number;
       isActive: boolean;
       addressID: string;
       plusCode: string | null;
@@ -8091,9 +8912,12 @@ export type ListTrackingInfosQuery = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -8104,9 +8928,12 @@ export type ListTrackingInfosQuery = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -8147,9 +8974,12 @@ export type GetTrackingInfoQuery = {
   images: Array<{
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -8178,9 +9008,12 @@ export type GetTrackingInfoQuery = {
   image: {
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -8212,11 +9045,15 @@ export type GetTrackingInfoQuery = {
       scanDateTime: string;
       scannedByUserID: string;
       notes: string | null;
-      isFinal: boolean;
+      isFinal: boolean | null;
       tags: Array<string> | null;
       imageID: string;
       isActive: boolean;
       trackingInfoID: string;
+      isFlagged: boolean | null;
+      FlagNotes: string | null;
+      boxStatus: BoxStatus;
+      destinationLocationInfoID: string;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
@@ -8234,9 +9071,12 @@ export type GetTrackingInfoQuery = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -8251,9 +9091,12 @@ export type GetTrackingInfoQuery = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -8294,9 +9137,12 @@ export type ListUsersQuery = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -8311,9 +9157,12 @@ export type ListUsersQuery = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -8353,9 +9202,12 @@ export type GetUserQuery = {
   images: Array<{
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -8388,9 +9240,12 @@ export type GetUserQuery = {
   image: {
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -8444,9 +9299,12 @@ export type GetUserQuery = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -8457,9 +9315,12 @@ export type GetUserQuery = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -8497,11 +9358,15 @@ export type GetUserQuery = {
       scanDateTime: string;
       scannedByUserID: string;
       notes: string | null;
-      isFinal: boolean;
+      isFinal: boolean | null;
       tags: Array<string> | null;
       imageID: string;
       isActive: boolean;
       trackingInfoID: string;
+      isFlagged: boolean | null;
+      FlagNotes: string | null;
+      boxStatus: BoxStatus;
+      destinationLocationInfoID: string;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
@@ -8523,9 +9388,12 @@ export type UserByOrgIdQuery = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -8540,9 +9408,12 @@ export type UserByOrgIdQuery = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -8573,9 +9444,12 @@ export type UserByOrgIdQuery = {
 export type OnCreateImageSubscription = {
   __typename: "Image";
   id: string;
-  altTex: string | null;
+  label: string | null;
+  altText: string | null;
   src: string;
   userID: string;
+  dateAdded: string;
+  isActive: boolean;
   createdAt: string;
   updatedAt: string;
   user: {
@@ -8590,9 +9464,12 @@ export type OnCreateImageSubscription = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -8607,9 +9484,12 @@ export type OnCreateImageSubscription = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -8639,9 +9519,12 @@ export type OnCreateImageSubscription = {
 export type OnUpdateImageSubscription = {
   __typename: "Image";
   id: string;
-  altTex: string | null;
+  label: string | null;
+  altText: string | null;
   src: string;
   userID: string;
+  dateAdded: string;
+  isActive: boolean;
   createdAt: string;
   updatedAt: string;
   user: {
@@ -8656,9 +9539,12 @@ export type OnUpdateImageSubscription = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -8673,9 +9559,12 @@ export type OnUpdateImageSubscription = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -8705,9 +9594,12 @@ export type OnUpdateImageSubscription = {
 export type OnDeleteImageSubscription = {
   __typename: "Image";
   id: string;
-  altTex: string | null;
+  label: string | null;
+  altText: string | null;
   src: string;
   userID: string;
+  dateAdded: string;
+  isActive: boolean;
   createdAt: string;
   updatedAt: string;
   user: {
@@ -8722,9 +9614,12 @@ export type OnDeleteImageSubscription = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -8739,9 +9634,12 @@ export type OnDeleteImageSubscription = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -8772,7 +9670,7 @@ export type OnCreateBoxCategorySubscription = {
   __typename: "BoxCategory";
   id: string;
   name: string;
-  active: boolean;
+  isActive: boolean;
   createdAt: string;
   updatedAt: string;
   boxes: {
@@ -8809,7 +9707,7 @@ export type OnUpdateBoxCategorySubscription = {
   __typename: "BoxCategory";
   id: string;
   name: string;
-  active: boolean;
+  isActive: boolean;
   createdAt: string;
   updatedAt: string;
   boxes: {
@@ -8846,7 +9744,7 @@ export type OnDeleteBoxCategorySubscription = {
   __typename: "BoxCategory";
   id: string;
   name: string;
-  active: boolean;
+  isActive: boolean;
   createdAt: string;
   updatedAt: string;
   boxes: {
@@ -9025,9 +9923,12 @@ export type OnCreateOrgSubscription = {
   images: Array<{
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -9056,9 +9957,12 @@ export type OnCreateOrgSubscription = {
   image: {
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -9179,9 +10083,12 @@ export type OnUpdateOrgSubscription = {
   images: Array<{
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -9210,9 +10117,12 @@ export type OnUpdateOrgSubscription = {
   image: {
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -9333,9 +10243,12 @@ export type OnDeleteOrgSubscription = {
   images: Array<{
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -9364,9 +10277,12 @@ export type OnDeleteOrgSubscription = {
   image: {
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -9459,8 +10375,8 @@ export type OnCreateLocationInfoSubscription = {
   __typename: "LocationInfo";
   id: string;
   locationLabel: string;
-  latitude: string;
-  longitude: string;
+  latitude: number;
+  longitude: number;
   isActive: boolean;
   addressID: string;
   phones: Array<{
@@ -9504,11 +10420,15 @@ export type OnCreateLocationInfoSubscription = {
       scanDateTime: string;
       scannedByUserID: string;
       notes: string | null;
-      isFinal: boolean;
+      isFinal: boolean | null;
       tags: Array<string> | null;
       imageID: string;
       isActive: boolean;
       trackingInfoID: string;
+      isFlagged: boolean | null;
+      FlagNotes: string | null;
+      boxStatus: BoxStatus;
+      destinationLocationInfoID: string;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
@@ -9520,8 +10440,8 @@ export type OnUpdateLocationInfoSubscription = {
   __typename: "LocationInfo";
   id: string;
   locationLabel: string;
-  latitude: string;
-  longitude: string;
+  latitude: number;
+  longitude: number;
   isActive: boolean;
   addressID: string;
   phones: Array<{
@@ -9565,11 +10485,15 @@ export type OnUpdateLocationInfoSubscription = {
       scanDateTime: string;
       scannedByUserID: string;
       notes: string | null;
-      isFinal: boolean;
+      isFinal: boolean | null;
       tags: Array<string> | null;
       imageID: string;
       isActive: boolean;
       trackingInfoID: string;
+      isFlagged: boolean | null;
+      FlagNotes: string | null;
+      boxStatus: BoxStatus;
+      destinationLocationInfoID: string;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
@@ -9581,8 +10505,8 @@ export type OnDeleteLocationInfoSubscription = {
   __typename: "LocationInfo";
   id: string;
   locationLabel: string;
-  latitude: string;
-  longitude: string;
+  latitude: number;
+  longitude: number;
   isActive: boolean;
   addressID: string;
   phones: Array<{
@@ -9626,11 +10550,15 @@ export type OnDeleteLocationInfoSubscription = {
       scanDateTime: string;
       scannedByUserID: string;
       notes: string | null;
-      isFinal: boolean;
+      isFinal: boolean | null;
       tags: Array<string> | null;
       imageID: string;
       isActive: boolean;
       trackingInfoID: string;
+      isFlagged: boolean | null;
+      FlagNotes: string | null;
+      boxStatus: BoxStatus;
+      destinationLocationInfoID: string;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
@@ -9660,9 +10588,12 @@ export type OnCreateShipmentSubscription = {
   images: Array<{
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -9691,9 +10622,12 @@ export type OnCreateShipmentSubscription = {
   image: {
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -9719,8 +10653,8 @@ export type OnCreateShipmentSubscription = {
     __typename: "LocationInfo";
     id: string;
     locationLabel: string;
-    latitude: string;
-    longitude: string;
+    latitude: number;
+    longitude: number;
     isActive: boolean;
     addressID: string;
     phones: Array<{
@@ -9763,8 +10697,8 @@ export type OnCreateShipmentSubscription = {
     __typename: "LocationInfo";
     id: string;
     locationLabel: string;
-    latitude: string;
-    longitude: string;
+    latitude: number;
+    longitude: number;
     isActive: boolean;
     addressID: string;
     phones: Array<{
@@ -9855,9 +10789,12 @@ export type OnUpdateShipmentSubscription = {
   images: Array<{
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -9886,9 +10823,12 @@ export type OnUpdateShipmentSubscription = {
   image: {
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -9914,8 +10854,8 @@ export type OnUpdateShipmentSubscription = {
     __typename: "LocationInfo";
     id: string;
     locationLabel: string;
-    latitude: string;
-    longitude: string;
+    latitude: number;
+    longitude: number;
     isActive: boolean;
     addressID: string;
     phones: Array<{
@@ -9958,8 +10898,8 @@ export type OnUpdateShipmentSubscription = {
     __typename: "LocationInfo";
     id: string;
     locationLabel: string;
-    latitude: string;
-    longitude: string;
+    latitude: number;
+    longitude: number;
     isActive: boolean;
     addressID: string;
     phones: Array<{
@@ -10050,9 +10990,12 @@ export type OnDeleteShipmentSubscription = {
   images: Array<{
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -10081,9 +11024,12 @@ export type OnDeleteShipmentSubscription = {
   image: {
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -10109,8 +11055,8 @@ export type OnDeleteShipmentSubscription = {
     __typename: "LocationInfo";
     id: string;
     locationLabel: string;
-    latitude: string;
-    longitude: string;
+    latitude: number;
+    longitude: number;
     isActive: boolean;
     addressID: string;
     phones: Array<{
@@ -10153,8 +11099,8 @@ export type OnDeleteShipmentSubscription = {
     __typename: "LocationInfo";
     id: string;
     locationLabel: string;
-    latitude: string;
-    longitude: string;
+    latitude: number;
+    longitude: number;
     isActive: boolean;
     addressID: string;
     phones: Array<{
@@ -10236,7 +11182,7 @@ export type OnCreateBoxSubscription = {
     __typename: "BoxCategory";
     id: string;
     name: string;
-    active: boolean;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     boxes: {
@@ -10254,9 +11200,12 @@ export type OnCreateBoxSubscription = {
   images: Array<{
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -10288,9 +11237,12 @@ export type OnCreateBoxSubscription = {
   image: {
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -10316,7 +11268,7 @@ export type OnCreateBoxSubscription = {
     __typename: "BoxCategory";
     id: string;
     name: string;
-    active: boolean;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     boxes: {
@@ -10356,9 +11308,12 @@ export type OnCreateBoxSubscription = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -10369,9 +11324,12 @@ export type OnCreateBoxSubscription = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -10421,9 +11379,12 @@ export type OnCreateBoxSubscription = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -10434,9 +11395,12 @@ export type OnCreateBoxSubscription = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -10444,8 +11408,8 @@ export type OnCreateBoxSubscription = {
       __typename: "LocationInfo";
       id: string;
       locationLabel: string;
-      latitude: string;
-      longitude: string;
+      latitude: number;
+      longitude: number;
       isActive: boolean;
       addressID: string;
       plusCode: string | null;
@@ -10460,8 +11424,8 @@ export type OnCreateBoxSubscription = {
       __typename: "LocationInfo";
       id: string;
       locationLabel: string;
-      latitude: string;
-      longitude: string;
+      latitude: number;
+      longitude: number;
       isActive: boolean;
       addressID: string;
       plusCode: string | null;
@@ -10487,11 +11451,15 @@ export type OnCreateBoxSubscription = {
       scanDateTime: string;
       scannedByUserID: string;
       notes: string | null;
-      isFinal: boolean;
+      isFinal: boolean | null;
       tags: Array<string> | null;
       imageID: string;
       isActive: boolean;
       trackingInfoID: string;
+      isFlagged: boolean | null;
+      FlagNotes: string | null;
+      boxStatus: BoxStatus;
+      destinationLocationInfoID: string;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
@@ -10512,7 +11480,7 @@ export type OnUpdateBoxSubscription = {
     __typename: "BoxCategory";
     id: string;
     name: string;
-    active: boolean;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     boxes: {
@@ -10530,9 +11498,12 @@ export type OnUpdateBoxSubscription = {
   images: Array<{
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -10564,9 +11535,12 @@ export type OnUpdateBoxSubscription = {
   image: {
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -10592,7 +11566,7 @@ export type OnUpdateBoxSubscription = {
     __typename: "BoxCategory";
     id: string;
     name: string;
-    active: boolean;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     boxes: {
@@ -10632,9 +11606,12 @@ export type OnUpdateBoxSubscription = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -10645,9 +11622,12 @@ export type OnUpdateBoxSubscription = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -10697,9 +11677,12 @@ export type OnUpdateBoxSubscription = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -10710,9 +11693,12 @@ export type OnUpdateBoxSubscription = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -10720,8 +11706,8 @@ export type OnUpdateBoxSubscription = {
       __typename: "LocationInfo";
       id: string;
       locationLabel: string;
-      latitude: string;
-      longitude: string;
+      latitude: number;
+      longitude: number;
       isActive: boolean;
       addressID: string;
       plusCode: string | null;
@@ -10736,8 +11722,8 @@ export type OnUpdateBoxSubscription = {
       __typename: "LocationInfo";
       id: string;
       locationLabel: string;
-      latitude: string;
-      longitude: string;
+      latitude: number;
+      longitude: number;
       isActive: boolean;
       addressID: string;
       plusCode: string | null;
@@ -10763,11 +11749,15 @@ export type OnUpdateBoxSubscription = {
       scanDateTime: string;
       scannedByUserID: string;
       notes: string | null;
-      isFinal: boolean;
+      isFinal: boolean | null;
       tags: Array<string> | null;
       imageID: string;
       isActive: boolean;
       trackingInfoID: string;
+      isFlagged: boolean | null;
+      FlagNotes: string | null;
+      boxStatus: BoxStatus;
+      destinationLocationInfoID: string;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
@@ -10788,7 +11778,7 @@ export type OnDeleteBoxSubscription = {
     __typename: "BoxCategory";
     id: string;
     name: string;
-    active: boolean;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     boxes: {
@@ -10806,9 +11796,12 @@ export type OnDeleteBoxSubscription = {
   images: Array<{
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -10840,9 +11833,12 @@ export type OnDeleteBoxSubscription = {
   image: {
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -10868,7 +11864,7 @@ export type OnDeleteBoxSubscription = {
     __typename: "BoxCategory";
     id: string;
     name: string;
-    active: boolean;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     boxes: {
@@ -10908,9 +11904,12 @@ export type OnDeleteBoxSubscription = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -10921,9 +11920,12 @@ export type OnDeleteBoxSubscription = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -10973,9 +11975,12 @@ export type OnDeleteBoxSubscription = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -10986,9 +11991,12 @@ export type OnDeleteBoxSubscription = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -10996,8 +12004,8 @@ export type OnDeleteBoxSubscription = {
       __typename: "LocationInfo";
       id: string;
       locationLabel: string;
-      latitude: string;
-      longitude: string;
+      latitude: number;
+      longitude: number;
       isActive: boolean;
       addressID: string;
       plusCode: string | null;
@@ -11012,8 +12020,8 @@ export type OnDeleteBoxSubscription = {
       __typename: "LocationInfo";
       id: string;
       locationLabel: string;
-      latitude: string;
-      longitude: string;
+      latitude: number;
+      longitude: number;
       isActive: boolean;
       addressID: string;
       plusCode: string | null;
@@ -11039,11 +12047,15 @@ export type OnDeleteBoxSubscription = {
       scanDateTime: string;
       scannedByUserID: string;
       notes: string | null;
-      isFinal: boolean;
+      isFinal: boolean | null;
       tags: Array<string> | null;
       imageID: string;
       isActive: boolean;
       trackingInfoID: string;
+      isFlagged: boolean | null;
+      FlagNotes: string | null;
+      boxStatus: BoxStatus;
+      destinationLocationInfoID: string;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
@@ -11059,15 +12071,18 @@ export type OnCreateBoxLocationSubscription = {
   scanDateTime: string;
   scannedByUserID: string;
   notes: string | null;
-  isFinal: boolean;
+  isFinal: boolean | null;
   tags: Array<string> | null;
   imageID: string;
   images: Array<{
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -11091,14 +12106,21 @@ export type OnCreateBoxLocationSubscription = {
   }> | null;
   isActive: boolean;
   trackingInfoID: string;
+  isFlagged: boolean | null;
+  FlagNotes: string | null;
+  boxStatus: BoxStatus;
+  destinationLocationInfoID: string;
   createdAt: string;
   updatedAt: string;
   image: {
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -11124,8 +12146,52 @@ export type OnCreateBoxLocationSubscription = {
     __typename: "LocationInfo";
     id: string;
     locationLabel: string;
-    latitude: string;
-    longitude: string;
+    latitude: number;
+    longitude: number;
+    isActive: boolean;
+    addressID: string;
+    phones: Array<{
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    plusCode: string | null;
+    website: Array<string> | null;
+    notes: string | null;
+    notesHistory: Array<string> | null;
+    tags: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
+    address: {
+      __typename: "Address";
+      id: string;
+      label: string;
+      addressLine1: string;
+      addressLine2: string | null;
+      city: string;
+      state: string | null;
+      province: string | null;
+      zipCode: string | null;
+      postalCode: string | null;
+      country: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
+  };
+  destinationLocationInfo: {
+    __typename: "LocationInfo";
+    id: string;
+    locationLabel: string;
+    latitude: number;
+    longitude: number;
     isActive: boolean;
     addressID: string;
     phones: Array<{
@@ -11177,7 +12243,7 @@ export type OnCreateBoxLocationSubscription = {
       __typename: "BoxCategory";
       id: string;
       name: string;
-      active: boolean;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -11191,9 +12257,12 @@ export type OnCreateBoxLocationSubscription = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -11207,9 +12276,12 @@ export type OnCreateBoxLocationSubscription = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -11217,7 +12289,7 @@ export type OnCreateBoxLocationSubscription = {
       __typename: "BoxCategory";
       id: string;
       name: string;
-      active: boolean;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -11277,9 +12349,12 @@ export type OnCreateBoxLocationSubscription = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -11290,9 +12365,12 @@ export type OnCreateBoxLocationSubscription = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -11331,9 +12409,12 @@ export type OnCreateBoxLocationSubscription = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -11348,9 +12429,12 @@ export type OnCreateBoxLocationSubscription = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -11385,15 +12469,18 @@ export type OnUpdateBoxLocationSubscription = {
   scanDateTime: string;
   scannedByUserID: string;
   notes: string | null;
-  isFinal: boolean;
+  isFinal: boolean | null;
   tags: Array<string> | null;
   imageID: string;
   images: Array<{
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -11417,14 +12504,21 @@ export type OnUpdateBoxLocationSubscription = {
   }> | null;
   isActive: boolean;
   trackingInfoID: string;
+  isFlagged: boolean | null;
+  FlagNotes: string | null;
+  boxStatus: BoxStatus;
+  destinationLocationInfoID: string;
   createdAt: string;
   updatedAt: string;
   image: {
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -11450,8 +12544,52 @@ export type OnUpdateBoxLocationSubscription = {
     __typename: "LocationInfo";
     id: string;
     locationLabel: string;
-    latitude: string;
-    longitude: string;
+    latitude: number;
+    longitude: number;
+    isActive: boolean;
+    addressID: string;
+    phones: Array<{
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    plusCode: string | null;
+    website: Array<string> | null;
+    notes: string | null;
+    notesHistory: Array<string> | null;
+    tags: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
+    address: {
+      __typename: "Address";
+      id: string;
+      label: string;
+      addressLine1: string;
+      addressLine2: string | null;
+      city: string;
+      state: string | null;
+      province: string | null;
+      zipCode: string | null;
+      postalCode: string | null;
+      country: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
+  };
+  destinationLocationInfo: {
+    __typename: "LocationInfo";
+    id: string;
+    locationLabel: string;
+    latitude: number;
+    longitude: number;
     isActive: boolean;
     addressID: string;
     phones: Array<{
@@ -11503,7 +12641,7 @@ export type OnUpdateBoxLocationSubscription = {
       __typename: "BoxCategory";
       id: string;
       name: string;
-      active: boolean;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -11517,9 +12655,12 @@ export type OnUpdateBoxLocationSubscription = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -11533,9 +12674,12 @@ export type OnUpdateBoxLocationSubscription = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -11543,7 +12687,7 @@ export type OnUpdateBoxLocationSubscription = {
       __typename: "BoxCategory";
       id: string;
       name: string;
-      active: boolean;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -11603,9 +12747,12 @@ export type OnUpdateBoxLocationSubscription = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -11616,9 +12763,12 @@ export type OnUpdateBoxLocationSubscription = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -11657,9 +12807,12 @@ export type OnUpdateBoxLocationSubscription = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -11674,9 +12827,12 @@ export type OnUpdateBoxLocationSubscription = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -11711,15 +12867,18 @@ export type OnDeleteBoxLocationSubscription = {
   scanDateTime: string;
   scannedByUserID: string;
   notes: string | null;
-  isFinal: boolean;
+  isFinal: boolean | null;
   tags: Array<string> | null;
   imageID: string;
   images: Array<{
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -11743,14 +12902,21 @@ export type OnDeleteBoxLocationSubscription = {
   }> | null;
   isActive: boolean;
   trackingInfoID: string;
+  isFlagged: boolean | null;
+  FlagNotes: string | null;
+  boxStatus: BoxStatus;
+  destinationLocationInfoID: string;
   createdAt: string;
   updatedAt: string;
   image: {
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -11776,8 +12942,52 @@ export type OnDeleteBoxLocationSubscription = {
     __typename: "LocationInfo";
     id: string;
     locationLabel: string;
-    latitude: string;
-    longitude: string;
+    latitude: number;
+    longitude: number;
+    isActive: boolean;
+    addressID: string;
+    phones: Array<{
+      __typename: "Phone";
+      id: string;
+      phone: string | null;
+      isActive: boolean | null;
+      type: PhoneType | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    plusCode: string | null;
+    website: Array<string> | null;
+    notes: string | null;
+    notesHistory: Array<string> | null;
+    tags: Array<string> | null;
+    createdAt: string;
+    updatedAt: string;
+    address: {
+      __typename: "Address";
+      id: string;
+      label: string;
+      addressLine1: string;
+      addressLine2: string | null;
+      city: string;
+      state: string | null;
+      province: string | null;
+      zipCode: string | null;
+      postalCode: string | null;
+      country: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    boxLocations: {
+      __typename: "ModelBoxLocationConnection";
+      nextToken: string | null;
+    } | null;
+  };
+  destinationLocationInfo: {
+    __typename: "LocationInfo";
+    id: string;
+    locationLabel: string;
+    latitude: number;
+    longitude: number;
     isActive: boolean;
     addressID: string;
     phones: Array<{
@@ -11829,7 +13039,7 @@ export type OnDeleteBoxLocationSubscription = {
       __typename: "BoxCategory";
       id: string;
       name: string;
-      active: boolean;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -11843,9 +13053,12 @@ export type OnDeleteBoxLocationSubscription = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -11859,9 +13072,12 @@ export type OnDeleteBoxLocationSubscription = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -11869,7 +13085,7 @@ export type OnDeleteBoxLocationSubscription = {
       __typename: "BoxCategory";
       id: string;
       name: string;
-      active: boolean;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -11929,9 +13145,12 @@ export type OnDeleteBoxLocationSubscription = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -11942,9 +13161,12 @@ export type OnDeleteBoxLocationSubscription = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -11983,9 +13205,12 @@ export type OnDeleteBoxLocationSubscription = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -12000,9 +13225,12 @@ export type OnDeleteBoxLocationSubscription = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -12040,9 +13268,12 @@ export type OnCreateTrackingInfoSubscription = {
   images: Array<{
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -12071,9 +13302,12 @@ export type OnCreateTrackingInfoSubscription = {
   image: {
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -12105,11 +13339,15 @@ export type OnCreateTrackingInfoSubscription = {
       scanDateTime: string;
       scannedByUserID: string;
       notes: string | null;
-      isFinal: boolean;
+      isFinal: boolean | null;
       tags: Array<string> | null;
       imageID: string;
       isActive: boolean;
       trackingInfoID: string;
+      isFlagged: boolean | null;
+      FlagNotes: string | null;
+      boxStatus: BoxStatus;
+      destinationLocationInfoID: string;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
@@ -12127,9 +13365,12 @@ export type OnCreateTrackingInfoSubscription = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -12144,9 +13385,12 @@ export type OnCreateTrackingInfoSubscription = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -12184,9 +13428,12 @@ export type OnUpdateTrackingInfoSubscription = {
   images: Array<{
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -12215,9 +13462,12 @@ export type OnUpdateTrackingInfoSubscription = {
   image: {
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -12249,11 +13499,15 @@ export type OnUpdateTrackingInfoSubscription = {
       scanDateTime: string;
       scannedByUserID: string;
       notes: string | null;
-      isFinal: boolean;
+      isFinal: boolean | null;
       tags: Array<string> | null;
       imageID: string;
       isActive: boolean;
       trackingInfoID: string;
+      isFlagged: boolean | null;
+      FlagNotes: string | null;
+      boxStatus: BoxStatus;
+      destinationLocationInfoID: string;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
@@ -12271,9 +13525,12 @@ export type OnUpdateTrackingInfoSubscription = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -12288,9 +13545,12 @@ export type OnUpdateTrackingInfoSubscription = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -12328,9 +13588,12 @@ export type OnDeleteTrackingInfoSubscription = {
   images: Array<{
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -12359,9 +13622,12 @@ export type OnDeleteTrackingInfoSubscription = {
   image: {
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -12393,11 +13659,15 @@ export type OnDeleteTrackingInfoSubscription = {
       scanDateTime: string;
       scannedByUserID: string;
       notes: string | null;
-      isFinal: boolean;
+      isFinal: boolean | null;
       tags: Array<string> | null;
       imageID: string;
       isActive: boolean;
       trackingInfoID: string;
+      isFlagged: boolean | null;
+      FlagNotes: string | null;
+      boxStatus: BoxStatus;
+      destinationLocationInfoID: string;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
@@ -12415,9 +13685,12 @@ export type OnDeleteTrackingInfoSubscription = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -12432,9 +13705,12 @@ export type OnDeleteTrackingInfoSubscription = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -12473,9 +13749,12 @@ export type OnCreateUserSubscription = {
   images: Array<{
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -12508,9 +13787,12 @@ export type OnCreateUserSubscription = {
   image: {
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -12564,9 +13846,12 @@ export type OnCreateUserSubscription = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -12577,9 +13862,12 @@ export type OnCreateUserSubscription = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -12617,11 +13905,15 @@ export type OnCreateUserSubscription = {
       scanDateTime: string;
       scannedByUserID: string;
       notes: string | null;
-      isFinal: boolean;
+      isFinal: boolean | null;
       tags: Array<string> | null;
       imageID: string;
       isActive: boolean;
       trackingInfoID: string;
+      isFlagged: boolean | null;
+      FlagNotes: string | null;
+      boxStatus: BoxStatus;
+      destinationLocationInfoID: string;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
@@ -12641,9 +13933,12 @@ export type OnUpdateUserSubscription = {
   images: Array<{
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -12676,9 +13971,12 @@ export type OnUpdateUserSubscription = {
   image: {
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -12732,9 +14030,12 @@ export type OnUpdateUserSubscription = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -12745,9 +14046,12 @@ export type OnUpdateUserSubscription = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -12785,11 +14089,15 @@ export type OnUpdateUserSubscription = {
       scanDateTime: string;
       scannedByUserID: string;
       notes: string | null;
-      isFinal: boolean;
+      isFinal: boolean | null;
       tags: Array<string> | null;
       imageID: string;
       isActive: boolean;
       trackingInfoID: string;
+      isFlagged: boolean | null;
+      FlagNotes: string | null;
+      boxStatus: BoxStatus;
+      destinationLocationInfoID: string;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
@@ -12809,9 +14117,12 @@ export type OnDeleteUserSubscription = {
   images: Array<{
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -12844,9 +14155,12 @@ export type OnDeleteUserSubscription = {
   image: {
     __typename: "Image";
     id: string;
-    altTex: string | null;
+    label: string | null;
+    altText: string | null;
     src: string;
     userID: string;
+    dateAdded: string;
+    isActive: boolean;
     createdAt: string;
     updatedAt: string;
     user: {
@@ -12900,9 +14214,12 @@ export type OnDeleteUserSubscription = {
     images: Array<{
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     }> | null;
@@ -12913,9 +14230,12 @@ export type OnDeleteUserSubscription = {
     image: {
       __typename: "Image";
       id: string;
-      altTex: string | null;
+      label: string | null;
+      altText: string | null;
       src: string;
       userID: string;
+      dateAdded: string;
+      isActive: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -12953,11 +14273,15 @@ export type OnDeleteUserSubscription = {
       scanDateTime: string;
       scannedByUserID: string;
       notes: string | null;
-      isFinal: boolean;
+      isFinal: boolean | null;
       tags: Array<string> | null;
       imageID: string;
       isActive: boolean;
       trackingInfoID: string;
+      isFlagged: boolean | null;
+      FlagNotes: string | null;
+      boxStatus: BoxStatus;
+      destinationLocationInfoID: string;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
@@ -12977,9 +14301,12 @@ export class APIService {
         createImage(input: $input, condition: $condition) {
           __typename
           id
-          altTex
+          label
+          altText
           src
           userID
+          dateAdded
+          isActive
           createdAt
           updatedAt
           user {
@@ -12994,9 +14321,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -13011,9 +14341,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -13059,9 +14392,12 @@ export class APIService {
         updateImage(input: $input, condition: $condition) {
           __typename
           id
-          altTex
+          label
+          altText
           src
           userID
+          dateAdded
+          isActive
           createdAt
           updatedAt
           user {
@@ -13076,9 +14412,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -13093,9 +14432,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -13141,9 +14483,12 @@ export class APIService {
         deleteImage(input: $input, condition: $condition) {
           __typename
           id
-          altTex
+          label
+          altText
           src
           userID
+          dateAdded
+          isActive
           createdAt
           updatedAt
           user {
@@ -13158,9 +14503,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -13175,9 +14523,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -13224,7 +14575,7 @@ export class APIService {
           __typename
           id
           name
-          active
+          isActive
           createdAt
           updatedAt
           boxes {
@@ -13277,7 +14628,7 @@ export class APIService {
           __typename
           id
           name
-          active
+          isActive
           createdAt
           updatedAt
           boxes {
@@ -13330,7 +14681,7 @@ export class APIService {
           __typename
           id
           name
-          active
+          isActive
           createdAt
           updatedAt
           boxes {
@@ -13675,9 +15026,12 @@ export class APIService {
           images {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -13706,9 +15060,12 @@ export class APIService {
           image {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -13845,9 +15202,12 @@ export class APIService {
           images {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -13876,9 +15236,12 @@ export class APIService {
           image {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -14015,9 +15378,12 @@ export class APIService {
           images {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -14046,9 +15412,12 @@ export class APIService {
           image {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -14207,6 +15576,10 @@ export class APIService {
               imageID
               isActive
               trackingInfoID
+              isFlagged
+              FlagNotes
+              boxStatus
+              destinationLocationInfoID
               createdAt
               updatedAt
             }
@@ -14284,6 +15657,10 @@ export class APIService {
               imageID
               isActive
               trackingInfoID
+              isFlagged
+              FlagNotes
+              boxStatus
+              destinationLocationInfoID
               createdAt
               updatedAt
             }
@@ -14361,6 +15738,10 @@ export class APIService {
               imageID
               isActive
               trackingInfoID
+              isFlagged
+              FlagNotes
+              boxStatus
+              destinationLocationInfoID
               createdAt
               updatedAt
             }
@@ -14406,9 +15787,12 @@ export class APIService {
           images {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -14437,9 +15821,12 @@ export class APIService {
           image {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -14617,9 +16004,12 @@ export class APIService {
           images {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -14648,9 +16038,12 @@ export class APIService {
           image {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -14828,9 +16221,12 @@ export class APIService {
           images {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -14859,9 +16255,12 @@ export class APIService {
           image {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -15030,7 +16429,7 @@ export class APIService {
             __typename
             id
             name
-            active
+            isActive
             createdAt
             updatedAt
             boxes {
@@ -15048,9 +16447,12 @@ export class APIService {
           images {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -15082,9 +16484,12 @@ export class APIService {
           image {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -15110,7 +16515,7 @@ export class APIService {
             __typename
             id
             name
-            active
+            isActive
             createdAt
             updatedAt
             boxes {
@@ -15150,9 +16555,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -15163,9 +16571,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -15215,9 +16626,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -15228,9 +16642,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -15286,6 +16703,10 @@ export class APIService {
               imageID
               isActive
               trackingInfoID
+              isFlagged
+              FlagNotes
+              boxStatus
+              destinationLocationInfoID
               createdAt
               updatedAt
             }
@@ -15322,7 +16743,7 @@ export class APIService {
             __typename
             id
             name
-            active
+            isActive
             createdAt
             updatedAt
             boxes {
@@ -15340,9 +16761,12 @@ export class APIService {
           images {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -15374,9 +16798,12 @@ export class APIService {
           image {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -15402,7 +16829,7 @@ export class APIService {
             __typename
             id
             name
-            active
+            isActive
             createdAt
             updatedAt
             boxes {
@@ -15442,9 +16869,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -15455,9 +16885,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -15507,9 +16940,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -15520,9 +16956,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -15578,6 +17017,10 @@ export class APIService {
               imageID
               isActive
               trackingInfoID
+              isFlagged
+              FlagNotes
+              boxStatus
+              destinationLocationInfoID
               createdAt
               updatedAt
             }
@@ -15614,7 +17057,7 @@ export class APIService {
             __typename
             id
             name
-            active
+            isActive
             createdAt
             updatedAt
             boxes {
@@ -15632,9 +17075,12 @@ export class APIService {
           images {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -15666,9 +17112,12 @@ export class APIService {
           image {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -15694,7 +17143,7 @@ export class APIService {
             __typename
             id
             name
-            active
+            isActive
             createdAt
             updatedAt
             boxes {
@@ -15734,9 +17183,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -15747,9 +17199,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -15799,9 +17254,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -15812,9 +17270,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -15870,6 +17331,10 @@ export class APIService {
               imageID
               isActive
               trackingInfoID
+              isFlagged
+              FlagNotes
+              boxStatus
+              destinationLocationInfoID
               createdAt
               updatedAt
             }
@@ -15907,9 +17372,12 @@ export class APIService {
           images {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -15933,14 +17401,21 @@ export class APIService {
           }
           isActive
           trackingInfoID
+          isFlagged
+          FlagNotes
+          boxStatus
+          destinationLocationInfoID
           createdAt
           updatedAt
           image {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -16006,6 +17481,50 @@ export class APIService {
               nextToken
             }
           }
+          destinationLocationInfo {
+            __typename
+            id
+            locationLabel
+            latitude
+            longitude
+            isActive
+            addressID
+            phones {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            plusCode
+            website
+            notes
+            notesHistory
+            tags
+            createdAt
+            updatedAt
+            address {
+              __typename
+              id
+              label
+              addressLine1
+              addressLine2
+              city
+              state
+              province
+              zipCode
+              postalCode
+              country
+              createdAt
+              updatedAt
+            }
+            boxLocations {
+              __typename
+              nextToken
+            }
+          }
           box {
             __typename
             id
@@ -16019,7 +17538,7 @@ export class APIService {
               __typename
               id
               name
-              active
+              isActive
               createdAt
               updatedAt
             }
@@ -16033,9 +17552,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -16049,9 +17571,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -16059,7 +17584,7 @@ export class APIService {
               __typename
               id
               name
-              active
+              isActive
               createdAt
               updatedAt
             }
@@ -16119,9 +17644,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -16132,9 +17660,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -16173,9 +17704,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -16190,9 +17724,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -16249,9 +17786,12 @@ export class APIService {
           images {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -16275,14 +17815,21 @@ export class APIService {
           }
           isActive
           trackingInfoID
+          isFlagged
+          FlagNotes
+          boxStatus
+          destinationLocationInfoID
           createdAt
           updatedAt
           image {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -16348,6 +17895,50 @@ export class APIService {
               nextToken
             }
           }
+          destinationLocationInfo {
+            __typename
+            id
+            locationLabel
+            latitude
+            longitude
+            isActive
+            addressID
+            phones {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            plusCode
+            website
+            notes
+            notesHistory
+            tags
+            createdAt
+            updatedAt
+            address {
+              __typename
+              id
+              label
+              addressLine1
+              addressLine2
+              city
+              state
+              province
+              zipCode
+              postalCode
+              country
+              createdAt
+              updatedAt
+            }
+            boxLocations {
+              __typename
+              nextToken
+            }
+          }
           box {
             __typename
             id
@@ -16361,7 +17952,7 @@ export class APIService {
               __typename
               id
               name
-              active
+              isActive
               createdAt
               updatedAt
             }
@@ -16375,9 +17966,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -16391,9 +17985,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -16401,7 +17998,7 @@ export class APIService {
               __typename
               id
               name
-              active
+              isActive
               createdAt
               updatedAt
             }
@@ -16461,9 +18058,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -16474,9 +18074,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -16515,9 +18118,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -16532,9 +18138,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -16591,9 +18200,12 @@ export class APIService {
           images {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -16617,14 +18229,21 @@ export class APIService {
           }
           isActive
           trackingInfoID
+          isFlagged
+          FlagNotes
+          boxStatus
+          destinationLocationInfoID
           createdAt
           updatedAt
           image {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -16690,6 +18309,50 @@ export class APIService {
               nextToken
             }
           }
+          destinationLocationInfo {
+            __typename
+            id
+            locationLabel
+            latitude
+            longitude
+            isActive
+            addressID
+            phones {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            plusCode
+            website
+            notes
+            notesHistory
+            tags
+            createdAt
+            updatedAt
+            address {
+              __typename
+              id
+              label
+              addressLine1
+              addressLine2
+              city
+              state
+              province
+              zipCode
+              postalCode
+              country
+              createdAt
+              updatedAt
+            }
+            boxLocations {
+              __typename
+              nextToken
+            }
+          }
           box {
             __typename
             id
@@ -16703,7 +18366,7 @@ export class APIService {
               __typename
               id
               name
-              active
+              isActive
               createdAt
               updatedAt
             }
@@ -16717,9 +18380,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -16733,9 +18399,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -16743,7 +18412,7 @@ export class APIService {
               __typename
               id
               name
-              active
+              isActive
               createdAt
               updatedAt
             }
@@ -16803,9 +18472,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -16816,9 +18488,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -16857,9 +18532,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -16874,9 +18552,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -16930,9 +18611,12 @@ export class APIService {
           images {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -16961,9 +18645,12 @@ export class APIService {
           image {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -17000,6 +18687,10 @@ export class APIService {
               imageID
               isActive
               trackingInfoID
+              isFlagged
+              FlagNotes
+              boxStatus
+              destinationLocationInfoID
               createdAt
               updatedAt
             }
@@ -17017,9 +18708,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -17034,9 +18728,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -17090,9 +18787,12 @@ export class APIService {
           images {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -17121,9 +18821,12 @@ export class APIService {
           image {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -17160,6 +18863,10 @@ export class APIService {
               imageID
               isActive
               trackingInfoID
+              isFlagged
+              FlagNotes
+              boxStatus
+              destinationLocationInfoID
               createdAt
               updatedAt
             }
@@ -17177,9 +18884,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -17194,9 +18904,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -17250,9 +18963,12 @@ export class APIService {
           images {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -17281,9 +18997,12 @@ export class APIService {
           image {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -17320,6 +19039,10 @@ export class APIService {
               imageID
               isActive
               trackingInfoID
+              isFlagged
+              FlagNotes
+              boxStatus
+              destinationLocationInfoID
               createdAt
               updatedAt
             }
@@ -17337,9 +19060,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -17354,9 +19080,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -17411,9 +19140,12 @@ export class APIService {
           images {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -17446,9 +19178,12 @@ export class APIService {
           image {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -17502,9 +19237,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -17515,9 +19253,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -17560,6 +19301,10 @@ export class APIService {
               imageID
               isActive
               trackingInfoID
+              isFlagged
+              FlagNotes
+              boxStatus
+              destinationLocationInfoID
               createdAt
               updatedAt
             }
@@ -17595,9 +19340,12 @@ export class APIService {
           images {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -17630,9 +19378,12 @@ export class APIService {
           image {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -17686,9 +19437,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -17699,9 +19453,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -17744,6 +19501,10 @@ export class APIService {
               imageID
               isActive
               trackingInfoID
+              isFlagged
+              FlagNotes
+              boxStatus
+              destinationLocationInfoID
               createdAt
               updatedAt
             }
@@ -17779,9 +19540,12 @@ export class APIService {
           images {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -17814,9 +19578,12 @@ export class APIService {
           image {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -17870,9 +19637,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -17883,9 +19653,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -17928,6 +19701,10 @@ export class APIService {
               imageID
               isActive
               trackingInfoID
+              isFlagged
+              FlagNotes
+              boxStatus
+              destinationLocationInfoID
               createdAt
               updatedAt
             }
@@ -17957,9 +19734,12 @@ export class APIService {
           items {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -18004,9 +19784,12 @@ export class APIService {
         getImage(id: $id) {
           __typename
           id
-          altTex
+          label
+          altText
           src
           userID
+          dateAdded
+          isActive
           createdAt
           updatedAt
           user {
@@ -18021,9 +19804,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -18038,9 +19824,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -18075,6 +19864,74 @@ export class APIService {
     )) as any;
     return <GetImageQuery>response.data.getImage;
   }
+  async ImagesByUser(
+    userID?: string,
+    dateAdded?: ModelStringKeyConditionInput,
+    sortDirection?: ModelSortDirection,
+    filter?: ModelImageFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<ImagesByUserQuery> {
+    const statement = `query ImagesByUser($userID: ID, $dateAdded: ModelStringKeyConditionInput, $sortDirection: ModelSortDirection, $filter: ModelImageFilterInput, $limit: Int, $nextToken: String) {
+        ImagesByUser(userID: $userID, dateAdded: $dateAdded, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            label
+            altText
+            src
+            userID
+            dateAdded
+            isActive
+            createdAt
+            updatedAt
+            user {
+              __typename
+              id
+              name
+              orgID
+              hashedSecret
+              isActive
+              tags
+              imageID
+              status
+              statusHistory
+              internalNotes
+              notes
+              rank
+              notesHistory
+              createdAt
+              updatedAt
+            }
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (userID) {
+      gqlAPIServiceArguments.userID = userID;
+    }
+    if (dateAdded) {
+      gqlAPIServiceArguments.dateAdded = dateAdded;
+    }
+    if (sortDirection) {
+      gqlAPIServiceArguments.sortDirection = sortDirection;
+    }
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <ImagesByUserQuery>response.data.ImagesByUser;
+  }
   async ListBoxCategorys(
     filter?: ModelBoxCategoryFilterInput,
     limit?: number,
@@ -18087,7 +19944,7 @@ export class APIService {
             __typename
             id
             name
-            active
+            isActive
             createdAt
             updatedAt
             boxes {
@@ -18119,7 +19976,7 @@ export class APIService {
           __typename
           id
           name
-          active
+          isActive
           createdAt
           updatedAt
           boxes {
@@ -18381,9 +20238,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -18394,9 +20254,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -18476,9 +20339,12 @@ export class APIService {
           images {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -18507,9 +20373,12 @@ export class APIService {
           image {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -18732,6 +20601,10 @@ export class APIService {
               imageID
               isActive
               trackingInfoID
+              isFlagged
+              FlagNotes
+              boxStatus
+              destinationLocationInfoID
               createdAt
               updatedAt
             }
@@ -18777,9 +20650,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -18790,9 +20666,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -18875,9 +20754,12 @@ export class APIService {
           images {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -18906,9 +20788,12 @@ export class APIService {
           image {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -19077,7 +20962,7 @@ export class APIService {
               __typename
               id
               name
-              active
+              isActive
               createdAt
               updatedAt
             }
@@ -19091,9 +20976,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -19107,9 +20995,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -19117,7 +21008,7 @@ export class APIService {
               __typename
               id
               name
-              active
+              isActive
               createdAt
               updatedAt
             }
@@ -19199,7 +21090,7 @@ export class APIService {
             __typename
             id
             name
-            active
+            isActive
             createdAt
             updatedAt
             boxes {
@@ -19217,9 +21108,12 @@ export class APIService {
           images {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -19251,9 +21145,12 @@ export class APIService {
           image {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -19279,7 +21176,7 @@ export class APIService {
             __typename
             id
             name
-            active
+            isActive
             createdAt
             updatedAt
             boxes {
@@ -19319,9 +21216,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -19332,9 +21232,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -19384,9 +21287,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -19397,9 +21303,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -19455,6 +21364,10 @@ export class APIService {
               imageID
               isActive
               trackingInfoID
+              isFlagged
+              FlagNotes
+              boxStatus
+              destinationLocationInfoID
               createdAt
               updatedAt
             }
@@ -19493,7 +21406,7 @@ export class APIService {
               __typename
               id
               name
-              active
+              isActive
               createdAt
               updatedAt
             }
@@ -19507,9 +21420,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -19523,9 +21439,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -19533,7 +21452,7 @@ export class APIService {
               __typename
               id
               name
-              active
+              isActive
               createdAt
               updatedAt
             }
@@ -19630,7 +21549,7 @@ export class APIService {
               __typename
               id
               name
-              active
+              isActive
               createdAt
               updatedAt
             }
@@ -19644,9 +21563,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -19660,9 +21582,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -19670,7 +21595,7 @@ export class APIService {
               __typename
               id
               name
-              active
+              isActive
               createdAt
               updatedAt
             }
@@ -19769,7 +21694,7 @@ export class APIService {
               __typename
               id
               name
-              active
+              isActive
               createdAt
               updatedAt
             }
@@ -19783,9 +21708,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -19799,9 +21727,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -19809,7 +21740,7 @@ export class APIService {
               __typename
               id
               name
-              active
+              isActive
               createdAt
               updatedAt
             }
@@ -19905,7 +21836,7 @@ export class APIService {
               __typename
               id
               name
-              active
+              isActive
               createdAt
               updatedAt
             }
@@ -19919,9 +21850,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -19935,9 +21869,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -19945,7 +21882,7 @@ export class APIService {
               __typename
               id
               name
-              active
+              isActive
               createdAt
               updatedAt
             }
@@ -20041,7 +21978,7 @@ export class APIService {
               __typename
               id
               name
-              active
+              isActive
               createdAt
               updatedAt
             }
@@ -20055,9 +21992,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -20071,9 +22011,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -20081,7 +22024,7 @@ export class APIService {
               __typename
               id
               name
-              active
+              isActive
               createdAt
               updatedAt
             }
@@ -20178,7 +22121,7 @@ export class APIService {
               __typename
               id
               name
-              active
+              isActive
               createdAt
               updatedAt
             }
@@ -20192,9 +22135,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -20208,9 +22154,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -20218,7 +22167,7 @@ export class APIService {
               __typename
               id
               name
-              active
+              isActive
               createdAt
               updatedAt
             }
@@ -20310,9 +22259,12 @@ export class APIService {
           images {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -20336,14 +22288,21 @@ export class APIService {
           }
           isActive
           trackingInfoID
+          isFlagged
+          FlagNotes
+          boxStatus
+          destinationLocationInfoID
           createdAt
           updatedAt
           image {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -20409,6 +22368,50 @@ export class APIService {
               nextToken
             }
           }
+          destinationLocationInfo {
+            __typename
+            id
+            locationLabel
+            latitude
+            longitude
+            isActive
+            addressID
+            phones {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            plusCode
+            website
+            notes
+            notesHistory
+            tags
+            createdAt
+            updatedAt
+            address {
+              __typename
+              id
+              label
+              addressLine1
+              addressLine2
+              city
+              state
+              province
+              zipCode
+              postalCode
+              country
+              createdAt
+              updatedAt
+            }
+            boxLocations {
+              __typename
+              nextToken
+            }
+          }
           box {
             __typename
             id
@@ -20422,7 +22425,7 @@ export class APIService {
               __typename
               id
               name
-              active
+              isActive
               createdAt
               updatedAt
             }
@@ -20436,9 +22439,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -20452,9 +22458,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -20462,7 +22471,7 @@ export class APIService {
               __typename
               id
               name
-              active
+              isActive
               createdAt
               updatedAt
             }
@@ -20522,9 +22531,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -20535,9 +22547,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -20576,9 +22591,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -20593,9 +22611,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -20652,26 +22673,52 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
             isActive
             trackingInfoID
+            isFlagged
+            FlagNotes
+            boxStatus
+            destinationLocationInfoID
             createdAt
             updatedAt
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
             locationInfo {
+              __typename
+              id
+              locationLabel
+              latitude
+              longitude
+              isActive
+              addressID
+              plusCode
+              website
+              notes
+              notesHistory
+              tags
+              createdAt
+              updatedAt
+            }
+            destinationLocationInfo {
               __typename
               id
               locationLabel
@@ -20786,26 +22833,52 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
             isActive
             trackingInfoID
+            isFlagged
+            FlagNotes
+            boxStatus
+            destinationLocationInfoID
             createdAt
             updatedAt
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
             locationInfo {
+              __typename
+              id
+              locationLabel
+              latitude
+              longitude
+              isActive
+              addressID
+              plusCode
+              website
+              notes
+              notesHistory
+              tags
+              createdAt
+              updatedAt
+            }
+            destinationLocationInfo {
               __typename
               id
               locationLabel
@@ -20929,26 +23002,52 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
             isActive
             trackingInfoID
+            isFlagged
+            FlagNotes
+            boxStatus
+            destinationLocationInfoID
             createdAt
             updatedAt
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
             locationInfo {
+              __typename
+              id
+              locationLabel
+              latitude
+              longitude
+              isActive
+              addressID
+              plusCode
+              website
+              notes
+              notesHistory
+              tags
+              createdAt
+              updatedAt
+            }
+            destinationLocationInfo {
               __typename
               id
               locationLabel
@@ -21074,26 +23173,52 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
             isActive
             trackingInfoID
+            isFlagged
+            FlagNotes
+            boxStatus
+            destinationLocationInfoID
             createdAt
             updatedAt
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
             locationInfo {
+              __typename
+              id
+              locationLabel
+              latitude
+              longitude
+              isActive
+              addressID
+              plusCode
+              website
+              notes
+              notesHistory
+              tags
+              createdAt
+              updatedAt
+            }
+            destinationLocationInfo {
               __typename
               id
               locationLabel
@@ -21219,26 +23344,52 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
             isActive
             trackingInfoID
+            isFlagged
+            FlagNotes
+            boxStatus
+            destinationLocationInfoID
             createdAt
             updatedAt
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
             locationInfo {
+              __typename
+              id
+              locationLabel
+              latitude
+              longitude
+              isActive
+              addressID
+              plusCode
+              website
+              notes
+              notesHistory
+              tags
+              createdAt
+              updatedAt
+            }
+            destinationLocationInfo {
               __typename
               id
               locationLabel
@@ -21358,9 +23509,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -21371,9 +23525,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -21431,9 +23588,12 @@ export class APIService {
           images {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -21462,9 +23622,12 @@ export class APIService {
           image {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -21501,6 +23664,10 @@ export class APIService {
               imageID
               isActive
               trackingInfoID
+              isFlagged
+              FlagNotes
+              boxStatus
+              destinationLocationInfoID
               createdAt
               updatedAt
             }
@@ -21518,9 +23685,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -21535,9 +23705,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -21592,9 +23765,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -21609,9 +23785,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -21668,9 +23847,12 @@ export class APIService {
           images {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -21703,9 +23885,12 @@ export class APIService {
           image {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -21759,9 +23944,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -21772,9 +23960,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -21817,6 +24008,10 @@ export class APIService {
               imageID
               isActive
               trackingInfoID
+              isFlagged
+              FlagNotes
+              boxStatus
+              destinationLocationInfoID
               createdAt
               updatedAt
             }
@@ -21854,9 +24049,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -21871,9 +24069,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -21928,9 +24129,12 @@ export class APIService {
         onCreateImage {
           __typename
           id
-          altTex
+          label
+          altText
           src
           userID
+          dateAdded
+          isActive
           createdAt
           updatedAt
           user {
@@ -21945,9 +24149,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -21962,9 +24169,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -22000,9 +24210,12 @@ export class APIService {
         onUpdateImage {
           __typename
           id
-          altTex
+          label
+          altText
           src
           userID
+          dateAdded
+          isActive
           createdAt
           updatedAt
           user {
@@ -22017,9 +24230,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -22034,9 +24250,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -22072,9 +24291,12 @@ export class APIService {
         onDeleteImage {
           __typename
           id
-          altTex
+          label
+          altText
           src
           userID
+          dateAdded
+          isActive
           createdAt
           updatedAt
           user {
@@ -22089,9 +24311,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -22106,9 +24331,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -22147,7 +24375,7 @@ export class APIService {
           __typename
           id
           name
-          active
+          isActive
           createdAt
           updatedAt
           boxes {
@@ -22192,7 +24420,7 @@ export class APIService {
           __typename
           id
           name
-          active
+          isActive
           createdAt
           updatedAt
           boxes {
@@ -22237,7 +24465,7 @@ export class APIService {
           __typename
           id
           name
-          active
+          isActive
           createdAt
           updatedAt
           boxes {
@@ -22488,9 +24716,12 @@ export class APIService {
           images {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -22519,9 +24750,12 @@ export class APIService {
           image {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -22648,9 +24882,12 @@ export class APIService {
           images {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -22679,9 +24916,12 @@ export class APIService {
           image {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -22808,9 +25048,12 @@ export class APIService {
           images {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -22839,9 +25082,12 @@ export class APIService {
           image {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -22992,6 +25238,10 @@ export class APIService {
               imageID
               isActive
               trackingInfoID
+              isFlagged
+              FlagNotes
+              boxStatus
+              destinationLocationInfoID
               createdAt
               updatedAt
             }
@@ -23061,6 +25311,10 @@ export class APIService {
               imageID
               isActive
               trackingInfoID
+              isFlagged
+              FlagNotes
+              boxStatus
+              destinationLocationInfoID
               createdAt
               updatedAt
             }
@@ -23130,6 +25384,10 @@ export class APIService {
               imageID
               isActive
               trackingInfoID
+              isFlagged
+              FlagNotes
+              boxStatus
+              destinationLocationInfoID
               createdAt
               updatedAt
             }
@@ -23167,9 +25425,12 @@ export class APIService {
           images {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -23198,9 +25459,12 @@ export class APIService {
           image {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -23370,9 +25634,12 @@ export class APIService {
           images {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -23401,9 +25668,12 @@ export class APIService {
           image {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -23573,9 +25843,12 @@ export class APIService {
           images {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -23604,9 +25877,12 @@ export class APIService {
           image {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -23765,7 +26041,7 @@ export class APIService {
             __typename
             id
             name
-            active
+            isActive
             createdAt
             updatedAt
             boxes {
@@ -23783,9 +26059,12 @@ export class APIService {
           images {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -23817,9 +26096,12 @@ export class APIService {
           image {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -23845,7 +26127,7 @@ export class APIService {
             __typename
             id
             name
-            active
+            isActive
             createdAt
             updatedAt
             boxes {
@@ -23885,9 +26167,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -23898,9 +26183,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -23950,9 +26238,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -23963,9 +26254,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -24021,6 +26315,10 @@ export class APIService {
               imageID
               isActive
               trackingInfoID
+              isFlagged
+              FlagNotes
+              boxStatus
+              destinationLocationInfoID
               createdAt
               updatedAt
             }
@@ -24047,7 +26345,7 @@ export class APIService {
             __typename
             id
             name
-            active
+            isActive
             createdAt
             updatedAt
             boxes {
@@ -24065,9 +26363,12 @@ export class APIService {
           images {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -24099,9 +26400,12 @@ export class APIService {
           image {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -24127,7 +26431,7 @@ export class APIService {
             __typename
             id
             name
-            active
+            isActive
             createdAt
             updatedAt
             boxes {
@@ -24167,9 +26471,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -24180,9 +26487,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -24232,9 +26542,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -24245,9 +26558,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -24303,6 +26619,10 @@ export class APIService {
               imageID
               isActive
               trackingInfoID
+              isFlagged
+              FlagNotes
+              boxStatus
+              destinationLocationInfoID
               createdAt
               updatedAt
             }
@@ -24329,7 +26649,7 @@ export class APIService {
             __typename
             id
             name
-            active
+            isActive
             createdAt
             updatedAt
             boxes {
@@ -24347,9 +26667,12 @@ export class APIService {
           images {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -24381,9 +26704,12 @@ export class APIService {
           image {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -24409,7 +26735,7 @@ export class APIService {
             __typename
             id
             name
-            active
+            isActive
             createdAt
             updatedAt
             boxes {
@@ -24449,9 +26775,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -24462,9 +26791,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -24514,9 +26846,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -24527,9 +26862,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -24585,6 +26923,10 @@ export class APIService {
               imageID
               isActive
               trackingInfoID
+              isFlagged
+              FlagNotes
+              boxStatus
+              destinationLocationInfoID
               createdAt
               updatedAt
             }
@@ -24614,9 +26956,12 @@ export class APIService {
           images {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -24640,14 +26985,21 @@ export class APIService {
           }
           isActive
           trackingInfoID
+          isFlagged
+          FlagNotes
+          boxStatus
+          destinationLocationInfoID
           createdAt
           updatedAt
           image {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -24713,6 +27065,50 @@ export class APIService {
               nextToken
             }
           }
+          destinationLocationInfo {
+            __typename
+            id
+            locationLabel
+            latitude
+            longitude
+            isActive
+            addressID
+            phones {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            plusCode
+            website
+            notes
+            notesHistory
+            tags
+            createdAt
+            updatedAt
+            address {
+              __typename
+              id
+              label
+              addressLine1
+              addressLine2
+              city
+              state
+              province
+              zipCode
+              postalCode
+              country
+              createdAt
+              updatedAt
+            }
+            boxLocations {
+              __typename
+              nextToken
+            }
+          }
           box {
             __typename
             id
@@ -24726,7 +27122,7 @@ export class APIService {
               __typename
               id
               name
-              active
+              isActive
               createdAt
               updatedAt
             }
@@ -24740,9 +27136,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -24756,9 +27155,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -24766,7 +27168,7 @@ export class APIService {
               __typename
               id
               name
-              active
+              isActive
               createdAt
               updatedAt
             }
@@ -24826,9 +27228,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -24839,9 +27244,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -24880,9 +27288,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -24897,9 +27308,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -24948,9 +27362,12 @@ export class APIService {
           images {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -24974,14 +27391,21 @@ export class APIService {
           }
           isActive
           trackingInfoID
+          isFlagged
+          FlagNotes
+          boxStatus
+          destinationLocationInfoID
           createdAt
           updatedAt
           image {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -25047,6 +27471,50 @@ export class APIService {
               nextToken
             }
           }
+          destinationLocationInfo {
+            __typename
+            id
+            locationLabel
+            latitude
+            longitude
+            isActive
+            addressID
+            phones {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            plusCode
+            website
+            notes
+            notesHistory
+            tags
+            createdAt
+            updatedAt
+            address {
+              __typename
+              id
+              label
+              addressLine1
+              addressLine2
+              city
+              state
+              province
+              zipCode
+              postalCode
+              country
+              createdAt
+              updatedAt
+            }
+            boxLocations {
+              __typename
+              nextToken
+            }
+          }
           box {
             __typename
             id
@@ -25060,7 +27528,7 @@ export class APIService {
               __typename
               id
               name
-              active
+              isActive
               createdAt
               updatedAt
             }
@@ -25074,9 +27542,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -25090,9 +27561,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -25100,7 +27574,7 @@ export class APIService {
               __typename
               id
               name
-              active
+              isActive
               createdAt
               updatedAt
             }
@@ -25160,9 +27634,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -25173,9 +27650,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -25214,9 +27694,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -25231,9 +27714,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -25282,9 +27768,12 @@ export class APIService {
           images {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -25308,14 +27797,21 @@ export class APIService {
           }
           isActive
           trackingInfoID
+          isFlagged
+          FlagNotes
+          boxStatus
+          destinationLocationInfoID
           createdAt
           updatedAt
           image {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -25381,6 +27877,50 @@ export class APIService {
               nextToken
             }
           }
+          destinationLocationInfo {
+            __typename
+            id
+            locationLabel
+            latitude
+            longitude
+            isActive
+            addressID
+            phones {
+              __typename
+              id
+              phone
+              isActive
+              type
+              createdAt
+              updatedAt
+            }
+            plusCode
+            website
+            notes
+            notesHistory
+            tags
+            createdAt
+            updatedAt
+            address {
+              __typename
+              id
+              label
+              addressLine1
+              addressLine2
+              city
+              state
+              province
+              zipCode
+              postalCode
+              country
+              createdAt
+              updatedAt
+            }
+            boxLocations {
+              __typename
+              nextToken
+            }
+          }
           box {
             __typename
             id
@@ -25394,7 +27934,7 @@ export class APIService {
               __typename
               id
               name
-              active
+              isActive
               createdAt
               updatedAt
             }
@@ -25408,9 +27948,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -25424,9 +27967,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -25434,7 +27980,7 @@ export class APIService {
               __typename
               id
               name
-              active
+              isActive
               createdAt
               updatedAt
             }
@@ -25494,9 +28040,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -25507,9 +28056,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -25548,9 +28100,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -25565,9 +28120,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -25613,9 +28171,12 @@ export class APIService {
           images {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -25644,9 +28205,12 @@ export class APIService {
           image {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -25683,6 +28247,10 @@ export class APIService {
               imageID
               isActive
               trackingInfoID
+              isFlagged
+              FlagNotes
+              boxStatus
+              destinationLocationInfoID
               createdAt
               updatedAt
             }
@@ -25700,9 +28268,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -25717,9 +28288,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -25765,9 +28339,12 @@ export class APIService {
           images {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -25796,9 +28373,12 @@ export class APIService {
           image {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -25835,6 +28415,10 @@ export class APIService {
               imageID
               isActive
               trackingInfoID
+              isFlagged
+              FlagNotes
+              boxStatus
+              destinationLocationInfoID
               createdAt
               updatedAt
             }
@@ -25852,9 +28436,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -25869,9 +28456,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -25917,9 +28507,12 @@ export class APIService {
           images {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -25948,9 +28541,12 @@ export class APIService {
           image {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -25987,6 +28583,10 @@ export class APIService {
               imageID
               isActive
               trackingInfoID
+              isFlagged
+              FlagNotes
+              boxStatus
+              destinationLocationInfoID
               createdAt
               updatedAt
             }
@@ -26004,9 +28604,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -26021,9 +28624,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -26068,9 +28674,12 @@ export class APIService {
           images {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -26103,9 +28712,12 @@ export class APIService {
           image {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -26159,9 +28771,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -26172,9 +28787,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -26217,6 +28835,10 @@ export class APIService {
               imageID
               isActive
               trackingInfoID
+              isFlagged
+              FlagNotes
+              boxStatus
+              destinationLocationInfoID
               createdAt
               updatedAt
             }
@@ -26242,9 +28864,12 @@ export class APIService {
           images {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -26277,9 +28902,12 @@ export class APIService {
           image {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -26333,9 +28961,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -26346,9 +28977,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -26391,6 +29025,10 @@ export class APIService {
               imageID
               isActive
               trackingInfoID
+              isFlagged
+              FlagNotes
+              boxStatus
+              destinationLocationInfoID
               createdAt
               updatedAt
             }
@@ -26416,9 +29054,12 @@ export class APIService {
           images {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -26451,9 +29092,12 @@ export class APIService {
           image {
             __typename
             id
-            altTex
+            label
+            altText
             src
             userID
+            dateAdded
+            isActive
             createdAt
             updatedAt
             user {
@@ -26507,9 +29151,12 @@ export class APIService {
             images {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -26520,9 +29167,12 @@ export class APIService {
             image {
               __typename
               id
-              altTex
+              label
+              altText
               src
               userID
+              dateAdded
+              isActive
               createdAt
               updatedAt
             }
@@ -26565,6 +29215,10 @@ export class APIService {
               imageID
               isActive
               trackingInfoID
+              isFlagged
+              FlagNotes
+              boxStatus
+              destinationLocationInfoID
               createdAt
               updatedAt
             }

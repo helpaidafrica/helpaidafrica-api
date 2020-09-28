@@ -7,9 +7,12 @@ query ListImages(
   listImages(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -36,9 +39,12 @@ query ListImages(
 query GetImage($id: ID!) {
   getImage(id: $id) {
     id
-    altTex
+    label
+    altText
     src
     userID
+    dateAdded
+    isActive
     createdAt
     updatedAt
     user {
@@ -51,9 +57,12 @@ query GetImage($id: ID!) {
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -67,9 +76,12 @@ query GetImage($id: ID!) {
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -94,6 +106,53 @@ query GetImage($id: ID!) {
     }
   }
 }
+query ImagesByUser(
+  $userID: ID
+  $dateAdded: ModelStringKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelImageFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  ImagesByUser(
+    userID: $userID
+    dateAdded: $dateAdded
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      label
+      altText
+      src
+      userID
+      dateAdded
+      isActive
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+        orgID
+        hashedSecret
+        isActive
+        tags
+        imageID
+        status
+        statusHistory
+        internalNotes
+        notes
+        rank
+        notesHistory
+        createdAt
+        updatedAt
+      }
+    }
+    nextToken
+  }
+}
 query ListBoxCategorys(
   $filter: ModelBoxCategoryFilterInput
   $limit: Int
@@ -103,7 +162,7 @@ query ListBoxCategorys(
     items {
       id
       name
-      active
+      isActive
       createdAt
       updatedAt
       boxes {
@@ -117,7 +176,7 @@ query GetBoxCategory($id: ID!) {
   getBoxCategory(id: $id) {
     id
     name
-    active
+    isActive
     createdAt
     updatedAt
     boxes {
@@ -279,9 +338,12 @@ query ListOrgs($filter: ModelOrgFilterInput, $limit: Int, $nextToken: String) {
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -291,9 +353,12 @@ query ListOrgs($filter: ModelOrgFilterInput, $limit: Int, $nextToken: String) {
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -350,9 +415,12 @@ query GetOrg($id: ID!) {
     imageID
     images {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -379,9 +447,12 @@ query GetOrg($id: ID!) {
     updatedAt
     image {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -563,6 +634,10 @@ query GetLocationInfo($id: ID!) {
         imageID
         isActive
         trackingInfoID
+        isFlagged
+        FlagNotes
+        boxStatus
+        destinationLocationInfoID
         createdAt
         updatedAt
       }
@@ -596,9 +671,12 @@ query ListShipments(
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -608,9 +686,12 @@ query ListShipments(
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -672,9 +753,12 @@ query GetShipment($id: ID!) {
     imageID
     images {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -701,9 +785,12 @@ query GetShipment($id: ID!) {
     updatedAt
     image {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -845,7 +932,7 @@ query ListBoxs($filter: ModelBoxFilterInput, $limit: Int, $nextToken: String) {
       additionalBoxCategories {
         id
         name
-        active
+        isActive
         createdAt
         updatedAt
       }
@@ -858,9 +945,12 @@ query ListBoxs($filter: ModelBoxFilterInput, $limit: Int, $nextToken: String) {
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -873,16 +963,19 @@ query ListBoxs($filter: ModelBoxFilterInput, $limit: Int, $nextToken: String) {
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
       boxCategory {
         id
         name
-        active
+        isActive
         createdAt
         updatedAt
       }
@@ -943,7 +1036,7 @@ query GetBox($id: ID!) {
     additionalBoxCategories {
       id
       name
-      active
+      isActive
       createdAt
       updatedAt
       boxes {
@@ -959,9 +1052,12 @@ query GetBox($id: ID!) {
     imageID
     images {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -991,9 +1087,12 @@ query GetBox($id: ID!) {
     updatedAt
     image {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -1017,7 +1116,7 @@ query GetBox($id: ID!) {
     boxCategory {
       id
       name
-      active
+      isActive
       createdAt
       updatedAt
       boxes {
@@ -1052,9 +1151,12 @@ query GetBox($id: ID!) {
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -1064,9 +1166,12 @@ query GetBox($id: ID!) {
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -1111,9 +1216,12 @@ query GetBox($id: ID!) {
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -1123,9 +1231,12 @@ query GetBox($id: ID!) {
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -1176,6 +1287,10 @@ query GetBox($id: ID!) {
         imageID
         isActive
         trackingInfoID
+        isFlagged
+        FlagNotes
+        boxStatus
+        destinationLocationInfoID
         createdAt
         updatedAt
       }
@@ -1208,7 +1323,7 @@ query BoxByOrgId(
       additionalBoxCategories {
         id
         name
-        active
+        isActive
         createdAt
         updatedAt
       }
@@ -1221,9 +1336,12 @@ query BoxByOrgId(
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -1236,16 +1354,19 @@ query BoxByOrgId(
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
       boxCategory {
         id
         name
-        active
+        isActive
         createdAt
         updatedAt
       }
@@ -1321,7 +1442,7 @@ query BoxByShipmentId(
       additionalBoxCategories {
         id
         name
-        active
+        isActive
         createdAt
         updatedAt
       }
@@ -1334,9 +1455,12 @@ query BoxByShipmentId(
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -1349,16 +1473,19 @@ query BoxByShipmentId(
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
       boxCategory {
         id
         name
-        active
+        isActive
         createdAt
         updatedAt
       }
@@ -1432,7 +1559,7 @@ query BoxByBoxCategoryId(
       additionalBoxCategories {
         id
         name
-        active
+        isActive
         createdAt
         updatedAt
       }
@@ -1445,9 +1572,12 @@ query BoxByBoxCategoryId(
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -1460,16 +1590,19 @@ query BoxByBoxCategoryId(
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
       boxCategory {
         id
         name
-        active
+        isActive
         createdAt
         updatedAt
       }
@@ -1543,7 +1676,7 @@ query BoxByTitle(
       additionalBoxCategories {
         id
         name
-        active
+        isActive
         createdAt
         updatedAt
       }
@@ -1556,9 +1689,12 @@ query BoxByTitle(
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -1571,16 +1707,19 @@ query BoxByTitle(
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
       boxCategory {
         id
         name
-        active
+        isActive
         createdAt
         updatedAt
       }
@@ -1654,7 +1793,7 @@ query BoxByQrCode(
       additionalBoxCategories {
         id
         name
-        active
+        isActive
         createdAt
         updatedAt
       }
@@ -1667,9 +1806,12 @@ query BoxByQrCode(
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -1682,16 +1824,19 @@ query BoxByQrCode(
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
       boxCategory {
         id
         name
-        active
+        isActive
         createdAt
         updatedAt
       }
@@ -1767,7 +1912,7 @@ query BoxByStatus(
       additionalBoxCategories {
         id
         name
-        active
+        isActive
         createdAt
         updatedAt
       }
@@ -1780,9 +1925,12 @@ query BoxByStatus(
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -1795,16 +1943,19 @@ query BoxByStatus(
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
       boxCategory {
         id
         name
-        active
+        isActive
         createdAt
         updatedAt
       }
@@ -1866,9 +2017,12 @@ query GetBoxLocation($id: ID!) {
     imageID
     images {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -1891,13 +2045,20 @@ query GetBoxLocation($id: ID!) {
     }
     isActive
     trackingInfoID
+    isFlagged
+    FlagNotes
+    boxStatus
+    destinationLocationInfoID
     createdAt
     updatedAt
     image {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -1958,6 +2119,46 @@ query GetBoxLocation($id: ID!) {
         nextToken
       }
     }
+    destinationLocationInfo {
+      id
+      locationLabel
+      latitude
+      longitude
+      isActive
+      addressID
+      phones {
+        id
+        phone
+        isActive
+        type
+        createdAt
+        updatedAt
+      }
+      plusCode
+      website
+      notes
+      notesHistory
+      tags
+      createdAt
+      updatedAt
+      address {
+        id
+        label
+        addressLine1
+        addressLine2
+        city
+        state
+        province
+        zipCode
+        postalCode
+        country
+        createdAt
+        updatedAt
+      }
+      boxLocations {
+        nextToken
+      }
+    }
     box {
       id
       title
@@ -1969,7 +2170,7 @@ query GetBoxLocation($id: ID!) {
       additionalBoxCategories {
         id
         name
-        active
+        isActive
         createdAt
         updatedAt
       }
@@ -1982,9 +2183,12 @@ query GetBoxLocation($id: ID!) {
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -1997,16 +2201,19 @@ query GetBoxLocation($id: ID!) {
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
       boxCategory {
         id
         name
-        active
+        isActive
         createdAt
         updatedAt
       }
@@ -2061,9 +2268,12 @@ query GetBoxLocation($id: ID!) {
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -2073,9 +2283,12 @@ query GetBoxLocation($id: ID!) {
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -2110,9 +2323,12 @@ query GetBoxLocation($id: ID!) {
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -2126,9 +2342,12 @@ query GetBoxLocation($id: ID!) {
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -2171,25 +2390,50 @@ query ListBoxLocations(
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
       isActive
       trackingInfoID
+      isFlagged
+      FlagNotes
+      boxStatus
+      destinationLocationInfoID
       createdAt
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
       locationInfo {
+        id
+        locationLabel
+        latitude
+        longitude
+        isActive
+        addressID
+        plusCode
+        website
+        notes
+        notesHistory
+        tags
+        createdAt
+        updatedAt
+      }
+      destinationLocationInfo {
         id
         locationLabel
         latitude
@@ -2288,25 +2532,50 @@ query BoxLocationsByBoxId(
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
       isActive
       trackingInfoID
+      isFlagged
+      FlagNotes
+      boxStatus
+      destinationLocationInfoID
       createdAt
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
       locationInfo {
+        id
+        locationLabel
+        latitude
+        longitude
+        isActive
+        addressID
+        plusCode
+        website
+        notes
+        notesHistory
+        tags
+        createdAt
+        updatedAt
+      }
+      destinationLocationInfo {
         id
         locationLabel
         latitude
@@ -2405,25 +2674,50 @@ query BoxLocationInfoByLocationInfoId(
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
       isActive
       trackingInfoID
+      isFlagged
+      FlagNotes
+      boxStatus
+      destinationLocationInfoID
       createdAt
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
       locationInfo {
+        id
+        locationLabel
+        latitude
+        longitude
+        isActive
+        addressID
+        plusCode
+        website
+        notes
+        notesHistory
+        tags
+        createdAt
+        updatedAt
+      }
+      destinationLocationInfo {
         id
         locationLabel
         latitude
@@ -2522,25 +2816,50 @@ query BoxLocationByScannedUserId(
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
       isActive
       trackingInfoID
+      isFlagged
+      FlagNotes
+      boxStatus
+      destinationLocationInfoID
       createdAt
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
       locationInfo {
+        id
+        locationLabel
+        latitude
+        longitude
+        isActive
+        addressID
+        plusCode
+        website
+        notes
+        notesHistory
+        tags
+        createdAt
+        updatedAt
+      }
+      destinationLocationInfo {
         id
         locationLabel
         latitude
@@ -2639,25 +2958,50 @@ query BoxLocationByTrackingInfoId(
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
       isActive
       trackingInfoID
+      isFlagged
+      FlagNotes
+      boxStatus
+      destinationLocationInfoID
       createdAt
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
       locationInfo {
+        id
+        locationLabel
+        latitude
+        longitude
+        isActive
+        addressID
+        plusCode
+        website
+        notes
+        notesHistory
+        tags
+        createdAt
+        updatedAt
+      }
+      destinationLocationInfo {
         id
         locationLabel
         latitude
@@ -2743,9 +3087,12 @@ query ListTrackingInfos(
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -2755,9 +3102,12 @@ query ListTrackingInfos(
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -2795,9 +3145,12 @@ query GetTrackingInfo($id: ID!) {
     imageID
     images {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -2824,9 +3177,12 @@ query GetTrackingInfo($id: ID!) {
     updatedAt
     image {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -2860,6 +3216,10 @@ query GetTrackingInfo($id: ID!) {
         imageID
         isActive
         trackingInfoID
+        isFlagged
+        FlagNotes
+        boxStatus
+        destinationLocationInfoID
         createdAt
         updatedAt
       }
@@ -2875,9 +3235,12 @@ query GetTrackingInfo($id: ID!) {
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -2891,9 +3254,12 @@ query GetTrackingInfo($id: ID!) {
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -2934,9 +3300,12 @@ query ListUsers(
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -2950,9 +3319,12 @@ query ListUsers(
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -2989,9 +3361,12 @@ query GetUser($id: ID!) {
     imageID
     images {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -3022,9 +3397,12 @@ query GetUser($id: ID!) {
     updatedAt
     image {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -3073,9 +3451,12 @@ query GetUser($id: ID!) {
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -3085,9 +3466,12 @@ query GetUser($id: ID!) {
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -3125,6 +3509,10 @@ query GetUser($id: ID!) {
         imageID
         isActive
         trackingInfoID
+        isFlagged
+        FlagNotes
+        boxStatus
+        destinationLocationInfoID
         createdAt
         updatedAt
       }
@@ -3156,9 +3544,12 @@ query UserByOrgId(
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -3172,9 +3563,12 @@ query UserByOrgId(
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }

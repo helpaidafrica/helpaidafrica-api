@@ -2,9 +2,12 @@
 subscription OnCreateImage {
   onCreateImage {
     id
-    altTex
+    label
+    altText
     src
     userID
+    dateAdded
+    isActive
     createdAt
     updatedAt
     user {
@@ -17,9 +20,12 @@ subscription OnCreateImage {
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -33,9 +39,12 @@ subscription OnCreateImage {
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -63,9 +72,12 @@ subscription OnCreateImage {
 subscription OnUpdateImage {
   onUpdateImage {
     id
-    altTex
+    label
+    altText
     src
     userID
+    dateAdded
+    isActive
     createdAt
     updatedAt
     user {
@@ -78,9 +90,12 @@ subscription OnUpdateImage {
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -94,9 +109,12 @@ subscription OnUpdateImage {
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -124,9 +142,12 @@ subscription OnUpdateImage {
 subscription OnDeleteImage {
   onDeleteImage {
     id
-    altTex
+    label
+    altText
     src
     userID
+    dateAdded
+    isActive
     createdAt
     updatedAt
     user {
@@ -139,9 +160,12 @@ subscription OnDeleteImage {
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -155,9 +179,12 @@ subscription OnDeleteImage {
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -186,7 +213,7 @@ subscription OnCreateBoxCategory {
   onCreateBoxCategory {
     id
     name
-    active
+    isActive
     createdAt
     updatedAt
     boxes {
@@ -221,7 +248,7 @@ subscription OnUpdateBoxCategory {
   onUpdateBoxCategory {
     id
     name
-    active
+    isActive
     createdAt
     updatedAt
     boxes {
@@ -256,7 +283,7 @@ subscription OnDeleteBoxCategory {
   onDeleteBoxCategory {
     id
     name
-    active
+    isActive
     createdAt
     updatedAt
     boxes {
@@ -430,9 +457,12 @@ subscription OnCreateOrg {
     imageID
     images {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -459,9 +489,12 @@ subscription OnCreateOrg {
     updatedAt
     image {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -573,9 +606,12 @@ subscription OnUpdateOrg {
     imageID
     images {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -602,9 +638,12 @@ subscription OnUpdateOrg {
     updatedAt
     image {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -716,9 +755,12 @@ subscription OnDeleteOrg {
     imageID
     images {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -745,9 +787,12 @@ subscription OnDeleteOrg {
     updatedAt
     image {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -880,6 +925,10 @@ subscription OnCreateLocationInfo {
         imageID
         isActive
         trackingInfoID
+        isFlagged
+        FlagNotes
+        boxStatus
+        destinationLocationInfoID
         createdAt
         updatedAt
       }
@@ -937,6 +986,10 @@ subscription OnUpdateLocationInfo {
         imageID
         isActive
         trackingInfoID
+        isFlagged
+        FlagNotes
+        boxStatus
+        destinationLocationInfoID
         createdAt
         updatedAt
       }
@@ -994,6 +1047,10 @@ subscription OnDeleteLocationInfo {
         imageID
         isActive
         trackingInfoID
+        isFlagged
+        FlagNotes
+        boxStatus
+        destinationLocationInfoID
         createdAt
         updatedAt
       }
@@ -1022,9 +1079,12 @@ subscription OnCreateShipment {
     imageID
     images {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -1051,9 +1111,12 @@ subscription OnCreateShipment {
     updatedAt
     image {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -1203,9 +1266,12 @@ subscription OnUpdateShipment {
     imageID
     images {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -1232,9 +1298,12 @@ subscription OnUpdateShipment {
     updatedAt
     image {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -1384,9 +1453,12 @@ subscription OnDeleteShipment {
     imageID
     images {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -1413,9 +1485,12 @@ subscription OnDeleteShipment {
     updatedAt
     image {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -1556,7 +1631,7 @@ subscription OnCreateBox {
     additionalBoxCategories {
       id
       name
-      active
+      isActive
       createdAt
       updatedAt
       boxes {
@@ -1572,9 +1647,12 @@ subscription OnCreateBox {
     imageID
     images {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -1604,9 +1682,12 @@ subscription OnCreateBox {
     updatedAt
     image {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -1630,7 +1711,7 @@ subscription OnCreateBox {
     boxCategory {
       id
       name
-      active
+      isActive
       createdAt
       updatedAt
       boxes {
@@ -1665,9 +1746,12 @@ subscription OnCreateBox {
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -1677,9 +1761,12 @@ subscription OnCreateBox {
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -1724,9 +1811,12 @@ subscription OnCreateBox {
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -1736,9 +1826,12 @@ subscription OnCreateBox {
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -1789,6 +1882,10 @@ subscription OnCreateBox {
         imageID
         isActive
         trackingInfoID
+        isFlagged
+        FlagNotes
+        boxStatus
+        destinationLocationInfoID
         createdAt
         updatedAt
       }
@@ -1808,7 +1905,7 @@ subscription OnUpdateBox {
     additionalBoxCategories {
       id
       name
-      active
+      isActive
       createdAt
       updatedAt
       boxes {
@@ -1824,9 +1921,12 @@ subscription OnUpdateBox {
     imageID
     images {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -1856,9 +1956,12 @@ subscription OnUpdateBox {
     updatedAt
     image {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -1882,7 +1985,7 @@ subscription OnUpdateBox {
     boxCategory {
       id
       name
-      active
+      isActive
       createdAt
       updatedAt
       boxes {
@@ -1917,9 +2020,12 @@ subscription OnUpdateBox {
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -1929,9 +2035,12 @@ subscription OnUpdateBox {
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -1976,9 +2085,12 @@ subscription OnUpdateBox {
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -1988,9 +2100,12 @@ subscription OnUpdateBox {
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -2041,6 +2156,10 @@ subscription OnUpdateBox {
         imageID
         isActive
         trackingInfoID
+        isFlagged
+        FlagNotes
+        boxStatus
+        destinationLocationInfoID
         createdAt
         updatedAt
       }
@@ -2060,7 +2179,7 @@ subscription OnDeleteBox {
     additionalBoxCategories {
       id
       name
-      active
+      isActive
       createdAt
       updatedAt
       boxes {
@@ -2076,9 +2195,12 @@ subscription OnDeleteBox {
     imageID
     images {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -2108,9 +2230,12 @@ subscription OnDeleteBox {
     updatedAt
     image {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -2134,7 +2259,7 @@ subscription OnDeleteBox {
     boxCategory {
       id
       name
-      active
+      isActive
       createdAt
       updatedAt
       boxes {
@@ -2169,9 +2294,12 @@ subscription OnDeleteBox {
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -2181,9 +2309,12 @@ subscription OnDeleteBox {
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -2228,9 +2359,12 @@ subscription OnDeleteBox {
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -2240,9 +2374,12 @@ subscription OnDeleteBox {
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -2293,6 +2430,10 @@ subscription OnDeleteBox {
         imageID
         isActive
         trackingInfoID
+        isFlagged
+        FlagNotes
+        boxStatus
+        destinationLocationInfoID
         createdAt
         updatedAt
       }
@@ -2313,9 +2454,12 @@ subscription OnCreateBoxLocation {
     imageID
     images {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -2338,13 +2482,20 @@ subscription OnCreateBoxLocation {
     }
     isActive
     trackingInfoID
+    isFlagged
+    FlagNotes
+    boxStatus
+    destinationLocationInfoID
     createdAt
     updatedAt
     image {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -2405,6 +2556,46 @@ subscription OnCreateBoxLocation {
         nextToken
       }
     }
+    destinationLocationInfo {
+      id
+      locationLabel
+      latitude
+      longitude
+      isActive
+      addressID
+      phones {
+        id
+        phone
+        isActive
+        type
+        createdAt
+        updatedAt
+      }
+      plusCode
+      website
+      notes
+      notesHistory
+      tags
+      createdAt
+      updatedAt
+      address {
+        id
+        label
+        addressLine1
+        addressLine2
+        city
+        state
+        province
+        zipCode
+        postalCode
+        country
+        createdAt
+        updatedAt
+      }
+      boxLocations {
+        nextToken
+      }
+    }
     box {
       id
       title
@@ -2416,7 +2607,7 @@ subscription OnCreateBoxLocation {
       additionalBoxCategories {
         id
         name
-        active
+        isActive
         createdAt
         updatedAt
       }
@@ -2429,9 +2620,12 @@ subscription OnCreateBoxLocation {
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -2444,16 +2638,19 @@ subscription OnCreateBoxLocation {
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
       boxCategory {
         id
         name
-        active
+        isActive
         createdAt
         updatedAt
       }
@@ -2508,9 +2705,12 @@ subscription OnCreateBoxLocation {
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -2520,9 +2720,12 @@ subscription OnCreateBoxLocation {
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -2557,9 +2760,12 @@ subscription OnCreateBoxLocation {
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -2573,9 +2779,12 @@ subscription OnCreateBoxLocation {
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -2613,9 +2822,12 @@ subscription OnUpdateBoxLocation {
     imageID
     images {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -2638,13 +2850,20 @@ subscription OnUpdateBoxLocation {
     }
     isActive
     trackingInfoID
+    isFlagged
+    FlagNotes
+    boxStatus
+    destinationLocationInfoID
     createdAt
     updatedAt
     image {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -2705,6 +2924,46 @@ subscription OnUpdateBoxLocation {
         nextToken
       }
     }
+    destinationLocationInfo {
+      id
+      locationLabel
+      latitude
+      longitude
+      isActive
+      addressID
+      phones {
+        id
+        phone
+        isActive
+        type
+        createdAt
+        updatedAt
+      }
+      plusCode
+      website
+      notes
+      notesHistory
+      tags
+      createdAt
+      updatedAt
+      address {
+        id
+        label
+        addressLine1
+        addressLine2
+        city
+        state
+        province
+        zipCode
+        postalCode
+        country
+        createdAt
+        updatedAt
+      }
+      boxLocations {
+        nextToken
+      }
+    }
     box {
       id
       title
@@ -2716,7 +2975,7 @@ subscription OnUpdateBoxLocation {
       additionalBoxCategories {
         id
         name
-        active
+        isActive
         createdAt
         updatedAt
       }
@@ -2729,9 +2988,12 @@ subscription OnUpdateBoxLocation {
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -2744,16 +3006,19 @@ subscription OnUpdateBoxLocation {
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
       boxCategory {
         id
         name
-        active
+        isActive
         createdAt
         updatedAt
       }
@@ -2808,9 +3073,12 @@ subscription OnUpdateBoxLocation {
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -2820,9 +3088,12 @@ subscription OnUpdateBoxLocation {
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -2857,9 +3128,12 @@ subscription OnUpdateBoxLocation {
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -2873,9 +3147,12 @@ subscription OnUpdateBoxLocation {
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -2913,9 +3190,12 @@ subscription OnDeleteBoxLocation {
     imageID
     images {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -2938,13 +3218,20 @@ subscription OnDeleteBoxLocation {
     }
     isActive
     trackingInfoID
+    isFlagged
+    FlagNotes
+    boxStatus
+    destinationLocationInfoID
     createdAt
     updatedAt
     image {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -3005,6 +3292,46 @@ subscription OnDeleteBoxLocation {
         nextToken
       }
     }
+    destinationLocationInfo {
+      id
+      locationLabel
+      latitude
+      longitude
+      isActive
+      addressID
+      phones {
+        id
+        phone
+        isActive
+        type
+        createdAt
+        updatedAt
+      }
+      plusCode
+      website
+      notes
+      notesHistory
+      tags
+      createdAt
+      updatedAt
+      address {
+        id
+        label
+        addressLine1
+        addressLine2
+        city
+        state
+        province
+        zipCode
+        postalCode
+        country
+        createdAt
+        updatedAt
+      }
+      boxLocations {
+        nextToken
+      }
+    }
     box {
       id
       title
@@ -3016,7 +3343,7 @@ subscription OnDeleteBoxLocation {
       additionalBoxCategories {
         id
         name
-        active
+        isActive
         createdAt
         updatedAt
       }
@@ -3029,9 +3356,12 @@ subscription OnDeleteBoxLocation {
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -3044,16 +3374,19 @@ subscription OnDeleteBoxLocation {
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
       boxCategory {
         id
         name
-        active
+        isActive
         createdAt
         updatedAt
       }
@@ -3108,9 +3441,12 @@ subscription OnDeleteBoxLocation {
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -3120,9 +3456,12 @@ subscription OnDeleteBoxLocation {
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -3157,9 +3496,12 @@ subscription OnDeleteBoxLocation {
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -3173,9 +3515,12 @@ subscription OnDeleteBoxLocation {
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -3210,9 +3555,12 @@ subscription OnCreateTrackingInfo {
     imageID
     images {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -3239,9 +3587,12 @@ subscription OnCreateTrackingInfo {
     updatedAt
     image {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -3275,6 +3626,10 @@ subscription OnCreateTrackingInfo {
         imageID
         isActive
         trackingInfoID
+        isFlagged
+        FlagNotes
+        boxStatus
+        destinationLocationInfoID
         createdAt
         updatedAt
       }
@@ -3290,9 +3645,12 @@ subscription OnCreateTrackingInfo {
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -3306,9 +3664,12 @@ subscription OnCreateTrackingInfo {
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -3343,9 +3704,12 @@ subscription OnUpdateTrackingInfo {
     imageID
     images {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -3372,9 +3736,12 @@ subscription OnUpdateTrackingInfo {
     updatedAt
     image {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -3408,6 +3775,10 @@ subscription OnUpdateTrackingInfo {
         imageID
         isActive
         trackingInfoID
+        isFlagged
+        FlagNotes
+        boxStatus
+        destinationLocationInfoID
         createdAt
         updatedAt
       }
@@ -3423,9 +3794,12 @@ subscription OnUpdateTrackingInfo {
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -3439,9 +3813,12 @@ subscription OnUpdateTrackingInfo {
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -3476,9 +3853,12 @@ subscription OnDeleteTrackingInfo {
     imageID
     images {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -3505,9 +3885,12 @@ subscription OnDeleteTrackingInfo {
     updatedAt
     image {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -3541,6 +3924,10 @@ subscription OnDeleteTrackingInfo {
         imageID
         isActive
         trackingInfoID
+        isFlagged
+        FlagNotes
+        boxStatus
+        destinationLocationInfoID
         createdAt
         updatedAt
       }
@@ -3556,9 +3943,12 @@ subscription OnDeleteTrackingInfo {
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -3572,9 +3962,12 @@ subscription OnDeleteTrackingInfo {
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -3610,9 +4003,12 @@ subscription OnCreateUser {
     imageID
     images {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -3643,9 +4039,12 @@ subscription OnCreateUser {
     updatedAt
     image {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -3694,9 +4093,12 @@ subscription OnCreateUser {
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -3706,9 +4108,12 @@ subscription OnCreateUser {
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -3746,6 +4151,10 @@ subscription OnCreateUser {
         imageID
         isActive
         trackingInfoID
+        isFlagged
+        FlagNotes
+        boxStatus
+        destinationLocationInfoID
         createdAt
         updatedAt
       }
@@ -3764,9 +4173,12 @@ subscription OnUpdateUser {
     imageID
     images {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -3797,9 +4209,12 @@ subscription OnUpdateUser {
     updatedAt
     image {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -3848,9 +4263,12 @@ subscription OnUpdateUser {
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -3860,9 +4278,12 @@ subscription OnUpdateUser {
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -3900,6 +4321,10 @@ subscription OnUpdateUser {
         imageID
         isActive
         trackingInfoID
+        isFlagged
+        FlagNotes
+        boxStatus
+        destinationLocationInfoID
         createdAt
         updatedAt
       }
@@ -3918,9 +4343,12 @@ subscription OnDeleteUser {
     imageID
     images {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -3951,9 +4379,12 @@ subscription OnDeleteUser {
     updatedAt
     image {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -4002,9 +4433,12 @@ subscription OnDeleteUser {
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -4014,9 +4448,12 @@ subscription OnDeleteUser {
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -4054,6 +4491,10 @@ subscription OnDeleteUser {
         imageID
         isActive
         trackingInfoID
+        isFlagged
+        FlagNotes
+        boxStatus
+        destinationLocationInfoID
         createdAt
         updatedAt
       }

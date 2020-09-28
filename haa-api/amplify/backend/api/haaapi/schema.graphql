@@ -48,6 +48,7 @@ enum UserStatus {
 
 type Image 
 @model
+@key(name: "UsersForImage", fields: ["userID", "dateAdded"], queryField: "ImagesByUser")
 @auth(
   rules: [
    { allow: owner },
@@ -63,6 +64,7 @@ type Image
   src: AWSURL!
   userID: ID!
   user: User! @connection(fields: ["userID"])
+  dateAdded: AWSDateTime!
   isActive: Boolean!
 }
 

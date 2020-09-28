@@ -5,9 +5,12 @@ mutation CreateImage(
 ) {
   createImage(input: $input, condition: $condition) {
     id
-    altTex
+    label
+    altText
     src
     userID
+    dateAdded
+    isActive
     createdAt
     updatedAt
     user {
@@ -20,9 +23,12 @@ mutation CreateImage(
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -36,9 +42,12 @@ mutation CreateImage(
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -69,9 +78,12 @@ mutation UpdateImage(
 ) {
   updateImage(input: $input, condition: $condition) {
     id
-    altTex
+    label
+    altText
     src
     userID
+    dateAdded
+    isActive
     createdAt
     updatedAt
     user {
@@ -84,9 +96,12 @@ mutation UpdateImage(
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -100,9 +115,12 @@ mutation UpdateImage(
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -133,9 +151,12 @@ mutation DeleteImage(
 ) {
   deleteImage(input: $input, condition: $condition) {
     id
-    altTex
+    label
+    altText
     src
     userID
+    dateAdded
+    isActive
     createdAt
     updatedAt
     user {
@@ -148,9 +169,12 @@ mutation DeleteImage(
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -164,9 +188,12 @@ mutation DeleteImage(
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -198,7 +225,7 @@ mutation CreateBoxCategory(
   createBoxCategory(input: $input, condition: $condition) {
     id
     name
-    active
+    isActive
     createdAt
     updatedAt
     boxes {
@@ -236,7 +263,7 @@ mutation UpdateBoxCategory(
   updateBoxCategory(input: $input, condition: $condition) {
     id
     name
-    active
+    isActive
     createdAt
     updatedAt
     boxes {
@@ -274,7 +301,7 @@ mutation DeleteBoxCategory(
   deleteBoxCategory(input: $input, condition: $condition) {
     id
     name
-    active
+    isActive
     createdAt
     updatedAt
     boxes {
@@ -478,9 +505,12 @@ mutation CreateOrg(
     imageID
     images {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -507,9 +537,12 @@ mutation CreateOrg(
     updatedAt
     image {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -624,9 +657,12 @@ mutation UpdateOrg(
     imageID
     images {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -653,9 +689,12 @@ mutation UpdateOrg(
     updatedAt
     image {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -770,9 +809,12 @@ mutation DeleteOrg(
     imageID
     images {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -799,9 +841,12 @@ mutation DeleteOrg(
     updatedAt
     image {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -937,6 +982,10 @@ mutation CreateLocationInfo(
         imageID
         isActive
         trackingInfoID
+        isFlagged
+        FlagNotes
+        boxStatus
+        destinationLocationInfoID
         createdAt
         updatedAt
       }
@@ -997,6 +1046,10 @@ mutation UpdateLocationInfo(
         imageID
         isActive
         trackingInfoID
+        isFlagged
+        FlagNotes
+        boxStatus
+        destinationLocationInfoID
         createdAt
         updatedAt
       }
@@ -1057,6 +1110,10 @@ mutation DeleteLocationInfo(
         imageID
         isActive
         trackingInfoID
+        isFlagged
+        FlagNotes
+        boxStatus
+        destinationLocationInfoID
         createdAt
         updatedAt
       }
@@ -1088,9 +1145,12 @@ mutation CreateShipment(
     imageID
     images {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -1117,9 +1177,12 @@ mutation CreateShipment(
     updatedAt
     image {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -1272,9 +1335,12 @@ mutation UpdateShipment(
     imageID
     images {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -1301,9 +1367,12 @@ mutation UpdateShipment(
     updatedAt
     image {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -1456,9 +1525,12 @@ mutation DeleteShipment(
     imageID
     images {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -1485,9 +1557,12 @@ mutation DeleteShipment(
     updatedAt
     image {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -1631,7 +1706,7 @@ mutation CreateBox(
     additionalBoxCategories {
       id
       name
-      active
+      isActive
       createdAt
       updatedAt
       boxes {
@@ -1647,9 +1722,12 @@ mutation CreateBox(
     imageID
     images {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -1679,9 +1757,12 @@ mutation CreateBox(
     updatedAt
     image {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -1705,7 +1786,7 @@ mutation CreateBox(
     boxCategory {
       id
       name
-      active
+      isActive
       createdAt
       updatedAt
       boxes {
@@ -1740,9 +1821,12 @@ mutation CreateBox(
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -1752,9 +1836,12 @@ mutation CreateBox(
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -1799,9 +1886,12 @@ mutation CreateBox(
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -1811,9 +1901,12 @@ mutation CreateBox(
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -1864,6 +1957,10 @@ mutation CreateBox(
         imageID
         isActive
         trackingInfoID
+        isFlagged
+        FlagNotes
+        boxStatus
+        destinationLocationInfoID
         createdAt
         updatedAt
       }
@@ -1886,7 +1983,7 @@ mutation UpdateBox(
     additionalBoxCategories {
       id
       name
-      active
+      isActive
       createdAt
       updatedAt
       boxes {
@@ -1902,9 +1999,12 @@ mutation UpdateBox(
     imageID
     images {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -1934,9 +2034,12 @@ mutation UpdateBox(
     updatedAt
     image {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -1960,7 +2063,7 @@ mutation UpdateBox(
     boxCategory {
       id
       name
-      active
+      isActive
       createdAt
       updatedAt
       boxes {
@@ -1995,9 +2098,12 @@ mutation UpdateBox(
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -2007,9 +2113,12 @@ mutation UpdateBox(
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -2054,9 +2163,12 @@ mutation UpdateBox(
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -2066,9 +2178,12 @@ mutation UpdateBox(
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -2119,6 +2234,10 @@ mutation UpdateBox(
         imageID
         isActive
         trackingInfoID
+        isFlagged
+        FlagNotes
+        boxStatus
+        destinationLocationInfoID
         createdAt
         updatedAt
       }
@@ -2141,7 +2260,7 @@ mutation DeleteBox(
     additionalBoxCategories {
       id
       name
-      active
+      isActive
       createdAt
       updatedAt
       boxes {
@@ -2157,9 +2276,12 @@ mutation DeleteBox(
     imageID
     images {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -2189,9 +2311,12 @@ mutation DeleteBox(
     updatedAt
     image {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -2215,7 +2340,7 @@ mutation DeleteBox(
     boxCategory {
       id
       name
-      active
+      isActive
       createdAt
       updatedAt
       boxes {
@@ -2250,9 +2375,12 @@ mutation DeleteBox(
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -2262,9 +2390,12 @@ mutation DeleteBox(
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -2309,9 +2440,12 @@ mutation DeleteBox(
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -2321,9 +2455,12 @@ mutation DeleteBox(
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -2374,6 +2511,10 @@ mutation DeleteBox(
         imageID
         isActive
         trackingInfoID
+        isFlagged
+        FlagNotes
+        boxStatus
+        destinationLocationInfoID
         createdAt
         updatedAt
       }
@@ -2397,9 +2538,12 @@ mutation CreateBoxLocation(
     imageID
     images {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -2422,13 +2566,20 @@ mutation CreateBoxLocation(
     }
     isActive
     trackingInfoID
+    isFlagged
+    FlagNotes
+    boxStatus
+    destinationLocationInfoID
     createdAt
     updatedAt
     image {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -2489,6 +2640,46 @@ mutation CreateBoxLocation(
         nextToken
       }
     }
+    destinationLocationInfo {
+      id
+      locationLabel
+      latitude
+      longitude
+      isActive
+      addressID
+      phones {
+        id
+        phone
+        isActive
+        type
+        createdAt
+        updatedAt
+      }
+      plusCode
+      website
+      notes
+      notesHistory
+      tags
+      createdAt
+      updatedAt
+      address {
+        id
+        label
+        addressLine1
+        addressLine2
+        city
+        state
+        province
+        zipCode
+        postalCode
+        country
+        createdAt
+        updatedAt
+      }
+      boxLocations {
+        nextToken
+      }
+    }
     box {
       id
       title
@@ -2500,7 +2691,7 @@ mutation CreateBoxLocation(
       additionalBoxCategories {
         id
         name
-        active
+        isActive
         createdAt
         updatedAt
       }
@@ -2513,9 +2704,12 @@ mutation CreateBoxLocation(
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -2528,16 +2722,19 @@ mutation CreateBoxLocation(
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
       boxCategory {
         id
         name
-        active
+        isActive
         createdAt
         updatedAt
       }
@@ -2592,9 +2789,12 @@ mutation CreateBoxLocation(
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -2604,9 +2804,12 @@ mutation CreateBoxLocation(
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -2641,9 +2844,12 @@ mutation CreateBoxLocation(
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -2657,9 +2863,12 @@ mutation CreateBoxLocation(
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -2700,9 +2909,12 @@ mutation UpdateBoxLocation(
     imageID
     images {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -2725,13 +2937,20 @@ mutation UpdateBoxLocation(
     }
     isActive
     trackingInfoID
+    isFlagged
+    FlagNotes
+    boxStatus
+    destinationLocationInfoID
     createdAt
     updatedAt
     image {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -2792,6 +3011,46 @@ mutation UpdateBoxLocation(
         nextToken
       }
     }
+    destinationLocationInfo {
+      id
+      locationLabel
+      latitude
+      longitude
+      isActive
+      addressID
+      phones {
+        id
+        phone
+        isActive
+        type
+        createdAt
+        updatedAt
+      }
+      plusCode
+      website
+      notes
+      notesHistory
+      tags
+      createdAt
+      updatedAt
+      address {
+        id
+        label
+        addressLine1
+        addressLine2
+        city
+        state
+        province
+        zipCode
+        postalCode
+        country
+        createdAt
+        updatedAt
+      }
+      boxLocations {
+        nextToken
+      }
+    }
     box {
       id
       title
@@ -2803,7 +3062,7 @@ mutation UpdateBoxLocation(
       additionalBoxCategories {
         id
         name
-        active
+        isActive
         createdAt
         updatedAt
       }
@@ -2816,9 +3075,12 @@ mutation UpdateBoxLocation(
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -2831,16 +3093,19 @@ mutation UpdateBoxLocation(
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
       boxCategory {
         id
         name
-        active
+        isActive
         createdAt
         updatedAt
       }
@@ -2895,9 +3160,12 @@ mutation UpdateBoxLocation(
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -2907,9 +3175,12 @@ mutation UpdateBoxLocation(
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -2944,9 +3215,12 @@ mutation UpdateBoxLocation(
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -2960,9 +3234,12 @@ mutation UpdateBoxLocation(
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -3003,9 +3280,12 @@ mutation DeleteBoxLocation(
     imageID
     images {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -3028,13 +3308,20 @@ mutation DeleteBoxLocation(
     }
     isActive
     trackingInfoID
+    isFlagged
+    FlagNotes
+    boxStatus
+    destinationLocationInfoID
     createdAt
     updatedAt
     image {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -3095,6 +3382,46 @@ mutation DeleteBoxLocation(
         nextToken
       }
     }
+    destinationLocationInfo {
+      id
+      locationLabel
+      latitude
+      longitude
+      isActive
+      addressID
+      phones {
+        id
+        phone
+        isActive
+        type
+        createdAt
+        updatedAt
+      }
+      plusCode
+      website
+      notes
+      notesHistory
+      tags
+      createdAt
+      updatedAt
+      address {
+        id
+        label
+        addressLine1
+        addressLine2
+        city
+        state
+        province
+        zipCode
+        postalCode
+        country
+        createdAt
+        updatedAt
+      }
+      boxLocations {
+        nextToken
+      }
+    }
     box {
       id
       title
@@ -3106,7 +3433,7 @@ mutation DeleteBoxLocation(
       additionalBoxCategories {
         id
         name
-        active
+        isActive
         createdAt
         updatedAt
       }
@@ -3119,9 +3446,12 @@ mutation DeleteBoxLocation(
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -3134,16 +3464,19 @@ mutation DeleteBoxLocation(
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
       boxCategory {
         id
         name
-        active
+        isActive
         createdAt
         updatedAt
       }
@@ -3198,9 +3531,12 @@ mutation DeleteBoxLocation(
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -3210,9 +3546,12 @@ mutation DeleteBoxLocation(
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -3247,9 +3586,12 @@ mutation DeleteBoxLocation(
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -3263,9 +3605,12 @@ mutation DeleteBoxLocation(
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -3303,9 +3648,12 @@ mutation CreateTrackingInfo(
     imageID
     images {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -3332,9 +3680,12 @@ mutation CreateTrackingInfo(
     updatedAt
     image {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -3368,6 +3719,10 @@ mutation CreateTrackingInfo(
         imageID
         isActive
         trackingInfoID
+        isFlagged
+        FlagNotes
+        boxStatus
+        destinationLocationInfoID
         createdAt
         updatedAt
       }
@@ -3383,9 +3738,12 @@ mutation CreateTrackingInfo(
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -3399,9 +3757,12 @@ mutation CreateTrackingInfo(
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -3439,9 +3800,12 @@ mutation UpdateTrackingInfo(
     imageID
     images {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -3468,9 +3832,12 @@ mutation UpdateTrackingInfo(
     updatedAt
     image {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -3504,6 +3871,10 @@ mutation UpdateTrackingInfo(
         imageID
         isActive
         trackingInfoID
+        isFlagged
+        FlagNotes
+        boxStatus
+        destinationLocationInfoID
         createdAt
         updatedAt
       }
@@ -3519,9 +3890,12 @@ mutation UpdateTrackingInfo(
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -3535,9 +3909,12 @@ mutation UpdateTrackingInfo(
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -3575,9 +3952,12 @@ mutation DeleteTrackingInfo(
     imageID
     images {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -3604,9 +3984,12 @@ mutation DeleteTrackingInfo(
     updatedAt
     image {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -3640,6 +4023,10 @@ mutation DeleteTrackingInfo(
         imageID
         isActive
         trackingInfoID
+        isFlagged
+        FlagNotes
+        boxStatus
+        destinationLocationInfoID
         createdAt
         updatedAt
       }
@@ -3655,9 +4042,12 @@ mutation DeleteTrackingInfo(
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -3671,9 +4061,12 @@ mutation DeleteTrackingInfo(
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -3712,9 +4105,12 @@ mutation CreateUser(
     imageID
     images {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -3745,9 +4141,12 @@ mutation CreateUser(
     updatedAt
     image {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -3796,9 +4195,12 @@ mutation CreateUser(
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -3808,9 +4210,12 @@ mutation CreateUser(
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -3848,6 +4253,10 @@ mutation CreateUser(
         imageID
         isActive
         trackingInfoID
+        isFlagged
+        FlagNotes
+        boxStatus
+        destinationLocationInfoID
         createdAt
         updatedAt
       }
@@ -3869,9 +4278,12 @@ mutation UpdateUser(
     imageID
     images {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -3902,9 +4314,12 @@ mutation UpdateUser(
     updatedAt
     image {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -3953,9 +4368,12 @@ mutation UpdateUser(
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -3965,9 +4383,12 @@ mutation UpdateUser(
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -4005,6 +4426,10 @@ mutation UpdateUser(
         imageID
         isActive
         trackingInfoID
+        isFlagged
+        FlagNotes
+        boxStatus
+        destinationLocationInfoID
         createdAt
         updatedAt
       }
@@ -4026,9 +4451,12 @@ mutation DeleteUser(
     imageID
     images {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -4059,9 +4487,12 @@ mutation DeleteUser(
     updatedAt
     image {
       id
-      altTex
+      label
+      altText
       src
       userID
+      dateAdded
+      isActive
       createdAt
       updatedAt
       user {
@@ -4110,9 +4541,12 @@ mutation DeleteUser(
       imageID
       images {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -4122,9 +4556,12 @@ mutation DeleteUser(
       updatedAt
       image {
         id
-        altTex
+        label
+        altText
         src
         userID
+        dateAdded
+        isActive
         createdAt
         updatedAt
       }
@@ -4162,6 +4599,10 @@ mutation DeleteUser(
         imageID
         isActive
         trackingInfoID
+        isFlagged
+        FlagNotes
+        boxStatus
+        destinationLocationInfoID
         createdAt
         updatedAt
       }
