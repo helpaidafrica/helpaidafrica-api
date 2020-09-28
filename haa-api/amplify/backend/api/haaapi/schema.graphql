@@ -58,10 +58,12 @@ type Image
 ) 
 {
   id: ID!
-  altTex: String
+  label: String
+  altText: String
   src: AWSURL!
   userID: ID!
   user: User! @connection(fields: ["userID"])
+  isActive: Boolean!
 }
 
 type BoxCategory 
@@ -77,7 +79,7 @@ type BoxCategory
 {
   id: ID!
   name: String!
-  active: Boolean!
+  isActive: Boolean!
   boxes: [Box] @connection(keyName: "byBoxCategory", fields: ["id"])
 }
 
@@ -179,8 +181,8 @@ type LocationInfo
 ) {
   id: ID!
   locationLabel: String!
-  latitude: String!
-  longitude: String!
+  latitude: Float!
+  longitude: Float!
   isActive: Boolean!
 
   addressID: ID!
@@ -294,23 +296,25 @@ type BoxLocation
   id: ID!
   boxID: ID!
   box: Box! @connection(fields: ["boxID"])
-
   locationInfoID: ID!
   locationInfo: LocationInfo! @connection(fields: ["locationInfoID"])
   scanDateTime: AWSDateTime!
   scannedByUserID: ID!
   scannedByUser: User! @connection(fields: ["scannedByUserID"])
-
   notes: String
-  isFinal: Boolean!
+  isFinal: Boolean
   tags: [String!]
   imageID: ID!
   image: Image @connection(fields: ["imageID"])
   images: [Image!]
   isActive: Boolean!
-
   trackingInfoID: ID!
   trackingInfo: TrackingInfo! @connection(fields: ["trackingInfoID"]) 
+  isFlagged: Boolean
+  FlagNotes: String
+  boxStatus: BoxStatus!
+  destinationLocationInfoID: ID!
+  destinationLocationInfo: LocationInfo! @connection(fields: ["destinationLocationInfoID"])
 
 }
 
