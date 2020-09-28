@@ -1,108 +1,123 @@
 ## step 1: add images
 mutation addTrackingInfoImage($userID: ID = "1") {
-  createImage(input: {userID: $userID, altTex: "image_saba.jpb", src: "https://bucket/foo.jpg"}) {
+  createImage(input: {
+    userID: $userID, 
+    label: "tracking info image 3", 
+    altText: "tracking info image 3", 
+    isActive: true,
+    dateAdded: "2020-09-21T00:00:00Z",
+    src: "https://bucket/foo.jpg"}) {
     id
-    altTex
+    altText
     src
+    label
+    dateAdded
   }
 }
 
 mutation addBoxImage($userID: ID = "1") {
-  createImage(input: {userID: $userID, altTex: "image_box_2020-08-A-Box-1-saba.jpb", src: "https://bucket/foo.jpg"}) {
+
+  createImage(input: {
+    userID: $userID, 
+    label: "box image", 
+    altText: "box image", 
+    isActive: true,
+    dateAdded: "2020-09-21T00:00:00Z",
+    src: "https://bucket/2020-08-24-120000-Box-1-saba.jpg"}) {
     id
-    altTex
+    altText
     src
+    label
+    dateAdded
   }
 }
 
 # step 2: create tracking info record
 mutation createTrackingInfo(
-    $userID: ID = "1", $isActive: Boolean = true, $Notes: String = "some notes",
-    $imageID: ID = "d417de7d-1042-4c86-b77d-60b96f09fb47") {
+    $userID: ID = "1", $isActive: Boolean = true, 
+    $Notes: String = "some notes",
+    $imageID: ID = "0") {
   createTrackingInfo(input: {
     isActive: $isActive, 
     timeOfDelivery: "2020-09-21T00:00:00Z", 
     userID: $userID, notes: $Notes, 
-    id: "1", 
     imageID: $imageID
     }) {
-      id
-      isActive
-      timeOfDelivery
-      userID
-      image { id src user { id name}}
-      notes
-      createdAt
+    id
+    isActive
+    timeOfDelivery
+    userID
   }
 }
 
-## step 3: Track Boxes
+# step 3: create loctionInfo for current location
+mutation create_LocationInfo_currentLocation
+ {
+ create_user_currentLocation: createLocationInfo(input: {
+    isActive: true, 
+    locationLabel: "this is the user current location", 
+    latitude: 0, longitude: 0, addressID: "0"}) {
+    id
+    isActive
+    latitude
+    locationLabel
+  }
 
-mutation Track_Box_1 (
+}
+
+# optionally, create location Info for destination location
+mutation create_LocationInfo_destination
+ {
+ create_LocationInfo_destinationLocation: createLocationInfo(input: {
+    isActive: true, 
+    locationLabel: "this is the destination location", 
+    latitude: 0, longitude: 0, addressID: "0"}) {
+    id
+    isActive
+    latitude
+    locationLabel
+  }
+}
+
+## step 4: Track Boxes
+
+mutation Track_Multiple_Boxes (
   $trackingInfoID: ID = "1",
   $userID: ID = "1", 
   $locationInfoID: ID = "2", 
-  $isFinal: Boolean = true, 
-  $isActive: Boolean = true,
-  $boxID: ID = "2020-08-A-Box-1",
-  $boxTrackingImageId: ID = "box_1_tracking_image_id",
-  $status: BoxStatus = DELIVERED,
-  $scan_date: AWSDateTime = "2020-09-19T10:00:00Z"
+  $destinationLocationInfoID: ID = "3", 
+  $scanDateTime: AWSDateTime = "2020-09-21T00:00:00Z"
   ) {
 
     # add tracking location for box 1 
     track_box_1 : createBoxLocation
     (input: {
-      boxID: $boxID, 
-      isActive: $isActive, 
-      isFinal: $isFinal, 
+      isActive: true, 
       locationInfoID: $locationInfoID, 
       trackingInfoID: $trackingInfoID, 
-      scannedByUserID: $userID, 
-      imageID: $boxTrackingImageId,
-      scanDateTime:$scan_date
-    })
-    { boxID    isActive    trackingInfoID scanDateTime scannedByUserID}
-
-    # update box 1 status 
-    update_boxstatus: updateBox(input: { 
-      status: $status, 
-      id: $boxID
-    }) 
-    { id isActive status }
-}
-
-
-
-mutation Track_Box_2 (
-  $trackingInfoID: ID = "1",
-  $userID: ID = "1", 
-  $locationInfoID: ID = "2", 
-  $isFinal: Boolean = true, 
-  $isActive: Boolean = true,
-  $boxID: ID = "2020-08-A-Box-2",
-  $status: BoxStatus = DELIVERED ,
-  $scan_date: AWSDateTime = "2020-09-19T14:00:00Z"  
-  ) {
-
+      destinationLocationInfoID: $destinationLocationInfoID,
+      imageID: "0",       
+      boxID: "2020-08-A-Box-1", 
+      boxStatus: DELIVERED,
+      scanDateTime: $scanDateTime,
+      scannedByUserID: $userID 
+    }
+    )
+    {id trackingInfoID boxID boxStatus scanDateTime scannedByUserID}
+  
     # add tracking location for box 2
     track_box_2 : createBoxLocation
     (input: {
-      boxID: $boxID, 
-      isActive: $isActive, 
-      isFinal: $isFinal, 
+      isActive: true, 
       locationInfoID: $locationInfoID, 
       trackingInfoID: $trackingInfoID, 
-      scannedByUserID: $userID,
-      scanDateTime:$scan_date
-      imageID: "0" # unknown image
-    })
-    { boxID    isActive    trackingInfoID  scanDateTime scannedByUserID}
-
-    # update box 2 status 
-    update_boxstatus: updateBox(input: { 
-      status: $status, 
-      id: $boxID
-    }) 
-    { id isActive status }
+      destinationLocationInfoID: $destinationLocationInfoID,
+      imageID: "0", 
+      boxID: "2020-08-A-Box-2", 
+      boxStatus: LOST,
+      scanDateTime: $scanDateTime,
+      scannedByUserID: $userID 
+    }
+    )
+    {id trackingInfoID boxID boxStatus scanDateTime scannedByUserID}
 }

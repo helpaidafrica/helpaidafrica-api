@@ -1,0 +1,10 @@
+query UserImages {
+  ImagesByUser(userID: "1") {
+    items {
+      id
+      isActive
+      label
+      userID
+    }
+  }
+}
