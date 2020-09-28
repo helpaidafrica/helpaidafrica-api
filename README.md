@@ -31,6 +31,7 @@ Other types
 
 GraphQL schema is located [here](https://github.com/helpaidafrica/helpaidafrica-api/blob/master/haa-api/amplify/backend/api/haaapi/schema.graphql).
 
+![HelpAidAfrica-BoxAPI-Schema](https://raw.githubusercontent.com/helpaidafrica/helpaidafrica-api/master/public/assets/img/HelpAidAfrica-BoxAPI-Schema.jpg)
 
 ---
 ## Queries
