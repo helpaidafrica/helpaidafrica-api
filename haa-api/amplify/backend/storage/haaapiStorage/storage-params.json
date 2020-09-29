@@ -1,0 +1,18 @@
+{
+    "groupPermissionMap": {
+        "haaApiAdmins": [
+            "create/update",
+            "read",
+            "delete"
+        ],
+        "haaApiDataAdmins": [
+            "create/update",
+            "read",
+            "delete"
+        ],
+        "haaApiUsers": [
+            "create/update",
+            "read"
+        ]
+    }
+}
