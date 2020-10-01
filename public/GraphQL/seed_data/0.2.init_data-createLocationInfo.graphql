@@ -80,3 +80,261 @@ mutation CreateSABALocationInfo {
     website
   }
 }
+
+mutation CreateKenyaShippingPortLocation {
+  createLocationInfo(input: {
+    addressID: "0", id: "Kenya Shipping Port", 
+    isActive: true, 
+    latitude: 0, 
+    locationLabel: "Kenya Shipping Port", 
+    longitude: 0,
+    notes: "Placeholder for Container Shipping Port in Kenya"
+  })
+	{
+    addressID
+    createdAt
+    id
+    isActive
+    latitude
+    locationLabel
+    longitude
+    notes
+    
+  }
+}
+
+mutation CreateLocationInfoForHelpAidAfrica {
+  helpaidAfrica_HQ_locationInfo: createLocationInfo(input: {
+    addressID: "Help Aid Africa USA HQ", id: "Help Aid Africa USA HQ", 
+    isActive: true, 
+    longitude: 37.9295182, 
+    latitude: -122.0680417, 
+    locationLabel: "Help Aid Africa USA HQ", 
+    notes: "Placeholder for Help Aid Africa USA HQ" 
+   }) {
+    addressID
+    createdAt
+    id
+    isActive
+    latitude
+    locationLabel
+    longitude
+    notes
+    notesHistory
+    plusCode
+    tags
+    updatedAt
+    website
+  }
+
+  helpaidAfrica_Kenya_locationInfo: createLocationInfo(input: {
+    addressID: "0", id: "Help Aid Africa Kenya", 
+    isActive: true, 
+    longitude: 0, 
+    latitude: 0, 
+    locationLabel: "Help Aid Africa in Kenya", 
+    notes: "Placeholder for Help Aid Africa in Kenya" 
+   }) {
+    addressID
+    createdAt
+    id
+    isActive
+    latitude
+    locationLabel
+    longitude
+    notes
+    notesHistory
+    plusCode
+    tags
+    updatedAt
+    website
+  }
+}
+
+mutation CreateLocationInfoForOrgs {
+  
+  MasaiMara_locationInfo: createLocationInfo(input: {
+    addressID: "0", id: "Masai Mara", 
+    isActive: true, 
+    longitude: 0, 
+    latitude: 0, 
+    locationLabel: "Masai Mara", 
+    notes: "Placeholder for Masai Mara Donation Destination" 
+   }) {
+    addressID
+    createdAt
+    id
+    isActive
+    latitude
+    locationLabel
+    longitude
+    notes
+    notesHistory
+    plusCode
+    tags
+    updatedAt
+    website
+  }
+
+  LadyOfMercy_locationInfo: createLocationInfo(input: {
+    addressID: "0", id: "Lady of Mercy", 
+    isActive: true, 
+    longitude: 0, 
+    latitude: 0, 
+    locationLabel: "Lady of Mercy", 
+    notes: "Placeholder for Lady of Mercy Donation Destination" 
+   }) {
+    addressID
+    createdAt
+    id
+    isActive
+    latitude
+    locationLabel
+    longitude
+    notes
+    notesHistory
+    plusCode
+    tags
+    updatedAt
+    website
+  }
+
+  KBF_locationInfo:createLocationInfo(input: {
+    addressID: "0", id: "KBF", 
+    isActive: true, 
+    longitude: 0, 
+    latitude: 0, 
+    locationLabel: "KBF", 
+    notes: "Placeholder for KBF Donation Destination" 
+   }) {
+    addressID
+    createdAt
+    id
+    isActive
+    latitude
+    locationLabel
+    longitude
+    notes
+    notesHistory
+    plusCode
+    tags
+    updatedAt
+    website
+  }
+
+  DarUlMuslemeen_locationInfo:createLocationInfo(input: {
+    addressID: "0", id: "Dar-ul-Muslemeen", 
+    isActive: true, 
+    longitude: 0, 
+    latitude: 0, 
+    locationLabel: "Dar-ul-Muslemeen", 
+    notes: "Placeholder for Dar-ul-Muslemeen Donation Destination" 
+   }) {
+    addressID
+    createdAt
+    id
+    isActive
+    latitude
+    locationLabel
+    longitude
+    notes
+    notesHistory
+    plusCode
+    tags
+    updatedAt
+    website
+  }
+
+  VOI_locationInfo: createLocationInfo(input: {
+    addressID: "0", id: "VOI", 
+    isActive: true, 
+    longitude: 0, 
+    latitude: 0, 
+    locationLabel: "VOI", 
+    notes: "Placeholder for VOI Donation Destination" 
+   }) {
+    addressID
+    createdAt
+    id
+    isActive
+    latitude
+    locationLabel
+    longitude
+    notes
+    notesHistory
+    plusCode
+    tags
+    updatedAt
+    website
+  }
+
+  XMasaiMara_locationInfo: createLocationInfo(input: {
+    addressID: "0", id: "X Masai Mara", 
+    isActive: true, 
+    longitude: 0, 
+    latitude: 0, 
+    locationLabel: "X Masai Mara", 
+    notes: "Placeholder for X Masai Mara Donation Destination" 
+   }) {
+    addressID
+    createdAt
+    id
+    isActive
+    latitude
+    locationLabel
+    longitude
+    notes
+    notesHistory
+    plusCode
+    tags
+    updatedAt
+    website
+  }
+
+  XLadyOfMercy_locationInfo: createLocationInfo(input: {
+    addressID: "0", id: "X lady of mercy", 
+    isActive: true, 
+    longitude: 0, 
+    latitude: 0, 
+    locationLabel: "X lady of mercy", 
+    notes: "Placeholder for X lady of mercy Donation destination" 
+   }) {
+    addressID
+    createdAt
+    id
+    isActive
+    latitude
+    locationLabel
+    longitude
+    notes
+    notesHistory
+    plusCode
+    tags
+    updatedAt
+    website
+  }
+
+  locationInfo_143: createLocationInfo(input: {
+    addressID: "0", id: "143", 
+    isActive: true, 
+    longitude: 0, 
+    latitude: 0, 
+    locationLabel: "143", 
+    notes: "Placeholder for 143 Donation destination" 
+   }) {
+    addressID
+    createdAt
+    id
+    isActive
+    latitude
+    locationLabel
+    longitude
+    notes
+    notesHistory
+    plusCode
+    tags
+    updatedAt
+    website
+  }
+
+}

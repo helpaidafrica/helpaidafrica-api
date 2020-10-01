@@ -23,7 +23,6 @@ mutation CreateGoldenGateParkAddress {
     state
     province
     postalCode
-    owner
     label
     id
     createdAt
@@ -53,7 +52,35 @@ mutation CreateSABAAddress {
     state
     province
     postalCode
-    owner
+    label
+    id
+    createdAt
+    country
+    city
+    addressLine2
+    addressLine1
+  }
+}
+
+
+mutation CreateHelpAidAfricaUSAAddress {
+  createAddress(input: 
+    { id: "Help Aid Africa USA HQ", 
+      label: "Help Aid Africa USA HQ", 
+      addressLine1: "1132 Corrie L"
+      addressLine2: "", 
+      province: "", 
+      city: "Walnut Creek", 
+      state: "CA", 
+      postalCode: "", 
+      zipCode: "94597", 
+      country: "USA", 
+    }) {
+    zipCode
+    updatedAt
+    state
+    province
+    postalCode
     label
     id
     createdAt
