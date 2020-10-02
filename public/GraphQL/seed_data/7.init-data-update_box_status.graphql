@@ -639,4 +639,7 @@ updateBox_S267: updateBox(input: {id: "2020-08-B-Box-S267", status: IN_TRANSIT, 
 updateBox_S268: updateBox(input: {id: "2020-08-B-Box-S268", status: IN_TRANSIT, isActive: true, statusHistory: [NEW, IN_TRANSIT]}) {    id    isActive    status    statusHistory  }
 updateBox_S269: updateBox(input: {id: "2020-08-B-Box-S269", status: IN_TRANSIT, isActive: true, statusHistory: [NEW, IN_TRANSIT]}) {    id    isActive    status    statusHistory  }
 updateBox_S270: updateBox(input: {id: "2020-08-B-Box-S270", status: IN_TRANSIT, isActive: true, statusHistory: [NEW, IN_TRANSIT]}) {    id    isActive    status    statusHistory  }
+updateBox_C109_1: updateBox(input: {id: "2020-08-A-Box-C109_1", status: IN_TRANSIT, isActive: true, statusHistory: [NEW, IN_TRANSIT]}) {    id    isActive    status    statusHistory  }
+updateBox_C109_2: updateBox(input: {id: "2020-08-A-Box-C109_2", status: IN_TRANSIT, isActive: true, statusHistory: [NEW, IN_TRANSIT]}) {    id    isActive    status    statusHistory  }
+updateBox_C3_1: updateBox(input: {id: "2020-08-A-Box-C3_1", status: IN_TRANSIT, isActive: true, statusHistory: [NEW, IN_TRANSIT]}) {    id    isActive    status    statusHistory  }
 }

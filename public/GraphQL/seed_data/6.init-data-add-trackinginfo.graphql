@@ -10265,5 +10265,53 @@ mutation Track_Multiple_Boxes (
     }
     )
     {id trackingInfoID boxID boxStatus scanDateTime scannedByUserID}
+
+    # add tracking location for box C109_1
+    track_box_C109_1 : createBoxLocation
+    (input: {
+      isActive: true, 
+      locationInfoID: $locationInfoID, 
+      trackingInfoID: $trackingInfoID, 
+      destinationLocationInfoID: $destinationLocationInfoID,
+      imageID: "0",       
+      boxID: "2020-08-A-Box-C109_1", 
+      boxStatus: $boxStatus,
+      scanDateTime: $scanDateTime,
+      scannedByUserID: $userID 
+    }
+    )
+    {id trackingInfoID boxID boxStatus scanDateTime scannedByUserID}
+  
+    # add tracking location for box C109_2 
+    track_box_C109_2 : createBoxLocation
+    (input: {
+      isActive: true, 
+      locationInfoID: $locationInfoID, 
+      trackingInfoID: $trackingInfoID, 
+      destinationLocationInfoID: $destinationLocationInfoID,
+      imageID: "0",       
+      boxID: "2020-08-A-Box-C109_2", 
+      boxStatus: $boxStatus,
+      scanDateTime: $scanDateTime,
+      scannedByUserID: $userID 
+    }
+    )
+    {id trackingInfoID boxID boxStatus scanDateTime scannedByUserID}
+  
+    # add tracking location for box C3_1
+    track_box_C3_1 : createBoxLocation
+    (input: {
+      isActive: true, 
+      locationInfoID: $locationInfoID, 
+      trackingInfoID: $trackingInfoID, 
+      destinationLocationInfoID: $destinationLocationInfoID,
+      imageID: "0",       
+      boxID: "2020-08-A-Box-C3_1", 
+      boxStatus: $boxStatus,
+      scanDateTime: $scanDateTime,
+      scannedByUserID: $userID 
+    }
+    )
+    {id trackingInfoID boxID boxStatus scanDateTime scannedByUserID}
   
   }
