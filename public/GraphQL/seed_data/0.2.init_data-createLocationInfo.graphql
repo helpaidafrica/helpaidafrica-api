@@ -338,3 +338,127 @@ mutation CreateLocationInfoForOrgs {
   }
 
 }
+
+mutation CreateLocationInfoForKenyaCounties {
+  
+  Kwale_locationInfo: createLocationInfo(input: {
+    addressID: "0", id: "Kwale County, Kenya", 
+    isActive: true, 
+    latitude: -4.1219318, 
+    longitude: 38.4838337, 
+    locationLabel: "Kwale County, Kenya", 
+    notes: "Kwale County is a county in the former Coast Province of Kenya. Its capital is Kwale, although Ukunda is the largest town.",
+    website: "https://en.wikipedia.org/wiki/Kwale_County"
+
+   }) {
+    id
+    locationLabel
+    latitude
+    longitude
+    notes
+    website
+    isActive
+    addressID
+    createdAt
+  }
+
+  Kilifi_locationInfo: createLocationInfo(input: {
+    addressID: "0", id: "Kilifi County, Kenya", 
+    isActive: true, 
+    latitude: -3.1501127, 
+    longitude: 39.1036671, 
+    locationLabel: "Kilifi County, Kenya", 
+    notes: "Kilifi County is a county of Kenya. It was formed in 2010 as a result of a merger of Kilifi District and Malindi District. Its capital is Kilifi and its largest town is Malindi.",
+    website: "https://en.wikipedia.org/wiki/Kilifi_County"
+   }) {
+    id
+    locationLabel
+    latitude
+    longitude
+    notes
+    website
+    isActive
+    addressID
+    createdAt
+  }
+
+  Tana_River_locationInfo: createLocationInfo(input: {
+    addressID: "0", id: "Tana River County, Kenya", 
+    isActive: true, 
+    latitude: -1.544358, 
+    longitude: 39.5954102, 
+    locationLabel: "Tana River County, Kenya", 
+    notes: "Tana River County is a county in the former Coast Province, Kenya. It is named after the Tana River.",
+    website: "https://en.wikipedia.org/wiki/Tana_River_County"
+   }) {
+    id
+    locationLabel
+    latitude
+    longitude
+    notes
+    website
+    isActive
+    addressID
+    createdAt
+ }
+
+  Taita_Taveta_locationInfo: createLocationInfo(input: {
+    addressID: "0", id: "Taita Taveta County, Kenya",
+    isActive: true,
+    latitude: -3.4063816,
+    longitude: 36.1585848,
+    locationLabel: "Taita Taveta County, Kenya", 
+    notes: "Taita–Taveta County is a county of Kenya. It lies approximately 140 km northwest of Mombasa and 380 km southeast of Nairobi.",
+    website: "https://en.wikipedia.org/wiki/Taita%E2%80%93Taveta_County"
+   }) {
+    id
+    locationLabel
+    latitude
+    longitude
+    notes
+    website
+    isActive
+    addressID
+    createdAt
+ }
+
+  Lamu_locationInfo: createLocationInfo(input: {
+    addressID: "0", id: "Lamu County, Kenya", 
+    isActive: true, 
+    latitude: -2.0674157, 
+    longitude: 39.7642648, 
+    locationLabel: "Lamu County, Kenya", 
+    notes: "Lamu County is located in the Northern Coast of Kenya and is one of the Six Coastal Counties in Kenya.",
+    website: "https://en.wikipedia.org/wiki/Lamu_County"
+   }) {
+    id
+    locationLabel
+    latitude
+    longitude
+    notes
+    website
+    isActive
+    addressID
+    createdAt
+  }
+
+  Mombasa_locationInfo: createLocationInfo(input: {
+    addressID: "0", id: "Mombasa County, Kenya",
+    isActive: true,
+    latitude: -4.0368736,
+    longitude: 39.5252979,
+    locationLabel: "Mombasa County, Kenya",
+    notes: "Mombasa County is one of the 47 counties of Kenya. It's the capital and the only city in the county of Mombasa. Initially it was one of the former districts of Kenya but in 2013 it was reconstituted as a county, on the same boundaries.",
+    website: "https://en.wikipedia.org/wiki/Mombasa_County"
+   }) {
+    id
+    locationLabel
+    latitude
+    longitude
+    notes
+    website
+    isActive
+    addressID
+    createdAt
+  }
+}
