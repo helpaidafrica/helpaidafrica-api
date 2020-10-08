@@ -3,8 +3,8 @@ mutation CreateUnknownLocationInfo {
   createLocationInfo(input: {
     addressID: "0", id: "0", 
     isActive: true, 
-    longitude: "38.1201", 
-    latitude: "86.9142", 
+    longitude: 0, 
+    latitude: 0, 
     locationLabel: "Unknown Location", 
     notes: "Placeholder for an unknown location" 
    }) {
@@ -24,13 +24,35 @@ mutation CreateUnknownLocationInfo {
   }
 }
 
+mutation CreateCustomLocationInfo {
+  createLocationInfo(input: {
+    addressID: "0", id: "-1", 
+    isActive: true, 
+    longitude: 0, 
+    latitude: 0, 
+    locationLabel: "Custom Location - Enter in Notes", 
+    notes: "Placeholder for a user supplied custom location" 
+   }) {
+    addressID
+    createdAt
+    id
+    isActive
+    latitude
+    locationLabel
+    longitude
+    notes
+    notesHistory
+    updatedAt
+  }
+}
+
 mutation CreateGoldenGateParkLocationInfo {
   createLocationInfo(input: {
     addressID: "1", id: "1", 
-    isActive: true, 
-    latitude: "37.7694208", 
+    isActive: false, 
+    latitude: 37.7694208, 
     locationLabel: "Golden Gate Park (Landmark)", 
-    longitude: "-122.4884025", 
+    longitude: -122.4884025, 
     notes: "Golden Gate Park, located in San Francisco, California, United States, is a large urban park consisting of 1,017 acres of public grounds. It is administered by the San Francisco Recreation & Parks Department, which began in 1871 to oversee the development of Golden Gate Park.", 
     plusCode: "QG97+QG Daly City, California", 
     tags: "large urban park", 
