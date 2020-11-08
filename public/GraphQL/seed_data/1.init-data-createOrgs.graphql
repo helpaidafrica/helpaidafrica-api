@@ -104,5 +104,36 @@ VOI: createOrg(input: {id: "VOI", addressID: "0", description: "", isActive: tru
       label
     }
   }
+  orgHabitat_for_humanity: createOrg(input: {id: "Habitat for humanity", addressID: "0", description: "", isActive: true, name: "Habitat for humanity", imageID: "0"}) {
+    addressID
+    id
+    name
+    address {
+      label
+    }
+  }
+  orgHelping_Hands: createOrg(input: {id: "Helping Hands", addressID: "0", description: "", isActive: true, name: "Helping Hands", imageID: "0"}) {
+    addressID
+    id
+    name
+    address {
+      label
+    }
+  }
+  orgHWG: createOrg(input: {id: "HWG", addressID: "0", description: "", isActive: true, name: "HWG", imageID: "0"}) {
+    addressID
+    id
+    name
+    address {
+      label
+    }
+  }
+  orgBilal: createOrg(input: {id: "Bilal", addressID: "0", description: "", isActive: true, name: "Bilal", imageID: "0"}) {
+    addressID
+    id
+    name
+    address {
+      label
+    }
+  }
 }
-
