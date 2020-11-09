@@ -128,12 +128,4 @@ VOI: createOrg(input: {id: "VOI", addressID: "0", description: "", isActive: tru
       label
     }
   }
-  orgBilal: createOrg(input: {id: "Bilal", addressID: "0", description: "", isActive: true, name: "Bilal", imageID: "0"}) {
-    addressID
-    id
-    name
-    address {
-      label
-    }
-  }
 }

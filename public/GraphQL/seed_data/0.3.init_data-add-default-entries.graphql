@@ -1,7 +1,8 @@
 mutation addUnknownImage($userID: ID = "1") {
-  createImage(input: {id: "0", userID: $userID, altTex: "unknown image source", src: "https://bucket/unknown.jpg"}) {
+  createImage(input: {id: "0", userID: $userID, altText: "unknown image source", src: "https://bucket/unknown.jpg", isActive: false, dateAdded: "2020-11-08T00:00:00Z"}) {
     id
-    altTex
-    src
+    altText
+    src,
+    dateAdded
   }
 }

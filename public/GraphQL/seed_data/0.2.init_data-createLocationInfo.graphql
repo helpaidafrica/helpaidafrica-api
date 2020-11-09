@@ -483,4 +483,84 @@ mutation CreateLocationInfoForKenyaCounties {
     addressID
     createdAt
   }
+
 }
+
+mutation Create_AdditionalDesctinationLocation_20201107 {
+  createLocationInfo_Habitat_for_humanity: createLocationInfo(input: {
+    addressID: "0", id: "Habitat for humanity", 
+    isActive: true, 
+    latitude: 0, 
+    locationLabel: "Habitat for humanity", 
+    longitude: 0,
+    notes: "Created upon request from Abbas bhai on Nov 7th 2020."
+  })
+	{
+    addressID
+    createdAt
+    id
+    isActive
+    latitude
+    locationLabel
+    longitude
+    notes
+  }
+
+  createLocationInfo_Helping_Hands: createLocationInfo(input: {
+    addressID: "0", id: "Helping Hands", 
+    isActive: true, 
+    latitude: 0, 
+    locationLabel: "Helping Hands", 
+    longitude: 0,
+    notes: "Created upon request from Abbas bhai on Nov 7th 2020."
+  })
+	{
+    addressID
+    createdAt
+    id
+    isActive
+    latitude
+    locationLabel
+    longitude
+    notes
+  }
+
+  createLocationInfo_HWG: createLocationInfo(input: {
+    addressID: "0", id: "HWG", 
+    isActive: true, 
+    latitude: 0, 
+    locationLabel: "HWG", 
+    longitude: 0,
+    notes: "Created upon request from Abbas bhai on Nov 7th 2020."
+  })
+	{
+    addressID
+    createdAt
+    id
+    isActive
+    latitude
+    locationLabel
+    longitude
+    notes
+  }
+
+  createLocationInfo_Bilal: createLocationInfo(input: {
+    addressID: "0", id: "Bilal", 
+    isActive: true, 
+    latitude: 0, 
+    locationLabel: "Bilal", 
+    longitude: 0,
+    notes: "Created upon request from Abbas bhai on Nov 7th 2020."
+  })
+	{
+    addressID
+    createdAt
+    id
+    isActive
+    latitude
+    locationLabel
+    longitude
+    notes
+  }
+}
+
